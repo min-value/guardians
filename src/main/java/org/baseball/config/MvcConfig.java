@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -18,11 +19,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.sql.DataSource;
 
 @Configuration
+@PropertySource("classpath:db.properties")
 @EnableWebMvc
 @ComponentScan("org.baseball")
 @MapperScan(basePackages = "org.baseball", annotationClass = Mapper.class)
 public class MvcConfig implements WebMvcConfigurer {
-    @Value("${spring.datasource.url}")
+    @Value("${spring.datasource.driver-class-name}")
     private String driver;
 
     @Value("${spring.datasource.url}")
