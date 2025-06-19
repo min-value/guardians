@@ -9,10 +9,10 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" href="/assets/css/style.css"/>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
 <p class="text">index</p>
+index
 </body>
 </html>
