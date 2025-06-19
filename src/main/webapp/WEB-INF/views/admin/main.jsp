@@ -7,7 +7,7 @@
 <body>
 <%request.setAttribute("activePage", "main");%>
 <jsp:include page="sidebar.jsp" ></jsp:include>
-<div class="container">
+<div class="box">
   <img class="symbol" src="/assets/img/symbol.png"/>
   <div class="logo">
     <img class="guardians" src="/assets/img/guardians.png"/>
