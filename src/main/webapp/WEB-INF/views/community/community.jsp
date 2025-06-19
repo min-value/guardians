@@ -9,13 +9,15 @@
 <%
     String content1Value = "title";
     String content1Text = "제목";
-    String content2Value = "content";
-    String content2Text = "내용";
+    String content2Value = "writer";
+    String content2Text = "작성자";
+    String pageTitle = "커뮤니티";
 
     pageContext.setAttribute("content1Value", content1Value);
     pageContext.setAttribute("content1Text", content1Text);
     pageContext.setAttribute("content2Value", content2Value);
     pageContext.setAttribute("content2Text", content2Text);
+    pageContext.setAttribute("pageTitle", pageTitle);
 %>
 <html>
 <head>
@@ -25,29 +27,21 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/community/community.css">
 </head>
 <body>
+    <%@ include file="../include/header.jsp" %>
+    <%@ include file="../include/headerImg.jsp" %>
     <div class="content">
-        <%-- ================ < search bar >================ --%>
-        <form class="search" action="" method="get">
-            <select class="dropdown" name="type">
-                <option value="all" selected>전체</option>
-                <option value="${content1Value}">${content1Text}</option>
-                <option value="${content2Value}">${content2Text}</option>
-            </select>
-            <input class="search-text" type="text" placeholder="검색어를 입력하세요.">
-            <button class="search-btn" type="submit" onclick="alert('클릭!')"></button>
-        </form>
-        <%-- ============================================ --%>
+        <%@ include file="../include/search.jsp" %>
 
         <%-- ================ < inventory >================ --%>
             <div class ="inventory">
-                <div>
-
-                </div>
+                <div class ="inventoryText"></div>
                 <hr/>
             </div>
         <%-- ============================================ --%>
+
+        ${count}
     </div>
 
-    ${count}
+    <%@ include file="../include/footer.jsp" %>
 </body>
 </html>

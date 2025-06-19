@@ -1,0 +1,16 @@
+.backgroundImg{
+    width: 1536px;
+    height: 320px;
+    background: url("../../img/header-title.png") no-repeat center center;
+    background-size: contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.text{
+    color: black;
+    font-family: "Pretendard Variable";
+    font-weight: bold;
+    font-size: 48px;
+    text-align: center;
+}

@@ -1,69 +1,14 @@
-html, body {
-    height: 100%; /* 세로 100% 적용 위해 필요 */
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
 
 .content{
     width: 980px;
     margin: 0 auto;
 }
-
-/*================ search bar ====================*/
-.search {
-    margin-top: 80px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    font-family: "Pretendard Variable";
-    height: 40px;
-}
-
-.dropdown {
-    width: 80px;
-    height: 40px;
-    font-family: "Pretendard Variable";
-
-    padding: 10px 17px 10px 17px;
-    margin-right: 10px;
-
-    border: 1px solid var(--gray-03);
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background: url("../../img/dropdownVector.png") no-repeat right 10px center;
-    font-size: 14px;
-    color: var(--black);
-    cursor: pointer;
-}
-
-.search-text{
-    width: 260px;
-    height: 40px;
-    border: 1px solid var(--gray-03);
-    padding: 10px 13px 10px 13px;
-    font-size: 14px;
-    color: var(--black);
-}
-.search-text::placeholder {
-    color: var(--gray-03);
-    opacity: 1;
-}
-
-.search-btn{
-    width: 40px;
-    height: 40px;
-    background: url("../../img/search_img.png") no-repeat center center;
-    background-size: contain;
-    border: none;
-    cursor: pointer;
-}
-
-.dropdown:focus,
-.search-text,
-.search-btn:focus {
-    outline: none;
-}
-/*================ search bar ====================*/
 
 /*================ inventory ====================*/
 hr {
@@ -72,3 +17,4 @@ hr {
     border: none;
     background-color: var(--gray-03);
 }
+
