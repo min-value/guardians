@@ -6,93 +6,96 @@
     font-display: swap;
 }
 
-/* 전체 헤더 영역 */
+* {
+    box-sizing: border-box;
+}
+
 .header {
+    width: 100%;
     margin: 0;
     padding: 0;
-    width: 100%;
-    background-color: #fff;
     font-family: 'Pretendard', sans-serif;
     font-weight: 400;
+    background-color: #fff;
     z-index: 1000;
     position: relative;
 }
 
 /* 로그인 영역 */
-.header .login {
-    max-width: 1200px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    font-size: 16px;
-    padding: 0 36px;
-    gap: 12px;
-    margin: 0 auto;
-    position: relative;
+.login-wrapper {
+    width: 100%;
+    background-color: #fff;
 }
-
-/* 로그인 링크 스타일 */
-.header .login a {
+.login {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 36px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+}
+.login a {
     text-decoration: none;
     color: #333;
 }
-.header .login a:hover {
+.login a:hover {
     color: #0241A0;
     font-weight: 500;
 }
 .divider {
     color: #000;
     font-size: 16px;
-    font-weight: 400;
     user-select: none;
 }
 
-/* 메뉴 전체 감싸는 영역 */
+/* 메뉴 영역 */
+.menu-wrapper {
+    background-color: #fff;
+}
 .header-inner {
-    max-width: 1200px;
+    max-width: 1160px;
     margin: 0 auto;
+    padding: 16px 0px;
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
     position: relative;
-    padding: 16px 20px;
-    max-height: 100px;
-    border-bottom: 4px solid #BDBDBD;
 }
-
-/* 메뉴 전체 리스트 (6개) */
 .menu-list {
-    display: flex;
-    width: 100%;
     list-style: none;
-    padding: 0;
+    justify-content: center;
+    display: flex;
     margin: 0;
-    z-index: 10;
-    position: relative;
+    padding: 0;
 }
 
-/* 각 메뉴 아이템 */
+.menu-list li:nth-child(3) {
+    margin-right: 200px;
+}
+
 .menu-list li {
-    flex: 1; /* 균등 너비 */
+    list-style: none;
+    flex: none;
     text-align: center;
 }
-
-.menu-list li > a {
-    display: block;
-    font-size: 24px;
+.menu-list li a {
+    display: inline-block;
+    width: 160px;
+    text-align: center;
     text-decoration: none;
+    font-size: 24px;
     color: #000;
-    padding: 10px 5px;
     transition: 0.2s;
-    position: relative;
 }
-.menu-list li > a:hover {
-    font-weight: 600;
+.menu-list li a:hover {
     color: #0241A0;
+    font-weight: 600;
     text-decoration: underline;
     text-decoration-color: #0241A0;
 }
-
+/* 로고 */
 .logo {
     position: absolute;
     left: 50%;
@@ -103,61 +106,75 @@
     width: 200px;
 }
 
-.depth2-wrapper {
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease, opacity 0.4s ease;
+/* 세부 메뉴 (전체 배경) */
+.depth2-background {
     position: absolute;
-    display: flex;
-    flex-direction: row;
-    top: 110%;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-image: url('/assets/img/header-background.png');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    display: none;
+}
+
+.header:hover .depth2-background {
+    display: block;
+}
+
+/* 세부 메뉴 wrapper */
+.depth2-wrapper {
+    max-width: 1160px;
+    min-height: 320px;
+    height: 100%;
+    margin: 0;
+    top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    width: 100%;
-    max-width: 1200px;
-    background-color: #fff;
-    background-image: url('/assets/img/header-background.png');
-    background-position: right top;
-    background-repeat: no-repeat;
-    background-size: cover;
-    z-index: 500;
-    box-sizing: border-box;
-    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    overflow: hidden;
+    opacity: 0;
+    max-height: 0;
+    transition: max-height 0.4s ease, opacity 0.4s ease;
     pointer-events: none;
-    height: auto;
+    position: relative;
+    z-index: 500;
 }
 
-/* 세부 메뉴 6개 */
+/* 열릴 때 효과 */
+.header:hover .depth2-wrapper {
+    max-height: 320px;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.depth2-wrapper .depth2-column:nth-child(4) {
+    margin-left: 200px;
+}
+
 .depth2-column {
     flex: 1;
+    width: 160px;
     text-align: center;
+    flex: none;
 }
-
-/* 세부 메뉴 리스트 공통 */
 .depth2 {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 .depth2 li a {
-    display: block;
+    display: inline-block;
+    width: 160px;
+    text-align: center;
+    text-decoration: none;
     padding: 20px 0;
     color: #000;
-    text-decoration: none;
-    text-align: center;
 }
 .depth2 li a:hover {
     font-weight: 600;
     color: #0241A0;
-}
-
-.between{
-    width: 200px;
-}
-
-.header:hover .depth2-wrapper {
-    max-height: 320px;
-    opacity: 1;
-    pointer-events: auto;
 }
