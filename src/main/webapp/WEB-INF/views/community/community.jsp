@@ -12,8 +12,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/community/community.css">
 </head>
 <body>
-    <div id="gg">
-
-    </div>
+    <div id="gg"></div>
+    ${count}
 </body>
 </html>
