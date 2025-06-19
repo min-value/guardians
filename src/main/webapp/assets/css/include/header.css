@@ -1,0 +1,163 @@
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* 전체 헤더 영역 */
+.header {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #fff;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 400;
+    z-index: 1000;
+    position: relative;
+}
+
+/* 로그인 영역 */
+.header .login {
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 16px;
+    padding: 0 36px;
+    gap: 12px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* 로그인 링크 스타일 */
+.header .login a {
+    text-decoration: none;
+    color: #333;
+}
+.header .login a:hover {
+    color: #0241A0;
+    font-weight: 500;
+}
+.divider {
+    color: #000;
+    font-size: 16px;
+    font-weight: 400;
+    user-select: none;
+}
+
+/* 메뉴 전체 감싸는 영역 */
+.header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 16px 20px;
+    max-height: 100px;
+    border-bottom: 4px solid #BDBDBD;
+}
+
+/* 메뉴 전체 리스트 (6개) */
+.menu-list {
+    display: flex;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    z-index: 10;
+    position: relative;
+}
+
+/* 각 메뉴 아이템 */
+.menu-list li {
+    flex: 1; /* 균등 너비 */
+    text-align: center;
+}
+
+.menu-list li > a {
+    display: block;
+    font-size: 24px;
+    text-decoration: none;
+    color: #000;
+    padding: 10px 5px;
+    transition: 0.2s;
+    position: relative;
+}
+.menu-list li > a:hover {
+    font-weight: 600;
+    color: #0241A0;
+    text-decoration: underline;
+    text-decoration-color: #0241A0;
+}
+
+.logo {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%) translateY(128px);
+    z-index: 1000;
+}
+.logo img {
+    width: 200px;
+}
+
+.depth2-wrapper {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.4s ease;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1200px;
+    background-color: #fff;
+    background-image: url('/assets/img/header-background.png');
+    background-position: right top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 500;
+    box-sizing: border-box;
+    font-size: 18px;
+    pointer-events: none;
+    height: auto;
+}
+
+/* 세부 메뉴 6개 */
+.depth2-column {
+    flex: 1;
+    text-align: center;
+}
+
+/* 세부 메뉴 리스트 공통 */
+.depth2 {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.depth2 li a {
+    display: block;
+    padding: 20px 0;
+    color: #000;
+    text-decoration: none;
+    text-align: center;
+}
+.depth2 li a:hover {
+    font-weight: 600;
+    color: #0241A0;
+}
+
+.between{
+    width: 200px;
+}
+
+.header:hover .depth2-wrapper {
+    max-height: 320px;
+    opacity: 1;
+    pointer-events: auto;
+}
