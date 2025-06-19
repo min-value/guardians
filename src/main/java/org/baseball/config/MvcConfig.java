@@ -63,6 +63,13 @@ public class MvcConfig implements WebMvcConfigurer {
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean ssf = new SqlSessionFactoryBean();
         ssf.setDataSource(datasource());//의존성 주입
+
+        // mapper 경로설정
+        org.springframework.core.io.Resource[] res =
+                new org.springframework.core.io.support.PathMatchingResourcePatternResolver()
+                        .getResources("classpath:mappers/**/*.xml");
+        ssf.setMapperLocations(res);
+        
         return ssf.getObject();
     }
     //DAO에 도입될 객체
@@ -73,6 +80,9 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/assets/**")
+                .addResourceLocations("/assets/");
+
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
 
