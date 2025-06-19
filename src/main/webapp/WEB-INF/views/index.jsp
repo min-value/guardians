@@ -9,8 +9,9 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="/assets/css/style.css"/>
 </head>
 <body>
-index
+<p class="text">index</p>
 </body>
 </html>
