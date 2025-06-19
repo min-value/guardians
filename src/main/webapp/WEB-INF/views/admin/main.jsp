@@ -7,8 +7,12 @@
 <body>
 <%request.setAttribute("activePage", "main");%>
 <jsp:include page="sidebar.jsp" ></jsp:include>
-<div>
-
+<div class="container">
+  <img class="symbol" src="/assets/img/symbol.png"/>
+  <div class="logo">
+    <img class="guardians" src="/assets/img/guardians.png"/>
+    <input class="main" type="button" src="/index.do" value="main">
+  </div>
 </div>
 </body>
 </html>
