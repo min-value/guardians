@@ -1,5 +1,27 @@
-#gg{
-    width:200px;
-    height: 200px;
-    background-color: palevioletred;
+.dropdown{
+    width: 80px;
+    height: 40px;
+}
+
+.search-text{
+    width: 260px;
+    height: 40px;
+}
+.search-btn{
+    width: 40px;
+    height: 40px;
+    background: url("../../img/search_img.png") no-repeat center center;
+    background-size: contain;
+}
+
+.dropdown,
+.search-text,
+.search-btn {
+    vertical-align: middle;
+}
+
+.check{
+    width:100px;
+    height: 100px;
+    background-color: var(--errorColor);
 }
