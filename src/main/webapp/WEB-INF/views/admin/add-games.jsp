@@ -4,8 +4,8 @@
     <title>Title</title>
 </head>
 <body>
-<%request.setAttribute("activePage", "reservation");%>
+<%request.setAttribute("activePage", "addgames");%>
 <jsp:include page="sidebar.jsp" ></jsp:include>
-check-reservation
+addgames
 </body>
 </html>
