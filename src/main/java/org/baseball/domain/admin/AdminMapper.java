@@ -1,11 +1,14 @@
 package org.baseball.domain.admin;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.baseball.dto.ReserveInfoDto;
+import org.baseball.dto.GamesInfoDTO;
+import org.baseball.dto.ReserveInfoDTO;
 
 import java.util.List;
 
 @Mapper
 public interface AdminMapper {
-    List<ReserveInfoDto> showReserveList();
+    List<ReserveInfoDTO> showReserveList();
+    List<GamesInfoDTO> showGamesList();
+    List<GamesInfoDTO> showGamesAddList();
 }

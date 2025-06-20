@@ -1,12 +1,14 @@
 package org.baseball.domain.admin;
 
-import org.baseball.dto.ReserveInfoDto;
+import org.baseball.dto.GamesInfoDTO;
+import org.baseball.dto.ReserveInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -14,12 +16,12 @@ public class AdminService {
     @Autowired
     AdminMapper adminMapper;
 
-    public List<ReserveInfoDto> showReserveList(){
-        List<ReserveInfoDto> list = adminMapper.showReserveList();
+    public List<ReserveInfoDTO> showReserveList(){
+        List<ReserveInfoDTO> list = adminMapper.showReserveList();
         Timestamp now = new Timestamp(System.currentTimeMillis());
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // 초 없이
         int cnt =1;
-        for (ReserveInfoDto l : list) {
+        for (ReserveInfoDTO l : list) {
             l.setNo(cnt++);
             if (l.isCancel()) {
                 l.setStatus("취소완료");
@@ -51,8 +53,53 @@ public class AdminService {
             }
             l.setZoneAndSeat(zoneAndSeat);
         }
-
         return list;
+    }
 
+    public List<GamesInfoDTO> showGamesList(){
+        List<GamesInfoDTO> list = adminMapper.showGamesList();
+        int cnt =1;
+        for (GamesInfoDTO l : list){
+            l.setNo(cnt++);
+            l.setOurTeam("1");
+            l.setStatus(1);
+            if(l.getResult() == null) {
+                l.setResult("예정");
+                l.setStatus(2);
+                l.setOpponentScore("-");
+                l.setOurScore("-");
+            }
+            else {
+                switch (l.getResult()) {
+                    case "WIN":
+                        l.setResult("승리");
+                        break;
+                    case "LOSE":
+                        l.setResult("패배");
+                        break;
+                    case "DRAW":
+                        l.setResult("무승부");
+                        break;
+                    case "CANCEL":
+                        l.setResult("취소");
+                        break;
+                }
+            }
+        }
+        return list;
+    }
+
+    public List<GamesInfoDTO> showGamesAddList(){
+        List<GamesInfoDTO> list = adminMapper.showGamesAddList();
+        int cnt =1;
+        for (GamesInfoDTO l : list){
+            l.setNo(cnt++);
+            l.setOurTeam("1");
+            l.setResult("예정");
+            l.setStatus(2);
+            l.setOpponentScore("-");
+            l.setOurScore("-");
+        }
+        return list;
     }
 }
