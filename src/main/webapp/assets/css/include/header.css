@@ -114,7 +114,7 @@
     transform: translateX(-50%);
     width: 1536px;
     height: 320px;
-    background-image: url('/assets/img/header-background.png');
+    background-image: url('/assets/img/header/header-background.png');
     background-size: auto 320px;
     background-position: right top;
     background-repeat: no-repeat;
