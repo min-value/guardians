@@ -1,0 +1,353 @@
+@import "/assets/css/colors.css";
+body {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    min-height: 100vh;
+}
+
+/*  sidebar  */
+.sidebar {
+    height: 100vh;
+    width: 270px;
+    background: var(--lightBlue);
+    color: var(--black);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.07);
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    padding: 14px 24px;
+    color: var(--black);
+    text-decoration: none;
+    font-size: 16px;
+    transition: background 0.2s;
+    border-radius: 4px;
+    margin: 4px 18px;
+}
+
+.sidebar a img {
+    width: 22px;
+    height: 22px;
+    margin-right: 12px;
+}
+
+.sidebar a:hover {
+    color: var(--mainColor);
+}
+
+.sidebar a:hover img {
+    filter: brightness(0) saturate(100%) invert(17%) sepia(100%) saturate(1220%) hue-rotate(194deg) brightness(91%) contrast(98%);
+}
+
+.sidebar a.active {
+    color: var(--mainColor);
+}
+
+.sidebar a.active img {
+    filter: brightness(0) saturate(100%) invert(17%) sepia(100%) saturate(1220%) hue-rotate(194deg) brightness(91%) contrast(98%);
+}
+
+/* admin commons */
+.box{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 40px 0;
+}
+
+.title {
+    display: flex;
+    justify-items: start;
+    font-size: 1.5rem;
+    margin-left: 3rem;
+    gap: 12px;
+}
+
+.title img {
+    width: 28px;
+    height: 28px;
+}
+
+.title p {
+    margin: 0;
+}
+
+.content{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.filter{
+    width: 90%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0 4rem;
+}
+
+.filter select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    padding: 0.6rem 0.8rem;
+    font-size: 16px;
+    border: 1px solid var(--gray-05);
+    border-radius: 0;
+    background-color: #fff;
+    background-image: url('/assets/img/icon/arrow-down.png');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    cursor: pointer;
+    color: var(--black);
+}
+
+table {
+    margin: 4rem 4rem;
+    width: 90%;
+    border: var(--gray-02) 2px;
+    font-weight: 400;
+}
+
+.filter_table{
+    margin-top: 0.6rem;
+}
+table thead {
+    background: var(--gray-06);
+    padding: 0.4rem 0.1rem;
+}
+
+table tr th {
+    font-weight: 400;
+}
+
+/*   /admin/home/   */
+.admin_main,
+.admin_tickets,
+.admin_games,
+.admin_add_games {
+    margin-bottom: 20px;
+}
+
+.symbol {
+    height: 15rem;
+}
+
+.logo{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 10rem;
+}
+
+.guardians {
+    width: 30rem;
+}
+
+.main {
+    width: 95%;
+    box-sizing: border-box;
+    background: var(--mainColor);
+    border-radius: 10px;
+    border: 1px solid var(--mainColor);
+    font-size: 2.2rem;
+    color: var(--white);
+    text-align: center;
+    padding: 0.4rem;
+    margin: 0.8rem;
+}
+
+/*   /admin/reservation/   */
+
+table {
+    border: 1px solid var(--gray-02);
+    border-collapse: collapse;
+    width: 90%;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    font-size: 1rem;
+}
+
+thead th {
+    border-bottom: 1px solid var(--gray-02);
+    background: var(--gray-06);
+    color: var(--black);
+    padding: 14px 8px;
+    text-align: center;
+}
+
+tbody td {
+    padding: 12px 8px;
+    text-align: center;
+    color: var(--gray-02);
+}
+
+tbody td input {
+    padding: 12px 8px;
+    text-align: center;
+    color: var(--gray-02);
+}
+
+
+@media (max-width: 900px) {
+    table, thead, tbody, th, td, tr {
+        font-size: 0.9rem;
+    }
+    .container {
+        padding: 10px 0;
+    }
+}
+
+.teamlogo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    vertical-align: middle;
+}
+/* modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-body {
+    background-color: #fff;
+    padding: 2rem;
+    width: 50%;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-body > button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+}
+.modal-body h3 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 1.2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--gray-04);
+}
+
+.modal-body button img:hover {
+    filter: brightness(0) saturate(100%) invert(17%) sepia(100%) saturate(1220%) hue-rotate(194deg) brightness(91%) contrast(98%);
+}
+
+.modal-body form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+}
+
+.form-row label {
+    text-align: left;
+    margin: 1rem;
+    width: 20%;
+}
+
+.form-row input {
+    flex: 1;
+}
+
+.modal-body input[type="text"],
+.modal-body input[type="datetime-local"] {
+    width: 80%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--gray-03);
+    border-radius: 4px;
+    font-size: 1rem;
+    color: var(--black);
+    background-color: var(--white);
+}
+
+.modal-body input[type="text"] {
+    color: var(--gray-03);
+}
+
+.btn_container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 1.3rem;
+    margin-top: 1rem;
+}
+
+.close_btn {
+    background-color: var(--white);
+    color: var(--mainColor);
+    border: 1px solid var(--mainColor);
+    padding: 0.8rem 3rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.save_btn {
+    background-color: var(--mainColor);
+    color: var(--white);
+    border: none;
+    padding: 0.8rem 3rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.close_btn:hover {
+    background-color: var(--lightBlue);
+    color: var(--mainColor)
+}
+
+.save_btn:hover {
+    background-color: var(--subColor);
+    color: var(--white)
+}
