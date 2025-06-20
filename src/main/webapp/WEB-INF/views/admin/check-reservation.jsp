@@ -10,9 +10,15 @@
 <%request.setAttribute("activePage", "reservation");%>
 <jsp:include page="sidebar.jsp" ></jsp:include>
 <div class="container">
-    <div class="title">
-        <img src="/assets/img/icon/list.png" alt="icon"/>
-        <p>예매 목록 조회</p>
+    <div class="title_container">
+        <div class="title">
+            <img src="/assets/img/icon/list.png" alt="icon"/>
+            <p>예매 목록 조회</p>
+        </div>
+        <div class="logout">
+            <a>로그아웃</a>
+            <img src="/assets/img/icon/logout.png" alt="icon"/>
+        </div>
     </div>
     <div class="content">
         <table>

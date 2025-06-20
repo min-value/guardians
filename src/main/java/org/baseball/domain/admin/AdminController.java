@@ -3,15 +3,15 @@ package org.baseball.domain.admin;
 import lombok.extern.slf4j.Slf4j;
 import org.baseball.dto.AddGameInfoDTO;
 import org.baseball.dto.GamesInfoDTO;
+import org.baseball.dto.HomeGameDTO;
 import org.baseball.dto.ReserveInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Slf4j
@@ -56,8 +56,8 @@ public class AdminController {
     }
 
     @PostMapping("/admin/tickets/addgame")
-    public String addGame(Model model){
-        return "admin/add-games";
+    @ResponseBody
+    public boolean addGame(@RequestBody HomeGameDTO homeGameDTO) {
+        return adminService.addHomeGame(homeGameDTO);
     }
-
 }
