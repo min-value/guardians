@@ -1,0 +1,16 @@
+* {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.topbar-container {
+    width: 800px;
+    height: 43px;
+}
+
+#topbar {
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+}

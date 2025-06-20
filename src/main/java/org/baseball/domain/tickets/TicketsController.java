@@ -11,4 +11,14 @@ public class TicketsController {
     public String test() {
         return "tickets/stadium";
     }
+
+    @GetMapping("/test2")
+    public String test2() {
+        return "tickets/seats";
+    }
+
+    @GetMapping("/test3")
+    public String test3() {
+        return "tickets/tickets1";
+    }
 }

@@ -1,0 +1,12 @@
+* {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.full-container {
+    width: 800px;
+    height: 700px;
+    display: flex;
+}
+

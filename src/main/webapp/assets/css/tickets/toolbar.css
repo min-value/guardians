@@ -1,0 +1,31 @@
+* {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+/* tool bar */
+.btn-container {
+    top: 20px;
+    right: 20px;
+    position: absolute;
+    z-index: 2;
+}
+
+.btn-wrapper {
+    width: 50px;
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+}
+
+#gobackBtn {
+    margin-bottom: 13px;
+}
+
+#enlargementBtn {
+    margin-bottom: 4px;
+}
+
+#reductionBtn {
+    margin-bottom: 13px;
+}
