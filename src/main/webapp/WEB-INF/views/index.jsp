@@ -11,6 +11,8 @@
     <title>Title</title>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/include/header.jsp" %>
+<p class="text">index</p>
 index
 </body>
 </html>
