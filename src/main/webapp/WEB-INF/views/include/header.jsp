@@ -31,7 +31,7 @@
         </ul>
 
         <div class="logo">
-            <a href="/index.do"><img src="assets/img/header-logo.png" alt="로고"></a>
+            <a href="/index.do"><img src="/assets/img/header-logo.png" alt="로고"></a>
         </div>
     </div>
 

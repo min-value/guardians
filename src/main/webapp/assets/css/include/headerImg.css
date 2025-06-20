@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
+    font-style: normal;
+    font-display: swap;
+}
+
 .backgroundImg{
     width: 1536px;
     height: 320px;
@@ -9,8 +16,8 @@
 }
 .text{
     color: black;
-    font-family: "Pretendard Variable";
-    font-weight: bold;
+    font-weight: 600;
     font-size: 48px;
     text-align: center;
 }
+

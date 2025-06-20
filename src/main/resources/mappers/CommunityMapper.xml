@@ -2,7 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.baseball.domain.community.CommunityMapper">
-    <select id="count" parameterType="org.baseball.domain.community.CommunityMapper" resultType="int">
+
+
+    <select id="count" parameterType="org.baseball.dto.PostDto" resultType="int">
         SELECT COUNT(*) FROM post
     </select>
+
+    <select id="getPostList" resultType="org.baseball.dto.PostDto" parameterType="map">
+        SELECT
+            p.post_pk,
+            p.title,
+            p.p_content,
+            p.p_date,
+            u.user_name
+        FROM post p
+        JOIN user u ON p.user_pk = u.user_pk
+        <where>
+            <if test="type != null and type != '' and keyword != null and keyword != ''">
+                <choose>
+                    <when test="type == 'title'">
+                        AND p.title LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                    <when test="type == 'writer'">
+                        AND u.user_name LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                    <otherwise>
+                        AND (p.title LIKE CONCAT('%', #{keyword}, '%')
+                        OR u.user_name LIKE CONCAT('%', #{keyword}, '%'))
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+        ORDER BY p.p_date DESC
+    </select>
+
 </mapper>

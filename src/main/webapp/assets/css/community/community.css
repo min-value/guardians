@@ -1,7 +1,16 @@
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
+    font-style: normal;
+    font-display: swap;
+}
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+html, body {
+    overflow-x: hidden;
 }
 
 
@@ -11,6 +20,82 @@
 }
 
 /*================ inventory ====================*/
+.inventoryText{
+    color: black;
+    font-weight: 400;
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+
+.inventoryList {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-weight: 400;
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+.inventoryList .all {
+    flex: 1;
+    text-align: left;
+    color: black;
+}
+.inventoryList .my {
+    flex: 1;
+    text-align: left;
+    color: var(--gray-03);
+}
+.inventoryList .else {
+    flex: 7;
+    text-align: left;
+    color: var(--white);
+}
+.clickable {
+    cursor: pointer;
+}
+/*-------------------------------------------*/
+
+.backgroundWrapper{
+    display: flex;
+    justify-content: center;
+}
+
+.postHeader {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 52px;
+    background-color: var(--gray-06);
+    border-bottom: 1px solid var(--gray-01);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--gray-01);
+}
+.postHeader .title {
+    flex: 3;
+    text-align: left;
+}
+.postHeader .writer {
+    flex: 1;
+    text-align: left;
+}
+.postHeader .date {
+    flex: 1;
+    text-align: left;
+}
+
+.postList{
+    width: 980px;
+    display: table;
+}
+.myList{
+    width: 980px;
+    display: none;
+}
+
+
+
 hr {
     width : 980px;
     height : 2px;
@@ -18,3 +103,31 @@ hr {
     background-color: var(--gray-03);
 }
 
+
+/*---------*/
+.footer{
+    height: 200px;
+}
+.btnLocation{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-family: "Pretendard Variable";
+    height: 40px;
+    margin-top: 31px;
+}
+
+.writeBtn{
+    width: 180px;
+    height: 50px;
+    background: url("../../img/button-short.png") no-repeat center center;
+    background-size: contain;
+    border: none;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 16px;
+    color: white;
+    display: flex;
+    justify-content: center; /* 가로 가운데 */
+    align-items: center;     /* 세로 가운데 */
+}

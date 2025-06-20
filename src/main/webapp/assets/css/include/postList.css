@@ -1,0 +1,23 @@
+.post {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 52px;
+    background-color: var(--white);
+    border-bottom: 1px solid var(--gray-01);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-01);
+}
+.post .title {
+    flex: 3;
+    text-align: left;
+}
+.post .writer {
+    flex: 1;
+    text-align: left;
+}
+.post .date {
+    flex: 1;
+    text-align: left;
+}
