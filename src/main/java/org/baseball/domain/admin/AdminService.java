@@ -1,5 +1,6 @@
 package org.baseball.domain.admin;
 
+import org.baseball.dto.AddGameInfoDTO;
 import org.baseball.dto.GamesInfoDTO;
 import org.baseball.dto.ReserveInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,4 +103,9 @@ public class AdminService {
         }
         return list;
     }
+
+    public AddGameInfoDTO showAddGameInfo(int gameNo) {
+        return adminMapper.showAddGameInfo(gameNo);
+    }
+
 }

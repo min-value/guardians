@@ -1,6 +1,7 @@
 package org.baseball.domain.admin;
 
 import lombok.extern.slf4j.Slf4j;
+import org.baseball.dto.AddGameInfoDTO;
 import org.baseball.dto.GamesInfoDTO;
 import org.baseball.dto.ReserveInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -44,6 +46,13 @@ public class AdminController {
         model.addAttribute("list", list);
         log.info("####" + list.toString());
         return "admin/add-games";
+    }
+
+    @GetMapping("/admin/tickets/gameinfo")
+    @ResponseBody
+    public AddGameInfoDTO showAddGameInfo(@RequestParam("gameNo") int gameNo) {
+        System.out.println("### dto: " + adminService.showAddGameInfo(gameNo));
+        return adminService.showAddGameInfo(gameNo);
     }
 
     @PostMapping("/admin/tickets/addgame")

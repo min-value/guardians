@@ -202,6 +202,12 @@ tbody td {
     color: var(--gray-02);
 }
 
+tbody td input {
+    padding: 12px 8px;
+    text-align: center;
+    color: var(--gray-02);
+}
+
 
 @media (max-width: 900px) {
     table, thead, tbody, th, td, tr {
@@ -217,4 +223,131 @@ tbody td {
     width: auto;
     object-fit: contain;
     vertical-align: middle;
+}
+/* modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-body {
+    background-color: #fff;
+    padding: 2rem;
+    width: 50%;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-body > button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+}
+.modal-body h3 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 1.2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--gray-04);
+}
+
+.modal-body button img:hover {
+    filter: brightness(0) saturate(100%) invert(17%) sepia(100%) saturate(1220%) hue-rotate(194deg) brightness(91%) contrast(98%);
+}
+
+.modal-body form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+}
+
+.form-row label {
+    text-align: left;
+    margin: 1rem;
+    width: 20%;
+}
+
+.form-row input {
+    flex: 1;
+}
+
+.modal-body input[type="text"],
+.modal-body input[type="datetime-local"] {
+    width: 80%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--gray-03);
+    border-radius: 4px;
+    font-size: 1rem;
+    color: var(--black);
+    background-color: var(--white);
+}
+
+.modal-body input[type="text"] {
+    color: var(--gray-03);
+}
+
+.btn_container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 1.3rem;
+    margin-top: 1rem;
+}
+
+.close_btn {
+    background-color: var(--white);
+    color: var(--mainColor);
+    border: 1px solid var(--mainColor);
+    padding: 0.8rem 3rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.save_btn {
+    background-color: var(--mainColor);
+    color: var(--white);
+    border: none;
+    padding: 0.8rem 3rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.close_btn:hover {
+    background-color: var(--lightBlue);
+    color: var(--mainColor)
+}
+
+.save_btn:hover {
+    background-color: var(--subColor);
+    color: var(--white)
 }

@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-    <input type="button" value=""
+    <input type="button" value="">
 </body>
 </html>
