@@ -110,11 +110,13 @@
 .depth2-background {
     position: absolute;
     top: 100%;
-    left: 0;
-    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1536px;
+    height: 320px;
     background-image: url('/assets/img/header-background.png');
-    background-size: cover;
-    background-position: center top;
+    background-size: auto 320px;
+    background-position: right top;
     background-repeat: no-repeat;
     display: none;
 }
@@ -129,7 +131,6 @@
     min-height: 320px;
     height: 100%;
     margin: 0;
-    top: 100%;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
