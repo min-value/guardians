@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.baseball.domain.admin.AdminMapper">
+    <select id="showReserveList" resultType="org.baseball.dto.ReserveInfoDTO">
+        SELECT
+            u.user_name AS name,
+            l.reservelist_pk AS reserveNo,
+            COUNT(r.reserve_pk) AS seatCount,
+            GROUP_CONCAT(r.zone_pk) AS zone,
+            GROUP_CONCAT(r.seat_num) AS seat,
+            l.is_cancel AS isCancel,
+            l.is_pay AS isPay,
+            DATE(g.game_date) AS gameDate,
+            DATE(l.cancel_date) AS cancelDate
+        FROM reservation_list l
+                 JOIN user u ON l.user_pk = u.user_pk
+                 LEFT JOIN reservations r ON l.reservelist_pk = r.reservelist_pk
+                 JOIN games g ON g.game_pk = l.game_pk
+        GROUP BY l.reservelist_pk, u.user_name, l.is_cancel, g.game_date, l.cancel_date
+        ORDER BY l.reservelist_pk
+    </select>
+    <select id="showGamesList" resultType="org.baseball.dto.GamesInfoDTO">
+        SELECT game_pk as gameNo, team_pk as opponentTeam, our_score as ourScore, opp_score as opponentScore, result, DATE_FORMAT(game_date, '%Y-%m-%d %H:%i') as gameDate
+        FROM games
+        WHERE stadium_pk = 1
+        ORDER BY game_date DESC
+    </select>
+    <select id="showGamesAddList" resultType="org.baseball.dto.GamesInfoDTO">
+        SELECT game_pk as gameNo, team_pk as opponentTeam, our_score as ourScore, opp_score as opponentScore, result, DATE_FORMAT(game_date, '%Y-%m-%d %H:%i') as gameDate
+        FROM games
+        WHERE stadium_pk = 1 AND game_pk NOT IN (SELECT game_pk FROM homegame)
+        ORDER BY game_date DESC
+    </select>
+    <select id="showAddGameInfo" parameterType="int" resultType="org.baseball.dto.AddGameInfoDTO">
+        SELECT g.game_pk as gameNo, t.team_name as opponentTeamName, DATE_FORMAT(g.game_date, '%Y-%m-%d %H:%i') as gameDate, s.location as stadium
+        FROM games g
+         JOIN team t ON t.team_pk = g.team_pk
+         JOIN stadium s ON s.stadium_pk = g.stadium_pk
+        WHERE g.game_pk =  #{gameNo}
+    </select>
+<!--    <insert id="addGame" parameterMap="org">-->
+<!--        INSERT homegame(game_pk, start_date, end_date) value (${}, ${}, ${});-->
+<!--    </insert>-->
+</mapper>
