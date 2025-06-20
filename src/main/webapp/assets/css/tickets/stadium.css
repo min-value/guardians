@@ -1,0 +1,32 @@
+* {
+    display:block;
+}
+
+.stadium-container {
+    width: 833px;
+    height: 512px;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+}
+
+.stadium-wrapper {
+    width: 700px;
+    height: 469px;
+    display: flex;
+    overflow: auto;
+    justify-content: center;
+    background-color: #E1E1E1;
+    position: absolute;
+    z-index: 1;
+}
+
+#svgMap {
+    width: 463px;
+    background-color: white;
+}
+
+.btn-container {
+    position: absolute;
+    z-index: 2;
+}
