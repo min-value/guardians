@@ -30,7 +30,7 @@
             </ul>
 
             <div class="logo">
-                <a href="/index.do">
+                <a href="/home">
                     <img src="/assets/img/header/header-logo.png" alt="로고">
                 </a>
             </div>
