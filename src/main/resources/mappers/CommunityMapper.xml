@@ -3,37 +3,65 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.baseball.domain.community.CommunityMapper">
 
-
-    <select id="count" parameterType="org.baseball.dto.PostDto" resultType="int">
-        SELECT COUNT(*) FROM post
-    </select>
-
-    <select id="getPostList" resultType="org.baseball.dto.PostDto" parameterType="map">
-        SELECT
-            p.post_pk,
-            p.title,
-            p.p_content,
-            p.p_date,
-            u.user_name
+    <select id="getPostPageWithSearch" resultType="org.baseball.dto.PostDto" parameterType="map">
+        SELECT p.post_pk, p.title, p.p_content, p.p_date, u.user_name
         FROM post p
         JOIN user u ON p.user_pk = u.user_pk
         <where>
-            <if test="type != null and type != '' and keyword != null and keyword != ''">
+            <if test="type != numm and type != '' and keyword != null and keyword != ''">
                 <choose>
                     <when test="type == 'title'">
-                        AND p.title LIKE CONCAT('%', #{keyword}, '%')
+                        p.title LIKE CONCAT('%',#{keyword},'%')
                     </when>
                     <when test="type == 'writer'">
-                        AND u.user_name LIKE CONCAT('%', #{keyword}, '%')
+                        u.user_name LIKE CONCAT('%',#{keyword},'%')
                     </when>
                     <otherwise>
-                        AND (p.title LIKE CONCAT('%', #{keyword}, '%')
+                        (p.title LIKE CONCAT('%', #{keyword}, '%')
                         OR u.user_name LIKE CONCAT('%', #{keyword}, '%'))
                     </otherwise>
                 </choose>
             </if>
         </where>
         ORDER BY p.p_date DESC
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <select id="countFiltered" resultType="int" parameterType="map">
+        SELECT COUNT(*)
+        FROM post p
+        JOIN user u ON p.user_pk = u.user_pk
+        <where>
+            <if test="type != null and type != '' and keyword != null and keyword != ''">
+                <choose>
+                    <when test="type == 'title'">
+                        p.title LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                    <when test="type == 'writer'">
+                        u.user_name LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                    <otherwise>
+                        (p.title LIKE CONCAT('%', #{keyword}, '%')
+                        OR u.user_name LIKE CONCAT('%', #{keyword}, '%'))
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectPostById" resultType="org.baseball.dto.PostDto" parameterType="int">
+        SELECT p.post_pk, p.title, p.p_content, p.p_date, u.user_name
+        FROM post p
+        JOIN user u ON p.user_pk = u.user_pk
+        WHERE p.post_pk = #{postPk}
+    </select>
+
+    <select id="selectCommentById" resultType="org.baseball.dto.CommentDTO" parameterType="int">
+        SELECT c.comment_pk, c.c_content, c.c_date, u.user_name
+        FROM comment c
+        JOIN user u ON c.user_pk = u.user_pk
+        WHERE c.post_pk = #{postPk}
+        ORDER BY c.c_date ASC
     </select>
 
 </mapper>

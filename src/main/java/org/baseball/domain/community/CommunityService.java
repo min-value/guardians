@@ -1,5 +1,6 @@
 package org.baseball.domain.community;
 
+import org.baseball.dto.CommentDTO;
 import org.baseball.dto.PostDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,14 +15,31 @@ public class CommunityService {
     @Autowired
     private CommunityMapper mapper;
 
-    public Map<String, Object> getPostList(String type, String keyword){
+    public Map<String, Object> getPostpageWithSearch(int page, String type, String keyword){
+        int size = 10;
+        int offset = (page - 1) * size;
+
         Map<String, Object> param = new HashMap<>();
+        param.put("offset", offset);
+        param.put("size", size);
         param.put("type", type);
         param.put("keyword", keyword);
 
-        List<PostDto> list = mapper.getPostList(param);
-        Map<String, Object> map = new HashMap<>();
-        map.put("list", list);
-        return map;
+        List<PostDto> list = mapper.getPostPageWithSearch(param);
+        int count = mapper.countFiltered(param);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("list", list);
+        result.put("totalCount", count);
+
+        return result;
+    }
+
+    public PostDto getPostById(int postPk){
+        return mapper.selectPostById(postPk);
+    }
+
+    public List<CommentDTO> getCommentById(int postPk){
+        return mapper.selectCommentById(postPk);
     }
 }

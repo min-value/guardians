@@ -8,7 +8,7 @@
 .backgroundImg{
     width: 1536px;
     height: 320px;
-    background: url("../../img/header-title.png") no-repeat center center;
+    background: url("../../img/header/header-title.png") no-repeat center center;
     background-size: contain;
     display: flex;
     justify-content: center;
