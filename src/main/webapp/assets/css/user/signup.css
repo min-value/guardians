@@ -1,0 +1,105 @@
+@import url('/assets/css/colors.css');
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+.signup-form {
+    width: 378px;
+    margin: 80px auto;
+    font-family: 'Pretendard', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signup-input {
+    border: none;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.error-msg {
+    font-size: 16px;
+    color: var(--errorColor);
+    margin-left: 8px;
+    font-weight: 400;
+    gap: 8px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.error-msg img {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.input-form label {
+    font-size: 18px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--mainColor);
+    display: inline-flex;
+    align-items: center;
+}
+
+.input-form input[type="text"],
+.input-form input[type="password"],
+.input-form input[type="email"],
+.input-form input[type="tel"]
+{
+    width: 378px;
+    height: 50px;
+    padding: 14px 20px;
+    background-color: var(--gray-06);
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin-bottom: 24px;
+}
+
+.input-form input[type="text"]::placeholder,
+.input-form input[type="password"]::placeholder,
+.input-form input[type="email"]::placeholder,
+.input-form input[type="tel"]::placeholder{
+    color: var(--gray-04);
+}
+
+.input-form input[type="text"]:focus,
+.input-form input[type="password"]:focus,
+.input-form input[type="email"]:focus,
+.input-form input[type="tel"]:focus{
+    border-color: var(--mainColor);
+    outline: none;
+}
+
+.input-form .signup-btn [type="submit"] {
+    width: 378px;
+    height: 50px;
+    margin-top: 40px;
+    background-color: var(--mainColor);
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.input-form .signup-btn [type="submit"]:hover {
+    background-color: var(--mainHover);
+}
+
+.input-form .signup-btn input[type="submit"]:disabled {
+    background-color: var(--gray-04);
+    color: var(--white);
+    cursor: not-allowed;
+}
