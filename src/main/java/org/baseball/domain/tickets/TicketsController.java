@@ -21,4 +21,14 @@ public class TicketsController {
     public String test3() {
         return "tickets/tickets1";
     }
+
+    @GetMapping("/test4")
+    public String test4() {
+        return "tickets/tickets2";
+    }
+
+    @GetMapping("/test5")
+    public String test5() {
+        return "tickets/tickets3";
+    }
 }

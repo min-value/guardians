@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
+    font-style: normal;
+    font-display: swap;
+}
+
 * {
     display: block;
     margin: 0;
@@ -6,11 +13,32 @@
 
 .topbar-container {
     width: 800px;
-    height: 43px;
+    height: 120px;
 }
 
-#topbar {
-    height: 100%;
-    width: auto;
+#topbar1 {
+    height: 77px;
+    width: 800px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#tkLogo {
+    height: 50px;
+    margin-right: 5px;
+    margin-left: 20px;
+}
+
+#tkText {
+    margin-left: 5px;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+#topbar2 {
+    height: 43px;
+    width: 800px;
     object-fit: cover;
 }

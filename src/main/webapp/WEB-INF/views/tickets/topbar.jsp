@@ -4,5 +4,9 @@
 %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/tickets/topbar.css">
 <div class="topbar-container">
-    <img id="topbar" src="${pageContext.request.contextPath}/assets/img/tickets/topbar<%=type%>.png" alt="상단 바">
+    <div id="topbar1">
+        <img id="tkLogo" src="${pageContext.request.contextPath}/assets/img/teamlogos/1.png" alt="팀 로고">
+        <div id="tkText">신한 가디언즈 티켓 예매</div>
+    </div>
+    <img id="topbar2" src="${pageContext.request.contextPath}/assets/img/tickets/topbar<%=type%>.svg" alt="상단 바">
 </div>

@@ -5,19 +5,19 @@
 }
 
 .stadium-container {
-    width: 833px;
-    height: 512px;
+    width: 482px;
+    height: 424px;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: var(--white);
 }
 
 .ballpark-container {
     position: absolute;
-    height: 512px;
-    aspect-ratio: 1.2 / 1;
+    height: 424px;
+    width: 482px;
     display: flex;
     overflow: hidden;
     justify-content: center;
@@ -35,6 +35,6 @@
 }
 
 #svgMap {
-    height: 512px;
-    background-color: white;
+    height: 424px;
+    background-color: var(--white);
 }

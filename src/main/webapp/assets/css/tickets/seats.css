@@ -5,26 +5,26 @@
 }
 
 .seats-container {
-    width: 833px;
-    height: 512px;
+    width: 482px;
+    height: 424px;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #F5F5F5; /* todo: white로 변경 */
+    background-color: var(--white);
 }
 
 .map-container {
     position: absolute;
-    width: 644px;
-    height: 512px;
+    width: 482px;
+    height: 424px;
     display: flex;
     overflow: hidden;
     justify-content: center;
     align-items: center;
     z-index: 1;
     margin: auto auto;
-    background-color: white;
+    background-color: var(--white);
 }
 
 .map-wrapper {
@@ -34,39 +34,13 @@
     overflow: auto;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: var(--white);
 }
 
 #svgMap {
     width: 100%;
     height: 60%;
-    background-color: white;
-}
-
-/* tool bar */
-.btn-container {
-    top: 20px;
-    right: 20px;
-    position: absolute;
-    z-index: 2;
-}
-
-.btn-wrapper {
-    width: 50px;
-    aspect-ratio: 1 / 1;
-    cursor: pointer;
-}
-
-#gobackBtn {
-    margin-bottom: 13px;
-}
-
-#enlargementBtn {
-    margin-bottom: 4px;
-}
-
-#reductionBtn {
-    margin-bottom: 13px;
+    background-color: var(--white);
 }
 
 /* direction */

@@ -1,3 +1,5 @@
+@import "/assets/css/colors.css";
+
 * {
     display: block;
     margin: 0;
@@ -8,5 +10,77 @@
     width: 800px;
     height: 700px;
     display: flex;
+    flex-direction: column;
+}
+.mainback-container {
+    width: 800px;
+    height: 580px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+.main-container {
+    width: 757px;
+    height: 549px;
+    background-color: var(--gray-06);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+.left-container {
+    height: 549px;
+    width: 537px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.left-wrapper {
+    height: 534px;
+    width: 522px;
+    display: flex;
+    flex-direction: column;
+}
+
+.right-container {
+    height: 549px;
+    width: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.right-wrapper {
+    height: 439px;
+    width: 185px;
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+.top-container {
+    height: 210px;
+    width: 185px;
+}
+
+.bottom-container {
+    height: 249px;
+    width: 185px;
+}
+
+.ticket-btn-container {
+    height: 60px;
+    width: 185px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+
+.ticket-btn-container > img {
+    width: 100%;
+}
