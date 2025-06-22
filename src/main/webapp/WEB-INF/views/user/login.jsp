@@ -12,7 +12,7 @@
         <img src="/assets/img/header/header-title.png" alt="헤더 타이틀" style="max-width: 100%; height: 320px; display: flex; justify-content: center;">
     </div>
     <div class="login-form">
-        <form action="login.do" method="post" id="board1" onsubmit="return loginCheck();">
+        <form action="login" method="post" id="board1" onsubmit="return loginCheck();">
             <div class="input-form">
                 <div class="login-input">
                     <label for="id">아이디</label>
