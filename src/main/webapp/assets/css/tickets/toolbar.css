@@ -1,0 +1,47 @@
+* {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+/* tool bar */
+.btn-container {
+    top: 10px;
+    right: 10px;
+    position: absolute;
+    z-index: 2;
+}
+
+.btn-wrapper {
+    width: 40px;
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+}
+
+#gobackBtn {
+    margin-bottom: 8px;
+}
+
+#gobackBtn > img {
+    width: 100%;
+}
+
+#enlargementBtn {
+    margin-bottom: 2px;
+}
+
+#enlargementBtn > img{
+    width: 100%;
+}
+
+#reductionBtn {
+    margin-bottom: 8px;
+}
+
+#reductionBtn > img {
+    width: 100%;
+}
+
+#reloadBtn > img {
+    width: 100%;
+}
