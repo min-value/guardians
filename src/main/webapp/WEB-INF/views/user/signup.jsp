@@ -11,17 +11,17 @@
         <img src="/assets/img/header/header-title.png" alt="헤더 타이틀" style="max-width: 100%; height: 320px; display: flex; justify-content: center;">
     </div>
     <div class="signup-form">
-        <form action="signup.do" method="post" id="board1" onsubmit="return signupCheck();">
+        <form action="signup" method="post" id="board1" onsubmit="return signupCheck();">
             <div class="input-form">
                 <div class="signup-input">
                     <label for="id">아이디</label>
-                    <input type="text" id="id" name="id" placeholder="아이디를 입력하세요">
+                    <input type="text" id="id" name="userId" placeholder="아이디를 입력하세요">
                 </div>
                 <div class="signup-input">
                     <label for="pwd">비밀번호
                         <span class="error-msg" id="pwd-error"></span>
                     </label>
-                    <input type="password" id="pwd" name="pwd" placeholder="대문자, 특수문자를 포함하여 6~10자리를 입력하세요">
+                    <input type="password" id="pwd" name="userPwd" placeholder="대문자, 특수문자를 포함하여 6~10자리를 입력하세요">
                 </div>
                 <div class="signup-input">
                     <label for="confirmPwd">비밀번호 확인
@@ -39,7 +39,7 @@
                 </div>
                 <div class="signup-input">
                     <label for="phoneNumber">전화번호</label>
-                    <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="전화번호를 입력하세요">
+                    <input type="tel" id="phoneNumber" name="tel" placeholder="전화번호를 입력하세요">
                 </div>
                 <div class="signup-btn"><input type="submit" value="완료" alt="완료" disabled></div>
             </div>
