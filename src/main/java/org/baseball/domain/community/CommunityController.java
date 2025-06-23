@@ -49,6 +49,12 @@ public class CommunityController {
         return "community/postDetail";
     }
 
+    @PostMapping("/post/delete")
+    public String deletePost(@RequestParam int post_pk){
+        communityService.deletePost(post_pk);
+        return "redirect:/community/post";
+    }
+
     @GetMapping("/comment")
     @ResponseBody
     public Map<String, Object> getComments(

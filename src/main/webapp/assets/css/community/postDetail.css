@@ -58,7 +58,7 @@ html, body {
     font-size: 20px;
     font-weight: 400;
     border-bottom: 2px solid var(--gray-02);
-    height: 300px;
+    min-height: 300px;
 }
 .edit{
     flex: 0.1;
@@ -67,6 +67,31 @@ html, body {
     background: url("../../img/icon/edit-vertical.png") no-repeat center center;
     background-size: contain;
 }
+
+#edit-dropdown-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.edit-dropdown {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 80px;
+}
+
+.edit-dropdown div {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.edit-dropdown div:hover {
+    background-color: #f0f0f0;
+}
+/*=====================================*/
 
 .footer{
     height:200px;
