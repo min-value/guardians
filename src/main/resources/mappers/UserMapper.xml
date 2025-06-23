@@ -17,4 +17,14 @@
          #{tel}
         )
     </insert>
+
+    <select id="login" parameterType="string" resultType="org.baseball.dto.UserDTO">
+        SELECT user_id AS userId,
+               user_pwd AS userPwd,
+               user_name AS userName,
+               email,
+               tel
+        FROM user
+        WHERE user_id = #{userId}
+    </select>
 </mapper>

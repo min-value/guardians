@@ -35,4 +35,26 @@ public class UserServiceImpl implements UserService {
         if (!password.matches(".*[!@#$%^&*()].*")) return false;
         return true;
     }
+
+    @Override
+    public UserDTO login(String userId, String userPwd) {
+        UserDTO user = userMapper.login(userId);
+
+        System.out.println("userMapper.login() 결과: " + user);
+
+        if (user == null) {
+            System.out.println("로그인 실패: 사용자 없음");
+            return null;
+        }
+
+        System.out.println("DB에서 조회된 비밀번호: " + user.getUserPwd());
+
+        if (user.getUserPwd().equals(userPwd)) {
+            System.out.println("비밀번호 일치, 로그인 성공");
+            return user;
+        } else {
+            System.out.println("로그인 실패: 비밀번호 불일치");
+            return null;
+        }
+    }
 }

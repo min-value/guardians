@@ -1,5 +1,6 @@
 package org.baseball.domain.user;
 
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.baseball.dto.UserDTO;
@@ -22,6 +23,33 @@ public class UserController {
     @RequestMapping("/login")
     public String showLoginPage() {
         return "user/login";
+    }
+
+    // 로그인 처리
+    @PostMapping("/login")
+    public String login(@RequestParam String userId,
+                        @RequestParam String userPwd,
+                        HttpSession session,
+                        Model model) {
+        System.out.println("로그인 시도: " + userId);
+        UserDTO loginUser = userService.login(userId, userPwd);
+
+        if (loginUser != null) {
+            System.out.println("로그인 성공: " + loginUser.getUserName());
+            session.setAttribute("loginUser", loginUser);
+            return "redirect:/mypage";
+        } else {
+            System.out.println("로그인 실패");
+            model.addAttribute("errorMessage", "아이디 또는 비밀번호가 틀렸습니다.");
+            return "user/login";
+        }
+    }
+
+    // 로그아웃 처리
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // 로그인 정보 삭제
+        return "redirect:/home";
     }
 
     // 회원가입 페이지
@@ -52,5 +80,35 @@ public class UserController {
     @RequestMapping("/mypage")
     public String showMypage() {
         return "user/mypage";
+    }
+
+    // 탭별 내용 반환 (Ajax 호출용)
+    @GetMapping("/mypage/info")
+    public String getInfoTab(HttpSession session, Model model) {
+        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+        if (loginUser == null) {
+            return "user/mypage/empty";  // 로그인 안된 경우 빈 페이지 or 로그인 유도
+        }
+        // DB에서 최신 회원정보 가져와서 전달 (예시는 session 데이터 사용)
+        model.addAttribute("user", loginUser);
+        return "user/mypage/info";  // 내 정보 탭 JSP
+    }
+
+    @GetMapping("/mypage/tickets")
+    public String getTicketsTab(HttpSession session, Model model) {
+        // 예매내역 조회 로직 추가 필요
+        return "user/mypage/tickets"; // 예매내역 탭 JSP
+    }
+
+    @GetMapping("/mypage/points")
+    public String getPointsTab(HttpSession session, Model model) {
+        // 포인트내역 조회 로직 추가 필요
+        return "user/mypage/points";  // 포인트내역 탭 JSP
+    }
+
+    @GetMapping("/mypage/fairy")
+    public String getFairyTab(HttpSession session, Model model) {
+        // 승리요정 탭 데이터 조회 로직 추가 필요
+        return "user/mypage/fairy";  // 승리요정 탭 JSP
     }
 }

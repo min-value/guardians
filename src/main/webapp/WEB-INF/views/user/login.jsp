@@ -12,23 +12,28 @@
         <img src="/assets/img/header/header-title.png" alt="헤더 타이틀" style="max-width: 100%; height: 320px; display: flex; justify-content: center;">
     </div>
     <div class="login-form">
-        <form action="login" method="post" id="board1" onsubmit="return loginCheck();">
+        <form action="${pageContext.request.contextPath}/login" method="post" id="loginForm">
             <div class="input-form">
                 <div class="login-input">
                     <label for="id">아이디</label>
-                    <input type="text" id="id" name="id" placeholder="아이디를 입력하세요">
+                    <input type="text" id="id" name="userId" placeholder="아이디를 입력하세요" required>
                 </div>
                 <div class="login-input">
                     <label for="pwd">비밀번호</label>
-                    <input type="password" id="pwd" name="pwd" placeholder="비밀번호를 입력하세요">
+                    <input type="password" id="pwd" name="userPwd" placeholder="비밀번호를 입력하세요" required>
                 </div>
                 <div class="login-btn"><input type="submit" value="로그인" alt="로그인"></div>
                 <div class="signup">
                     <span>계정이 없으신가요?</span>
-                    <a class="signup-link" href="/signup.do">회원가입</a>
+                    <a class="signup-link" href="/signup">회원가입</a>
                 </div>
             </div>
         </form>
+
+        <c:if test="${not empty errorMessage}">
+            <p style="color: var(--errorColor);">${errorMessage}</p>
+        </c:if>
+
         <hr class="divider-line" />
         <div class="kakao-login">
             <button type="button" class="kakao-btn">
