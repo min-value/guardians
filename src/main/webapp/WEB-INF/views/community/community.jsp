@@ -16,10 +16,13 @@
 <html>
 <head>
     <title>신한 가디언즈</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/include/pagination.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/colors.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/community/community.css">
 <%--    <link rel="stylesheet" href="/assets/css/include/postList.css">--%>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/include/pagination.js"></script>
+
 <script>
     function loadPage(page){
         const params = new URLSearchParams(window.location.search);
@@ -35,7 +38,6 @@
                 keyword: keyword
             },
             success: function(res){
-                console.log(res);
                 const list = res.list;
                 const totalCount = res.totalCount;
 
@@ -54,39 +56,13 @@
                      );
                 });
 
-                const pageCount = Math.ceil(totalCount/10);
-                const pagination = $('#pagination').empty();
-                // ◀ 이전 버튼
-                // if (page >=1) {
-                const prev = $('<button class="pageLeft"></button>');
-                prev.prop('disabled', page === 1);  // 1페이지면 클릭 막기
-                prev.on('click', () => {
-                    if (page > 1) loadPage(page - 1);
+                createPagination({
+                    currentPage: page,
+                    totalCount: totalCount,
+                    onPageChange: (newPage) => loadPage(newPage),
+                    pageSize: 10,
+                    containerId: '#pagination'
                 });
-                pagination.append(prev);
-                // }
-
-                // 숫자 버튼 (1 ... 4 5 6 ... 마지막)
-                for (let i = 1; i <= pageCount; i++) {
-                    if (i === 1 || i === pageCount || Math.abs(i - page) <= 1) {
-                        const btn = $(`<button class="page-btn">\${i}</button>`);
-                        if (i === page) btn.addClass('active');
-                        btn.on('click', () => loadPage(i));
-                        pagination.append(btn);
-                    } else if (i === page - 2 || i === page + 2) {
-                        pagination.append(`<span class="page-ellipsis"></span>`);
-                    }
-                }
-
-                // ▶ 다음 버튼
-                // if (page <= pageCount) {
-                const next = $('<button class="pageRight"></button>');
-                next.prop('disabled', page === pageCount); // 마지막 페이지면 비활성화
-                next.on('click', () => {
-                    if (page < pageCount) loadPage(page + 1);
-                });
-                pagination.append(next);
-                // }
             }
         });
     }

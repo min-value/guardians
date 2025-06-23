@@ -45,9 +45,15 @@ public class CommunityController {
     @GetMapping("/post/{post_pk}")
     public String post(@PathVariable("post_pk") int postPk, Model model) {
         PostDto post = communityService.getPostById(postPk);
-        List<CommentDTO> commentList = communityService.getCommentById(postPk);
         model.addAttribute("post", post);
-        model.addAttribute("commentList", commentList);
         return "community/postDetail";
+    }
+
+    @GetMapping("/comment")
+    @ResponseBody
+    public Map<String, Object> getComments(
+            @RequestParam("post_pk") int postPk,
+            @RequestParam(defaultValue = "1") int page) {
+        return communityService.getCommentById(postPk, page);
     }
 }

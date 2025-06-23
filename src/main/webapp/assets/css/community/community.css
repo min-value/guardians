@@ -151,63 +151,7 @@ hr {
 .footer{
     height:200px;
 }
-/*=========== 페이지네이션 버튼 =============*/
-/*나중에 따로 컴포넌트로 빼기*/
-#pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
 
-.page-btn{
-    width: 45px;
-    height: 45px;
-    border: none;
-    border-radius: 5px;
-    background-color: transparent;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: 500;
-    color: var(--gray-02);
-    transition: 0.2s;
-}
-.pageRight, .pageLeft {
-    width: 10px;
-    height: 20px;
-    border: none;
-    cursor: pointer;
-}
-.pageRight{
-    background: url("../../img/icon/pageRight.png") no-repeat center center;
-    background-size: contain;
-    padding-right: 50px;
-}
-.pageLeft{
-    background: url("../../img/icon/pageLeft.png") no-repeat center center;
-    background-size: contain;
-    padding-left: 50px;
-}
-
-.page-btn.active {
-    background-color: var(--mainColor);
-    color: white;
-}
-
-.page-ellipsis {
-    display: inline-block;
-    width: 18px;
-    height: 4px;
-    border: none;
-    cursor: default;
-    background: url("../../img/icon/pageDot.png") no-repeat center center;
-    background-size: contain;
-    padding-right: 45px;
-}
-.pageLeft:disabled, .pageRight:disabled {
-    opacity: 0.5;
-    cursor: default;
-}
 .post-link {
     color: inherit;
     text-decoration: none;

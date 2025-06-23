@@ -39,7 +39,17 @@ public class CommunityService {
         return mapper.selectPostById(postPk);
     }
 
-    public List<CommentDTO> getCommentById(int postPk){
-        return mapper.selectCommentById(postPk);
+    public Map<String, Object> getCommentById(int postPk, int page){
+        int size = 5;
+        int offset = (page - 1) * size;
+
+        List<CommentDTO> list = mapper.getCommentPage(postPk, offset, size);
+        int totalCount = mapper.countComment(postPk);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("list", list);
+        result.put("totalCount", totalCount);
+
+        return result;
     }
 }

@@ -56,12 +56,19 @@
         WHERE p.post_pk = #{postPk}
     </select>
 
-    <select id="selectCommentById" resultType="org.baseball.dto.CommentDTO" parameterType="int">
+    <select id="getCommentPage" resultType="org.baseball.dto.CommentDTO" parameterType="int">
         SELECT c.comment_pk, c.c_content, c.c_date, u.user_name
         FROM comment c
         JOIN user u ON c.user_pk = u.user_pk
         WHERE c.post_pk = #{postPk}
-        ORDER BY c.c_date ASC
+        ORDER BY c.c_date DESC
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <select id="countComment" resultType="int" parameterType="int">
+        SELECT COUNT(*)
+        FROM comment c
+        WHERE c.post_pk = #{postPk}
     </select>
 
 </mapper>

@@ -5,6 +5,24 @@
     <title>신한 가디언즈</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/colors.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/community/postDetail.css">
+<script>
+    function loadComment(page){
+        const params = new URLSearchParams(window.location.search);
+        const postPk = params.get('postPk');
+        $.ajax({
+            url:'community/comment',
+            method: 'GET',
+            data:{
+                postPk: postPk,
+                page: page
+            },
+            success: function (res){
+                const commentList = res.list;
+                const totalCount = res.totalCount;
+            }
+        })
+    }
+</script>
 </head>
 <body>
     <%@ include file="../include/header.jsp" %>
@@ -22,7 +40,21 @@
         <div id="post-container">
             ${post.p_content}
         </div>
-        <div id="comment-container"></div>
+        <div id="comment-container">
+            <div class="comment-box">
+                <div class="comment-header">
+                    <span class="comment-user">userId1</span>
+                    <span class="comment-date">2025-06-15 9:21</span>
+                    <div class="comment-actions">
+                        <button class="comment-edit">수정</button>
+                        <button class="comment-delete">삭제</button>
+                    </div>
+                </div>
+                <div class="comment-content">
+                    야;; 니눈에는 저게 잘한거냐? 잘한게 있어야 칭찬하지
+                </div>
+            </div>
+        </div>
     </div>
     <div class="footer"></div>
     <%@ include file="../include/footer.jsp" %>
