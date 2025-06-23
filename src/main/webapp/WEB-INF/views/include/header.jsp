@@ -5,15 +5,15 @@
 <header class="header">
     <div class="login-wrapper">
         <div class="login">
-            <c:if test="${empty login}">
-                <a href="/login.do">로그인</a>
+            <c:if test="${empty sessionScope.loginUser}">
+                <a href="/login">로그인</a>
                 <span class="divider">|</span>
-                <a href="/signup.do">회원가입</a>
+                <a href="/signup">회원가입</a>
             </c:if>
-            <c:if test="${!empty login}">
-                <a href="/logout.do">로그아웃</a>
+            <c:if test="${not empty sessionScope.loginUser}">
+                <a href="/logout">로그아웃</a>
                 <span class="divider">|</span>
-                <a href="/mypage.do">마이페이지</a>
+                <a href="/mypage">마이페이지</a>
             </c:if>
         </div>
     </div>
@@ -30,7 +30,7 @@
             </ul>
 
             <div class="logo">
-                <a href="/index.do">
+                <a href="/home">
                     <img src="/assets/img/header/header-logo.png" alt="로고">
                 </a>
             </div>
