@@ -1,0 +1,101 @@
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
+    font-style: normal;
+    font-display: swap;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {
+    overflow-x: hidden;
+}
+.content{
+    width: 980px;
+    margin: 0 auto;
+    padding-top: 80px;
+}
+
+.postHeader {
+    width: 980px;
+    height: 80px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+    background-color: var(--gray-06);
+    border-bottom: 2px solid var(--gray-01);
+    color: var(--gray-01);
+}
+.postHeader .title {
+    flex: 3;
+    text-align: left;
+    font-size: 20px;
+    font-weight: 500;
+}
+.postHeader .writer {
+    flex: 1;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 400;
+}
+.postHeader .date {
+    flex: 1;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+#post-container{
+    padding: 40px 40px;
+    font-size: 20px;
+    font-weight: 400;
+    border-bottom: 2px solid var(--gray-02);
+    height: 300px;
+}
+
+.footer{
+    height:200px;
+}
+
+.comment-box{
+    border-bottom: 1px solid var(--gray-02);
+    padding: 16px 40px;
+}
+.comment-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.comment-user{
+    color: var(--gray-02);
+    font-weight: 400;
+    font-size: 16px;
+}
+.comment-date{
+    color: var(--gray-02);
+    font-weight: 400;
+    font-size: 16px;
+}
+.comment-content{
+    color: var(--black);
+    font-weight: 400;
+    font-size: 20px;
+    padding-top: 5px;
+}
+
+.comment-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--gray-02);
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.comment-actions button:hover {
+    text-decoration: underline;
+}

@@ -1,28 +1,108 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 82103
-  Date: 25. 6. 19.
-  Time: 오전 9:26
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
+    String content1Value = "title";
+    String content1Text = "제목";
+    String content2Value = "writer";
+    String content2Text = "작성자";
+    String pageTitle = "커뮤니티";
+
+    pageContext.setAttribute("content1Value", content1Value);
+    pageContext.setAttribute("content1Text", content1Text);
+    pageContext.setAttribute("content2Value", content2Value);
+    pageContext.setAttribute("content2Text", content2Text);
+    pageContext.setAttribute("pageTitle", pageTitle);
+%>
 <html>
 <head>
-    <title>Title</title>
+    <title>신한 가디언즈</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/include/pagination.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/colors.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/community/community.css">
+<%--    <link rel="stylesheet" href="/assets/css/include/postList.css">--%>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/include/pagination.js"></script>
+
+<script>
+    function loadPage(page){
+        const params = new URLSearchParams(window.location.search);
+        const type = params.get('type');
+        const keyword = params.get('keyword');
+
+        $.ajax({
+            url:'/community/page',
+            method: 'GET',
+            data: {
+                page: page,
+                type : type,
+                keyword: keyword
+            },
+            success: function(res){
+                const list = res.list;
+                const totalCount = res.totalCount;
+
+                const container = $('#post-container').empty();
+                list.forEach(post => {
+                    const date = new Date(post.p_date);
+                    const formattedDate = `\${date.getFullYear()}-\${(date.getMonth()+1).toString().padStart(2,'0')}-\${date.getDate().toString().padStart(2,'0')} \${date.getHours().toString().padStart(2,'0')}:\${date.getMinutes().toString().padStart(2,'0')}`;
+                    container.append(`
+                        <div id="post">
+                            <div class="title">
+                                <a href="/community/post/${'${post.post_pk}'}" class="post-link">\${post.title}</a>
+                            </div>
+                            <div class="writer">\${post.user_name}</div>
+                            <div class="date">\${formattedDate}</div>
+                        </div>`
+                     );
+                });
+
+                createPagination({
+                    currentPage: page,
+                    totalCount: totalCount,
+                    onPageChange: (newPage) => loadPage(newPage),
+                    pageSize: 10,
+                    containerId: '#pagination'
+                });
+            }
+        });
+    }
+    $(document).ready(()=>{
+        loadPage(1);
+    });
+</script>
+
 </head>
 <body>
-    <form class="search" action="" method="get">
-        <select class="dropdown">
-            <option value="all" selected>전체</option>
-            <option value="title">제목</option>
-            <option value="content">내용</option>
-        </select>
-        <input class="search-text" type="text" placeholder="검색어를 입력하세요.">
-        <button class="search-btn" type="submit" onclick="alert('클릭!')"></button>
-    </form>
-    <div class="check"></div>
-    ${count}
+    <%@ include file="../include/header.jsp" %>
+    <div class="backgroundWrapper">
+        <%@ include file="../include/headerImg.jsp" %>
+    </div>
+    <div class="content">
+        <%@ include file="../include/search.jsp" %>
+
+        <%-- ================ < inventory >================ --%>
+            <div class ="inventory">
+                <div class="inventoryList">
+                    <div class ="all"><span class="clickable" onclick="showPostList()">전체</span></div>
+                    <div class ="my"><span class="clickable" onclick="showMyList()">내가 쓴 글</span></div>
+                    <div class ="else"></div>
+                </div>
+                <hr/>
+                <div class="postHeader">
+                    <div class="title">제목</div>
+                    <div class="writer">작성자</div>
+                    <div class="date">작성일시</div>
+                </div>
+                <div id="post-container"></div>
+            </div>
+        <div class="btnLocation">
+            <button class="writeBtn" type="button">글쓰기</button>
+        </div>
+        <div id="pagination"></div>
+
+        <%-- ============================================ --%>
+    </div>
+    <div class="footer"></div>
+    <%@ include file="../include/footer.jsp" %>
 </body>
 </html>
