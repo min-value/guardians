@@ -3,8 +3,12 @@
 <html>
 <head>
     <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
+        let gameNo = null;
         function openModal(gameNo){
+            document.querySelector('#modal-gameNo').value = gameNo;
+
             fetch('/admin/tickets/gameinfo?gameNo=' + gameNo)
                 .then(response => response.json())
                 .then(data => {
@@ -18,15 +22,59 @@
                 });
 
         }
+
+        function saveHomeGame() {
+            const gameNo = document.querySelector('#modal-gameNo').value;
+            const start = document.querySelector("#startDate").value;
+            const end = document.querySelector("#endDate").value;
+
+            if (!start || !end) {
+                alert("날짜를 입력해주세요.");
+                return false;
+            }
+
+            if (start > end) {
+                alert("시작일과 마감일을 확인해주세요.");
+                return false;
+            }
+
+            $.ajax({
+                url: '/admin/tickets/addgame',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    gameNo: gameNo,
+                    startTime: start,
+                    endTime: end
+                }),
+                success: function(res) {
+                    alert("등록 완료");
+                    document.querySelector('.modal').style.display = 'none';
+                    location.reload(); // 새로고침하여 반영
+                },
+                error: function() {
+                    alert("실패하였습니다. 다시 시도해 주세요.");
+                }
+            });
+
+            return false; // form submit 방지
+        }
+
     </script>
 </head>
 <body>
 <%request.setAttribute("activePage", "addgames");%>
 <jsp:include page="sidebar.jsp" ></jsp:include>
 <div class="container">
-    <div class="title">
-        <img src="/assets/img/icon/schedule.png" alt="icon"/>
-        <p>경기 예매 등록</p>
+    <div class="title_container">
+        <div class="title">
+            <img src="/assets/img/icon/schedule.png" alt="icon"/>
+            <p>경기 예매 등록</p>
+        </div>
+        <div class="logout">
+            <a>로그아웃</a>
+            <img src="/assets/img/icon/logout.png" alt="icon"/>
+        </div>
     </div>
     <div class="content">
         <table>
@@ -60,30 +108,31 @@
     <div class="modal">
         <div class="modal-body">
             <h3>예매 등록</h3>
-            <div class="form-row">
-                <label for="modal-opponentTeam">원정팀:</label>
-                <input type="text" id="modal-opponentTeam" readonly>
-            </div>
-            <div class="form-row">
-                <label for="modal-gameDate">경기날짜:</label>
-                <input type="text" id="modal-gameDate" readonly>
-            </div>
-            <div class="form-row">
-                <label for="modal-stadium">경기장:</label>
-                <input type="text" id="modal-stadium" readonly>
-            </div>
-            <div class="form-row">
-                <label for="startDate">예매 시작일:</label>
-                <input type="datetime-local" name="startDate" id="startDate" value="날짜를 선택해주세요.">
-            </div>
-            <div class="form-row">
-                <label for="endDate">예매 마감일:</label>
-                <input type="datetime-local" name="endDate" id="endDate" value="날짜를 선택해주세요.">
-            </div>
-            <div class="btn_container">
-                <input type="submit" value="취소" onclick="document.querySelector('.modal').style.display='none'" class="close_btn">
-                <input type="submit" value="저장" class="save_btn">
-            </div>
+                <input type="hidden" name="gameNo" id="modal-gameNo">
+                <div class="form-row">
+                    <label for="modal-opponentTeam">원정팀:</label>
+                    <input type="text" id="modal-opponentTeam" readonly>
+                </div>
+                <div class="form-row">
+                    <label for="modal-gameDate">경기날짜:</label>
+                    <input type="text" id="modal-gameDate" readonly>
+                </div>
+                <div class="form-row">
+                    <label for="modal-stadium">경기장:</label>
+                    <input type="text" id="modal-stadium" readonly>
+                </div>
+                <div class="form-row">
+                    <label for="startDate">예매 시작일:</label>
+                    <input type="datetime-local" name="startTime" id="startDate">
+                </div>
+                <div class="form-row">
+                    <label for="endDate">예매 마감일:</label>
+                    <input type="datetime-local" name="endTime" id="endDate">
+                </div>
+                <div class="btn_container">
+                    <input type="button" value="취소" onclick="document.querySelector('.modal').style.display='none'" class="close_btn">
+                    <input type="button" value="저장" class="save_btn" id="add_game_btn" onclick="saveHomeGame()">
+                </div>
         </div>
     </div>
 </div>

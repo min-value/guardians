@@ -39,7 +39,8 @@
          JOIN stadium s ON s.stadium_pk = g.stadium_pk
         WHERE g.game_pk =  #{gameNo}
     </select>
-<!--    <insert id="addGame" parameterMap="org">-->
-<!--        INSERT homegame(game_pk, start_date, end_date) value (${}, ${}, ${});-->
-<!--    </insert>-->
+    <insert id="addHomeGame" parameterType="org.baseball.dto.HomeGameDTO">
+        INSERT INTO homegame(game_pk, start_date, end_date)
+        VALUES (#{gameNo}, #{startTime}, #{endTime})
+    </insert>
 </mapper>
