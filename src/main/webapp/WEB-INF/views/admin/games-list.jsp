@@ -10,17 +10,23 @@
 <%request.setAttribute("activePage", "gamelist");%>
 <jsp:include page="sidebar.jsp" ></jsp:include>
 <div class="container">
-    <div class="title">
-        <img src="/assets/img/icon/list.png" alt="icon"/>
-        <p>경기 목록 조회</p>
+    <div class="title_container">
+        <div class="title">
+            <img src="/assets/img/icon/list.png" alt="icon"/>
+            <p>경기 목록 조회</p>
+        </div>
+        <div class="logout">
+            <a>로그아웃</a>
+            <img src="/assets/img/icon/logout.png" alt="icon"/>
+        </div>
     </div>
     <div class="content">
         <div class="filter">
             <form method="get" action="/admin/games/allgame">
                 <select name="status" onchange="this.form.submit()">
                     <option value="0" <c:if test="${selectedStatus == '0' || empty selectedStatus}">selected</c:if>>전체</option>
-                    <option value="1" <c:if test="${selectedStatus == '1'}">selected</c:if>>경기 예정</option>
-                    <option value="2" <c:if test="${selectedStatus == '2'}">selected</c:if>>경기 종료</option>
+                    <option value="1" <c:if test="${selectedStatus == '1'}">selected</c:if>>경기 종료</option>
+                    <option value="2" <c:if test="${selectedStatus == '2'}">selected</c:if>>경기 예정</option>
                 </select>
             </form>
         </div>

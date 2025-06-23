@@ -2,6 +2,7 @@ package org.baseball.domain.admin;
 
 import org.baseball.dto.AddGameInfoDTO;
 import org.baseball.dto.GamesInfoDTO;
+import org.baseball.dto.HomeGameDTO;
 import org.baseball.dto.ReserveInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -106,6 +107,11 @@ public class AdminService {
 
     public AddGameInfoDTO showAddGameInfo(int gameNo) {
         return adminMapper.showAddGameInfo(gameNo);
+    }
+
+    public boolean addHomeGame(HomeGameDTO homeGameDTO) {
+        int r = adminMapper.addHomeGame(homeGameDTO);
+        return r > 0;
     }
 
 }
