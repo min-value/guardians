@@ -10,6 +10,7 @@ body {
 /*  sidebar  */
 .sidebar {
     width: 270px;
+    min-height: 100vh;
     background: var(--lightBlue);
     color: var(--black);
     display: flex;
