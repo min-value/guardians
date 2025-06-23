@@ -57,4 +57,10 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
+
+    // 마이페이지 내 정보 수정
+    @Override
+    public void updateUserInfo(UserDTO user) {
+        userMapper.updateUser(user);
+    }
 }

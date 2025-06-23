@@ -26,7 +26,6 @@ html, body {
     gap: 48px;
     border-bottom: 2px solid var(--gray-05);
     width: 980px;
-    margin-bottom: 20px;
 }
 
 .mypage-tabs .tab-btn {
