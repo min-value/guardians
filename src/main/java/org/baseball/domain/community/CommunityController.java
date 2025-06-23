@@ -52,7 +52,7 @@ public class CommunityController {
     @GetMapping("/comment")
     @ResponseBody
     public Map<String, Object> getComments(
-            @RequestParam("post_pk") int postPk,
+            @RequestParam(name = "post_pk") int postPk,
             @RequestParam(defaultValue = "1") int page) {
         return communityService.getCommentById(postPk, page);
     }

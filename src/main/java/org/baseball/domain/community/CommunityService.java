@@ -43,7 +43,11 @@ public class CommunityService {
         int size = 5;
         int offset = (page - 1) * size;
 
-        List<CommentDTO> list = mapper.getCommentPage(postPk, offset, size);
+        Map<String, Object> param = new HashMap<>();
+        param.put("post_pk", postPk);
+        param.put("offset", offset);
+        param.put("size", size);
+        List<CommentDTO> list = mapper.getCommentPage(param);
         int totalCount = mapper.countComment(postPk);
 
         Map<String, Object> result = new HashMap<>();

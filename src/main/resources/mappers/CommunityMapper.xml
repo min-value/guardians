@@ -56,11 +56,11 @@
         WHERE p.post_pk = #{postPk}
     </select>
 
-    <select id="getCommentPage" resultType="org.baseball.dto.CommentDTO" parameterType="int">
+    <select id="getCommentPage" resultType="org.baseball.dto.CommentDTO" parameterType="map">
         SELECT c.comment_pk, c.c_content, c.c_date, u.user_name
         FROM comment c
         JOIN user u ON c.user_pk = u.user_pk
-        WHERE c.post_pk = #{postPk}
+        WHERE c.post_pk = #{post_pk}
         ORDER BY c.c_date DESC
         LIMIT #{size} OFFSET #{offset}
     </select>
