@@ -3,9 +3,16 @@
 <html>
 <head>
     <title>Title</title>
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/colors.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin/admin.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/include/pagination.css">
+
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/include/pagination.js"></script>
     <script>
         let gameNo = null;
+        let currentPage = 1;
         function openModal(gameNo){
             document.querySelector('#modal-gameNo').value = gameNo;
 
@@ -39,7 +46,7 @@
             }
 
             $.ajax({
-                url: '/admin/tickets/addgame',
+                url: '/admin/tickets/addgame/page',
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({
@@ -50,7 +57,7 @@
                 success: function(res) {
                     alert("등록 완료");
                     document.querySelector('.modal').style.display = 'none';
-                    location.reload(); // 새로고침하여 반영
+                    loadPage(currentPage);
                 },
                 error: function() {
                     alert("실패하였습니다. 다시 시도해 주세요.");
@@ -59,6 +66,56 @@
 
             return false; // form submit 방지
         }
+
+        function loadPage(page) {
+            currentPage = page;
+            $.ajax({
+                url: '/admin/games/allgame/page',
+                method: 'GET',
+                data: {
+                    page: page,
+                },
+                success: function(res) {
+                    const list = res.list;
+                    const totalCount = res.totalCount;
+                    console.log(res);
+                    const container = $('#list').empty();
+
+                    list.forEach(dto => {
+
+                        container.append(`
+                             <tr>
+                                <td>\${dto.no}</td>
+                                <td><img class="teamlogo" src="/assets/img/teamlogos/\${dto.ourTeam}.png" alt="ourTeam">
+                                    vs <img class="teamlogo" src="/assets/img/teamlogos/\${dto.opponentTeam}.png" alt="opponentTeam"></td>
+                                <td>\${dto.ourScore}:\${dto.opponentScore}</td>
+                                <td>\${dto.result}</td>
+                                <td>\${dto.gameDate}</td>
+                                <td>
+                                    <input class="save_btn" type="button" value="예매등록" onclick="openModal(\${dto.gameNo})">
+                                </td>
+                            </tr>
+                        `);
+                    });
+
+                    createPagination({
+                        currentPage: page,
+                        totalCount: totalCount,
+                        onPageChange: (newPage) => loadPage(newPage),
+                        pageSize: 10,
+                        containerId: '#pagination'
+                    });
+                },
+                error: function(err) {
+                    alert("데이터를 불러오지 못했습니다.");
+                    console.error(err);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            loadPage(1);
+        });
 
     </script>
 </head>
@@ -88,22 +145,11 @@
                     <th>예매등록</th>
                 </tr>
             </thead>
-            <tbody>
-            <c:forEach var="dto" items="${list}">
-                <tr>
-                    <td>${dto.no}</td>
-                    <td><img class="teamlogo" src="/assets/img/teamlogos/${dto.ourTeam}.png" alt="ourTeam">
-                        vs <img class="teamlogo" src="/assets/img/teamlogos/${dto.opponentTeam}.png" alt="opponentTeam"></td>
-                    <td>${dto.ourScore}:${dto.opponentScore}</td>
-                    <td>${dto.result}</td>
-                    <td>${dto.gameDate}</td>
-                    <td>
-                        <input class="save_btn" type="button" value="예매등록" onclick="openModal(${dto.gameNo})">
-                    </td>
-                </tr>
-            </c:forEach>
+            <tbody id="list">
             </tbody>
         </table>
+        <div id="pagination"></div>
+
     </div>
     <div class="modal">
         <div class="modal-body">
