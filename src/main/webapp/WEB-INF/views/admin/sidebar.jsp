@@ -16,10 +16,10 @@
 <%String activePage = (String) request.getAttribute("activePage");%>
 <div class="sidebar">
   <div class="admin_main">
-    <a href="/admin/home" class="<%= "main".equals(activePage) ? "active" : "" %>"><img src="/assets/img/icon/adminmain.png" alt="icon"/> 관리자 메인</a>
+    <a href="/admin/home" class="<%= "main".equals(activePage) ? "active" : "" %>"><img src="/assets/img/icon/adminmain.png" alt="icon"/>관리자 메인</a>
   </div>
   <div class="admin_tickets">
-    <a href="/admin/tickets/reservation" class="<%= "reservation".equals(activePage) ? "active" : "" %>"><img src="/assets/img/icon/list.png" alt="icon"/> 예매 목록 조회</a>
+    <a href="/admin/tickets/reservation" class="<%= "reservation".equals(activePage) ? "active" : "" %>"><img src="/assets/img/icon/list.png" alt="icon"/>예매 목록 조회</a>
   </div>
   <div class="admin_games">
     <a href="/admin/games/allgame" class="<%= "gamelist".equals(activePage) ? "active" : "" %>"><img src="/assets/img/icon/list.png" alt="icon"/>경기 목록 조회</a>
