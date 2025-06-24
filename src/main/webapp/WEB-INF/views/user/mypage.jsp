@@ -20,39 +20,81 @@
         <button class="tab-btn" data-tab="fairy">승리요정</button>
     </div>
 
-    <div id="info" class="tab-content active">
-        <%@ include file="/WEB-INF/views/user/mypage/info.jsp" %>
-    </div>
-
-    <div id="tickets" class="tab-content">
-        <%@ include file="/WEB-INF/views/user/mypage/tickets.jsp" %>
-    </div>
-
-    <div id="points" class="tab-content">
-        <%@ include file="/WEB-INF/views/user/mypage/points.jsp" %>
-    </div>
-
-    <div id="fairy" class="tab-content">
-        <%@ include file="/WEB-INF/views/user/mypage/fairy.jsp" %>
-    </div>
-
+    <div id="tab-content-container"></div>
 </div>
 
 <script>
-    const tabs = document.querySelectorAll('.mypage-tabs .tab-btn');
-    const contents = document.querySelectorAll('.tab-content');
+    document.addEventListener('DOMContentLoaded', () => {
+        const tabs = document.querySelectorAll('.mypage-tabs .tab-btn');
+        const contentContainer = document.getElementById('tab-content-container');
 
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
+        function bindInfoForm() {
+            const form = document.getElementById("infoForm");
+            const editBtn = document.getElementById("editBtn");
+            if (!form || !editBtn) return;
+            let isEditMode = false;
+            editBtn.addEventListener("click", () => {
+                if (!isEditMode) {
+                    form.querySelectorAll("input").forEach(input => {
+                        if (input.name !== "userId") input.removeAttribute("readonly");
+                    });
+                    editBtn.textContent = "저장";
+                    editBtn.classList.replace("edit-mode", "save-mode");
+                    isEditMode = true;
+                } else {
+                    const formData = new FormData(form);
+                    fetch('/user/update', {
+                        method: 'POST',
+                        body: new URLSearchParams(formData)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            alert(data.message);
+                            if (data.success) {
+                                form.querySelectorAll("input").forEach(input => input.setAttribute("readonly", true));
+                                editBtn.textContent = "수정";
+                                editBtn.classList.replace("save-mode", "edit-mode");
+                                isEditMode = false;
+                            }
+                        })
+                        .catch(err => {
+                            alert("서버 오류가 발생했습니다.");
+                            console.error(err);
+                        });
+                }
+            });
+        }
 
-            contents.forEach(c => c.classList.remove('active'));
-            const target = tab.getAttribute('data-tab');
-            document.getElementById(target).classList.add('active');
+        function loadTabContent(tabName) {
+            const url = '/user/mypage/' + tabName;
+            fetch(url)
+                .then(res => res.text())
+                .then(html => {
+                    contentContainer.innerHTML = html;
+
+                    if (tabName === 'info') {
+                        bindInfoForm();
+                    }
+                })
+                .catch(err => console.error(err));
+        }
+
+
+        // 초기 로드
+        loadTabContent('info');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const name = tab.getAttribute('data-tab');
+                console.log('>>> 탭 클릭: data-tab 속성 =', JSON.stringify(name));
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                loadTabContent(name);
+            });
         });
     });
 </script>
+
 
 </body>
 </html>
