@@ -25,8 +25,8 @@
                 <li><a href="#">TEAMINFO</a></li>
                 <li><a href="#">GAME</a></li>
                 <li><a href="#">TICKET</a></li>
-                <li><a href="#">FAIRY</a></li>
                 <li><a href="#">COMMUNITY</a></li>
+                <li><a href="#">FAIRY</a></li>
             </ul>
 
             <div class="logo">
@@ -68,12 +68,12 @@
             </div>
             <div class="depth2-column">
                 <ul class="depth2">
-                    <li><a href="#">승리요정</a></li>
+                    <li><a href="#">커뮤니티</a></li>
                 </ul>
             </div>
             <div class="depth2-column">
                 <ul class="depth2">
-                    <li><a href="#">커뮤니티</a></li>
+                    <li><a href="#">승리요정</a></li>
                 </ul>
             </div>
         </div>
