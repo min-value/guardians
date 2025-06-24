@@ -27,7 +27,7 @@ html, body {
     margin-bottom: 12px;
 }
 
-.inventoryList {
+#inventoryList {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -35,17 +35,21 @@ html, body {
     font-size: 24px;
     margin-bottom: 12px;
 }
-.inventoryList .all {
+#inventoryList .all {
     flex: 1;
     text-align: left;
     color: black;
+    font-weight: 400;
+    font-size: 24px;
 }
-.inventoryList .my {
+#inventoryList .my {
     flex: 1;
     text-align: left;
     color: var(--gray-03);
+    font-weight: 400;
+    font-size: 24px;
 }
-.inventoryList .else {
+#inventoryList .else {
     flex: 7;
     text-align: left;
     color: var(--white);
@@ -98,7 +102,6 @@ hr {
     align-items: center;
     font-family: "Pretendard Variable";
     height: 40px;
-    margin-top: 31px;
 }
 
 .writeBtn{
@@ -121,6 +124,7 @@ hr {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    margin-bottom: 31px;
 }
 #post {
     display: flex;

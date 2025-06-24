@@ -22,55 +22,10 @@
 <%--    <link rel="stylesheet" href="/assets/css/include/postList.css">--%>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/include/pagination.js"></script>
-
 <script>
-    function loadPage(page){
-        const params = new URLSearchParams(window.location.search);
-        const type = params.get('type');
-        const keyword = params.get('keyword');
-
-        $.ajax({
-            url:'/community/page',
-            method: 'GET',
-            data: {
-                page: page,
-                type : type,
-                keyword: keyword
-            },
-            success: function(res){
-                const list = res.list;
-                const totalCount = res.totalCount;
-
-                const container = $('#post-container').empty();
-                list.forEach(post => {
-                    const date = new Date(post.p_date);
-                    const formattedDate = `\${date.getFullYear()}-\${(date.getMonth()+1).toString().padStart(2,'0')}-\${date.getDate().toString().padStart(2,'0')} \${date.getHours().toString().padStart(2,'0')}:\${date.getMinutes().toString().padStart(2,'0')}`;
-                    container.append(`
-                        <div id="post">
-                            <div class="title">
-                                <a href="/community/post/${'${post.post_pk}'}" class="post-link">\${post.title}</a>
-                            </div>
-                            <div class="writer">\${post.user_name}</div>
-                            <div class="date">\${formattedDate}</div>
-                        </div>`
-                     );
-                });
-
-                createPagination({
-                    currentPage: page,
-                    totalCount: totalCount,
-                    onPageChange: (newPage) => loadPage(newPage),
-                    pageSize: 10,
-                    containerId: '#pagination'
-                });
-            }
-        });
-    }
-    $(document).ready(()=>{
-        loadPage(1);
-    });
+    const loginUserName = '${sessionScope.loginUser.userName}';
 </script>
-
+<script src="${pageContext.request.contextPath}/assets/js/community/loadPage.js"></script>
 </head>
 <body>
     <%@ include file="../include/header.jsp" %>
@@ -82,9 +37,11 @@
 
         <%-- ================ < inventory >================ --%>
             <div class ="inventory">
-                <div class="inventoryList">
-                    <div class ="all"><span class="clickable" onclick="showPostList()">전체</span></div>
-                    <div class ="my"><span class="clickable" onclick="showMyList()">내가 쓴 글</span></div>
+                <div id="inventoryList">
+                    <div class ="all"><span id="all-posts-btn" class="clickable">전체</span></div>
+                    <c:if test="${not empty sessionScope.loginUser}">
+                        <div id="my-posts-btn" class="my"><span class="clickable">내가 쓴 글</span></div>
+                    </c:if>
                     <div class ="else"></div>
                 </div>
                 <hr/>
@@ -95,14 +52,39 @@
                 </div>
                 <div id="post-container"></div>
             </div>
-        <div class="btnLocation">
-            <button class="writeBtn" type="button">글쓰기</button>
-        </div>
+        <c:if test="${not empty sessionScope.loginUser}">
+            <div class="btnLocation">
+                <button class="writeBtn" type="button">글쓰기</button>
+            </div>
+        </c:if>
         <div id="pagination"></div>
 
         <%-- ============================================ --%>
     </div>
     <div class="footer"></div>
     <%@ include file="../include/footer.jsp" %>
+
+<%--<form id="filterForm" action="/community/post" method="get">--%>
+<%--    <input type="hidden" name="type" value="">--%>
+<%--    <input type="hidden" name="keyword" value="">--%>
+<%--    <input type="hidden" name="page" value="1">--%>
+<%--</form>--%>
+<%--<script>--%>
+<%--    function showAllList(){--%>
+<%--        const form = document.getElementById("filterForm");--%>
+<%--        form.type.value = '';--%>
+<%--        form.keyword.value = '';--%>
+<%--        form.page.value = 1;--%>
+<%--        form.submit();--%>
+<%--    }--%>
+
+<%--    function showMyList() {--%>
+<%--        const form = document.getElementById("filterForm");--%>
+<%--        form.type.value = 'writer';--%>
+<%--        form.keyword.value = '${sessionScope.loginUser.userName}';--%>
+<%--        form.page.value = 1;--%>
+<%--        form.submit();--%>
+<%--    }--%>
+<%--</script>--%>
 </body>
 </html>

@@ -1,0 +1,99 @@
+@import url('/assets/css/colors.css');
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+.info-tab {
+    width: 378px;
+    margin: 48px auto;
+    font-family: 'Pretendard', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mypage-form label {
+    font-size: 18px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--mainColor);
+    display: inline-flex;
+    align-items: center;
+}
+
+.mypage-input {
+    width: 100%;
+}
+
+.mypage-form input[type="text"],
+.mypage-form input[type="email"],
+.mypage-form input[type="tel"] {
+    width: 100%;
+    height: 50px;
+    padding: 14px 20px;
+    background-color: var(--gray-06);
+    font-size: 18px;
+    font-weight: 400;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+.mypage-form input::placeholder {
+    color: var(--gray-04);
+}
+
+.mypage-form input:focus {
+    border-color: var(--mainColor);
+    outline: none;
+}
+
+.mypage-form input[readonly],
+.mypage-form input:disabled {
+    background-color: var(--white);
+    color: var(--black);
+    cursor: not-allowed;
+}
+
+.edit-mode {
+    width: 100%;
+    height: 50px;
+    margin-top: 64px;
+    background-color: white;
+    border: 1px solid var(--mainColor);
+    color: var(--mainColor);
+    font-size: 16px;
+    font-weight: 400;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.edit-mode:hover {
+    background-color: var(--lightBlue);
+    color: var(--mainColor);
+}
+
+.save-mode {
+    width: 100%;
+    height: 50px;
+    margin-top: 64px;
+    background-color: var(--mainColor);
+    border: none;
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 400;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.save-mode:hover {
+    background-color: var(--mainHover);
+    color: var(--white);
+}

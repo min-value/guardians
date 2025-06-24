@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/tickets/seats.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/seats.css" />
 
 <div class="seats-container">
     <%@ include file ="toolbar.jsp" %>
     <div class="direction-container">
-        <img id="directionInfo" src="${pageContext.request.contextPath}/assets/img/tickets/directionInfo.svg" alt="경기장 방향">
+        <img id="directionInfo" src="${pageContext.request.contextPath}/assets/img/reservation/directionInfo.svg" alt="경기장 방향">
     </div>
     <div class="map-container zoomP">
         <div class="map-wrapper zoomC">
@@ -12,4 +12,4 @@
         </div>
     </div>
 </div>
-<script type="module" src="${pageContext.request.contextPath}/assets/js/tickets/seats.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/assets/js/reservation/seats.js"></script>

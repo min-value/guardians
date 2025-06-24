@@ -10,4 +10,5 @@ public class CommentDTO {
     private String c_content;
     private Timestamp c_date;
     private String user_name;
+    private int user_pk;
 }

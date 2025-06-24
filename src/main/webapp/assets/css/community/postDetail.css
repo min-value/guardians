@@ -17,6 +17,10 @@ html, body {
     margin: 0 auto;
     padding-top: 80px;
 }
+.backgroundWrapper{
+    display: flex;
+    justify-content: center;
+}
 
 .postHeader {
     width: 980px;
@@ -54,8 +58,40 @@ html, body {
     font-size: 20px;
     font-weight: 400;
     border-bottom: 2px solid var(--gray-02);
-    height: 300px;
+    min-height: 300px;
 }
+.edit{
+    flex: 0.1;
+    border: none;
+    cursor: pointer;
+    background: url("../../img/icon/edit-vertical.png") no-repeat center center;
+    background-size: contain;
+}
+
+#edit-dropdown-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.edit-dropdown {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 80px;
+}
+
+.edit-dropdown div {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.edit-dropdown div:hover {
+    background-color: #f0f0f0;
+}
+/*=====================================*/
 
 .footer{
     height:200px;
@@ -67,13 +103,13 @@ html, body {
 }
 .comment-header{
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 .comment-user{
     color: var(--gray-02);
     font-weight: 400;
     font-size: 16px;
+    padding-right: 20px;
 }
 .comment-date{
     color: var(--gray-02);
@@ -83,8 +119,14 @@ html, body {
 .comment-content{
     color: var(--black);
     font-weight: 400;
-    font-size: 20px;
+    font-size: 18px;
     padding-top: 5px;
+}
+.comment-actions{
+    margin-left: auto;
+}
+.comment-delete{
+    padding-left: 10px;
 }
 
 .comment-actions button {

@@ -78,37 +78,33 @@ public class UserController {
 
     // 마이페이지
     @RequestMapping("/mypage")
-    public String showMypage() {
+    public String showMypage(HttpSession session, Model model) {
+        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+        if (loginUser != null) {
+            model.addAttribute("user", loginUser);
+        }
         return "user/mypage";
     }
 
-    // 탭별 내용 반환 (Ajax 호출용)
-    @GetMapping("/mypage/info")
-    public String getInfoTab(HttpSession session, Model model) {
+    // 마이페이지 내 정보 수정
+    @PostMapping("/user/update")
+    public String updateUser(@ModelAttribute UserDTO user, HttpSession session, Model model) {
         UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+
         if (loginUser == null) {
-            return "user/mypage/empty";  // 로그인 안된 경우 빈 페이지 or 로그인 유도
+            return "redirect:/login";
         }
-        // DB에서 최신 회원정보 가져와서 전달 (예시는 session 데이터 사용)
-        model.addAttribute("user", loginUser);
-        return "user/mypage/info";  // 내 정보 탭 JSP
-    }
 
-    @GetMapping("/mypage/tickets")
-    public String getTicketsTab(HttpSession session, Model model) {
-        // 예매내역 조회 로직 추가 필요
-        return "user/mypage/tickets"; // 예매내역 탭 JSP
-    }
+        // 기존 로그인 유저의 ID로 강제 고정 Id는 수정 불가능
+        user.setUserId(loginUser.getUserId());
 
-    @GetMapping("/mypage/points")
-    public String getPointsTab(HttpSession session, Model model) {
-        // 포인트내역 조회 로직 추가 필요
-        return "user/mypage/points";  // 포인트내역 탭 JSP
-    }
-
-    @GetMapping("/mypage/fairy")
-    public String getFairyTab(HttpSession session, Model model) {
-        // 승리요정 탭 데이터 조회 로직 추가 필요
-        return "user/mypage/fairy";  // 승리요정 탭 JSP
+        try {
+            userService.updateUserInfo(user);
+            session.setAttribute("loginUser", user);
+            return "redirect:/mypage";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "회원정보 수정 중 오류 발생");
+            return "user/mypage";
+        }
     }
 }

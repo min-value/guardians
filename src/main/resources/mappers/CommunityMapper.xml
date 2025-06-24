@@ -4,7 +4,7 @@
 <mapper namespace="org.baseball.domain.community.CommunityMapper">
 
     <select id="getPostPageWithSearch" resultType="org.baseball.dto.PostDto" parameterType="map">
-        SELECT p.post_pk, p.title, p.p_content, p.p_date, u.user_name
+        SELECT p.post_pk, p.title, p.p_content, p.p_date, u.user_name, u.user_pk
         FROM post p
         JOIN user u ON p.user_pk = u.user_pk
         <where>
@@ -23,7 +23,7 @@
                 </choose>
             </if>
         </where>
-        ORDER BY p.p_date DESC
+        ORDER BY p.p_date DESC, p.user_pk ASC, p.title ASC
         LIMIT #{size} OFFSET #{offset}
     </select>
 
@@ -50,17 +50,17 @@
     </select>
 
     <select id="selectPostById" resultType="org.baseball.dto.PostDto" parameterType="int">
-        SELECT p.post_pk, p.title, p.p_content, p.p_date, u.user_name
+        SELECT p.post_pk, p.title, p.p_content, p.p_date, u.user_name, u.user_pk
         FROM post p
         JOIN user u ON p.user_pk = u.user_pk
         WHERE p.post_pk = #{postPk}
     </select>
 
-    <select id="getCommentPage" resultType="org.baseball.dto.CommentDTO" parameterType="int">
-        SELECT c.comment_pk, c.c_content, c.c_date, u.user_name
+    <select id="getCommentPage" resultType="org.baseball.dto.CommentDTO" parameterType="map">
+        SELECT c.comment_pk, c.c_content, c.c_date, u.user_name, u.user_pk
         FROM comment c
         JOIN user u ON c.user_pk = u.user_pk
-        WHERE c.post_pk = #{postPk}
+        WHERE c.post_pk = #{post_pk}
         ORDER BY c.c_date DESC
         LIMIT #{size} OFFSET #{offset}
     </select>
@@ -70,5 +70,13 @@
         FROM comment c
         WHERE c.post_pk = #{postPk}
     </select>
+
+    <delete id="deleteCommentsInPost" parameterType="int">
+        DELETE FROM comment WHERE post_pk = #{post_pk}
+    </delete>
+
+    <delete id="deletePost" parameterType="int">
+        DELETE FROM post WHERE post_pk = #{post_pk}
+    </delete>
 
 </mapper>
