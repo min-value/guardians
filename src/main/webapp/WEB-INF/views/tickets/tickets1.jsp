@@ -28,27 +28,61 @@
                         </div>
                     </div>
                     <div class="mapinfo-container">
-<%--                        <%@ include file = "stadium.jsp" %>--%>
-                        <%@ include file = "seats.jsp" %>
+                        <%@ include file = "stadium.jsp" %>
+<%--                        <%@ include file = "seats.jsp" %>--%>
                     </div>
                 </div>
             </div>
             <div class="right-container">
                 <div class="right-wrapper">
                     <div class="top-container">
-
+                        <div class="top-infotext-container">
+                            <div class="top-infotext-wrapper">
+                                <div id="infotext"></div>
+                            </div>
+                        </div>
+                        <div class="top-infoImg-container">
+                            <div class="top-infoImg-wrapper">
+                                <img id="infoImg" src="${pageContext.request.contextPath}/assets/img/tickets/ballparkView.svg" alt="전체보기">
+                            </div>
+                        </div>
                     </div>
                     <div class="bottom-container">
-                        <div class="infotext-container">
-                            <div id="selectZone">등급 선택</div>
+                        <div class="bottom-infotext-container">
+                            <div class="selectZone-wrapper">
+                                <div id="selectZone">등급 선택</div>
+                            </div>
                             <div id="zoneReloadBtn-wrapper">
                                 <img id="zoneReloadBtn" src="${pageContext.request.contextPath}/assets/img/tickets/reloadBtnSmall.svg" alt="새로고침 버튼">
+                            </div>
+                        </div>
+                        <div class="zoneInfo-container">
+                            <div class="zoneInfo-wrapper">
+                                <div class="zoneInfo-listBox">
+                                    <div class="zoneInfo">
+                                        <div class="zoneColor-wrapper">
+                                            <div id="zoneColor"></div>
+                                        </div>
+                                        <div class="zoneName-wrapper">
+                                            <div id="zoneName">
+                                                VIP석
+                                            </div>
+                                        </div>
+                                        <div class="zoneVacancies-wrapper">
+                                            <div id="zoneVacancies">
+                                                0석
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="ticket-btn-container">
-                    <img src="${pageContext.request.contextPath}/assets/img/tickets/nextBtn.svg" alt="다음버튼">
+                    <div class="ticket-btn-wrapper">
+                        <img src="${pageContext.request.contextPath}/assets/img/tickets/nextBtn.svg" alt="다음버튼">
+                    </div>
                 </div>
             </div>
         </div>
