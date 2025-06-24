@@ -29,7 +29,7 @@
     </init-param>
     <init-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>org.baseball.config.MvcConfig </param-value>
+      <param-value>org.baseball.config.MvcConfig</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
