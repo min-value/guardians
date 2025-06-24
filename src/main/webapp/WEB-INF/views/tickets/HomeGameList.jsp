@@ -77,7 +77,8 @@
                                   </div>
                                   <div>
                                     <p class="stadium">구장</p>
-                                    <p class="location">\${dto.stadium}</p>
+<!--                                    <p class="location">\${dto.stadium}</p>-->
+                                        <p class="location">스타라이트 필드</p>
                                   </div>
                                   \${buttonHtml}
                                 </div>
