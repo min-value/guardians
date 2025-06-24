@@ -6,14 +6,14 @@
     <div class="login-wrapper">
         <div class="login">
             <c:if test="${empty sessionScope.loginUser}">
-                <a href="/login">로그인</a>
+                <a href="${pageContext.request.contextPath}/user/login">로그인</a>
                 <span class="divider">|</span>
-                <a href="/signup">회원가입</a>
+                <a href="${pageContext.request.contextPath}/user/signup">회원가입</a>
             </c:if>
             <c:if test="${not empty sessionScope.loginUser}">
-                <a href="/logout">로그아웃</a>
+                <a href="${pageContext.request.contextPath}/user/logout">로그아웃</a>
                 <span class="divider">|</span>
-                <a href="/mypage">마이페이지</a>
+                <a href="${pageContext.request.contextPath}/user/mypage">마이페이지</a>
             </c:if>
         </div>
     </div>

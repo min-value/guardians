@@ -37,7 +37,7 @@ public class UserController {
         if (loginUser != null) {
             System.out.println("로그인 성공: " + loginUser.getUserName());
             session.setAttribute("loginUser", loginUser);
-            return "redirect:/mypage";
+            return "redirect:/user/mypage";
         } else {
             System.out.println("로그인 실패");
             model.addAttribute("errorMessage", "아이디 또는 비밀번호가 틀렸습니다.");
@@ -64,7 +64,7 @@ public class UserController {
         try {
             userService.registerUser(user);
             // 가입 성공 시 로그인 페이지로 이동
-            return "redirect:/login";
+            return "redirect:/user/login";
         } catch (IllegalArgumentException e) {
             // 예외 처리(비밀번호 유효성 검사 실패 등)
             model.addAttribute("errorMessage", e.getMessage());
@@ -92,7 +92,7 @@ public class UserController {
         UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
 
         if (loginUser == null) {
-            return "redirect:/login";
+            return "redirect:/user/login";
         }
 
         // 기존 로그인 유저의 ID로 강제 고정 Id는 수정 불가능
@@ -101,7 +101,7 @@ public class UserController {
         try {
             userService.updateUserInfo(user);
             session.setAttribute("loginUser", user);
-            return "redirect:/mypage";
+            return "redirect:/user/mypage";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "회원정보 수정 중 오류 발생");
             return "user/mypage";
