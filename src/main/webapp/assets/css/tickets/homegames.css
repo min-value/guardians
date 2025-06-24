@@ -31,6 +31,12 @@ html, body {
     align-items: center;
     margin-top: 80px;
 }
+form {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
 
 .filter{
     display: flex;
@@ -44,12 +50,12 @@ html, body {
     -webkit-appearance: none;
     -moz-appearance: none;
 
-    padding: 0.6rem 1.8rem 0.6rem 0.8rem;
-    font-size: 16px;
+    padding: 1rem 2rem 1rem 1.2rem;
+    font-size: 20px;
     border: 1px solid var(--gray-05);
     border-radius: 0;
-    background-color: #fff;
-    background-image: url('/assets/img/icon/arrow-down.png');
+    background-color: var(--white);
+    background-image: url('/assets/img/dropdownVector.png');
     background-repeat: no-repeat;
     background-position: right 10px center;
     background-size: 12px;
@@ -63,7 +69,7 @@ html, body {
 }
 
 .box {
-    width: 100%;
+    width: 980px;
     height: 125px;
     display: flex;
     flex-direction: row;
@@ -89,7 +95,6 @@ html, body {
     height: 90px;
     margin: 20px;
 }
-
 
 .date {
     font-size: 54px;
@@ -144,7 +149,7 @@ html, body {
     margin-top: -10px;
 }
 
-.ticket-btn {
+.onsale-ticket-btn {
     height: 75px;
     width: 150px;
     background-color: var(--mainColor);
@@ -158,6 +163,46 @@ html, body {
     box-shadow: 0 2px 3px rgba(0,0,0,0.1);
     transition: background-color 0.3s ease;
 }
-.ticket-btn:hover {
+
+.onsale-ticket-btn:hover {
     background-color: var(--mainHover);
+}
+
+.plan-ticket-btn {
+    height: 75px;
+    width: 150px;
+    background-color: var(--lightBlue);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--black);
+    cursor: not-allowed;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+}
+
+.plan-time {
+    font-size: 20px;
+    font-weight: 300;
+    margin-bottom: -5px;
+}
+
+.plan-label {
+    font-size: 24px;
+    font-weight: 350;
+    margin-top: -5px;
+}
+
+.no-result {
+    width: 980px;
+    text-align: center;
+    font-size: 24px;
+    color: var(--gray-02);
+    margin-top: 20px;
 }

@@ -9,5 +9,5 @@ import java.util.Map;
 @Mapper
 public interface TicketsMapper {
     List<TicketsDTO> getTicketsList(Map<String, Object> param);
-    int countTicketsList();
+    int countTicketsList(Map<String, Object> param);
 }

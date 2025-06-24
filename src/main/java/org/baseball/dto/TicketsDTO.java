@@ -12,8 +12,8 @@ public class TicketsDTO {
     private String ourTeam;
     private String opponentTeam;
     private String stadium;
-    private Timestamp startTime;
-    private Timestamp endTime;
+    private Timestamp startDate;
+    private Timestamp endDate;
 
     private String date;
     private String day;

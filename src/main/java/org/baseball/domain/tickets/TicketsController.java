@@ -1,9 +1,9 @@
 package org.baseball.domain.tickets;
 
-import org.baseball.dto.GamesInfoDTO;
 import org.baseball.dto.TicketsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,7 +45,13 @@ public class TicketsController {
     }
 
     @GetMapping("/all")
-    public String showAllHomeGameList() {
+    public String showAllHomeGameList(
+            @RequestParam(required = false, defaultValue = "0") String teamStatus,
+            @RequestParam(required = false, defaultValue = "0") String ticketStatus,
+            Model model) {
+
+        model.addAttribute("selectedTeamStatus", teamStatus);
+        model.addAttribute("selectedTicketStatus", ticketStatus);
         return "tickets/HomeGameList";
     }
 
@@ -53,11 +59,11 @@ public class TicketsController {
     @ResponseBody
     public Map<String, Object>  showAllGamesList(
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(required = false) String teamStatus,
-            @RequestParam(required = false) String ticketStatus) {
+            @RequestParam(required = false) int teamStatus,
+            @RequestParam(required = false) int ticketStatus) {
 
         List<TicketsDTO> list = ticketsService.getTicketsList(page, teamStatus, ticketStatus);
-        int totalCount = ticketsService.countTicketsList();
+        int totalCount = ticketsService.countTicketsList(teamStatus, ticketStatus);
 
         Map<String, Object> response = new HashMap<>();
         response.put("list", list);

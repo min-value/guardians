@@ -16,13 +16,21 @@ public class TicketsService {
     @Autowired
     TicketsMapper ticketsMapper;
 
-    public List<TicketsDTO> getTicketsList(int page) {
+    public List<TicketsDTO> getTicketsList(int page, int teamStatus, int ticketStatus) {
         int size = 6;
         int offset = (page - 1) * size;
 
         Map<String, Object> param = new HashMap<>();
         param.put("offset", offset);
         param.put("size", size);
+        param.put("teamStatus", teamStatus);
+        param.put("ticketStatus", ticketStatus);
+
+        System.out.println("== 쿼리 요청 param ==");
+        System.out.println("teamStatus: " + teamStatus);
+        System.out.println("ticketStatus: " + ticketStatus);
+        System.out.println("offset: " + offset);
+        System.out.println("size: " + size);
 
         List<TicketsDTO> list = ticketsMapper.getTicketsList(param);
 
@@ -36,7 +44,10 @@ public class TicketsService {
         return list;
     }
 
-    public int countTicketsList() {
-        return ticketsMapper.countTicketsList();
+    public int countTicketsList(int teamStatus, int ticketStatus) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("teamStatus", teamStatus);
+        param.put("ticketStatus", ticketStatus);
+        return ticketsMapper.countTicketsList(param);
     }
 }

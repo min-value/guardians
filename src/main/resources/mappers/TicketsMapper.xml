@@ -9,37 +9,37 @@
         FROM homegame h
              JOIN games g ON h.game_pk = g.game_pk
              JOIN stadium s ON s.stadium_pk = g.stadium_pk
-        WHERE end_date > SYSDATE()
-        <if test="teamStatus != null and teamStatus != '0'">
-            AND g.team_pk = #{teamStatus}
+        WHERE end_date > NOW()
+        <if test="teamStatus != null and teamStatus != 0">
+            AND g.team_pk = ${teamStatus}
         </if>
-
-        <if test="ticketStatus != null and ticketStatus == '1'">
-            AND h.start_date &lt;= SYSDATE() AND h.end_date &gt;= SYSDATE()
-        </if>
-
-        <if test="ticketStatus != null and ticketStatus == '2'">
-            AND h.start_date > SYSDATE()  <!-- 판매 예정 -->
-        </if>
+        <choose>
+            <when test="ticketStatus != null and ticketStatus eq 1">
+                AND h.start_date &lt;= NOW() AND h.end_date >= NOW()
+            </when>
+            <when test="ticketStatus != null and ticketStatus eq 2">
+                AND h.start_date > NOW()
+            </when>
+        </choose>
         ORDER BY gameDate
         LIMIT #{size} OFFSET #{offset}
     </select>
-    <select id="countTicketsList" resultType="int">
+    <select id="countTicketsList" resultType="int" parameterType="map">
         SELECT count(*)
         FROM homegame h
              JOIN games g ON h.game_pk = g.game_pk
              JOIN stadium s ON s.stadium_pk = g.stadium_pk
-        WHERE end_date > SYSDATE()
+        WHERE end_date > NOW()
         <if test="teamStatus != null and teamStatus != '0'">
             AND g.team_pk = #{teamStatus}
         </if>
-
-        <if test="ticketStatus != null and ticketStatus == '1'">
-            AND h.start_date &lt;= SYSDATE() AND h.end_date &gt;= SYSDATE()
-        </if>
-
-        <if test="ticketStatus != null and ticketStatus == '2'">
-            AND h.start_date > SYSDATE()  <!-- 판매 예정 -->
-        </if>
+        <choose>
+            <when test="ticketStatus != null and ticketStatus == '1'">
+                AND h.start_date &lt;= NOW() AND h.end_date >= NOW()
+            </when>
+            <when test="ticketStatus != null and ticketStatus == '2'">
+                AND h.start_date > NOW()
+            </when>
+        </choose>
     </select>
 </mapper>
