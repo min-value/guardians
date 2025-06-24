@@ -1,6 +1,7 @@
 package org.baseball.domain.games;
 
-import org.baseball.dto.TeamDTO;
+import org.baseball.dto.RankDTO;
+import org.baseball.dto.ScheduleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,23 +12,26 @@ import java.util.List;
 @Controller
 public class GamesController {
 
-    private final RankService rankService;
+    private final GamesService gamesService;
 
     @Autowired
-    public GamesController(RankService rankService) {
-        this.rankService = rankService;
+    public GamesController(GamesService gamesService) {
+        this.gamesService = gamesService;
     }
 
     // 랭킹 페이지
     @GetMapping("/games/rank")
     public String showRank(Model model) {
-        List<TeamDTO> teamList = rankService.getTeamRanking();
+        List<RankDTO> teamList = gamesService.getTeamRanking();
         model.addAttribute("teamList", teamList);
         return "games/rank";
     }
-
+    
+    // 경기 일정 페이지
     @GetMapping("/games/all")
-    public String showSchedule() {
+    public String showSchedule(Model model) {
+        List<ScheduleDTO> scheduleList = gamesService.getGameSchedule();
+        model.addAttribute("scheduleList", scheduleList);
         return "games/schedule";
     }
 

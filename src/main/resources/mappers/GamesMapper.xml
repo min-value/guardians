@@ -3,10 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.baseball.domain.games.RankMapper">
+<mapper namespace="org.baseball.domain.games.GamesMapper">
 
-<!--    DTO와 DB 테이블 컬럼 이름 대응-->
-    <resultMap id="teamRank" type="org.baseball.dto.TeamDTO">
+    <!--랭킹 띄우기-->
+    <resultMap id="teamRank" type="org.baseball.dto.RankDTO">
         <result property="teamPk" column="team_pk"/>
         <result property="ranking" column="ranking"/>
         <result property="teamName" column="team_name"/>
@@ -33,6 +33,30 @@
             win_streak
         FROM team
         ORDER BY ranking ASC
+    </select>
+
+    <!--경기 일정-->
+    <resultMap id="gameSchedule" type="org.baseball.dto.ScheduleDTO">
+        <result property="gamePk" column="game_pk"/>
+        <result property="gameDate" column="game_date"/>
+        <result property="result" column="result"/>
+        <result property="ourScore" column="our_score"/>
+        <result property="oppScore" column="opp_score"/>
+        <result property="stadiumPk" column="stadium_pk"/>
+        <result property="teamPk" column="team_pk"/>
+    </resultMap>
+
+    <select id="getGameSchedule" resultMap="gameSchedule">
+        SELECT
+            game_pk,
+            game_date,
+            result,
+            our_score,
+            opp_score,
+            stadium_pk,
+            team_pk
+        FROM games
+        ORDER BY game_date ASC
     </select>
 
 </mapper>
