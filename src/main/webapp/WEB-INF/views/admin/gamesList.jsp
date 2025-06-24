@@ -84,7 +84,7 @@
             <p>경기 목록 조회</p>
         </div>
         <div class="logout">
-            <a>로그아웃</a>
+            <a href="/logout">로그아웃</a>
             <img src="/assets/img/icon/logout.png" alt="icon"/>
         </div>
     </div>
