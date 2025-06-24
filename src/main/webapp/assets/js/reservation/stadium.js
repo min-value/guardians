@@ -16,6 +16,14 @@ document.addEventListener('DOMContentLoaded', () => {
             region.style.cursor = 'pointer';
         });
     });
+
+    //선택된 좌석 관련 리스너 추가
+    const infoContainer = document.querySelector('.selectedList-info-container');
+    const compContainer = document.querySelector('.selectedList-comp-container');
+
+    infoContainer.addEventListener('click', function() {
+        compContainer.classList.toggle('show');
+    })
 });
 
 /* svgMap 내의 region 색상 변경 */

@@ -1,7 +1,47 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/toolbar.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/stadium.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">
 <div class="stadium-container">
+  <div class="selectedList-container">
+    <div class="selectedList-info-container">
+      <div class="selectedList-dropdown-wrapper">
+        <img id="selectedList-dropdown" src="/assets/img/reservation/dropDownWhiteDown.svg" alt="드롭다운">
+      </div>
+      <div class="selectedList-infoText-wrapper">
+        <div id="selectedList-infoText">
+          선택된 좌석 (<span id="selectList-num" style="display: inline">0</span>석)
+        </div>
+      </div>
+      <div class="resetBtn-wrapper">
+        <img id="resetBtn" src="/assets/img/reservation/resetBtn.svg" alt="초기화 버튼">
+      </div>
+    </div>
+    <div class="selectedList-comp-container">
+      <div class="selectedList-comp-wrapper">
+        <jsp:include page="selectedSeatComp.jsp">
+          <jsp:param name="zoneColor" value="purple"/>
+          <jsp:param name="zoneName" value="VIP석"/>
+          <jsp:param name="zoneDetail" value="a10"/>
+        </jsp:include>
+        <jsp:include page="selectedSeatComp.jsp">
+          <jsp:param name="zoneColor" value="purple"/>
+          <jsp:param name="zoneName" value="VIP석"/>
+          <jsp:param name="zoneDetail" value="a10"/>
+        </jsp:include>
+        <jsp:include page="selectedSeatComp.jsp">
+          <jsp:param name="zoneColor" value="purple"/>
+          <jsp:param name="zoneName" value="VIP석"/>
+          <jsp:param name="zoneDetail" value="a10"/>
+        </jsp:include>
+        <jsp:include page="selectedSeatComp.jsp">
+          <jsp:param name="zoneColor" value="purple"/>
+          <jsp:param name="zoneName" value="VIP석"/>
+          <jsp:param name="zoneDetail" value="a10"/>
+        </jsp:include>
+      </div>
+    </div>
+  </div>
   <%@ include file ="toolbar.jsp" %>
   <div class="ballpark-container">
     <div class="ballpark-wrapper zoomP">

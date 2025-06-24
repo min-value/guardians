@@ -1,3 +1,13 @@
+@import "/assets/css/colors.css";
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
+    font-style: normal;
+    font-display: swap;
+}
+
+
 * {
     display: block;
     margin: 0;
@@ -9,7 +19,7 @@
     top: 10px;
     right: 10px;
     position: absolute;
-    z-index: 2;
+    z-index: 3;
 }
 
 .btn-wrapper {
