@@ -46,7 +46,7 @@
             }
 
             $.ajax({
-                url: '/admin/tickets/addgame/page',
+                url: '/admin/tickets/addgame',
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({
@@ -70,7 +70,7 @@
         function loadPage(page) {
             currentPage = page;
             $.ajax({
-                url: '/admin/games/allgame/page',
+                url: '/admin/tickets/addgame/page',
                 method: 'GET',
                 data: {
                     page: page,

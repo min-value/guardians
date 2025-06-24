@@ -54,7 +54,7 @@
     </select>
 
     <select id="countHomeGames" resultType="int">
-        SELECT COUNT(*) FROM games
+        SELECT COUNT(*)
         FROM games
         WHERE stadium_pk = 1 AND game_pk NOT IN (SELECT game_pk FROM homegame)
     </select>
