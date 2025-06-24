@@ -2,6 +2,7 @@ package org.baseball.domain.admin;
 
 import org.baseball.dto.AddGameInfoDTO;
 import org.baseball.dto.GamesInfoDTO;
+import org.baseball.dto.HomeGameDTO;
 import org.baseball.dto.ReserveInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,15 +11,24 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AdminService {
     @Autowired
     AdminMapper adminMapper;
 
-    public List<ReserveInfoDTO> showReserveList(){
-        List<ReserveInfoDTO> list = adminMapper.showReserveList();
+    public List<ReserveInfoDTO> showReservationList(int page){
+        int size = 7;
+        int offset = (page - 1) * size;
+
+        Map<String, Object> param = new HashMap<>();
+        param.put("offset", offset);
+        param.put("size", size);
+
+        List<ReserveInfoDTO> list = adminMapper.showReservationList(param);
         Timestamp now = new Timestamp(System.currentTimeMillis());
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // 초 없이
         int cnt =1;
@@ -57,8 +67,15 @@ public class AdminService {
         return list;
     }
 
-    public List<GamesInfoDTO> showGamesList(){
-        List<GamesInfoDTO> list = adminMapper.showGamesList();
+    public List<GamesInfoDTO> showGamesList(String status, int page){
+        int size = 7;
+        int offset = (page - 1) * size;
+        Map<String, Object> param = new HashMap<>();
+        param.put("status", status);
+        param.put("size", size);
+        param.put("offset", offset);
+
+        List<GamesInfoDTO> list = adminMapper.showGamesList(param);
         int cnt =1;
         for (GamesInfoDTO l : list){
             l.setNo(cnt++);
@@ -83,6 +100,8 @@ public class AdminService {
                         break;
                     case "CANCEL":
                         l.setResult("취소");
+                        l.setOpponentScore("-");
+                        l.setOurScore("-");
                         break;
                 }
             }
@@ -90,8 +109,15 @@ public class AdminService {
         return list;
     }
 
-    public List<GamesInfoDTO> showGamesAddList(){
-        List<GamesInfoDTO> list = adminMapper.showGamesAddList();
+    public List<GamesInfoDTO> showGamesAddList(int page){
+        int size = 7;
+        int offset = (page - 1) * size;
+
+        Map<String, Object> param = new HashMap<>();
+        param.put("offset", offset);
+        param.put("size", size);
+
+        List<GamesInfoDTO> list = adminMapper.showGamesAddList(param);
         int cnt =1;
         for (GamesInfoDTO l : list){
             l.setNo(cnt++);
@@ -106,6 +132,25 @@ public class AdminService {
 
     public AddGameInfoDTO showAddGameInfo(int gameNo) {
         return adminMapper.showAddGameInfo(gameNo);
+    }
+
+    public boolean addHomeGame(HomeGameDTO homeGameDTO) {
+        int r = adminMapper.addHomeGame(homeGameDTO);
+        return r > 0;
+    }
+
+    public int countReservation(){
+        return adminMapper.countReservation();
+    }
+
+    public int countGames(String status){
+        Map<String, Object> param = new HashMap<>();
+        param.put("status", status);
+        return adminMapper.countGames(param);
+    }
+
+    public int countHomeGames(){
+        return adminMapper.countHomeGames();
     }
 
 }
