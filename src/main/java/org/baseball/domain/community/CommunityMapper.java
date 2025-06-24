@@ -12,6 +12,8 @@ public interface CommunityMapper {
     List<PostDto> getPostPageWithSearch(Map<String, Object> param);
     int countFiltered(Map<String, Object> param);
     PostDto selectPostById(int postPk);
-    List<CommentDTO> getCommentPage(int postPk, int offset, int size);
+    List<CommentDTO> getCommentPage(Map<String, Object> param);
     int countComment(int postPk);
+    void deletePost(int postPk);
+    void deleteCommentsInPost(int postPk);
 }
