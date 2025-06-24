@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/tickets/toolbar.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/tickets/stadium.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/toolbar.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/stadium.css" />
 <div class="stadium-container">
   <%@ include file ="toolbar.jsp" %>
   <div class="ballpark-container">
@@ -56,4 +56,4 @@
     </div>
   </div>
 </div>
-<script type="module" src="${pageContext.request.contextPath}/assets/js/tickets/stadium.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/assets/js/reservation/stadium.js"></script>

@@ -255,14 +255,14 @@
 
 #cancelAgree-checkbox+label {
     background-repeat: no-repeat;
-    background-image: url('/assets/img/tickets/checkboxOff.svg');
+    background-image: url('/assets/img/reservation/checkboxOff.svg');
     background-position: center center;
     background-size: contain;
 }
 
 #cancelAgree-checkbox:checked+label {
     background-repeat: no-repeat;
-    background-image: url('/assets/img/tickets/checkboxOn.svg');
+    background-image: url('/assets/img/reservation/checkboxOn.svg');
     background-position: center center;
     background-size: contain;
 }

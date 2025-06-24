@@ -141,6 +141,6 @@
     -moz-appearance: none;
 
     background-size: 10px;
-    background: url("/assets/img/tickets/dropdown.svg") no-repeat right 10px center;
+    background: url("/assets/img/reservation/dropdown.svg") no-repeat right 10px center;
     cursor: pointer;
 }

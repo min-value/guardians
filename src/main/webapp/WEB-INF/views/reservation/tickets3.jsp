@@ -2,9 +2,9 @@
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/tickets/tickets-common.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/tickets/tickets-common2.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/tickets/tickets3.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets-common.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets-common2.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets3.css">
 </head>
 <body>
 <!-- 권종/할인 선택 -->
@@ -26,7 +26,7 @@
                                 </div>
                             </div>
                             <div class="closeBtn-wrapper">
-                                <img class="closeBtn" src="${pageContext.request.contextPath}/assets/img/tickets/closeBtn.svg" alt="닫기 버튼">
+                                <img class="closeBtn" src="${pageContext.request.contextPath}/assets/img/reservation/closeBtn.svg" alt="닫기 버튼">
                             </div>
                         </div>
                         <div class="notification-content-container">
@@ -66,7 +66,7 @@
                                 </div>
                             </div>
                             <div class="closeBtn-wrapper">
-                                <img class="closeBtn" src="${pageContext.request.contextPath}/assets/img/tickets/closeBtn.svg" alt="닫기 버튼">
+                                <img class="closeBtn" src="${pageContext.request.contextPath}/assets/img/reservation/closeBtn.svg" alt="닫기 버튼">
                             </div>
                         </div>
                         <div class="notification-content-container">
@@ -111,13 +111,13 @@
                                 </div>
                             </div>
                             <div class="closeBtn-wrapper">
-                                <img class="closeBtn" src="${pageContext.request.contextPath}/assets/img/tickets/closeBtn.svg" alt="닫기 버튼">
+                                <img class="closeBtn" src="${pageContext.request.contextPath}/assets/img/reservation/closeBtn.svg" alt="닫기 버튼">
                             </div>
                         </div>
                         <div class="notification-content-container">
                             <div class="notification-content-wrapper" style="overflow-y: hidden">
                                 <div class="notification-content">
-                                    <img id="sportsNotice" src="${pageContext.request.contextPath}/assets/img/tickets/sportsNotice.png" alt="암표매매 제재사항 안내">
+                                    <img id="sportsNotice" src="${pageContext.request.contextPath}/assets/img/reservation/sportsNotice.png" alt="암표매매 제재사항 안내">
                                 </div>
                             </div>
                         </div>
@@ -215,7 +215,7 @@
                             <div class="paymentInfo-detail-wrapper">
                                 <div class="paymentInfo-card-container">
                                     <div class="paymentInfo-card-wrapper">
-                                        <img id="paymentInfo-card" src="${pageContext.request.contextPath}/assets/img/tickets/homeRunPay.svg" alt="홈런페이">
+                                        <img id="paymentInfo-card" src="${pageContext.request.contextPath}/assets/img/reservation/homeRunPay.svg" alt="홈런페이">
                                         <div id="myPoint">3000원</div>
                                     </div>
                                 </div>
@@ -311,14 +311,14 @@
                 </div>
                 <div class="ticket-btn-container">
                     <div class="ticket-btn-wrapper">
-                        <img src="${pageContext.request.contextPath}/assets/img/tickets/backBtnSmall.svg" alt="이전버튼">
-                        <img src="${pageContext.request.contextPath}/assets/img/tickets/nextBtnSmall.svg" alt="다음버튼">
+                        <img src="${pageContext.request.contextPath}/assets/img/reservation/backBtnSmall.svg" alt="이전버튼">
+                        <img src="${pageContext.request.contextPath}/assets/img/reservation/nextBtnSmall.svg" alt="다음버튼">
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script type="module" src="${pageContext.request.contextPath}/assets/js/tickets/tickets3.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/assets/js/reservation/tickets3.js"></script>
 </body>
 </html>

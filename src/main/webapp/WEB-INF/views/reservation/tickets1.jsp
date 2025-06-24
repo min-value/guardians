@@ -2,8 +2,8 @@
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/tickets/tickets-common.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/tickets/tickets1.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets-common.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets1.css">
 </head>
 <body>
 <!-- 등급/좌석 선택 -->
@@ -43,7 +43,7 @@
                         </div>
                         <div class="top-infoImg-container">
                             <div class="top-infoImg-wrapper">
-                                <img id="infoImg" src="${pageContext.request.contextPath}/assets/img/tickets/ballparkView.svg" alt="전체보기">
+                                <img id="infoImg" src="${pageContext.request.contextPath}/assets/img/reservation/ballparkView.svg" alt="전체보기">
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                                 <div id="selectZone">등급 선택</div>
                             </div>
                             <div id="zoneReloadBtn-wrapper">
-                                <img id="zoneReloadBtn" src="${pageContext.request.contextPath}/assets/img/tickets/reloadBtnSmall.svg" alt="새로고침 버튼">
+                                <img id="zoneReloadBtn" src="${pageContext.request.contextPath}/assets/img/reservation/reloadBtnSmall.svg" alt="새로고침 버튼">
                             </div>
                         </div>
                         <div class="zoneInfo-container">
@@ -81,13 +81,13 @@
                 </div>
                 <div class="ticket-btn-container">
                     <div class="ticket-btn-wrapper">
-                        <img src="${pageContext.request.contextPath}/assets/img/tickets/nextBtn.svg" alt="다음버튼">
+                        <img src="${pageContext.request.contextPath}/assets/img/reservation/nextBtn.svg" alt="다음버튼">
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script type="module" src="${pageContext.request.contextPath}/assets/js/tickets/tickets1.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/assets/js/reservation/tickets1.js"></script>
 </body>
 </html>
