@@ -20,13 +20,13 @@ public class UserController {
     }
 
     // 로그인 페이지
-    @RequestMapping("/login")
+    @RequestMapping("/user/login")
     public String showLoginPage() {
         return "user/login";
     }
 
     // 로그인 처리
-    @PostMapping("/login")
+    @PostMapping("/user/login")
     public String login(@RequestParam String userId,
                         @RequestParam String userPwd,
                         HttpSession session,
@@ -46,20 +46,20 @@ public class UserController {
     }
 
     // 로그아웃 처리
-    @RequestMapping("/logout")
+    @RequestMapping("/user/logout")
     public String logout(HttpSession session) {
         session.invalidate(); // 로그인 정보 삭제
         return "redirect:/home";
     }
 
     // 회원가입 페이지
-    @RequestMapping("/signup")
+    @RequestMapping("/user/signup")
     public String showSignupPage() {
-        return "/user/signup";
+        return "user/signup";
     }
 
     // 회원가입 처리
-    @PostMapping("/signup")
+    @PostMapping("/user/signup")
     public String registerUser(@ModelAttribute UserDTO user, Model model) {
         try {
             userService.registerUser(user);
@@ -77,7 +77,7 @@ public class UserController {
     }
 
     // 마이페이지
-    @RequestMapping("/mypage")
+    @RequestMapping("/user/mypage")
     public String showMypage(HttpSession session, Model model) {
         UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
         if (loginUser != null) {
