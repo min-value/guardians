@@ -1,33 +1,23 @@
-package org.baseball.domain.tickets;
+package org.baseball.domain.reservation;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/tickets")
-public class TicketsController {
-    @GetMapping("/test")
-    public String test() {
-        return "reservation/stadium";
-    }
-
-    @GetMapping("/test2")
-    public String test2() {
-        return "reservation/seats";
-    }
-
-    @GetMapping("/test3")
+@RequestMapping("/reservation")
+public class ReservationController {
+    @GetMapping("/seat")
     public String test3() {
         return "reservation/tickets1";
     }
 
-    @GetMapping("/test4")
+    @GetMapping("/discount")
     public String test4() {
         return "reservation/tickets2";
     }
 
-    @GetMapping("/test5")
+    @GetMapping("/confirm")
     public String test5() {
         return "reservation/tickets3";
     }
