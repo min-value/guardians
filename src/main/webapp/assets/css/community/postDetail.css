@@ -15,7 +15,7 @@ html, body {
 .content{
     width: 980px;
     margin: 0 auto;
-    padding-top: 80px;
+    padding-top: 60px;
 }
 .backgroundWrapper{
     display: flex;
@@ -51,6 +51,26 @@ html, body {
     text-align: left;
     font-size: 16px;
     font-weight: 400;
+}
+
+.goPrev{
+    height: 28px;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.prevImg{
+    height: 28px;
+    width: 28px;
+    background: url("../../img/icon/chevron-left.svg") no-repeat center center;
+    background-size: contain;
+}
+.prevText{
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
 }
 
 #post-container{
@@ -113,10 +133,24 @@ html, body {
     font-size: 16px;
 }
 .comment-content{
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
     color: var(--black);
     font-weight: 400;
     font-size: 18px;
-    padding-top: 5px;
+    padding-top: 8px;
+    width: 900px;
+    resize: none;
+
+}
+.comment-content:focus {
+    border-color: var(--mainColor);
+    outline: none;
+}
+.comment-content[readonly],
+.comment-content:disabled {
+    background-color: var(--white);
+    color: var(--black);
+    border: none;
 }
 .comment-actions{
     margin-left: auto;

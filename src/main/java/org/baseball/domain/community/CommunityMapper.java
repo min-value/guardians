@@ -20,4 +20,6 @@ public interface CommunityMapper {
     void deleteComment(int postPk);
     void addPost(PostDto dto);
     String getUserNameByPk(int user_pk);
+    void modifyPost(PostDto dto);
+    void updateComment(CommentDTO dto);
 }
