@@ -63,4 +63,16 @@ public class CommunityService {
         mapper.deleteCommentsInPost(post_pk);
         mapper.deletePost(post_pk);
     }
+
+    public void addComment(CommentDTO dto){
+        mapper.insertComment(dto);
+    }
+
+    public void deleteComment(int comment_pk){
+        mapper.deleteComment(comment_pk);
+    }
+
+    public void addPost(PostDto dto){
+        mapper.addPost(dto);
+    }
 }

@@ -52,39 +52,25 @@
                 </div>
                 <div id="post-container"></div>
             </div>
-        <c:if test="${not empty sessionScope.loginUser}">
             <div class="btnLocation">
-                <button class="writeBtn" type="button">글쓰기</button>
+                <button class="writeBtn" type="button" onclick="checkLogin()"
+                    data-login="${not empty sessionScope.loginUser}">글쓰기</button>
             </div>
-        </c:if>
         <div id="pagination"></div>
 
         <%-- ============================================ --%>
     </div>
-    <div class="footer"></div>
     <%@ include file="../include/footer.jsp" %>
-
-<%--<form id="filterForm" action="/community/post" method="get">--%>
-<%--    <input type="hidden" name="type" value="">--%>
-<%--    <input type="hidden" name="keyword" value="">--%>
-<%--    <input type="hidden" name="page" value="1">--%>
-<%--</form>--%>
-<%--<script>--%>
-<%--    function showAllList(){--%>
-<%--        const form = document.getElementById("filterForm");--%>
-<%--        form.type.value = '';--%>
-<%--        form.keyword.value = '';--%>
-<%--        form.page.value = 1;--%>
-<%--        form.submit();--%>
-<%--    }--%>
-
-<%--    function showMyList() {--%>
-<%--        const form = document.getElementById("filterForm");--%>
-<%--        form.type.value = 'writer';--%>
-<%--        form.keyword.value = '${sessionScope.loginUser.userName}';--%>
-<%--        form.page.value = 1;--%>
-<%--        form.submit();--%>
-<%--    }--%>
-<%--</script>--%>
+<script>
+    function checkLogin(){
+        const isLoggedIn = document.querySelector(".writeBtn").dataset.login === 'true';
+        if(isLoggedIn){
+            location.href='/community/post/write';
+        }
+        else{
+            alert("로그인 후 글을 작성하실 수 있습니다.")
+        }
+    }
+</script>
 </body>
 </html>

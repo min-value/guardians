@@ -16,4 +16,8 @@ public interface CommunityMapper {
     int countComment(int postPk);
     void deletePost(int postPk);
     void deleteCommentsInPost(int postPk);
+    void insertComment(CommentDTO dto);
+    void deleteComment(int postPk);
+    void addPost(PostDto dto);
+    String getUserNameByPk(int user_pk);
 }
