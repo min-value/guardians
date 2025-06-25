@@ -77,7 +77,8 @@
                                   </div>
                                   <div>
                                     <p class="stadium">구장</p>
-                                    <p class="location">\${dto.stadium}</p>
+<!--                                    <p class="location">\${dto.stadium}</p>-->
+                                        <p class="location">스타라이트 필드</p>
                                   </div>
                                   \${buttonHtml}
                                 </div>
@@ -108,6 +109,7 @@
   <div class="backgroundWrapper">
     <%@ include file="../include/headerImg.jsp" %>
   </div>
+  <%@ include file="../tickets/predict.jsp" %>
   <div class="container">
       <div class="filter-container">
         <form method="get" action="/tickets/all">

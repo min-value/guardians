@@ -59,8 +59,29 @@ public class CommunityService {
     }
 
     @Transactional
+    public void modifyPost(PostDto modifiedPost){
+        mapper.modifyPost(modifiedPost);
+    }
+
+    @Transactional
     public void deletePost(int post_pk){
         mapper.deleteCommentsInPost(post_pk);
         mapper.deletePost(post_pk);
+    }
+
+    public void addComment(CommentDTO dto){
+        mapper.insertComment(dto);
+    }
+
+    public void deleteComment(int comment_pk){
+        mapper.deleteComment(comment_pk);
+    }
+
+    public void addPost(PostDto dto){
+        mapper.addPost(dto);
+    }
+
+    public void updateComment(CommentDTO dto){
+        mapper.updateComment(dto);
     }
 }

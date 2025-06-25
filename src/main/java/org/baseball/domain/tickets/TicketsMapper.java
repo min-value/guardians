@@ -10,4 +10,5 @@ import java.util.Map;
 public interface TicketsMapper {
     List<TicketsDTO> getTicketsList(Map<String, Object> param);
     int countTicketsList(Map<String, Object> param);
+    int updatePredict(Map<String, Object> param);
 }

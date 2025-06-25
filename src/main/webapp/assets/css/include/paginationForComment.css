@@ -2,36 +2,36 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .pageBtn{
-    width: 45px;
-    height: 45px;
+    width: 35px;
+    height: 35px;
     border: none;
     border-radius: 5px;
     background-color: transparent;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 500;
     color: var(--gray-02);
     transition: 0.2s;
 }
 .pageRight, .pageLeft {
-    width: 10px;
-    height: 20px;
+    width: 8px;
+    height: 16px;
     border: none;
     cursor: pointer;
 }
 .pageRight{
     background: url("../../img/icon/pageRight.png") no-repeat center center;
     background-size: contain;
-    padding-right: 50px;
+    padding-right: 35px;
 }
 .pageLeft{
     background: url("../../img/icon/pageLeft.png") no-repeat center center;
     background-size: contain;
-    padding-left: 50px;
+    padding-left: 35px;
 }
 
 .pageBtn.active {
@@ -48,7 +48,7 @@
     cursor: default;
     background: url("../../img/icon/pageDot.png") no-repeat center center;
     background-size: contain;
-    padding-right: 45px;
+    padding-right: 35px;
 }
 .pageLeft:disabled, .pageRight:disabled {
     opacity: 0.5;

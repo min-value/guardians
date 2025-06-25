@@ -71,12 +71,66 @@
         WHERE c.post_pk = #{postPk}
     </select>
 
+    <!--  삭제하려는 글 안의 댓글 삭제  -->
     <delete id="deleteCommentsInPost" parameterType="int">
         DELETE FROM comment WHERE post_pk = #{post_pk}
     </delete>
 
+    <!--  글 삭제  -->
     <delete id="deletePost" parameterType="int">
         DELETE FROM post WHERE post_pk = #{post_pk}
     </delete>
+
+    <!--  댓글 삽입  -->
+    <insert id="insertComment" parameterType="org.baseball.dto.CommentDTO">
+        INSERT INTO comment(
+            c_content,
+            c_date,
+            post_pk,
+            user_pk
+        ) VALUES(
+             #{c_content},
+             NOW(),
+             #{post_pk},
+            #{user_pk}
+        )
+    </insert>
+
+    <!-- 댓글 하나 삭제 -->
+    <delete id="deleteComment" parameterType="int">
+        DELETE FROM comment WHERE comment_pk = #{comment_pk}
+    </delete>
+
+    <!--post 등록-->
+    <insert id="addPost" parameterType="org.baseball.dto.PostDto">
+        INSERT INTO post(
+            title,
+            p_content,
+            p_date,
+            user_pk
+        ) VALUES(
+            #{title},
+            #{p_content},
+            NOW(),
+            #{user_pk}
+        )
+    </insert>
+
+    <!--post 수정-->
+    <update id="modifyPost" parameterType="org.baseball.dto.PostDto">
+        UPDATE post
+        SET
+            title = #{title},
+            p_content = #{p_content}
+        WHERE post_pk = #{post_pk}
+    </update>
+
+    <!--comment 수정-->
+    <update id="updateComment" parameterType="org.baseball.dto.CommentDTO">
+        UPDATE comment
+        SET
+            c_content = #{c_content}
+        WHERE comment_pk = #{comment_pk}
+    </update>
 
 </mapper>

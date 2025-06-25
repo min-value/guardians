@@ -50,4 +50,12 @@ public class TicketsService {
         param.put("ticketStatus", ticketStatus);
         return ticketsMapper.countTicketsList(param);
     }
+
+    public int updatePredict(int userPk, int reservelistPk, int predict) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("userPk", userPk);
+        param.put("reservelistPk", reservelistPk);
+        param.put("predict", predict);
+        return ticketsMapper.updatePredict(param);
+    }
 }
