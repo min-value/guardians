@@ -23,9 +23,9 @@
             <ul class="menu-list">
                 <li><a href="#">STORY</a></li>
                 <li><a href="#">TEAMINFO</a></li>
-                <li><a href="#">GAME</a></li>
-                <li><a href="#">TICKET</a></li>
-                <li><a href="#">COMMUNITY</a></li>
+                <li><a href="/games/all">GAME</a></li>
+                <li><a href="/tickets/all">TICKET</a></li>
+                <li><a href="/community/post">COMMUNITY</a></li>
                 <li><a href="#">FAIRY</a></li>
             </ul>
 
@@ -56,19 +56,19 @@
             </div>
             <div class="depth2-column">
                 <ul class="depth2">
-                    <li><a href="#">경기 일정</a></li>
-                    <li><a href="#">경기 결과</a></li>
-                    <li><a href="#">총 전적</a></li>
+                    <li><a href="/games/all">경기 일정</a></li>
+                    <li><a href="/games/details">경기 결과</a></li>
+                    <li><a href="/games/rank">순위</a></li>
                 </ul>
             </div>
             <div class="depth2-column">
                 <ul class="depth2">
-                    <li><a href="#">예매</a></li>
+                    <li><a href="/tickets/all">예매</a></li>
                 </ul>
             </div>
             <div class="depth2-column">
                 <ul class="depth2">
-                    <li><a href="#">커뮤니티</a></li>
+                    <li><a href="/community/post">커뮤니티</a></li>
                 </ul>
             </div>
             <div class="depth2-column">

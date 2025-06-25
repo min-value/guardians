@@ -42,7 +42,7 @@ public class UserController {
         if (loginUser != null) {
             System.out.println("로그인 성공: " + loginUser.getUserName());
             session.setAttribute("loginUser", loginUser);
-            return "redirect:/user/mypage";
+            return "redirect:/home";
         } else {
             System.out.println("로그인 실패");
             model.addAttribute("errorMessage", "아이디 또는 비밀번호가 틀렸습니다.");
