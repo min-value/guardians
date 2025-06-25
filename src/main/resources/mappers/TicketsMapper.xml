@@ -42,4 +42,7 @@
             </when>
         </choose>
     </select>
+    <update id="updatePredict" parameterType="map">
+        UPDATE reservation_list set predict = ${predict} where reservelist_pk = ${reservelistPk} AND user_pk = ${userPk}
+    </update>
 </mapper>
