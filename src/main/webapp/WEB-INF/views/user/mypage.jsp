@@ -28,6 +28,7 @@
         const tabs = document.querySelectorAll('.mypage-tabs .tab-btn');
         const contentContainer = document.getElementById('tab-content-container');
 
+        // 내 정보 조회, 수정
         function bindInfoForm() {
             const form = document.getElementById("infoForm");
             const editBtn = document.getElementById("editBtn");
@@ -65,6 +66,72 @@
             });
         }
 
+        // 예매내역 조회
+        function bindTickets() {
+            const tryRender = () => {
+                const container = document.getElementById('tickets');
+                if (!container) {
+                    setTimeout(tryRender, 100); // tickets.jsp가 완전히 렌더링될 때까지 기다림
+                    return;
+                }
+
+                fetch('/user/tickets')
+                    .then(res => res.json())
+                    .then(tickets => {
+                        console.log(">>> 받은 예매 데이터:", tickets);
+                        console.log("matchDate:", tickets[0].matchDate);
+                        console.log("stadium:", tickets[0].stadium);
+                        console.log("seatInfo:", tickets[0].seatInfo);
+                        if (!tickets.length) {
+                            container.innerHTML = '<p class="no-tickets-msg">예매내역이 없습니다.</p>';
+                            return;
+                        }
+
+                        container.innerHTML = '';
+                        tickets.forEach(ticket => {
+                            const item = document.createElement('div');
+                            item.classList.add('ticket-item');
+                            item.innerHTML = `
+                                <div class="ticket-top">
+                                    <img src="/assets/img/teamlogos/1.png" class="logo-team">
+                                    <span class="vs-text">VS</span>
+                                    <img src="/assets/img/teamlogos/10.png" class="logo-team">
+                                    <span class="match-date">\${ticket.matchDate}</span>
+                                    <img src="/assets/img/mypage/chevron-right.svg" class="arrow-icon">
+                                </div>
+                                <div class="ticket-info">
+                                       <div class="info-row">
+                                         <span class="label">예매자</span>
+                                         <span class="user">\${ticket.userName}</span>
+                                       </div>
+                                       <div class="info-row">
+                                         <span class="label">예매번호</span>
+                                         <span class="ticket-num">\${ticket.ticketNumber}</span>
+                                       </div>
+                                      <div class="info-row">
+                                        <span class="label">경기장</span>
+                                        <span class="stadium">\${ticket.stadium}</span>
+                                      </div>
+                                      <div class="info-row">
+                                        <span class="label">좌석번호</span>
+                                        <span class="seat">\${ticket.seatInfo}</span>
+                                      </div>
+                                </div>
+                              `;
+                            container.appendChild(item);
+
+                            const arrow = item.querySelector('.arrow-icon');
+                            arrow.addEventListener('click', () => {
+                                item.classList.toggle('expanded');
+                            });
+                        });
+
+                    });
+            };
+
+            tryRender(); // 실행
+        }
+
         function loadTabContent(tabName) {
             const url = '/user/mypage/' + tabName;
             fetch(url)
@@ -74,7 +141,11 @@
 
                     if (tabName === 'info') {
                         bindInfoForm();
+                    } else if (tabName === 'tickets') {
+                        bindTickets();
                     }
+                    // else if (tabName==='points') bindPoints();
+                    // else if (tabName==='fairy')   bindFairy();
                 })
                 .catch(err => console.error(err));
         }
@@ -86,7 +157,6 @@
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const name = tab.getAttribute('data-tab');
-                console.log('>>> 탭 클릭: data-tab 속성 =', JSON.stringify(name));
                 tabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
                 loadTabContent(name);

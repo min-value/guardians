@@ -158,13 +158,17 @@ public class UserController {
         List<Map<String, Object>> fakeTickets = new ArrayList<>();
 
         Map<String, Object> ticket1 = new HashMap<>();
-        ticket1.put("matchDate", "2025-07-01");
+        ticket1.put("userName", "홍길동");
+        ticket1.put("ticketNumber", "202506101234567");
+        ticket1.put("matchDate", "2025-06-10 (화) 18:30");
         ticket1.put("stadium", "서울 스타라이트 필드");
         ticket1.put("seatInfo", "320구역 오렌지석 D열 8번");
         fakeTickets.add(ticket1);
 
         Map<String, Object> ticket2 = new HashMap<>();
-        ticket2.put("matchDate", "2025-07-10");
+        ticket2.put("userName", "홍길동");
+        ticket2.put("ticketNumber", "202506041234567");
+        ticket2.put("matchDate", "2025-06-04 (수) 18:30");
         ticket2.put("stadium", "서울 스타라이트 필드");
         ticket2.put("seatInfo", "110 외야석 A열 2번");
         fakeTickets.add(ticket2);
