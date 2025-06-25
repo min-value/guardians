@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.TransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.*;
 
 import javax.sql.DataSource;
@@ -20,6 +23,7 @@ import javax.sql.DataSource;
 @EnableWebMvc
 @ComponentScan("org.baseball")
 @MapperScan(basePackages = "org.baseball", annotationClass = Mapper.class)
+@EnableTransactionManagement //트랜잭션 활성화
 public class MvcConfig implements WebMvcConfigurer {
     @Value("${spring.datasource.driver-class-name}")
     private String driver;
@@ -88,5 +92,12 @@ public class MvcConfig implements WebMvcConfigurer {
 
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
+
+    //트랜잭션 매니저 빈 등록
+    @Bean
+    public TransactionManager tm() {
+        TransactionManager tm = new DataSourceTransactionManager(datasource());
+        return tm;
     }
 }

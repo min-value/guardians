@@ -27,7 +27,7 @@ html, body {
     margin-bottom: 12px;
 }
 
-.inventoryList {
+#inventoryList {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -35,17 +35,21 @@ html, body {
     font-size: 24px;
     margin-bottom: 12px;
 }
-.inventoryList .all {
+#inventoryList .all {
     flex: 1;
     text-align: left;
     color: black;
+    font-weight: 400;
+    font-size: 24px;
 }
-.inventoryList .my {
+#inventoryList .my {
     flex: 1;
     text-align: left;
     color: var(--gray-03);
+    font-weight: 400;
+    font-size: 24px;
 }
-.inventoryList .else {
+#inventoryList .else {
     flex: 7;
     text-align: left;
     color: var(--white);
@@ -97,23 +101,25 @@ hr {
     justify-content: flex-end;
     align-items: center;
     font-family: "Pretendard Variable";
-    height: 40px;
-    margin-top: 31px;
+    height: 50px;
 }
 
 .writeBtn{
     width: 180px;
     height: 50px;
-    background: url("../../img/button-short.png") no-repeat center center;
-    background-size: contain;
+    background-color: var(--mainColor);
     border: none;
     cursor: pointer;
     font-weight: 400;
     font-size: 16px;
     color: white;
     display: flex;
-    justify-content: center; /* 가로 가운데 */
-    align-items: center;     /* 세로 가운데 */
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+.writeBtn:hover{
+    background-color: var(--mainHover);
 }
 
 /*============= post ===========*/
@@ -121,6 +127,7 @@ hr {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    margin-bottom: 31px;
 }
 #post {
     display: flex;
@@ -146,10 +153,6 @@ hr {
 #post .date {
     flex: 1;
     text-align: left;
-}
-
-.footer{
-    height:200px;
 }
 
 .post-link {

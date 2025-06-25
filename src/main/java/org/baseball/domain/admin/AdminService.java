@@ -38,6 +38,7 @@ public class AdminService {
                 l.setStatus("취소완료");
             } else if (l.isPay() && l.getGameDate().after(now)) {
                 l.setStatus("결제완료");
+
             } else if (l.isPay() && l.getGameDate().before(now)) {
                 l.setStatus("사용완료");
             }
@@ -79,7 +80,7 @@ public class AdminService {
         int cnt =1;
         for (GamesInfoDTO l : list){
             l.setNo(cnt++);
-            l.setOurTeam("1");
+            l.setOurTeam("6");
             l.setStatus(1);
             if(l.getResult() == null) {
                 l.setResult("예정");
@@ -121,7 +122,7 @@ public class AdminService {
         int cnt =1;
         for (GamesInfoDTO l : list){
             l.setNo(cnt++);
-            l.setOurTeam("1");
+            l.setOurTeam("6");
             l.setResult("예정");
             l.setStatus(2);
             l.setOpponentScore("-");

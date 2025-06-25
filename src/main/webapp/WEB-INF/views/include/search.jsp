@@ -17,9 +17,14 @@
   document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("searchForm");
     const button = document.getElementById("searchBtn");
+    const keywordInput = form.querySelector("input[name = 'keyword']");
 
     button.addEventListener("click", () => {
-      form.submit();
+      const keyword = keywordInput.value.trim();
+      if(keyword === ''){
+          alert("검색어를 입력해주세요!");
+      }
+      else form.submit();
     });
   });
 </script>

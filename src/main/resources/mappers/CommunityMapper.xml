@@ -4,7 +4,7 @@
 <mapper namespace="org.baseball.domain.community.CommunityMapper">
 
     <select id="getPostPageWithSearch" resultType="org.baseball.dto.PostDto" parameterType="map">
-        SELECT p.post_pk, p.title, p.p_content, p.p_date, u.user_name
+        SELECT p.post_pk, p.title, p.p_content, p.p_date, u.user_name, u.user_pk
         FROM post p
         JOIN user u ON p.user_pk = u.user_pk
         <where>
@@ -23,7 +23,7 @@
                 </choose>
             </if>
         </where>
-        ORDER BY p.p_date DESC
+        ORDER BY p.p_date DESC, p.user_pk ASC, p.title ASC
         LIMIT #{size} OFFSET #{offset}
     </select>
 
@@ -50,17 +50,17 @@
     </select>
 
     <select id="selectPostById" resultType="org.baseball.dto.PostDto" parameterType="int">
-        SELECT p.post_pk, p.title, p.p_content, p.p_date, u.user_name
+        SELECT p.post_pk, p.title, p.p_content, p.p_date, u.user_name, u.user_pk
         FROM post p
         JOIN user u ON p.user_pk = u.user_pk
         WHERE p.post_pk = #{postPk}
     </select>
 
-    <select id="getCommentPage" resultType="org.baseball.dto.CommentDTO" parameterType="int">
-        SELECT c.comment_pk, c.c_content, c.c_date, u.user_name
+    <select id="getCommentPage" resultType="org.baseball.dto.CommentDTO" parameterType="map">
+        SELECT c.comment_pk, c.c_content, c.c_date, u.user_name, u.user_pk
         FROM comment c
         JOIN user u ON c.user_pk = u.user_pk
-        WHERE c.post_pk = #{postPk}
+        WHERE c.post_pk = #{post_pk}
         ORDER BY c.c_date DESC
         LIMIT #{size} OFFSET #{offset}
     </select>
@@ -70,5 +70,50 @@
         FROM comment c
         WHERE c.post_pk = #{postPk}
     </select>
+
+    <!--  삭제하려는 글 안의 댓글 삭제  -->
+    <delete id="deleteCommentsInPost" parameterType="int">
+        DELETE FROM comment WHERE post_pk = #{post_pk}
+    </delete>
+
+    <!--  글 삭제  -->
+    <delete id="deletePost" parameterType="int">
+        DELETE FROM post WHERE post_pk = #{post_pk}
+    </delete>
+
+    <!--  댓글 삽입  -->
+    <insert id="insertComment" parameterType="org.baseball.dto.CommentDTO">
+        INSERT INTO comment(
+            c_content,
+            c_date,
+            post_pk,
+            user_pk
+        ) VALUES(
+             #{c_content},
+             NOW(),
+             #{post_pk},
+            #{user_pk}
+        )
+    </insert>
+
+    <!-- 댓글 하나 삭제 -->
+    <delete id="deleteComment" parameterType="int">
+        DELETE FROM comment WHERE comment_pk = #{comment_pk}
+    </delete>
+
+    <!--post 등록-->
+    <insert id="addPost" parameterType="org.baseball.dto.PostDto">
+        INSERT INTO post(
+            title,
+            p_content,
+            p_date,
+            user_pk
+        ) VALUES(
+            #{title},
+            #{p_content},
+            NOW(),
+            #{user_pk}
+        )
+    </insert>
 
 </mapper>

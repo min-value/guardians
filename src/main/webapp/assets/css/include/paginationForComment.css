@@ -1,0 +1,56 @@
+#pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.pageBtn{
+    width: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--gray-02);
+    transition: 0.2s;
+}
+.pageRight, .pageLeft {
+    width: 8px;
+    height: 16px;
+    border: none;
+    cursor: pointer;
+}
+.pageRight{
+    background: url("../../img/icon/pageRight.png") no-repeat center center;
+    background-size: contain;
+    padding-right: 35px;
+}
+.pageLeft{
+    background: url("../../img/icon/pageLeft.png") no-repeat center center;
+    background-size: contain;
+    padding-left: 35px;
+}
+
+.pageBtn.active {
+    background-color: var(--white);
+    color: var(--mainColor);
+    text-decoration: underline;
+}
+
+.pageEllipsis {
+    display: inline-block;
+    width: 18px;
+    height: 4px;
+    border: none;
+    cursor: default;
+    background: url("../../img/icon/pageDot.png") no-repeat center center;
+    background-size: contain;
+    padding-right: 35px;
+}
+.pageLeft:disabled, .pageRight:disabled {
+    opacity: 0.5;
+    cursor: default;
+}

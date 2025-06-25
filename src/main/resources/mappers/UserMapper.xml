@@ -22,6 +22,7 @@
         SELECT user_id AS userId,
                user_pwd AS userPwd,
                user_name AS userName,
+               user_pk AS userPk,
                email,
                tel
         FROM user

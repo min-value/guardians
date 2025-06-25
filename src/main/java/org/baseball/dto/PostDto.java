@@ -11,5 +11,6 @@ public class PostDto {
     private String p_content;
     private Timestamp p_date;
     private String user_name;
+    private int user_pk;
 
 }

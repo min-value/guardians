@@ -17,6 +17,10 @@ html, body {
     margin: 0 auto;
     padding-top: 80px;
 }
+.backgroundWrapper{
+    display: flex;
+    justify-content: center;
+}
 
 .postHeader {
     width: 980px;
@@ -54,26 +58,54 @@ html, body {
     font-size: 20px;
     font-weight: 400;
     border-bottom: 2px solid var(--gray-02);
-    height: 300px;
+    min-height: 300px;
+}
+.edit{
+    flex: 0.1;
+    border: none;
+    cursor: pointer;
+    background: url("../../img/icon/edit-vertical.png") no-repeat center center;
+    background-size: contain;
 }
 
-.footer{
-    height:200px;
+#edit-dropdown-wrapper {
+    position: relative;
+    display: inline-block;
 }
+
+.edit-dropdown {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 80px;
+}
+
+.edit-dropdown div {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.edit-dropdown div:hover {
+    background-color: #f0f0f0;
+}
+/*=====================================*/
 
 .comment-box{
-    border-bottom: 1px solid var(--gray-02);
+    border-bottom: 1px solid var(--gray-03);
     padding: 16px 40px;
 }
 .comment-header{
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 .comment-user{
     color: var(--gray-02);
     font-weight: 400;
     font-size: 16px;
+    padding-right: 20px;
 }
 .comment-date{
     color: var(--gray-02);
@@ -83,8 +115,14 @@ html, body {
 .comment-content{
     color: var(--black);
     font-weight: 400;
-    font-size: 20px;
+    font-size: 18px;
     padding-top: 5px;
+}
+.comment-actions{
+    margin-left: auto;
+}
+.comment-delete{
+    padding-left: 10px;
 }
 
 .comment-actions button {
@@ -98,4 +136,47 @@ html, body {
 
 .comment-actions button:hover {
     text-decoration: underline;
+}
+
+/*write comment*/
+#commentForm{
+    width: 980px;
+    display: flex;
+    column-gap: 12px;
+    margin-top: 10px;
+}
+#write{
+    width: 870px;
+    height: 96px;
+    border: 1px solid var(--gray-02);
+    padding: 20px 40px;
+    font-size: 18px;
+    color: var(--black);
+    font-weight: 400;
+    resize: none;
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+    margin-right: 12px;
+}
+#write::placeholder{
+    font-size: 16px;
+    color: var(--gray-02);
+    font-weight: 400;
+}
+#write:focus {
+    outline: none;
+}
+#sendBtn{
+    width: 98px;
+    height: 96px;
+    background-color: var(--mainColor);
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+
+    font-size: 16px;
+    color: var(--white);
+    font-weight: 400;
+}
+#sendBtn:hover{
+    background-color: var(--mainHover);
 }

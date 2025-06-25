@@ -4,6 +4,7 @@ import org.baseball.dto.CommentDTO;
 import org.baseball.dto.PostDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,21 +36,43 @@ public class CommunityService {
         return result;
     }
 
-    public PostDto getPostById(int postPk){
-        return mapper.selectPostById(postPk);
+    public PostDto getPostById(int post_pk){
+        return mapper.selectPostById(post_pk);
     }
 
-    public Map<String, Object> getCommentById(int postPk, int page){
+    public Map<String, Object> getCommentById(int post_pk, int page){
         int size = 5;
         int offset = (page - 1) * size;
 
-        List<CommentDTO> list = mapper.getCommentPage(postPk, offset, size);
-        int totalCount = mapper.countComment(postPk);
+        Map<String, Object> param = new HashMap<>();
+        param.put("post_pk", post_pk);
+        param.put("offset", offset);
+        param.put("size", size);
+        List<CommentDTO> list = mapper.getCommentPage(param);
+        int totalCount = mapper.countComment(post_pk);
 
         Map<String, Object> result = new HashMap<>();
         result.put("list", list);
         result.put("totalCount", totalCount);
 
         return result;
+    }
+
+    @Transactional
+    public void deletePost(int post_pk){
+        mapper.deleteCommentsInPost(post_pk);
+        mapper.deletePost(post_pk);
+    }
+
+    public void addComment(CommentDTO dto){
+        mapper.insertComment(dto);
+    }
+
+    public void deleteComment(int comment_pk){
+        mapper.deleteComment(comment_pk);
+    }
+
+    public void addPost(PostDto dto){
+        mapper.addPost(dto);
     }
 }
