@@ -93,12 +93,8 @@ html, body {
 }
 /*=====================================*/
 
-.footer{
-    height:200px;
-}
-
 .comment-box{
-    border-bottom: 1px solid var(--gray-02);
+    border-bottom: 1px solid var(--gray-03);
     padding: 16px 40px;
 }
 .comment-header{
@@ -140,4 +136,47 @@ html, body {
 
 .comment-actions button:hover {
     text-decoration: underline;
+}
+
+/*write comment*/
+#commentForm{
+    width: 980px;
+    display: flex;
+    column-gap: 12px;
+    margin-top: 10px;
+}
+#write{
+    width: 870px;
+    height: 96px;
+    border: 1px solid var(--gray-02);
+    padding: 20px 40px;
+    font-size: 18px;
+    color: var(--black);
+    font-weight: 400;
+    resize: none;
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+    margin-right: 12px;
+}
+#write::placeholder{
+    font-size: 16px;
+    color: var(--gray-02);
+    font-weight: 400;
+}
+#write:focus {
+    outline: none;
+}
+#sendBtn{
+    width: 98px;
+    height: 96px;
+    background-color: var(--mainColor);
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+
+    font-size: 16px;
+    color: var(--white);
+    font-weight: 400;
+}
+#sendBtn:hover{
+    background-color: var(--mainHover);
 }

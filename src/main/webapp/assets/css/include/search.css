@@ -20,7 +20,7 @@
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background: url("../../img/dropdownVector.png") no-repeat right 10px center;
+    background: url("../../img/icon/dropdownVector.png") no-repeat right 10px center;
     font-size: 14px;
     color: var(--black);
     cursor: pointer;
@@ -42,7 +42,7 @@
 .search-btn{
     width: 40px;
     height: 40px;
-    background: url("../../img/search_img.png") no-repeat center center;
+    background: url("../../img/icon/search_img.png") no-repeat center center;
     background-size: contain;
     border: none;
     cursor: pointer;
