@@ -25,6 +25,10 @@
         <%@ include file="../include/headerImg.jsp" %>
     </div>
     <div class="content">
+        <div class="goPrev" onclick="goPrevPage()">
+            <div class="prevImg"></div>
+            <div class="prevText">글 목록</div>
+        </div>
         <div class="postHeader">
             <div class="title">${post.title}</div>
             <div class="writer">${post.user_name}</div>
@@ -68,9 +72,12 @@
         dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
     }
 
+    function goPrevPage(){
+        location.href='/community/post';
+    }
+
     function editPost() {
-        alert("수정 기능 실행!");
-        // 여기에 수정 페이지로 이동하거나 수정 모달 띄우는 로직 넣기
+        location.href='/community/post/${post.post_pk}/modify';
     }
 
     function deletePost() {

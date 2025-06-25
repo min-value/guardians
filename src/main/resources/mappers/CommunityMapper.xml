@@ -116,4 +116,21 @@
         )
     </insert>
 
+    <!--post 수정-->
+    <update id="modifyPost" parameterType="org.baseball.dto.PostDto">
+        UPDATE post
+        SET
+            title = #{title},
+            p_content = #{p_content}
+        WHERE post_pk = #{post_pk}
+    </update>
+
+    <!--comment 수정-->
+    <update id="updateComment" parameterType="org.baseball.dto.CommentDTO">
+        UPDATE comment
+        SET
+            c_content = #{c_content}
+        WHERE comment_pk = #{comment_pk}
+    </update>
+
 </mapper>
