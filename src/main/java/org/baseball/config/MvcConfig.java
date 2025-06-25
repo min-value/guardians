@@ -3,6 +3,7 @@ package org.baseball.config;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.baseball.interceptor.AdminCheckInterceptor;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
@@ -99,5 +100,11 @@ public class MvcConfig implements WebMvcConfigurer {
     public TransactionManager tm() {
         TransactionManager tm = new DataSourceTransactionManager(datasource());
         return tm;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new AdminCheckInterceptor())
+                .addPathPatterns("/admin/**");
     }
 }
