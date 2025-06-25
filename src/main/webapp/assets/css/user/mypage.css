@@ -7,7 +7,7 @@ html, body {
 }
 
 .mypage-container {
-    margin: 80px auto;
+    margin: 80px auto 0 auto;
     font-family: 'Pretendard', sans-serif;
     justify-content: center;
     display: flex;

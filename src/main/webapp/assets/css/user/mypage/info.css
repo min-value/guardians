@@ -3,7 +3,7 @@
 
 .info-tab {
     width: 378px;
-    margin: 48px auto;
+    margin: 48px auto 0 auto;
     font-family: 'Pretendard', sans-serif;
     display: flex;
     flex-direction: column;

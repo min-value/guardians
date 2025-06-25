@@ -118,6 +118,7 @@ public class UserController {
         return "user/mypage/fairy";
     }
 
+    // 마이페이지 내 정보 수정
     @PostMapping("/user/update")
     @ResponseBody
     public Map<String, Object> updateUserAjax(@ModelAttribute UserDTO user, HttpSession session) {

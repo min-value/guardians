@@ -22,6 +22,7 @@
 
     <div id="tab-content-container"></div>
 </div>
+<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -93,9 +94,9 @@
                             item.classList.add('ticket-item');
                             item.innerHTML = `
                                 <div class="ticket-top">
-                                    <img src="/assets/img/teamlogos/1.png" class="logo-team">
+                                    <img src="/assets/img/teamlogos/6.png" class="logo-team">
                                     <span class="vs-text">VS</span>
-                                    <img src="/assets/img/teamlogos/10.png" class="logo-team">
+                                    <img src="/assets/img/teamlogos/3.png" class="logo-team">
                                     <span class="match-date">\${ticket.matchDate}</span>
                                     <img src="/assets/img/mypage/chevron-right.svg" class="arrow-icon">
                                 </div>
@@ -132,6 +133,61 @@
             tryRender(); // 실행
         }
 
+        // 포인트 내역 조회
+        function bindPoints() {
+            const tryRender = () => {
+                const container = document.querySelector('.points-list');
+                const totalDiv = document.querySelector('.point-total');
+                if (!container || !totalDiv) {
+                    setTimeout(tryRender, 100);
+                    return;
+                }
+
+                fetch('/user/points')
+                    .then(res => res.json())
+                    .then(data => {
+                        const points = data.points;
+                        const totalAmount = data.totalAmount;
+
+                        const totalDiv = document.querySelector('.point-total');
+
+                        if(totalDiv) {
+                            totalDiv.textContent = '';
+                            totalDiv.textContent = `\${totalAmount}P`;
+                        } else {
+                            console.error("point-total 요소를 찾지 못했습니다.");
+                        }
+
+                        const container = document.querySelector('.points-list');
+                        if (!points.length) {
+                            container.innerHTML = '<p class="no-points-msg">포인트 내역이 없습니다.</p>';
+                            return;
+                        }
+
+                        container.innerHTML = '';
+                        points.forEach(point => {
+                            const item = document.createElement('div');
+                            item.className = 'point-item';
+                            item.innerHTML = `
+                                <span class="point-date">\${point.date}</span>
+                                <span class="point-description">\${point.description}</span>
+                                <span class="point-amount">\${point.point}P</span>
+                            `;
+                            const amountSpan = item.querySelector('.point-amount');
+
+                            if (point.point < 0) {
+                                amountSpan.classList.add('negative');
+                                amountSpan.textContent = `\${point.point}P`;
+                            } else {
+                                amountSpan.textContent = `+\${point.point}P`;
+                            }
+                            container.appendChild(item);
+                        });
+                    });
+            };
+            tryRender();
+        }
+
         function loadTabContent(tabName) {
             const url = '/user/mypage/' + tabName;
             fetch(url)
@@ -143,8 +199,9 @@
                         bindInfoForm();
                     } else if (tabName === 'tickets') {
                         bindTickets();
+                    } else if (tabName === 'points') {
+                        bindPoints();
                     }
-                    // else if (tabName==='points') bindPoints();
                     // else if (tabName==='fairy')   bindFairy();
                 })
                 .catch(err => console.error(err));
