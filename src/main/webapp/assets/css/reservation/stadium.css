@@ -7,148 +7,6 @@
     padding: 0;
 }
 
-.selectedList-container {
-    width: 482px;
-    height: 90px;
-    bottom: 0;
-    z-index: 2;
-    position: absolute;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    flex-direction: column;
-}
-
-.selectedList-info-container {
-    width: 480px;
-    height: 34px;
-    border: 1px solid var(--gray-02);
-    background-color: rgba(51, 51, 51, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    cursor: pointer;
-}
-
-.selectedList-dropdown-wrapper {
-    width: 40px;
-    height: 34px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#selectedList-dropdown {
-    width: 10px;
-}
-
-.selectedList-infoText-wrapper {
-    width: 360px;
-    height: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: start;
-}
-
-#selectedList-infoText {
-    line-height: 34px;
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--white);
-}
-
-.resetBtn-wrapper {
-    width: 80px;
-    height: 34px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#resetBtn {
-    width: 60%;
-    cursor: pointer;
-}
-
-.selectedList-comp-container {
-    display: none;
-    width: 480px;
-    height: 54px;
-    border: 1px solid var(--gray-02);
-    background-color: rgba(51, 51, 51, 0.4);
-    border-top: 0;
-}
-
-.selectedList-comp-container.show {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-}
-
-.selectedList-comp-wrapper {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-}
-.selectedSeatComp-container {
-    height: 30px;
-    width: 100px;
-    background-color: var(--gray-02);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 10px;
-}
-
-.selectedSeatComp-wrapper {
-    height: 30px;
-    width: 90px;
-    display: flex;
-    align-items: center;
-}
-
-.selectedSeatComp-zone-color-wrapper {
-    width: 18px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.selectedSeatComp-zone-color {
-    width: 11px;
-    height: 11px;
-}
-
-.selectedSeatComp-zone-name-wrapper {
-    width: 36px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.selectedSeatComp-zone-name {
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 30px;
-    color: var(--white);
-}
-
-.selectedSeatComp-zone-detail-wrapper {
-    width: 36px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.selectedSeatComp-zone-detail {
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 30px;
-    color: var(--white);
-}
 .stadium-container {
     width: 482px;
     height: 424px;
@@ -182,4 +40,26 @@
 #svgMap {
     height: 424px;
     background-color: var(--white);
+}
+
+/* 투명 영역 (툴팁 대상) */
+.region-overlay {
+    position: absolute;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+/* 툴팁 스타일 */
+.tooltip {
+    position: absolute;
+    padding: 6px 10px;
+    background: rgba(39,39,39,0.9);
+    color: white;
+    font-size: 14px;
+    border-radius: 4px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
 }

@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/reservation")
 public class ReservationController {
     @GetMapping("/seat")
-    public String test3() {
+    public String seat() {
         return "reservation/tickets1";
     }
 
     @GetMapping("/discount")
-    public String test4() {
+    public String discount() {
         return "reservation/tickets2";
     }
 
     @GetMapping("/confirm")
-    public String test5() {
+    public String confirm() {
         return "reservation/tickets3";
     }
 }

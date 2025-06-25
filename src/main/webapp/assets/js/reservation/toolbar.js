@@ -1,31 +1,49 @@
 const standardX = 130;
 const standardY = 50;
 
-const zoomC = document.querySelector('.zoomC');
-const zoomP = document.querySelector('.zoomP');
-let zoom = 1;
+const zoomCs = document.querySelectorAll('.zoomC');
+const zoomPs = document.querySelectorAll('.zoomP');
+
+let zoomC;
+let zoomP;
+
+export let zoom = 1;
+
+
 
 let offsetX = 0;
 let offsetY = 0;
 let startX = 0;
 let startY = 0;
 
+import {currentView, resetSelectedSeats, setColored, setCurrentView} from "./tickets1.js";
+import {selectedSeats} from "./tickets1.js";
+import {colored} from "./tickets1.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     //툴바 버튼 이벤트 리스너 추가 
-    const gobackBtn = document.getElementById('gobackBtn');
-    const enlargementBtn = document.getElementById('enlargementBtn');
-    const reductionBtn = document.getElementById('reductionBtn');
-    const reloadBtn = document.getElementById('reloadBtn');
+    const gobackBtn = document.querySelector('#gobackBtn');
+    const enlargementBtn = document.querySelector('#enlargementBtn');
+    const reductionBtn = document.querySelector('#reductionBtn');
+    const reloadBtn = document.querySelector('#reloadBtn');
+
+
     const mask = document.getElementById('highlight-mask');
     const overlay = document.getElementById('overlay');
+
+    //zone일 때 (최초 로드) zoomP, zoomC 세팅
+    setZoom();
+
     //색상 회복
     gobackBtn.addEventListener('click', () => {
-        colorRestore(mask, overlay);
+        if(currentView === 'zone') {
+            colorRestore(mask, overlay);
+        } else if(currentView === 'seat') {
+            switchToZone();
+        }
     });
     //확대
     enlargementBtn.addEventListener('click', () => {
-        zoomC
         zoomIn();
     })
 
@@ -33,9 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
     reductionBtn.addEventListener('click', () => {
         zoomOut();
     })
-
-    //드래그 이동
-    zoomP.addEventListener('mousedown', mouseDownHandler);
 
     //리로드
     reloadBtn.addEventListener('click', () => {
@@ -50,8 +65,21 @@ function colorRestore(mask, overlay) {
     }
 
     overlay.setAttribute('visibility', 'hidden');
+
+    setColored(1);
 }
 
+/* zone으로 이동 */
+function switchToZone() {
+    setCurrentView(1);
+
+    //선택한 좌석들 초기화: 선택 0
+    resetSelectedSeats();
+
+    //seat 화면 display:none 설정
+    document.querySelector('.seats-container').style.display = 'none';
+    document.querySelector('.stadium-container').style.display = 'flex';
+}
 /* 확대 및 축소 */
 function zoomIn() {
     if(zoom < 2) {
@@ -152,4 +180,16 @@ function applyTransform() {
     zoomC.style.transition = 'transform 0s';
     zoomC.style.transformOrigin = 'top left';
     zoomC.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${zoom})`;
+}
+
+export function setZoom() {
+    zoom = 1;
+
+    if(currentView === 'zone') {
+        zoomC = zoomCs[0];
+        zoomP = zoomPs[0];
+    } else if(currentView === 'seat') {
+        zoomC = zoomCs[1];
+        zoomP = zoomPs[1];
+    }
 }

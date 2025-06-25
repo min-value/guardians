@@ -3,46 +3,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/stadium.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">
 <div class="stadium-container">
-  <div class="selectedList-container">
-    <div class="selectedList-info-container">
-      <div class="selectedList-dropdown-wrapper">
-        <img id="selectedList-dropdown" src="/assets/img/reservation/dropDownWhiteDown.svg" alt="드롭다운">
-      </div>
-      <div class="selectedList-infoText-wrapper">
-        <div id="selectedList-infoText">
-          선택된 좌석 (<span id="selectList-num" style="display: inline">0</span>석)
-        </div>
-      </div>
-      <div class="resetBtn-wrapper">
-        <img id="resetBtn" src="/assets/img/reservation/resetBtn.svg" alt="초기화 버튼">
-      </div>
-    </div>
-    <div class="selectedList-comp-container">
-      <div class="selectedList-comp-wrapper">
-        <jsp:include page="selectedSeatComp.jsp">
-          <jsp:param name="zoneColor" value="purple"/>
-          <jsp:param name="zoneName" value="VIP석"/>
-          <jsp:param name="zoneDetail" value="a10"/>
-        </jsp:include>
-        <jsp:include page="selectedSeatComp.jsp">
-          <jsp:param name="zoneColor" value="purple"/>
-          <jsp:param name="zoneName" value="VIP석"/>
-          <jsp:param name="zoneDetail" value="a10"/>
-        </jsp:include>
-        <jsp:include page="selectedSeatComp.jsp">
-          <jsp:param name="zoneColor" value="purple"/>
-          <jsp:param name="zoneName" value="VIP석"/>
-          <jsp:param name="zoneDetail" value="a10"/>
-        </jsp:include>
-        <jsp:include page="selectedSeatComp.jsp">
-          <jsp:param name="zoneColor" value="purple"/>
-          <jsp:param name="zoneName" value="VIP석"/>
-          <jsp:param name="zoneDetail" value="a10"/>
-        </jsp:include>
-      </div>
-    </div>
-  </div>
-  <%@ include file ="toolbar.jsp" %>
   <div class="ballpark-container">
     <div class="ballpark-wrapper zoomP">
       <svg class="zoomC" id="svgMap" width="2745" height="2777" viewBox="0 0 2745 2777" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -96,4 +56,16 @@
     </div>
   </div>
 </div>
+<div id="tooltip" style="
+        position: absolute;
+        background: #333;
+        color: white;
+        padding: 6px 10px;
+        border-radius: 4px;
+        font-size: 14px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.2s;
+        z-index: 1000;
+      "></div>
 <script type="module" src="${pageContext.request.contextPath}/assets/js/reservation/stadium.js"></script>

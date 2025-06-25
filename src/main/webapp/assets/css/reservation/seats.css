@@ -5,10 +5,11 @@
 }
 
 .seats-container {
+    display: none;
     width: 482px;
     height: 424px;
     position: relative;
-    display: flex;
+    /*display: flex;*/
     justify-content: center;
     align-items: center;
     background-color: var(--white);
@@ -37,11 +38,11 @@
     background-color: var(--white);
 }
 
-#svgMap {
-    width: 100%;
-    height: 60%;
-    background-color: var(--white);
-}
+/*#svgMap {*/
+/*    width: 100%;*/
+/*    height: 60%;*/
+/*    background-color: var(--white);*/
+/*}*/
 
 /* direction */
 .direction-container {
