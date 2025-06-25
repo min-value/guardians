@@ -24,11 +24,9 @@ public class GamesServiceImpl implements GamesService {
         return gamesMapper.getTeamRanking();
     }
 
-    // 경기 일정 조회
+    // 특정 월 경기 일정 조회
     @Override
-    public List<ScheduleDTO> getGameSchedule() {
-        return gamesMapper.getGameSchedule();
+    public List<ScheduleDTO> getScheduleMonth(int year, int month) {
+        return gamesMapper.getScheduleMonth(year, month);
     }
-
-
 }

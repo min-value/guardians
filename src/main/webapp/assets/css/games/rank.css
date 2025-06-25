@@ -15,7 +15,7 @@
     max-width: 1180px;
     margin: 60px auto 100px auto;
     box-sizing: border-box;
-    position: relative; /* symbol 위치 기준 */
+    position: relative;
 }
 
 /* 기사 배경 */
@@ -48,8 +48,8 @@
 
 /* 테이블 헤더 */
 .rank-table thead {
-    background-color: #0241A0;
-    color: white;
+    background-color: var(--mainColor);
+    color: var(--white);
 }
 
 /* 테이블 */
@@ -71,7 +71,7 @@
 
 /* 테이블 내부 세부 지표 글씨 색 */
 .rank-table td:nth-child(n+3) {
-    color: #707070;
+    color: var(--gray-02);
 }
 
 /* 팀명 */

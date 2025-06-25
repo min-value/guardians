@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class RankDTO {
-    private int teamPk;
     private int ranking;
     private String teamName;
     private int win;

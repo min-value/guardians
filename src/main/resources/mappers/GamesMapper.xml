@@ -5,9 +5,8 @@
 
 <mapper namespace="org.baseball.domain.games.GamesMapper">
 
-    <!--랭킹 띄우기-->
+    <!-- 랭킹 조회 -->
     <resultMap id="teamRank" type="org.baseball.dto.RankDTO">
-        <result property="teamPk" column="team_pk"/>
         <result property="ranking" column="ranking"/>
         <result property="teamName" column="team_name"/>
         <result property="win" column="win"/>
@@ -21,7 +20,6 @@
 
     <select id="getTeamRanking" resultMap="teamRank">
         SELECT
-            team_pk,
             ranking,
             team_name,
             win,
@@ -35,27 +33,25 @@
         ORDER BY ranking ASC
     </select>
 
-    <!--경기 일정-->
+    <!-- 경기 일정 월별 조회 (점수 제거 버전) -->
     <resultMap id="gameSchedule" type="org.baseball.dto.ScheduleDTO">
         <result property="gamePk" column="game_pk"/>
         <result property="gameDate" column="game_date"/>
         <result property="result" column="result"/>
-        <result property="ourScore" column="our_score"/>
-        <result property="oppScore" column="opp_score"/>
         <result property="stadiumPk" column="stadium_pk"/>
         <result property="teamPk" column="team_pk"/>
     </resultMap>
 
-    <select id="getGameSchedule" resultMap="gameSchedule">
+    <select id="getScheduleMonth" resultMap="gameSchedule">
         SELECT
             game_pk,
             game_date,
             result,
-            our_score,
-            opp_score,
             stadium_pk,
             team_pk
         FROM games
+        WHERE YEAR(game_date) = #{year}
+          AND MONTH(game_date) = #{month}
         ORDER BY game_date ASC
     </select>
 

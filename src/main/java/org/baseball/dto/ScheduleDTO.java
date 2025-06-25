@@ -9,8 +9,6 @@ public class ScheduleDTO {
     int gamePk;
     Timestamp gameDate;
     String result;
-    int ourScore;
-    int oppScore;
     int stadiumPk;
     int teamPk;
 }
