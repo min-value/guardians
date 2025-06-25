@@ -1,0 +1,223 @@
+@import "/assets/css/colors.css";
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+/* left container */
+/* 게임 정보 표시 */
+.gameinfo-container {
+    height: 90px;
+    width: 522px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+}
+
+.teams-wrapper {
+    width: 522px;
+    height: 60px;
+    display: flex;
+    justify-content: start;
+    align-items: end;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+#team1 {
+    margin-right: 10px;
+    margin-left: 20px;
+}
+
+#team2 {
+    margin-left: 10px;
+}
+
+.detail-wrapper {
+    width: 522px;
+    height: 45px;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+#location {
+    margin-right: 10px;
+    margin-left: 20px;
+}
+
+#date {
+    margin-left: 10px;
+}
+
+/* svg 컨테이너 */
+.mapinfo-container {
+    height: 444px;
+    width: 522px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* right container */
+/* top container */
+.top-infoImg-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#infoImg {
+    height: 120px;
+}
+
+/* bottom container */
+.bottom-container {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 등급 선택 텍스트 + 새로고침 버튼 */
+.bottom-infotext-container {
+    display: flex;
+    justify-content: space-between;
+    height: 35px;
+    width: 185px;
+}
+
+.selectZone-wrapper {
+    height: 100%;
+    width: 93px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+#selectZone {
+    font-family: 'Pretandard', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    margin-left: 15px;
+}
+
+#zoneReloadBtn-wrapper {
+    height: 100%;
+    width: 92px;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+}
+
+#zoneReloadBtn {
+    height: 16px;
+    margin-right: 15px;
+    margin-bottom: 5px;
+}
+
+/* 등급 선택 표 */
+.zoneInfo-container {
+    height: 254px;
+    width: 185px;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
+.zoneInfo-wrapper {
+    height:239px;
+    width: 155px;
+    /*background-color: red;*/
+    border-radius: 5px;
+    border: 1px solid var(--gray-04);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.zoneInfo-listBox {
+    height: 235px;
+    width: 151px;
+    overflow-y: scroll;
+}
+.zoneInfo-listBox::-webkit-scrollbar {
+    width: 5px;
+}
+
+.zoneInfo-listBox::-webkit-scrollbar-thumb {
+    background-color: var(--gray-02);
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 1px rgba(0,0,0,.3);
+}
+
+.zoneInfo-listBox::-webkit-scrollbar-track {
+    background-color: var(--white);
+    border-radius: 5px;
+}
+
+.zoneInfo {
+    width: 145px;
+    height: 30px;
+    display: flex;
+}
+
+.zoneColor-wrapper {
+    width: 30px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#zoneColor {
+    width: 15px;
+    aspect-ratio: 1 / 1;
+    background-color: darkgoldenrod;
+}
+
+.zoneName-wrapper {
+    width: 70px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+
+#zoneName {
+    font-family: 'Pretandard', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-02);
+    margin-left: 5px;
+}
+
+.zoneVacancies-wrapper {
+    width: 50px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#zoneVacancies {
+    font-family: 'Pretandard', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-02);
+}
+
+.ticket-btn-wrapper > img {
+    width: 100%;
+}

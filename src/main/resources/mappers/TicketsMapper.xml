@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.baseball.domain.tickets.TicketsMapper">
+    <select id="getTicketsList" resultType="org.baseball.dto.TicketsDTO" parameterType="map">
+        SELECT
+            h.game_pk as gameNo, g.game_date as gameDate, g.team_pk as opponentTeam,
+            s.location as stadium, h.start_date as startDate, h.end_date as endDate
+        FROM homegame h
+             JOIN games g ON h.game_pk = g.game_pk
+             JOIN stadium s ON s.stadium_pk = g.stadium_pk
+        WHERE end_date > NOW()
+        <if test="teamStatus != null and teamStatus != 0">
+            AND g.team_pk = ${teamStatus}
+        </if>
+        <choose>
+            <when test="ticketStatus != null and ticketStatus eq 1">
+                AND h.start_date &lt;= NOW() AND h.end_date >= NOW()
+            </when>
+            <when test="ticketStatus != null and ticketStatus eq 2">
+                AND h.start_date > NOW()
+            </when>
+        </choose>
+        ORDER BY gameDate
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+    <select id="countTicketsList" resultType="int" parameterType="map">
+        SELECT count(*)
+        FROM homegame h
+             JOIN games g ON h.game_pk = g.game_pk
+             JOIN stadium s ON s.stadium_pk = g.stadium_pk
+        WHERE end_date > NOW()
+        <if test="teamStatus != null and teamStatus != '0'">
+            AND g.team_pk = #{teamStatus}
+        </if>
+        <choose>
+            <when test="ticketStatus != null and ticketStatus == '1'">
+                AND h.start_date &lt;= NOW() AND h.end_date >= NOW()
+            </when>
+            <when test="ticketStatus != null and ticketStatus == '2'">
+                AND h.start_date > NOW()
+            </when>
+        </choose>
+    </select>
+</mapper>

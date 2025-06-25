@@ -46,7 +46,7 @@
             }
 
             $.ajax({
-                url: '/admin/tickets/addgame/page',
+                url: '/admin/tickets/addgame',
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({
@@ -64,13 +64,13 @@
                 }
             });
 
-            return false; // form submit 방지
+            return false;
         }
 
         function loadPage(page) {
             currentPage = page;
             $.ajax({
-                url: '/admin/games/allgame/page',
+                url: '/admin/tickets/addgame/page',
                 method: 'GET',
                 data: {
                     page: page,
@@ -129,7 +129,7 @@
             <p>경기 예매 등록</p>
         </div>
         <div class="logout">
-            <a>로그아웃</a>
+            <a href="/logout">로그아웃</a>
             <img src="/assets/img/icon/logout.png" alt="icon"/>
         </div>
     </div>

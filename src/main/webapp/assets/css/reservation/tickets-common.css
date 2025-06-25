@@ -1,4 +1,16 @@
+/*
+    등급/좌석 선택(1), 권종/할인 선택(2), 예매 확인(3) 모두에서 공통으로 사용하는 스타일
+ */
+
 @import "/assets/css/colors.css";
+
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
+    font-style: normal;
+    font-display: swap;
+}
 
 * {
     display: block;
@@ -38,7 +50,7 @@
 }
 
 .left-wrapper {
-    height: 534px;
+    height: 514px;
     width: 522px;
     display: flex;
     flex-direction: column;
@@ -63,13 +75,49 @@
     justify-content: center;
     margin-bottom: 15px;
 }
+
 .top-container {
-    height: 210px;
+    height: 150px;
     width: 185px;
 }
 
+.top-infotext-container {
+    height: 30px;
+    width: 185px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.top-infotext-wrapper {
+    height: 30px;
+    width: 155px;
+    display: flex;
+    align-items: center;
+}
+
+#infotext {
+    font-family: 'Pretandard', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.top-infoImg-container {
+    height: 120px;
+    width: 185px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.top-infoImg-wrapper {
+    height: 120px;
+    width: 155px;
+    border: 1px solid var(--gray-04);
+}
+
 .bottom-container {
-    height: 249px;
+    height: 289px;
     width: 185px;
 }
 
@@ -81,6 +129,9 @@
     align-items: end;
 }
 
-.ticket-btn-container > img {
+.ticket-btn-wrapper {
     width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: end;
 }

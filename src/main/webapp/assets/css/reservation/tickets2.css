@@ -1,0 +1,146 @@
+@import "/assets/css/colors.css";
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.cancelAgree-checkbox-wrapper {
+    display: none;
+}
+
+.reservation-warning-container {
+    height: 50px;
+    width: 522px;
+}
+
+.reservation-warning-wrapper {
+    height: 40px;
+    width: 522px;
+    border: 2px solid var(--errorColor);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--white);
+}
+
+#reservation-warning-text {
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 5px;
+    color: var(--errorColor);
+}
+
+.ticket-selection-container {
+    height: 464px;
+    width: 522px;
+}
+
+.ticket-selection-wrapper {
+    height: 464px;
+    width: 522px;
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.selection-infotext-container {
+    height: 50px;
+    width: 522px;
+    display: flex;
+    align-items: center;
+}
+
+#selection-infotext {
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+.ticket-options-container {
+    height: 414px;
+    width: 492px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ticket-options-wrapper {
+    height: 384px;
+    width: 442px;
+}
+
+.ticket-option-wrapper {
+    height: 53px;
+    width: 442px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    border-bottom: 2px solid var(--gray-05);
+}
+
+.option-text-wrapper {
+    width: 250px;
+    height: 53px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-left: 5px;
+}
+
+.option-price-wrapper {
+    width: 120px;
+    height: 53px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-right: 15px;
+}
+
+
+.option-text {
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.option-price {
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+}
+.option-cnt-wrapper {
+    width: 72px;
+    height: 53px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cnt-dropdown {
+    width: 72px;
+    height: 25px;
+    padding-left: 18px;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-size: 10px;
+    background: url("/assets/img/reservation/dropdown.svg") no-repeat right 10px center;
+    cursor: pointer;
+}

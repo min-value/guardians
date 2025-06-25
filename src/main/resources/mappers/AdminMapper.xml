@@ -49,20 +49,20 @@
                 AND result IS NULL
             </when>
         </choose>
-        ORDER BY game_date DESC
+        ORDER BY game_date
         LIMIT #{size} OFFSET #{offset}
     </select>
 
     <select id="countHomeGames" resultType="int">
-        SELECT COUNT(*) FROM games
+        SELECT COUNT(*)
         FROM games
-        WHERE stadium_pk = 1 AND game_pk NOT IN (SELECT game_pk FROM homegame)
+        WHERE stadium_pk = 1 AND game_pk NOT IN (SELECT game_pk FROM homegame) AND game_date >= SYSDATE()
     </select>
     <select id="showGamesAddList" resultType="org.baseball.dto.GamesInfoDTO" parameterType="map">
         SELECT game_pk as gameNo, team_pk as opponentTeam, our_score as ourScore, opp_score as opponentScore, result, DATE_FORMAT(game_date, '%Y-%m-%d %H:%i') as gameDate
         FROM games
         WHERE stadium_pk = 1 AND game_pk NOT IN (SELECT game_pk FROM homegame) AND game_date >= SYSDATE()
-        ORDER BY game_date DESC
+        ORDER BY game_date
         LIMIT #{size} OFFSET #{offset}
     </select>
     <select id="showAddGameInfo" parameterType="int" resultType="org.baseball.dto.AddGameInfoDTO">

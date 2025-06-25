@@ -4,6 +4,7 @@
 <mapper namespace="org.baseball.domain.user.UserMapper">
     <insert id="insertUser" parameterType="org.baseball.dto.UserDTO">
         INSERT INTO `user` (
+            user_id,
             user_pwd,
             user_name,
             email,
