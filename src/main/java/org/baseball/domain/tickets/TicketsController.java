@@ -52,7 +52,7 @@ public class TicketsController {
 
         model.addAttribute("selectedTeamStatus", teamStatus);
         model.addAttribute("selectedTicketStatus", ticketStatus);
-        return "tickets/HomeGameList";
+        return "tickets/homeGameList";
     }
 
     @GetMapping("/allgames")
