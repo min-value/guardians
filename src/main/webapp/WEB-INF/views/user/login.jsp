@@ -12,7 +12,7 @@
         <img src="/assets/img/header/header-title.png" alt="헤더 타이틀" style="max-width: 100%; height: 320px; display: flex; justify-content: center;">
     </div>
     <div class="login-form">
-        <form action="${pageContext.request.contextPath}/login" method="post" id="loginForm">
+        <form action="${pageContext.request.contextPath}/user/login" method="post" id="loginForm">
             <div class="input-form">
                 <div class="login-input">
                     <label for="id">아이디</label>
@@ -25,7 +25,7 @@
                 <div class="login-btn"><input type="submit" value="로그인" alt="로그인"></div>
                 <div class="signup">
                     <span>계정이 없으신가요?</span>
-                    <a class="signup-link" href="/signup">회원가입</a>
+                    <a class="signup-link" href="${pageContext.request.contextPath}/user/signup">회원가입</a>
                 </div>
             </div>
         </form>

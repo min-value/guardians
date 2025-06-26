@@ -11,7 +11,7 @@
         <img src="/assets/img/header/header-title.png" alt="헤더 타이틀" style="max-width: 100%; height: 320px; display: flex; justify-content: center;">
     </div>
     <div class="signup-form">
-        <form action="signup" method="post" id="board1" onsubmit="return signupCheck();">
+        <form action="${pageContext.request.contextPath}/user/signup" method="post" id="board1" onsubmit="return signupCheck();">
             <div class="input-form">
                 <div class="signup-input">
                     <label for="id">아이디</label>
