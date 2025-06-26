@@ -33,26 +33,29 @@
         ORDER BY ranking ASC
     </select>
 
-    <!-- 경기 일정 월별 조회 (점수 제거 버전) -->
+    <!-- 경기 일정 월별 조회 -->
     <resultMap id="gameSchedule" type="org.baseball.dto.ScheduleDTO">
         <result property="gamePk" column="game_pk"/>
         <result property="gameDate" column="game_date"/>
         <result property="result" column="result"/>
         <result property="stadiumPk" column="stadium_pk"/>
         <result property="teamPk" column="team_pk"/>
+        <result property="location" column="location"/>
     </resultMap>
 
     <select id="getScheduleMonth" resultMap="gameSchedule">
         SELECT
-            game_pk,
-            game_date,
-            result,
-            stadium_pk,
-            team_pk
-        FROM games
-        WHERE YEAR(game_date) = #{year}
-          AND MONTH(game_date) = #{month}
-        ORDER BY game_date ASC
+        g.game_pk,
+        g.game_date,
+        g.result,
+        g.stadium_pk,
+        g.team_pk,
+        s.location
+        FROM games g
+        JOIN stadium s ON g.stadium_pk = s.stadium_pk
+        WHERE YEAR(g.game_date) = #{year}
+        AND MONTH(g.game_date) = #{month}
+        ORDER BY g.game_date ASC
     </select>
 
 </mapper>

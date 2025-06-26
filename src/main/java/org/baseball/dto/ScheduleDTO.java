@@ -11,4 +11,7 @@ public class ScheduleDTO {
     String result;
     int stadiumPk;
     int teamPk;
+
+    // StaduumPk
+    private String location;
 }

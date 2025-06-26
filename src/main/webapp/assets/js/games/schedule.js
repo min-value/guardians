@@ -1,19 +1,6 @@
 $(document).ready(function () {
     const calendarGrid = document.getElementById("calendar-grid");
 
-    // stadiumPk -> 구장명
-    const stadiumMap = {
-        1: "연남",
-        2: "고척",
-        3: "창원",
-        4: "대구",
-        5: "광주",
-        6: "수원",
-        7: "잠실",
-        8: "사직",
-        9: "대전(신)"
-    };
-
     // 달력 렌더링
     function renderCalendar(year, month) {
         calendarGrid.innerHTML = "";
@@ -87,7 +74,7 @@ $(document).ready(function () {
                                 const m = String(date.getMinutes()).padStart(2, "0");
                                 return `${h}:${m}`;
                             });
-                            const location = stadiumMap[stadiumPk] || "";
+                            const location = games[0].location || "";
                             locationInfo = `<div class="game-info">${location} ${timeList.join(" / ")}</div>`;
                         } else {
                             // 더블헤더 아닐 시
@@ -96,7 +83,7 @@ $(document).ready(function () {
                                 const date = new Date(g.gameDate);
                                 const h = String(date.getHours()).padStart(2, "0");
                                 const m = String(date.getMinutes()).padStart(2, "0");
-                                const loc = stadiumMap[g.stadiumPk] || "";
+                                const loc = g.location || "";
                                 return `<div class="game-info">${loc} ${h}:${m}</div>`;
                             }).join("");
                         }
