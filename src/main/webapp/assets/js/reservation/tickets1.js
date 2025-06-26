@@ -56,10 +56,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* 선택한 좌석들 표시하는 토글 */
 function showSelectedSeats(length) {
-    if(length === 0 ) {
-        return;
+    const container = document.querySelector('.selectedList-comp-container')
+    const dropdownImg = document.querySelector('#selectedList-dropdown');
+
+    const isShown = container.classList.toggle('show');
+
+    if(isShown) {
+        //드랍 다운이 열린 경우
+        dropdownImg.src = "/assets/img/reservation/dropDownWhiteUp.svg";
+    } else {
+        dropdownImg.src = "/assets/img/reservation/dropDownWhiteDown.svg";
     }
-    document.querySelector('.selectedList-comp-container').classList.toggle('show');
 }
 
 /* zone 클릭 시 이벤트 */
@@ -102,24 +109,79 @@ function switchToSeat() {
     let seatObject = document.getElementById('seatObj');
     let zoneDetail = map[lastColoredName];
 
-    console.log(zoneDetail);
     seatObject.addEventListener('load', function() {
         const seatDoc = seatObject.contentDocument;
         const seatElement = seatDoc.querySelectorAll('.seat');
 
         //seat에 커서 올리면 커서 모양 바꾸기
         seatElement.forEach(el => {
-            console.log(el.id);
             if(zoneDetail.includes(el.id)) {
                 //이미 팔린 좌석인 경우
-                console.log(el.id);
                 el.style.fill = '#E1E1E1';
                 el.style.pointerEvents = 'none';
             } else {
                 //예매 가능한 좌석인 경우
+                //마우스 포인터 변경
                 el.addEventListener('mouseover', () => {
                     el.style.cursor = 'pointer';
                 });
+
+                let isSelected = false;
+
+                //클릭 시: 선택된 좌석에 추가 및 모양 변경
+                el.addEventListener('click', () => {
+                    if(isSelected) {
+                        el.setAttribute('rx', 0);
+                        el.setAttribute('ry', 0);
+                        el.setAttribute('stroke', 'none');
+
+                        for(let i = 0; i < selectedSeats.length; ++i) {
+                            if(selectedSeats[i] === el.id) {
+                                selectedSeats.splice(i, 1);
+                                break;
+                            }
+                        }
+
+                        document.getElementById('selectList-num').innerHTML = selectedSeats.length + '';
+                        document.getElementById(el.id).remove();
+                        isSelected = !isSelected;
+                    } else {
+                        if(selectedSeats.length < 4) {
+                            el.setAttribute('rx', 10);
+                            el.setAttribute('ry', 10);
+                            el.setAttribute('stroke', 'black');
+                            el.setAttribute('stroke-width', '3');
+
+                            selectedSeats.push(el.id);
+
+                            document.getElementById('selectList-num').innerHTML = selectedSeats.length + '';
+                            document.querySelector(".selectedList-comp-wrapper")
+                                .innerHTML += `
+                            <div class="selectedSeatComp-container" id="${el.id}">
+                                <div class="selectedSeatComp-wrapper">
+                                    <div class="selectedSeatComp-zone-color-wrapper">
+                                        <div class="selectedSeatComp-zone-color" style="background-color: ${zoneInfo[lastColoredName].zoneColor}">
+                                        </div>
+                                    </div>
+                                    <div class="selectedSeatComp-zone-name-wrapper">
+                                        <div class="selectedSeatComp-zone-name">
+                                            ${zoneInfo[lastColoredName].zoneName}
+                                        </div>
+                                    </div>
+                                    <div class="selectedSeatComp-zone-detail-wrapper">
+                                        <div class="selectedSeatComp-zone-detail">
+                                            ${el.id}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                            isSelected = !isSelected;
+                        } else {
+                            alert(`1인당 최대 4매까지 예매 가능합니다.`);
+                        }
+                    }
+
+                })
             }
         });
     })

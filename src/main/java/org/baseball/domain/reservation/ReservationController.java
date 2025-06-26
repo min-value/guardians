@@ -34,12 +34,14 @@ public class ReservationController {
 
         //구역 별 남은 좌석 수 저장
         Map<ZoneDTO, Integer> zoneMap = new LinkedHashMap<>();
+        Map<Integer, ZoneDTO> zoneInfo = new LinkedHashMap<>();
         Map<Integer, List<String>> zoneDetail = new LinkedHashMap<>();
 
         //팔린 좌석들 가져오기
         for(ZoneDTO zoneDTO : zoneDTOList){
             List<String> seats = reservationService.getSoldSeats(new SoldSeatsReqDTO(gamePk, zoneDTO.getZonePk()));
             zoneMap.put(zoneDTO, zoneDTO.getTotalNum() - seats.size());
+            zoneInfo.put(zoneDTO.getZonePk(), zoneDTO);
             zoneDetail.put(zoneDTO.getZonePk(), seats);
         }
 
@@ -50,11 +52,15 @@ public class ReservationController {
         //구역 당 남은 좌석 수 세션에 저장
         model.addAttribute("zoneMap", zoneMap);
 
-        //구역 당 상세 정보 세션에 저장
-        ObjectMapper mapper = new ObjectMapper();
-        String zoneMapJson = mapper.writeValueAsString(zoneDetail);
+        ObjectMapper mapper1 = new ObjectMapper();
+        String zoneInfoJson = mapper1.writeValueAsString(zoneInfo);
+        model.addAttribute("zoneInfo", zoneInfoJson);
 
-        model.addAttribute("zoneMapDetail", zoneMapJson);
+        //구역 당 상세 정보 세션에 저장
+        ObjectMapper mapper2 = new ObjectMapper();
+        String zoneDetailJson = mapper2.writeValueAsString(zoneDetail);
+
+        model.addAttribute("zoneMapDetail", zoneDetailJson);
 
         log.info(zoneMap.toString());
 

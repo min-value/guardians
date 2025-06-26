@@ -305,17 +305,17 @@
 }
 .selectedSeatComp-container {
     height: 30px;
-    width: 100px;
+    width: 110px;
     background-color: var(--gray-02);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 10px;
+    margin-left: 8px;
 }
 
 .selectedSeatComp-wrapper {
     height: 30px;
-    width: 90px;
+    width: 110px;
     display: flex;
     align-items: center;
 }
@@ -334,7 +334,7 @@
 }
 
 .selectedSeatComp-zone-name-wrapper {
-    width: 36px;
+    width: 66px;
     height: 30px;
     display: flex;
     align-items: center;
@@ -343,13 +343,13 @@
 
 .selectedSeatComp-zone-name {
     font-weight: 500;
-    font-size: 13px;
+    font-size: 11px;
     line-height: 30px;
     color: var(--white);
 }
 
 .selectedSeatComp-zone-detail-wrapper {
-    width: 36px;
+    width: 26px;
     height: 30px;
     display: flex;
     align-items: center;
@@ -358,7 +358,7 @@
 
 .selectedSeatComp-zone-detail {
     font-weight: 500;
-    font-size: 13px;
+    font-size: 11px;
     line-height: 30px;
     color: var(--white);
 }

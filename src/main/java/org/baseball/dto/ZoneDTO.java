@@ -9,4 +9,5 @@ public class ZoneDTO {
     private String zoneColor;
     private int cost;
     private int totalNum;
+    private int remainingNum;
 }

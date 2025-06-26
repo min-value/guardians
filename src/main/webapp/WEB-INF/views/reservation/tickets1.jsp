@@ -13,6 +13,7 @@
 <body>
 <script>
     const map = ${zoneMapDetail};
+    const zoneInfo = ${zoneInfo};
 </script>
 <!-- 등급/좌석 선택 -->
 <div class="full-container">
@@ -54,26 +55,7 @@
                                 </div>
                                 <div class="selectedList-comp-container">
                                     <div class="selectedList-comp-wrapper">
-                                        <jsp:include page="selectedSeatComp.jsp">
-                                            <jsp:param name="zoneColor" value="purple"/>
-                                            <jsp:param name="zoneName" value="VIP석"/>
-                                            <jsp:param name="zoneDetail" value="a10"/>
-                                        </jsp:include>
-                                        <jsp:include page="selectedSeatComp.jsp">
-                                            <jsp:param name="zoneColor" value="purple"/>
-                                            <jsp:param name="zoneName" value="VIP석"/>
-                                            <jsp:param name="zoneDetail" value="a10"/>
-                                        </jsp:include>
-                                        <jsp:include page="selectedSeatComp.jsp">
-                                            <jsp:param name="zoneColor" value="purple"/>
-                                            <jsp:param name="zoneName" value="VIP석"/>
-                                            <jsp:param name="zoneDetail" value="a10"/>
-                                        </jsp:include>
-                                        <jsp:include page="selectedSeatComp.jsp">
-                                            <jsp:param name="zoneColor" value="purple"/>
-                                            <jsp:param name="zoneName" value="VIP석"/>
-                                            <jsp:param name="zoneDetail" value="a10"/>
-                                        </jsp:include>
+
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +93,7 @@
                                 <div class="zoneInfo-listBox">
                                     <!-- 구역 -->
                                     <c:forEach var="zone" items="${zoneMap}">
-                                        <div class="zoneInfo">
+                                        <div class="zoneInfo" id="${zone.key.zonePk}}">
                                             <div class="zoneColor-wrapper">
                                                 <div id="zoneColor" style="background-color: ${zone.key.zoneColor}"></div>
                                             </div>
