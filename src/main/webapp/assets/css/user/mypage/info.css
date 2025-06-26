@@ -1,15 +1,9 @@
 @import url('/assets/css/colors.css');
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
-    font-weight: 100 900;
-    font-style: normal;
-    font-display: swap;
-}
+@import url('/assets/css/font.css');
 
 .info-tab {
     width: 378px;
-    margin: 48px auto;
+    margin: 48px auto 0 auto;
     font-family: 'Pretendard', sans-serif;
     display: flex;
     flex-direction: column;
