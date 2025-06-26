@@ -1,14 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/seats.css" />
-
 <div class="seats-container">
-    <%@ include file ="toolbar.jsp" %>
     <div class="direction-container">
         <img id="directionInfo" src="${pageContext.request.contextPath}/assets/img/reservation/directionInfo.svg" alt="경기장 방향">
     </div>
     <div class="map-container zoomP">
         <div class="map-wrapper zoomC">
-            <object id="svgMap" type="image/svg+xml" data=""></object>
+            <object id="seatObj" type="image/svg+xml" data=""></object>
         </div>
     </div>
 </div>

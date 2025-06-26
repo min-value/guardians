@@ -1,18 +1,5 @@
 @import "/assets/css/colors.css";
 
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
-    font-style: normal;
-    font-display: swap;
-}
-
-* {
-    display: block;
-    margin: 0;
-    padding: 0;
-}
-
 /* left container */
 /* 게임 정보 표시 */
 .gameinfo-container {
@@ -30,7 +17,6 @@
     display: flex;
     justify-content: start;
     align-items: end;
-    font-family: 'Pretendard', sans-serif;
     font-weight: 700;
     font-size: 20px;
 }
@@ -50,7 +36,6 @@
     display: flex;
     justify-content: start;
     align-items: start;
-    font-family: 'Pretendard', sans-serif;
     font-weight: 400;
     font-size: 15px;
 }
@@ -66,6 +51,8 @@
 
 /* svg 컨테이너 */
 .mapinfo-container {
+    /*position: relative;*/
+    /*z-index: 1;*/
     height: 444px;
     width: 522px;
     display: flex;
@@ -73,6 +60,15 @@
     align-items: center;
 }
 
+.mapinfo-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 424px;
+    width: 482px;
+}
 /* right container */
 /* top container */
 .top-infoImg-wrapper {
@@ -108,7 +104,6 @@
 }
 
 #selectZone {
-    font-family: 'Pretandard', sans-serif;
     font-size: 15px;
     font-weight: 600;
     margin-left: 15px;
@@ -183,7 +178,7 @@
 }
 
 #zoneColor {
-    width: 15px;
+    width: 12px;
     aspect-ratio: 1 / 1;
     background-color: darkgoldenrod;
 }
@@ -196,8 +191,7 @@
 }
 
 #zoneName {
-    font-family: 'Pretandard', sans-serif;
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--gray-02);
     margin-left: 5px;
@@ -212,12 +206,159 @@
 }
 
 #zoneVacancies {
-    font-family: 'Pretandard', sans-serif;
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--gray-02);
 }
 
-.ticket-btn-wrapper > img {
+#ticket-btn {
     width: 100%;
+    cursor: pointer;
+}
+
+/* 선택된 좌석 */
+
+.selectedList-container {
+    width: 482px;
+    height: 90px;
+    bottom: 0;
+    z-index: 2;
+    position: absolute;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    flex-direction: column;
+    pointer-events: none;
+}
+
+.selectedList-info-container {
+    width: 482px;
+    height: 34px;
+    border: 1px solid var(--gray-02);
+    background-color: rgba(51, 51, 51, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    cursor: pointer;
+    pointer-events: all;
+}
+
+.selectedList-dropdown-wrapper {
+    width: 40px;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#selectedList-dropdown {
+    width: 10px;
+}
+
+.selectedList-infoText-wrapper {
+    width: 360px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+#selectedList-infoText {
+    line-height: 34px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+}
+
+.resetBtn-wrapper {
+    width: 80px;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#resetBtn {
+    width: 60%;
+    cursor: pointer;
+}
+
+.selectedList-comp-container {
+    display: none;
+    width: 482px;
+    height: 54px;
+    border: 1px solid var(--gray-02);
+    background-color: rgba(51, 51, 51, 0.4);
+    border-top: 0;
+}
+
+.selectedList-comp-container.show {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.selectedList-comp-wrapper {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+.selectedSeatComp-container {
+    height: 30px;
+    width: 110px;
+    background-color: var(--gray-02);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+}
+
+.selectedSeatComp-wrapper {
+    height: 30px;
+    width: 110px;
+    display: flex;
+    align-items: center;
+}
+
+.selectedSeatComp-zone-color-wrapper {
+    width: 18px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.selectedSeatComp-zone-color {
+    width: 11px;
+    height: 11px;
+}
+
+.selectedSeatComp-zone-name-wrapper {
+    width: 66px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.selectedSeatComp-zone-name {
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 30px;
+    color: var(--white);
+}
+
+.selectedSeatComp-zone-detail-wrapper {
+    width: 26px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.selectedSeatComp-zone-detail {
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 30px;
+    color: var(--white);
 }

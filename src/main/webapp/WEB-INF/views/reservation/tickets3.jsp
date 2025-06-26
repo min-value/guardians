@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets-common.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets-common2.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets3.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">
 </head>
 <body>
 <!-- 권종/할인 선택 -->
