@@ -1,5 +1,5 @@
-sessionStorage.setItem("gamePk", 87);
-sessionStorage.setItem("reservelistPk", 1);
+// sessionStorage.setItem("gamePk", 87);
+// sessionStorage.setItem("reservelistPk", 1);
 
 
 let reservelistPk = sessionStorage.getItem("reservelistPk");
