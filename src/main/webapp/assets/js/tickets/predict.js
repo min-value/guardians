@@ -2,6 +2,7 @@
 // sessionStorage.setItem("reservelistPk", 1);
 
 
+
 let reservelistPk = sessionStorage.getItem("reservelistPk");
 let gamePk = sessionStorage.getItem("gamePk");
 let user = JSON.parse(sessionStorage.getItem("loginUser")) || {};
