@@ -1,16 +1,3 @@
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
-    font-style: normal;
-    font-display: swap;
-}
-
-* {
-    display: block;
-    margin: 0;
-    padding: 0;
-}
-
 .topbar-container {
     width: 800px;
     height: 120px;
@@ -32,7 +19,6 @@
 
 #tkText {
     margin-left: 5px;
-    font-family: 'Pretendard', sans-serif;
     font-weight: 700;
     font-size: 18px;
 }

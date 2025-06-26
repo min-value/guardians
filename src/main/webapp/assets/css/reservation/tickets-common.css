@@ -5,15 +5,7 @@
 @import "/assets/css/colors.css";
 
 
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
-    font-style: normal;
-    font-display: swap;
-}
-
 * {
-    display: block;
     margin: 0;
     padding: 0;
 }
@@ -54,6 +46,8 @@
     width: 522px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .right-container {
@@ -97,7 +91,6 @@
 }
 
 #infotext {
-    font-family: 'Pretandard', sans-serif;
     font-size: 13px;
     font-weight: 600;
 }

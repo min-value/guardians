@@ -1,15 +1,12 @@
-* {
-    display: block;
-    margin: 0;
-    padding: 0;
-}
+@import "/assets/css/colors.css";
+
 
 /* tool bar */
 .btn-container {
     top: 10px;
     right: 10px;
     position: absolute;
-    z-index: 2;
+    z-index: 3;
 }
 
 .btn-wrapper {
