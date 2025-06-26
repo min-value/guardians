@@ -13,60 +13,11 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/include/pagination.js"></script>
 <script>
-    function loadComment(page){
-        const loginUserPk = '${sessionScope.loginUser != null ? sessionScope.loginUser.userPk : -1}';
-        const postPk = '${post.post_pk}';
-        $.ajax({
-            url:'/community/comment',
-            method: 'GET',
-            data:{
-                post_pk: postPk,
-                page: page
-            },
-            success: function (res){
-                const commentList = res.list;
-                const totalCount = res.totalCount;
-                const container = $('#comment-container').empty();
-                commentList.forEach(comment =>{
-                    const date = new Date(comment.c_date);
-                    const formattedDate = `\${date.getFullYear()}-\${(date.getMonth()+1).toString().padStart(2,'0')}-\${date.getDate().toString().padStart(2,'0')} \${date.getHours().toString().padStart(2,'0')}:\${date.getMinutes().toString().padStart(2,'0')}`;
-                    const isMine = (comment.user_pk === Number(loginUserPk));
-
-                    const html = `
-                        <div class="comment-box">
-                            <div class="comment-header">
-                                <span class="comment-user">\${comment.user_name}</span>
-                                <span class="comment-date">\${formattedDate}</span>
-                                <div class="comment-actions">
-                                    \${isMine ? `
-                                        <button class="comment-edit">수정</button>
-                                        <button class="comment-delete">삭제</button>` : ''}
-                                </div>
-                            </div>
-                            <div class="comment-content">
-                                \${comment.c_content}
-                            </div>
-                        </div>
-                    `;
-
-                    container.append(html);
-                });
-                if (totalCount > 0) {
-                    createPagination({
-                        currentPage: page,
-                        totalCount: totalCount,
-                        onPageChange: (newPage) => loadPage(newPage),
-                        pageSize: 5,
-                        containerId: '#pagination'
-                    });
-                }
-            }
-        });
-    }
-    $(document).ready(()=>{
-        loadComment(1);
-    });
+    const loginUserPk = '${sessionScope.loginUser != null ? sessionScope.loginUser.userPk : -1}';
+    const postPk = '${post.post_pk}';
 </script>
+<script src="${pageContext.request.contextPath}/assets/js/community/loadComment.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/community/commentSubmit.js"></script>
 </head>
 <body>
     <%@ include file="../include/header.jsp" %>
@@ -74,6 +25,10 @@
         <%@ include file="../include/headerImg.jsp" %>
     </div>
     <div class="content">
+        <div class="goPrev" onclick="goPrevPage()">
+            <div class="prevImg"></div>
+            <div class="prevText">글 목록</div>
+        </div>
         <div class="postHeader">
             <div class="title">${post.title}</div>
             <div class="writer">${post.user_name}</div>
@@ -96,28 +51,57 @@
         <div id="comment-container">
             <div class="comment-box"></div>
         </div>
+        <div id="write-comment">
+            <form id="commentForm" action="/community/comment/add" method="post" onsubmit="return checkLogin();">
+                <textarea id="write" name="c_content" type="text" placeholder="서로를 존중하는 댓글 문화를 만들어주세요."></textarea>
+                <input type="hidden" name="post_pk" value=${post.post_pk}>
+                <input type="hidden" name="user_pk" value=${sessionScope.loginUser.userPk}>
+                <button id="sendBtn" type="submit" data-login="${not empty sessionScope.loginUser}">댓글작성</button>
+            </form>
+        </div>
         <div id="pagination"></div>
     </div>
-    <div class="footer"></div>
     <%@ include file="../include/footer.jsp" %>
 <form id="deleteForm" action="/community/post/delete" method="post">
     <input type="hidden" name="post_pk" value="${post.post_pk}">
 </form>
+<div id="deleteComment"></div>
 <script>
     function toggleDropdown() {
         const dropdown = document.getElementById("edit-dropdown-wrapper");
         dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
     }
 
+    function goPrevPage(){
+        location.href='/community/post';
+    }
+
     function editPost() {
-        alert("수정 기능 실행!");
-        // 여기에 수정 페이지로 이동하거나 수정 모달 띄우는 로직 넣기
+        location.href='/community/post/${post.post_pk}/modify';
     }
 
     function deletePost() {
         if (confirm("정말 삭제하시겠습니까?")) {
             document.getElementById("deleteForm").submit();
         }
+    }
+
+    function checkLogin(){
+        let find = document.commentForm;
+        const isLoggedIn = document.querySelector("#sendBtn").dataset.login === 'true';
+        const commentContent = document.getElementById("write").value.trim();
+
+        if(!isLoggedIn){
+            alert("로그인 후 댓글을 작성하실 수 있습니다.");
+            return false;
+        }
+
+        if(commentContent === ""){
+            alert("내용을 작성하세요");
+            return false;
+        }
+
+        return true;
     }
 </script>
 </body>

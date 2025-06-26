@@ -101,22 +101,25 @@ hr {
     justify-content: flex-end;
     align-items: center;
     font-family: "Pretendard Variable";
-    height: 40px;
+    height: 50px;
 }
 
 .writeBtn{
     width: 180px;
     height: 50px;
-    background: url("../../img/button-short.png") no-repeat center center;
-    background-size: contain;
+    background-color: var(--mainColor);
     border: none;
     cursor: pointer;
     font-weight: 400;
     font-size: 16px;
     color: white;
     display: flex;
-    justify-content: center; /* 가로 가운데 */
-    align-items: center;     /* 세로 가운데 */
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+.writeBtn:hover{
+    background-color: var(--mainHover);
 }
 
 /*============= post ===========*/
@@ -150,10 +153,6 @@ hr {
 #post .date {
     flex: 1;
     text-align: left;
-}
-
-.footer{
-    height:200px;
 }
 
 .post-link {

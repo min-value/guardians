@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/colors.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/tickets/homegames.css">
+    <script type="module" src="${pageContext.request.contextPath}/assets/js/tickets/predict.js"></script>
 </head>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/include/pagination.js"></script>
@@ -77,7 +78,8 @@
                                   </div>
                                   <div>
                                     <p class="stadium">구장</p>
-                                    <p class="location">\${dto.stadium}</p>
+<!--                                    <p class="location">\${dto.stadium}</p>-->
+                                        <p class="location">스타라이트 필드</p>
                                   </div>
                                   \${buttonHtml}
                                 </div>
@@ -108,9 +110,10 @@
   <div class="backgroundWrapper">
     <%@ include file="../include/headerImg.jsp" %>
   </div>
+  <%@ include file="../tickets/predict.jsp" %>
   <div class="container">
       <div class="filter-container">
-        <form method="get" action="/tickets/all">
+        <form method="get" action="${pageContext.request.contextPath}/tickets/all">
           <div class="filter">
               <label>
                 <select name="teamStatus" onchange="this.form.submit()">

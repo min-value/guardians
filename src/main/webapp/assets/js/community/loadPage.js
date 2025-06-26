@@ -37,7 +37,7 @@ function loadPage(page){
                 container.append(`
                         <div id="post">
                             <div class="title">
-                                <a href="/community/post/${'${post.post_pk}'}" class="post-link">${post.title}</a>
+                                <a href="/community/post/${post.post_pk}" class="post-link">${post.title}</a>
                             </div>
                             <div class="writer">${post.user_name}</div>
                             <div class="date">${formattedDate}</div>
@@ -72,7 +72,6 @@ $(document).ready(function(){
     $('#all-posts-btn').on('click', function(){
         currentType = null;
         currentKeyword = null;
-        loadPage(1, currentType);
         updateButtonStyles('all');
         history.pushState(null, null, '/community/post'); // URL 초기화 (선택)
         loadPage(1);
@@ -80,7 +79,6 @@ $(document).ready(function(){
     $('#my-posts-btn').on('click', function(){
         currentType = 'writer';
         currentKeyword = loginUserName;
-        loadPage(1, currentType);
         updateButtonStyles('my');
         history.pushState(null, null, '/community/post'); // URL 초기화 (선택)
         loadPage(1);

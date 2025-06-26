@@ -6,14 +6,14 @@
     <div class="login-wrapper">
         <div class="login">
             <c:if test="${empty sessionScope.loginUser}">
-                <a href="/login">로그인</a>
+                <a href="${pageContext.request.contextPath}/user/login">로그인</a>
                 <span class="divider">|</span>
-                <a href="/signup">회원가입</a>
+                <a href="${pageContext.request.contextPath}/user/signup">회원가입</a>
             </c:if>
             <c:if test="${not empty sessionScope.loginUser}">
-                <a href="/logout">로그아웃</a>
+                <a href="${pageContext.request.contextPath}/user/logout">로그아웃</a>
                 <span class="divider">|</span>
-                <a href="/mypage">마이페이지</a>
+                <a href="${pageContext.request.contextPath}/user/mypage">마이페이지</a>
             </c:if>
         </div>
     </div>
@@ -21,12 +21,12 @@
     <div class="menu-wrapper">
         <div class="header-inner">
             <ul class="menu-list">
-                <li><a href="#">STORY</a></li>
+                <li><a href="/story/videos">STORY</a></li>
                 <li><a href="#">TEAMINFO</a></li>
-                <li><a href="#">GAME</a></li>
-                <li><a href="#">TICKET</a></li>
-                <li><a href="#">FAIRY</a></li>
-                <li><a href="#">COMMUNITY</a></li>
+                <li><a href="/games/all">GAME</a></li>
+                <li><a href="/tickets/all">TICKET</a></li>
+                <li><a href="/community/post">COMMUNITY</a></li>
+                <li><a href="/fairy">FAIRY</a></li>
             </ul>
 
             <div class="logo">
@@ -42,8 +42,8 @@
         <div class="depth2-wrapper">
             <div class="depth2-column">
                 <ul class="depth2">
-                    <li><a href="#">하이라이트</a></li>
-                    <li><a href="#">뉴스 스크랩</a></li>
+                    <li><a href="/story/videos">하이라이트</a></li>
+                    <li><a href="/story/news">뉴스 스크랩</a></li>
                 </ul>
             </div>
             <div class="depth2-column">
@@ -56,24 +56,24 @@
             </div>
             <div class="depth2-column">
                 <ul class="depth2">
-                    <li><a href="#">경기 일정</a></li>
-                    <li><a href="#">경기 결과</a></li>
-                    <li><a href="#">총 전적</a></li>
+                    <li><a href="/games/all">경기 일정</a></li>
+                    <li><a href="/games/details">경기 결과</a></li>
+                    <li><a href="/games/rank">순위</a></li>
                 </ul>
             </div>
             <div class="depth2-column">
                 <ul class="depth2">
-                    <li><a href="#">예매</a></li>
+                    <li><a href="/tickets/all">예매</a></li>
                 </ul>
             </div>
             <div class="depth2-column">
                 <ul class="depth2">
-                    <li><a href="#">승리요정</a></li>
+                    <li><a href="/community/post">커뮤니티</a></li>
                 </ul>
             </div>
             <div class="depth2-column">
                 <ul class="depth2">
-                    <li><a href="#">커뮤니티</a></li>
+                    <li><a href="/fairy">승리요정</a></li>
                 </ul>
             </div>
         </div>

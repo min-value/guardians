@@ -4,6 +4,7 @@
 <mapper namespace="org.baseball.domain.user.UserMapper">
     <insert id="insertUser" parameterType="org.baseball.dto.UserDTO">
         INSERT INTO `user` (
+            user_id,
             user_pwd,
             user_name,
             email,
@@ -23,6 +24,7 @@
                user_name AS userName,
                user_pk AS userPk,
                email,
+               is_admin AS isAdmin,
                tel
         FROM user
         WHERE user_id = #{userId}

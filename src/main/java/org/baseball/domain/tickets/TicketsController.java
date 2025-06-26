@@ -1,13 +1,11 @@
 package org.baseball.domain.tickets;
 
+import org.baseball.dto.PredictInfoDTO;
 import org.baseball.dto.TicketsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +50,7 @@ public class TicketsController {
 
         model.addAttribute("selectedTeamStatus", teamStatus);
         model.addAttribute("selectedTicketStatus", ticketStatus);
-        return "tickets/HomeGameList";
+        return "tickets/homeGameList";
     }
 
     @GetMapping("/allgames")
@@ -69,5 +67,19 @@ public class TicketsController {
         response.put("list", list);
         response.put("totalCount", totalCount);
         return response;
+    }
+
+    @PostMapping("/predict")
+    @ResponseBody
+    public int predict(@RequestParam int userPk,
+                       @RequestParam int reservelistPk,
+                       @RequestParam int predict) {
+        return ticketsService.updatePredict(userPk, reservelistPk, predict);
+    }
+
+    @GetMapping("/predict")
+    @ResponseBody
+    public PredictInfoDTO getGameInfoforPredict(@RequestParam int gamePk) {
+        return ticketsService.getGameInfoforPredict(gamePk);
     }
 }
