@@ -42,6 +42,11 @@
             </when>
         </choose>
     </select>
+    <select id="getGameInfoforPredict" parameterType="int" resultType="org.baseball.dto.PredictInfoDTO">
+        SELECT game_pk as gamePk, team_pk as opponentTeam
+        FROM games
+        WHERE game_pk = ${gamePk}
+    </select>
     <update id="updatePredict" parameterType="map">
         UPDATE reservation_list set predict = ${predict} where reservelist_pk = ${reservelistPk} AND user_pk = ${userPk}
     </update>

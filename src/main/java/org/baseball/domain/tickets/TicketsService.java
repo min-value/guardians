@@ -1,10 +1,10 @@
 package org.baseball.domain.tickets;
 
+import org.baseball.dto.PredictInfoDTO;
 import org.baseball.dto.TicketsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -57,5 +57,9 @@ public class TicketsService {
         param.put("reservelistPk", reservelistPk);
         param.put("predict", predict);
         return ticketsMapper.updatePredict(param);
+    }
+
+    public PredictInfoDTO getGameInfoforPredict(int gamePk) {
+        return ticketsMapper.getGameInfoforPredict(gamePk);
     }
 }

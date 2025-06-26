@@ -1,5 +1,6 @@
 package org.baseball.domain.tickets;
 
+import org.baseball.dto.PredictInfoDTO;
 import org.baseball.dto.TicketsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -74,5 +75,11 @@ public class TicketsController {
                        @RequestParam int reservelistPk,
                        @RequestParam int predict) {
         return ticketsService.updatePredict(userPk, reservelistPk, predict);
+    }
+
+    @GetMapping("/predict")
+    @ResponseBody
+    public PredictInfoDTO getGameInfoforPredict(@RequestParam int gamePk) {
+        return ticketsService.getGameInfoforPredict(gamePk);
     }
 }
