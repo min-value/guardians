@@ -1,11 +1,11 @@
 import {setZoom} from "./toolbar.js";
+import {getSeatsMap, setSeatType} from "./seats.js";
 
 export let selectedSeats = [];
 export let currentView = 'zone'; //zone, seat
 export let colored = 0; //0: region 포커스 x, 1: region 포커스 o
 export let lastColoredName = null;
 
-const ballpark = document.querySelectorAll("#svgMap")[0];
 
 document.addEventListener('DOMContentLoaded', () => {
     const tooltip = document.getElementById('tooltip');
@@ -94,8 +94,35 @@ function changeColor(region) {
 /* seat으로 이동 */
 function switchToSeat() {
     setCurrentView(2);
+    getSeatsMap(setSeatType(lastColoredName));
+
     document.querySelector('.stadium-container').style.display = 'none';
     document.querySelector('.seats-container').style.display = 'flex';
+    //세션에 저장되어 있는 값에 따라 색깔 칠하기
+    let seatObject = document.getElementById('seatObj');
+    let zoneDetail = map[lastColoredName];
+
+    console.log(zoneDetail);
+    seatObject.addEventListener('load', function() {
+        const seatDoc = seatObject.contentDocument;
+        const seatElement = seatDoc.querySelectorAll('.seat');
+
+        //seat에 커서 올리면 커서 모양 바꾸기
+        seatElement.forEach(el => {
+            console.log(el.id);
+            if(zoneDetail.includes(el.id)) {
+                //이미 팔린 좌석인 경우
+                console.log(el.id);
+                el.style.fill = '#E1E1E1';
+                el.style.pointerEvents = 'none';
+            } else {
+                //예매 가능한 좌석인 경우
+                el.addEventListener('mouseover', () => {
+                    el.style.cursor = 'pointer';
+                });
+            }
+        });
+    })
 }
 
 export function setCurrentView(num) {

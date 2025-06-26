@@ -1,18 +1,5 @@
 @import "/assets/css/colors.css";
 
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
-    font-style: normal;
-    font-display: swap;
-}
-
-
-* {
-    display: block;
-    margin: 0;
-    padding: 0;
-}
 
 #noti2 {
     display: none;
@@ -61,7 +48,6 @@
 
 .notification-title {
     margin-left: 20px;
-    font-family: 'Pretendard', sans-serif;
     font-weight: 500;
     font-size: 15px;
     line-height: 40px;
@@ -101,7 +87,6 @@
 .notification-content {
     width: 422px;
     height: 415px;
-    font-family: 'Pretendard', sans-serif;
     font-weight: 400;
     font-size: 12px;
 }
@@ -124,7 +109,6 @@
 .orderInfo-container {
     height: 140px;
     width: 522px;
-    font-family: 'Pretendard', sans-serif;
     font-weight: 400;
     font-size: 15px;
 }
@@ -137,7 +121,6 @@
 }
 
 #orderInfo-text {
-    font-family: 'Pretendard', sans-serif;
     font-weight: 600;
     font-size: 18px;
     margin-left: 20px;
@@ -300,7 +283,6 @@
 }
 
 #orderConfirm-text {
-    font-family: 'Pretendard', sans-serif;
     font-weight: 600;
     font-size: 18px;
     margin-left: 20px;
@@ -360,7 +342,6 @@
 }
 
 .orderConfirm-checkbox-text {
-    font-family: 'Pretandard', sans-serif;
     font-size: 12px;
     font-weight: 400;
     margin-left: 8px;
@@ -388,7 +369,6 @@
 }
 
 #paymentInfo-text {
-    font-family: 'Pretendard', sans-serif;
     font-weight: 600;
     font-size: 18px;
     margin-left: 20px;
@@ -437,7 +417,6 @@
     z-index: 2;
     right: 15px;
     bottom: 15px;
-    font-family: 'Pretendard', sans-serif;
     font-weight: 300;
     font-size: 17px;
     color: var(--white);

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.baseball.domain.reservation.ReservationMapper">
+    <resultMap id="ReserveGameInfo" type="org.baseball.dto.ReserveGameInfoDTO">
+        <result property="gamePk" column="game_pk"/>
+        <result property="oppTeamPk" column="team_pk"/>
+        <result property="oppTeamName" column="team_name"/>
+        <result property="gameDate" column="game_date"/>
+    </resultMap>
+    <select id="getGameInfo" parameterType="int" resultMap="ReserveGameInfo">
+        SELECT g.game_pk, g.team_pk, g.game_date, t.team_name
+        FROM games g LEFT JOIN team t ON g.team_pk = t.team_pk
+        WHERE g.game_pk = #{game_pk}
+    </select>
+
+    <select id="getSoldSeats" parameterType="org.baseball.dto.SoldSeatsReqDTO" resultType="string">
+        SELECT r.seat_num
+        FROM reservation_list l JOIN reservations r ON l.reservelist_pk = r.reservelist_pk
+        WHERE l.game_pk = #{gamePk} AND l.is_cancel = false AND r.zone_pk = #{zonePk}
+        ORDER BY seat_num DESC
+    </select>
+
+    <resultMap id="Zone" type="org.baseball.dto.ZoneDTO">
+        <result property="zonePk" column="zone_pk"/>
+        <result property="zoneName" column="zone_name"/>
+        <result property="zoneColor" column="zone_color"/>
+        <result property="cost" column="cost"/>
+        <result property="totalNum" column="total_num"/>
+    </resultMap>
+    <select id="getZones" resultMap="Zone">
+        SELECT zone_pk, zone_name, zone_color, cost, total_num
+        FROM zone
+        ORDER BY cost DESC, zone_pk DESC
+    </select>
+</mapper>

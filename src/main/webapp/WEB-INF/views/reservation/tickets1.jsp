@@ -1,11 +1,19 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <html>
 <head>
-    <title></title>
+    <meta charset="UTF-8">
+    <title>예매</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets-common.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets1.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">
 </head>
 <body>
+<script>
+    const map = ${zoneMapDetail};
+</script>
 <!-- 등급/좌석 선택 -->
 <div class="full-container">
     <jsp:include page="topbar.jsp" flush="false">
@@ -19,12 +27,12 @@
                         <div class="teams-wrapper">
                             <div id="team1">신한 가디언즈</div>
                             vs
-                            <div id="team2">삼성 라이온즈</div>
+                            <div id="team2">${gameInfo.oppTeamName}</div>
                         </div>
-                        <div class="detail-wrapper">
+                        <div class="detail-wrapper  ">
                             <div id="location">스타라이트 필드</div>
                             |
-                            <div id="date">2025-06-16(월) 18:30</div>
+                            <div id="date"><fmt:formatDate value="${gameInfo.gameDate}" pattern="yyyy-MM-dd(E) HH:mm" /></div>
                         </div>
                     </div>
                     <div class="mapinfo-container">
@@ -46,26 +54,26 @@
                                 </div>
                                 <div class="selectedList-comp-container">
                                     <div class="selectedList-comp-wrapper">
-                                                <jsp:include page="selectedSeatComp.jsp">
-                                                  <jsp:param name="zoneColor" value="purple"/>
-                                                  <jsp:param name="zoneName" value="VIP석"/>
-                                                  <jsp:param name="zoneDetail" value="a10"/>
-                                                </jsp:include>
-                                                <jsp:include page="selectedSeatComp.jsp">
-                                                  <jsp:param name="zoneColor" value="purple"/>
-                                                  <jsp:param name="zoneName" value="VIP석"/>
-                                                  <jsp:param name="zoneDetail" value="a10"/>
-                                                </jsp:include>
-                                                <jsp:include page="selectedSeatComp.jsp">
-                                                  <jsp:param name="zoneColor" value="purple"/>
-                                                  <jsp:param name="zoneName" value="VIP석"/>
-                                                  <jsp:param name="zoneDetail" value="a10"/>
-                                                </jsp:include>
-                                                <jsp:include page="selectedSeatComp.jsp">
-                                                  <jsp:param name="zoneColor" value="purple"/>
-                                                  <jsp:param name="zoneName" value="VIP석"/>
-                                                  <jsp:param name="zoneDetail" value="a10"/>
-                                                </jsp:include>
+                                        <jsp:include page="selectedSeatComp.jsp">
+                                            <jsp:param name="zoneColor" value="purple"/>
+                                            <jsp:param name="zoneName" value="VIP석"/>
+                                            <jsp:param name="zoneDetail" value="a10"/>
+                                        </jsp:include>
+                                        <jsp:include page="selectedSeatComp.jsp">
+                                            <jsp:param name="zoneColor" value="purple"/>
+                                            <jsp:param name="zoneName" value="VIP석"/>
+                                            <jsp:param name="zoneDetail" value="a10"/>
+                                        </jsp:include>
+                                        <jsp:include page="selectedSeatComp.jsp">
+                                            <jsp:param name="zoneColor" value="purple"/>
+                                            <jsp:param name="zoneName" value="VIP석"/>
+                                            <jsp:param name="zoneDetail" value="a10"/>
+                                        </jsp:include>
+                                        <jsp:include page="selectedSeatComp.jsp">
+                                            <jsp:param name="zoneColor" value="purple"/>
+                                            <jsp:param name="zoneName" value="VIP석"/>
+                                            <jsp:param name="zoneDetail" value="a10"/>
+                                        </jsp:include>
                                     </div>
                                 </div>
                             </div>
@@ -101,21 +109,24 @@
                         <div class="zoneInfo-container">
                             <div class="zoneInfo-wrapper">
                                 <div class="zoneInfo-listBox">
-                                    <div class="zoneInfo">
-                                        <div class="zoneColor-wrapper">
-                                            <div id="zoneColor"></div>
-                                        </div>
-                                        <div class="zoneName-wrapper">
-                                            <div id="zoneName">
-                                                VIP석
+                                    <!-- 구역 -->
+                                    <c:forEach var="zone" items="${zoneMap}">
+                                        <div class="zoneInfo">
+                                            <div class="zoneColor-wrapper">
+                                                <div id="zoneColor" style="background-color: ${zone.key.zoneColor}"></div>
+                                            </div>
+                                            <div class="zoneName-wrapper">
+                                                <div id="zoneName">
+                                                        ${zone.key.zoneName}
+                                                </div>
+                                            </div>
+                                            <div class="zoneVacancies-wrapper">
+                                                <div id="zoneVacancies">
+                                                        ${zone.value}석
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="zoneVacancies-wrapper">
-                                            <div id="zoneVacancies">
-                                                0석
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </c:forEach>
                                 </div>
                             </div>
                         </div>

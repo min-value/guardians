@@ -1,8 +1,4 @@
-* {
-    display: block;
-    margin: 0;
-    padding: 0;
-}
+@import "/assets/css/colors.css";
 
 .seats-container {
     display: none;

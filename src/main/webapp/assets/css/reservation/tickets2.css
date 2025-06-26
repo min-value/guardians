@@ -1,17 +1,5 @@
 @import "/assets/css/colors.css";
 
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
-    font-style: normal;
-    font-display: swap;
-}
-
-* {
-    display: block;
-    margin: 0;
-    padding: 0;
-}
 
 .cancelAgree-checkbox-wrapper {
     display: none;
@@ -62,7 +50,6 @@
 }
 
 #selection-infotext {
-    font-family: 'Pretendard', sans-serif;
     font-weight: 600;
     font-size: 20px;
     margin-left: 20px;
@@ -110,13 +97,11 @@
 
 
 .option-text {
-    font-family: 'Pretendard', sans-serif;
     font-weight: 400;
     font-size: 16px;
 }
 
 .option-price {
-    font-family: 'Pretendard', sans-serif;
     font-weight: 500;
     font-size: 16px;
 }
@@ -132,7 +117,6 @@
     width: 72px;
     height: 25px;
     padding-left: 18px;
-    font-family: 'Pretendard', sans-serif;
     font-weight: 400;
     font-size: 13px;
 

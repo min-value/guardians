@@ -1,18 +1,5 @@
 @import "/assets/css/colors.css";
 
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
-    font-style: normal;
-    font-display: swap;
-}
-
-* {
-    display: block;
-    margin: 0;
-    padding: 0;
-}
-
 /* left container */
 /* 게임 정보 표시 */
 .gameinfo-container {
@@ -30,7 +17,6 @@
     display: flex;
     justify-content: start;
     align-items: end;
-    font-family: 'Pretendard', sans-serif;
     font-weight: 700;
     font-size: 20px;
 }
@@ -50,7 +36,6 @@
     display: flex;
     justify-content: start;
     align-items: start;
-    font-family: 'Pretendard', sans-serif;
     font-weight: 400;
     font-size: 15px;
 }
@@ -119,7 +104,6 @@
 }
 
 #selectZone {
-    font-family: 'Pretandard', sans-serif;
     font-size: 15px;
     font-weight: 600;
     margin-left: 15px;
@@ -194,7 +178,7 @@
 }
 
 #zoneColor {
-    width: 15px;
+    width: 12px;
     aspect-ratio: 1 / 1;
     background-color: darkgoldenrod;
 }
@@ -207,8 +191,7 @@
 }
 
 #zoneName {
-    font-family: 'Pretandard', sans-serif;
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--gray-02);
     margin-left: 5px;
@@ -223,8 +206,7 @@
 }
 
 #zoneVacancies {
-    font-family: 'Pretandard', sans-serif;
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--gray-02);
 }
@@ -246,6 +228,7 @@
     justify-content: end;
     align-items: center;
     flex-direction: column;
+    pointer-events: none;
 }
 
 .selectedList-info-container {
@@ -257,6 +240,7 @@
     align-items: center;
     justify-content: start;
     cursor: pointer;
+    pointer-events: all;
 }
 
 .selectedList-dropdown-wrapper {

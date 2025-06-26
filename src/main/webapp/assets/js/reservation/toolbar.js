@@ -76,6 +76,9 @@ function switchToZone() {
     //선택한 좌석들 초기화: 선택 0
     resetSelectedSeats();
 
+    //select 변경
+    setZoom();
+
     //seat 화면 display:none 설정
     document.querySelector('.seats-container').style.display = 'none';
     document.querySelector('.stadium-container').style.display = 'flex';

@@ -3,7 +3,6 @@ const standardY = 50;
 
 let zoomC = document.querySelectorAll('.zoomC')[0];
 let zoomP = document.querySelectorAll('.zoomP')[0];
-
 import {zoom} from "./toolbar.js";
 
 let offsetX = 0;
