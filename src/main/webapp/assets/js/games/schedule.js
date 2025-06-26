@@ -1,7 +1,7 @@
 $(document).ready(function () {
     const calendarGrid = document.getElementById("calendar-grid");
 
-    // stadiumPk -> 구장명 매핑
+    // stadiumPk -> 구장명
     const stadiumMap = {
         1: "연남",
         2: "고척",
@@ -23,7 +23,7 @@ $(document).ready(function () {
         const startDayOfWeek = firstDay.getDay();
         const totalDays = lastDay.getDate();
 
-        // 앞 빈 셀
+        // 앞쪽 날짜 없는 셀
         for (let i = 0; i < startDayOfWeek; i++) {
             const emptyCell = document.createElement("div");
             emptyCell.classList.add("calendar-day", "empty");
@@ -56,7 +56,7 @@ $(document).ready(function () {
             success: function(scheduleList) {
                 const gameMap = {};
 
-                // 날짜별로 묶기
+                // 더블헤더 고려해서 일정 나누기
                 scheduleList.forEach(game => {
                     const date = new Date(game.gameDate);
                     const day = date.getDate();
@@ -78,7 +78,7 @@ $(document).ready(function () {
                         let locationInfo = "";
 
                         if (isSameTeamAndStadium) {
-                            // 한 번만 출력
+                            // 더블헤더 시 로고 한 번만 출력
                             logoImg = `<img src="/assets/img/games/${teamPk}.png" class="team-logo">`;
 
                             const timeList = games.map(g => {
@@ -90,7 +90,7 @@ $(document).ready(function () {
                             const location = stadiumMap[stadiumPk] || "";
                             locationInfo = `<div class="game-info">${location} ${timeList.join(" / ")}</div>`;
                         } else {
-                            // 다르면 각각 출력
+                            // 더블헤더 아닐 시
                             logoImg = games.map(g => `<img src="/assets/img/games/${g.teamPk}.png" class="team-logo">`).join("");
                             locationInfo = games.map(g => {
                                 const date = new Date(g.gameDate);
@@ -101,7 +101,7 @@ $(document).ready(function () {
                             }).join("");
                         }
 
-                        // 결과만 출력 (점수 없이)
+                        // 결과 출력
                         const resultList = games.map(g => {
                             let cls = "", txt = "";
                             if (g.result === "WIN") { cls = "win"; txt = "승"; }

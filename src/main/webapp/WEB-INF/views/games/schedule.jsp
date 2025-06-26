@@ -20,23 +20,31 @@
 
 <!-- 드롭다운 -->
 <div class="calendar-dropdown">
-    <select id="year-select" class="year-select">
-        <c:forEach var="y" begin="2023" end="2026">
-            <option value="${y}">${y}년</option>
-        </c:forEach>
-    </select>
+    <!-- 년도 -->
+    <div class="dropdown-wrapper">
+        <select id="year-select" class="year-select">
+            <c:forEach var="y" begin="2023" end="2026">
+                <option value="${y}">${y}년</option>
+            </c:forEach>
+        </select>
+        <img src="/assets/img/icon/dropdownVector.png" class="dropdown-icon">
+    </div>
 
-    <select id="month-select" class="month-select">
-        <c:forEach var="m" begin="1" end="12">
-            <option value="${m}">${m}월</option>
-        </c:forEach>
-    </select>
+    <!-- 월 -->
+    <div class="dropdown-wrapper">
+        <select id="month-select" class="month-select">
+            <c:forEach var="m" begin="1" end="12">
+                <option value="${m}">${m}월</option>
+            </c:forEach>
+        </select>
+        <img src="/assets/img/icon/dropdownVector.png" class="dropdown-icon">
+    </div>
 </div>
 
-<!-- 달력 전체 wrapper -->
+<!-- 달력 전체 -->
 <div class="calendar-wrapper">
     <div id="calendar-placeholder">
-        <!-- 요일 줄 -->
+        <!-- 요일 -->
         <div class="calendar-grid calendar-weekdays">
             <div class="calendar-header">일</div>
             <div class="calendar-header">월</div>
@@ -47,9 +55,8 @@
             <div class="calendar-header">토</div>
         </div>
 
-        <!-- 날짜 들어가는 영역 -->
         <div class="calendar-grid" id="calendar-grid">
-            <!-- JS가 calendar-day 넣어줌 -->
+            <%-- 날짜 --%>
         </div>
     </div>
 </div>
