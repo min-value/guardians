@@ -1,4 +1,4 @@
-import {setZoom} from "./toolbar.js";
+import {colorRestore, reload, setZoom} from "./toolbar.js";
 import {getSeatsMap, setSeatType} from "./seats.js";
 
 export let selectedSeats = [];
@@ -6,6 +6,7 @@ export let currentView = 'zone'; //zone, seat
 export let colored = 0; //0: region 포커스 x, 1: region 포커스 o
 export let lastColoredName = null;
 
+let seatSelectMap = {}; // key: seatId, value: true/false
 
 document.addEventListener('DOMContentLoaded', () => {
     const tooltip = document.getElementById('tooltip');
@@ -49,13 +50,82 @@ document.addEventListener('DOMContentLoaded', () => {
         location.href = '/reservation/discount';
     });
 
+    //리셋 버튼 리스너 추가
     document.getElementById('resetBtn').addEventListener('click', () => {
-        resetSelectedSeats();
+        resetSelectedAll();
+    });
+
+    //등급 선택 옆 새로고침 버튼 리스너 추가
+    document.getElementById('zoneReloadBtn').addEventListener('click', () => {
+        reload();
+    })
+
+    //등급 선택 클릭 리스너 추가: 클릭 시 좌측 경기장 색상 변경
+    document.querySelectorAll('.zoneInfo').forEach(el => {
+        el.addEventListener('click', () => {
+            let zonePk = el.id.split('zone')[0];
+            changeZoneInfoListBox(zonePk);
+        })
     })
 })
 
+/* 등급 선택 클릭 리스너 */
+function changeZoneInfoListBox(zonePk) {
+    //svgMap에서 해당 존 가져오기
+    let region = document.getElementById(zonePk);
+    const mask = document.getElementById('highlight-mask');
+    const overlay = document.getElementById('overlay');
+
+    if(colored === 1 && zonePk === lastColoredName) {
+        //포커스 O
+        updateZoneInfoHighlight(null);
+        colorRestore(mask, overlay);
+    } else {
+        //포커스 X
+        updateZoneInfoHighlight(zonePk);
+        changeColor(region);
+    }
+}
+/* 특정 zone 선택 시 해당 zonePk를 아이디로 가지고 있는 요소를 등급 선택존에서 포커스 */
+export function scrollToZoneInfo(zonePk) {
+    let targetId = zonePk + 'zone';
+
+    const container = document.querySelector('.zoneInfo-listBox');
+    const target = document.getElementById(targetId);
+
+    if(zonePk === null) {
+        const firstChild = document.querySelector('.zoneInfo-listBox').firstChild;
+        container.scrollTo({
+            top: firstChild.offsetTop - 340,
+            behavior: 'smooth'
+        });
+    } else {
+        container.scrollTo({
+            top: target.offsetTop - 340,
+            behavior: 'smooth'
+        });
+    }
+}
+
+/* 특정 존 선택 시 해당 zonePk를 아이디로 가지고 있는 요소의 색깔을 변경 */
+export function updateZoneInfoHighlight(currentId) {
+    // 이전에 선택된 zoneInfo에서 클래스 제거
+    const prevZoneDiv = document.getElementById(lastColoredName + 'zone');
+    if (prevZoneDiv) {
+        prevZoneDiv.classList.remove('highlight-zone');
+    }
+
+    if(currentId !== null) {
+        // 현재 선택된 zoneInfo에 클래스 추가
+        const currentZoneDiv = document.getElementById(currentId + 'zone');
+        if (currentZoneDiv) {
+            currentZoneDiv.classList.add('highlight-zone');
+        }
+    }
+}
+
 /* 선택한 좌석들 표시하는 토글 */
-function showSelectedSeats(length) {
+function showSelectedSeats() {
     const container = document.querySelector('.selectedList-comp-container')
     const dropdownImg = document.querySelector('#selectedList-dropdown');
 
@@ -63,9 +133,9 @@ function showSelectedSeats(length) {
 
     if(isShown) {
         //드랍 다운이 열린 경우
-        dropdownImg.src = "/assets/img/reservation/dropDownWhiteUp.svg";
-    } else {
         dropdownImg.src = "/assets/img/reservation/dropDownWhiteDown.svg";
+    } else {
+        dropdownImg.src = "/assets/img/reservation/dropDownWhiteUp.svg";
     }
 }
 
@@ -75,7 +145,9 @@ function clickZone(region) {
         switchToSeat();
         setZoom();
     } else {
+        updateZoneInfoHighlight(region.id);
         changeColor(region);
+        scrollToZoneInfo(region.id);
     }
 }
 
@@ -105,6 +177,11 @@ function switchToSeat() {
 
     document.querySelector('.stadium-container').style.display = 'none';
     document.querySelector('.seats-container').style.display = 'flex';
+
+    addSeatListener();
+}
+
+export function addSeatListener() {
     //세션에 저장되어 있는 값에 따라 색깔 칠하기
     let seatObject = document.getElementById('seatObj');
     let zoneDetail = map[lastColoredName];
@@ -121,30 +198,24 @@ function switchToSeat() {
                 el.style.pointerEvents = 'none';
             } else {
                 //예매 가능한 좌석인 경우
+
+                //색상 변경
+                el.style.fill = '#B748E7';
                 //마우스 포인터 변경
                 el.addEventListener('mouseover', () => {
                     el.style.cursor = 'pointer';
                 });
 
-                let isSelected = false;
 
                 //클릭 시: 선택된 좌석에 추가 및 모양 변경
                 el.addEventListener('click', () => {
-                    if(isSelected) {
-                        el.setAttribute('rx', 0);
-                        el.setAttribute('ry', 0);
-                        el.setAttribute('stroke', 'none');
-
+                    if(seatSelectMap[el.id] === true) {
                         for(let i = 0; i < selectedSeats.length; ++i) {
                             if(selectedSeats[i] === el.id) {
-                                selectedSeats.splice(i, 1);
+                                resetSelectedSeat(el, i);
                                 break;
                             }
                         }
-
-                        document.getElementById('selectList-num').innerHTML = selectedSeats.length + '';
-                        document.getElementById(el.id).remove();
-                        isSelected = !isSelected;
                     } else {
                         if(selectedSeats.length < 4) {
                             el.setAttribute('rx', 10);
@@ -175,18 +246,16 @@ function switchToSeat() {
                                     </div>
                                 </div>
                             </div>`;
-                            isSelected = !isSelected;
+                            seatSelectMap[el.id] = true;
                         } else {
                             alert(`1인당 최대 4매까지 예매 가능합니다.`);
                         }
                     }
-
                 })
             }
         });
     })
 }
-
 export function setCurrentView(num) {
     if(num === 1) {
         currentView = 'zone';
@@ -195,15 +264,28 @@ export function setCurrentView(num) {
     }
 }
 
-export function resetSelectedSeats() {
-    selectedSeats = [];
-    //임포트 요소들 삭제
-    let selectedListCompWrapper = document.querySelectorAll('selectedList-comp-wrapper');
-    selectedListCompWrapper.forEach(wrapper => {
-        while(wrapper.firstChild) {
-            wrapper.removeChild(wrapper.firstChild);
-        }
-    })
+//지정한 좌석 선택 해제
+export function resetSelectedSeat(seat, idx) {
+    seat.setAttribute('rx', 0);
+    seat.setAttribute('ry', 0);
+    seat.setAttribute('stroke', 'none');
+
+    selectedSeats.splice(idx, 1);
+
+    document.getElementById('selectList-num').innerHTML = selectedSeats.length + '';
+    document.getElementById(seat.id).remove();
+
+    seatSelectMap[seat.id] = false;
+}
+
+export function resetSelectedAll() {
+    let seatObject = document.getElementById('seatObj');
+    const seatDoc = seatObject.contentDocument;
+
+    for (let i = selectedSeats.length - 1; i >= 0; --i) {
+        const seatId = selectedSeats[i];
+        resetSelectedSeat(seatDoc.getElementById(seatId), i);
+    }
 }
 
 export function setColored(num) {

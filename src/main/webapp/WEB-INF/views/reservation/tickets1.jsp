@@ -9,11 +9,14 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets-common.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets1.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <script>
-    const map = ${zoneMapDetail};
-    const zoneInfo = ${zoneInfo};
+    let map = ${zoneMapDetail};
+    let zoneInfo = ${zoneInfo};
+    let gameInfo = JSON.parse('${gameInfoJson}');
+    sessionStorage.setItem('gameInfo', JSON.stringify(gameInfo));
 </script>
 <!-- 등급/좌석 선택 -->
 <div class="full-container">
@@ -42,7 +45,7 @@
                             <div class="selectedList-container">
                                 <div class="selectedList-info-container">
                                     <div class="selectedList-dropdown-wrapper">
-                                        <img id="selectedList-dropdown" src="/assets/img/reservation/dropDownWhiteDown.svg" alt="드롭다운">
+                                        <img id="selectedList-dropdown" src="/assets/img/reservation/dropDownWhiteUp.svg" alt="드롭다운">
                                     </div>
                                     <div class="selectedList-infoText-wrapper">
                                         <div id="selectedList-infoText">
@@ -53,7 +56,7 @@
                                         <img id="resetBtn" src="/assets/img/reservation/resetBtn.svg" alt="초기화 버튼">
                                     </div>
                                 </div>
-                                <div class="selectedList-comp-container">
+                                <div   class="selectedList-comp-container">
                                     <div class="selectedList-comp-wrapper">
 
                                     </div>
@@ -93,7 +96,7 @@
                                 <div class="zoneInfo-listBox">
                                     <!-- 구역 -->
                                     <c:forEach var="zone" items="${zoneMap}">
-                                        <div class="zoneInfo" id="${zone.key.zonePk}}">
+                                        <div class="zoneInfo" id="${zone.key.zonePk}zone">
                                             <div class="zoneColor-wrapper">
                                                 <div id="zoneColor" style="background-color: ${zone.key.zoneColor}"></div>
                                             </div>

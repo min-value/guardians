@@ -4,17 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.baseball.dto.ReserveGameInfoDTO;
-import org.baseball.dto.SoldSeatsReqDTO;
-import org.baseball.dto.ZoneDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedHashMap;
-import java.util.List;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
@@ -24,54 +19,40 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
+    //등급 및 좌석 선택 페이지 로드
     @GetMapping("/seat")
-    public String seat(@RequestParam("gamePk") int gamePk, Model model) throws JsonProcessingException {
+    public String seat(@RequestParam("gamePk") int gamePk, HttpSession session) throws JsonProcessingException {
         //경기 정보 가져오기(상대 팀 + 날짜)
         ReserveGameInfoDTO reserveGameInfoDTO = reservationService.getGameInfo(gamePk);
-
-        //구역 정보 가져오기
-        List<ZoneDTO> zoneDTOList = reservationService.getZones();
-
-        //구역 별 남은 좌석 수 저장
-        Map<ZoneDTO, Integer> zoneMap = new LinkedHashMap<>();
-        Map<Integer, ZoneDTO> zoneInfo = new LinkedHashMap<>();
-        Map<Integer, List<String>> zoneDetail = new LinkedHashMap<>();
-
-        //팔린 좌석들 가져오기
-        for(ZoneDTO zoneDTO : zoneDTOList){
-            List<String> seats = reservationService.getSoldSeats(new SoldSeatsReqDTO(gamePk, zoneDTO.getZonePk()));
-            zoneMap.put(zoneDTO, zoneDTO.getTotalNum() - seats.size());
-            zoneInfo.put(zoneDTO.getZonePk(), zoneDTO);
-            zoneDetail.put(zoneDTO.getZonePk(), seats);
-        }
-
-
         //게임 정보 세션에 저장
-        model.addAttribute("gameInfo", reserveGameInfoDTO);
+        session.setAttribute("gameInfo", reserveGameInfoDTO);
+        session.setAttribute("gameInfoJson", new ObjectMapper().writeValueAsString(reserveGameInfoDTO));
 
-        //구역 당 남은 좌석 수 세션에 저장
-        model.addAttribute("zoneMap", zoneMap);
-
-        ObjectMapper mapper1 = new ObjectMapper();
-        String zoneInfoJson = mapper1.writeValueAsString(zoneInfo);
-        model.addAttribute("zoneInfo", zoneInfoJson);
-
-        //구역 당 상세 정보 세션에 저장
-        ObjectMapper mapper2 = new ObjectMapper();
-        String zoneDetailJson = mapper2.writeValueAsString(zoneDetail);
-
-        model.addAttribute("zoneMapDetail", zoneDetailJson);
-
-        log.info(zoneMap.toString());
+        reservationService.getSeatInfo(gamePk, session);
 
         return "reservation/tickets1";
     }
 
+    //전체 구역 정보 불러오기
+    @ResponseBody
+    @GetMapping("/info/{gamePk}")
+    public Map<String, Object> getGameInfo(@PathVariable("gamePk") int gamePk, HttpSession session) throws JsonProcessingException {
+        reservationService.getSeatInfo(gamePk, session);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("zoneMap", session.getAttribute("zoneMap"));
+        result.put("zoneInfo", session.getAttribute("zoneInfo"));
+        result.put("zoneMapDetail", session.getAttribute("zoneMapDetail"));
+        return result;
+    }
+
+    //권종 및 할인 선택 페이지 로드
     @GetMapping("/discount")
     public String discount() {
         return "reservation/tickets2";
     }
 
+    //예매 확인 페이지 로드
     @GetMapping("/confirm")
     public String confirm() {
         return "reservation/tickets3";
