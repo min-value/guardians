@@ -4,6 +4,7 @@ import org.baseball.dto.PointDTO;
 import org.baseball.dto.UserDTO;
 import org.baseball.domain.point.PointService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/user/points")
+@RequestMapping("/point")
 public class PointController {
 
     private final PointService pointService;
@@ -23,22 +24,27 @@ public class PointController {
         this.pointService = pointService;
     }
 
-    @GetMapping
-    public Map<String, Object> getUserPoints(HttpSession session) {
+    // 포인트 내역 반환
+    @GetMapping("/list")
+    public List<PointDTO> getUserPoints(HttpSession session) {
         UserDTO user = (UserDTO) session.getAttribute("loginUser");
-        if (user == null) {
-            return Collections.emptyMap();
-        }
+        if (user == null) return Collections.emptyList();
 
-        int userPk = user.getUserPk();
-        List<PointDTO> points = pointService.getPointsByUserPk(userPk);
-        int totalAmount = points.stream().mapToInt(PointDTO::getPoint).sum();
+        return pointService.getPointsByUserPk(user.getUserPk());
+    }
 
-        Map<String, Object> result = new HashMap<>();
-        result.put("points", points);
-        result.put("totalAmount", totalAmount);
+    // 포인트 적립
+    @PutMapping("/plus")
+    public ResponseEntity<Void> plusPoint(@RequestBody PointDTO dto) {
+        pointService.addPoint(dto);
+        return ResponseEntity.ok().build();
+    }
 
-        return result;
+    // 포인트 차감
+    @PutMapping("/minus")
+    public ResponseEntity<Void> minusPoint(@RequestBody PointDTO dto) {
+        pointService.addPoint(dto);
+        return ResponseEntity.ok().build();
     }
 
 }
