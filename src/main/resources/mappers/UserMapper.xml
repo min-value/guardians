@@ -39,4 +39,15 @@
             tel = #{tel}
         WHERE user_id = #{userId}
     </update>
+
+    <select id="getTotalPoint" parameterType="int" resultType="int">
+        SELECT total_point FROM user WHERE user_pk = #{userPk}
+    </select>
+
+    <update id="updateTotalPoint">
+        UPDATE user
+        SET total_point = total_point + #{amount}
+        WHERE user_pk = #{userPk}
+    </update>
+
 </mapper>
