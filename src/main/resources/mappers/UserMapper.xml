@@ -8,7 +8,7 @@
             user_pwd,
             user_name,
             email,
-            tel
+            tel,
         ) VALUES (
             #{userId},
             #{userPwd},
@@ -25,7 +25,8 @@
                user_pk AS userPk,
                email,
                is_admin AS isAdmin,
-               tel
+               tel,
+               total_point as totalPoint
         FROM user
         WHERE user_id = #{userId}
     </select>

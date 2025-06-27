@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
   String pageTitle = "티켓";
-  pageContext.setAttribute("pageTitle", pageTitle);
 %>
 <html>
 <head>
