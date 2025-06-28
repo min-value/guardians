@@ -446,19 +446,30 @@
     width: 257px;
     height: 50%;
     display: flex;
+    flex-direction: column;
     align-items: start;
 }
 
-.point-wrapper {
-    margin-left: 15px;
-    width: 220px;
+#pointMsg {
+    margin-left: 20px;
+    font-size: 10px;
+    color: var(--errorColor);
+}
+
+#usePoint {
+    margin-left: 20px;
+    width: 180px;
     height: 25px;
     border: 1px solid var(--gray-02);
     display: flex;
     justify-content: end;
+    text-align: right;
 }
 
 #point {
     margin-right: 10px;
     line-height: 25px;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
 }

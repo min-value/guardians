@@ -107,15 +107,16 @@
 }
 
 .selectedSeat-wrapper {
-    height: 30px;
+    height: 45px;
     width: 100%;
     margin-bottom: 6px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     font-size: 13px;
     font-weight: 400;
     border: 1px solid var(--gray-03);
+    overflow-y: auto;
 }
 
 #zoneName {
