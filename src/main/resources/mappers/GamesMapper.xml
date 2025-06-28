@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.baseball.domain.games.GamesMapper">
+
+    <!-- 랭킹 조회 -->
+    <resultMap id="teamRank" type="org.baseball.dto.RankDTO">
+        <result property="ranking" column="ranking"/>
+        <result property="teamName" column="team_name"/>
+        <result property="win" column="win"/>
+        <result property="lose" column="lose"/>
+        <result property="draw" column="draw"/>
+        <result property="winRate" column="win_rate"/>
+        <result property="behind" column="behind"/>
+        <result property="gameCnt" column="game_cnt"/>
+        <result property="winStreak" column="win_streak"/>
+    </resultMap>
+
+    <select id="getTeamRanking" resultMap="teamRank">
+        SELECT
+            ranking,
+            team_name,
+            win,
+            lose,
+            draw,
+            win_rate,
+            behind,
+            game_cnt,
+            win_streak
+        FROM team
+        ORDER BY ranking ASC
+    </select>
+
+    <!-- 경기 일정 월별 조회 -->
+    <resultMap id="gameSchedule" type="org.baseball.dto.ScheduleDTO">
+        <result property="gamePk" column="game_pk"/>
+        <result property="gameDate" column="game_date"/>
+        <result property="result" column="result"/>
+        <result property="stadiumPk" column="stadium_pk"/>
+        <result property="teamPk" column="team_pk"/>
+        <result property="location" column="location"/>
+    </resultMap>
+
+    <select id="getScheduleMonth" resultMap="gameSchedule">
+        SELECT
+        g.game_pk,
+        g.game_date,
+        g.result,
+        g.stadium_pk,
+        g.team_pk,
+        s.location
+        FROM games g
+        JOIN stadium s ON g.stadium_pk = s.stadium_pk
+        WHERE YEAR(g.game_date) = #{year}
+        AND MONTH(g.game_date) = #{month}
+        ORDER BY g.game_date ASC
+    </select>
+
+</mapper>

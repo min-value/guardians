@@ -1,15 +1,12 @@
-sessionStorage.setItem("gamePk", 87);
-sessionStorage.setItem("reservelistPk", 1);
+// sessionStorage.setItem("gamePk", 87);
+// sessionStorage.setItem("reservelistPk", 1);
 
-
-let reservelistPk = sessionStorage.getItem("reservelistPk");
 let gamePk = sessionStorage.getItem("gamePk");
 let user = JSON.parse(sessionStorage.getItem("loginUser")) || {};
 
 let curPredict = null;
 
 gamePk = parseInt(gamePk);
-reservelistPk = parseInt(reservelistPk);
 
 $(document).ready(function () {
     console.log("jQuery ready 실행됨");

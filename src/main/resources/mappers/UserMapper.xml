@@ -8,7 +8,7 @@
             user_pwd,
             user_name,
             email,
-            tel
+            tel,
         ) VALUES (
             #{userId},
             #{userPwd},
@@ -25,7 +25,8 @@
                user_pk AS userPk,
                email,
                is_admin AS isAdmin,
-               tel
+               tel,
+               total_point as totalPoint
         FROM user
         WHERE user_id = #{userId}
     </select>
@@ -38,4 +39,15 @@
             tel = #{tel}
         WHERE user_id = #{userId}
     </update>
+
+    <select id="getTotalPoint" parameterType="int" resultType="int">
+        SELECT total_point FROM user WHERE user_pk = #{userPk}
+    </select>
+
+    <update id="updateTotalPoint">
+        UPDATE user
+        SET total_point = total_point + #{amount}
+        WHERE user_pk = #{userPk}
+    </update>
+
 </mapper>
