@@ -213,7 +213,8 @@ export function setZoom() {
 
 /* 리로드 함수 */
 export function reload() {
-    fetch(`/reservation/info/${JSON.parse(sessionStorage.getItem('gameInfo'))['gamePk']}`)
+    const gamePk = JSON.parse(sessionStorage.getItem('gameInfo'))['gamePk'];
+    fetch(`/reservation/info?gamePk=${gamePk}`)
         .then(res => res.json())
         .then(data => {
             map = JSON.parse(data.zoneMapDetail);

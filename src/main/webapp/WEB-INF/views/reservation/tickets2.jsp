@@ -42,8 +42,6 @@
                                                 <select class="cnt-dropdown" id="cnt-adult" name="cnt-adult">
                                                     <!-- todo: 사용자가 선택한 매수에 따라 다르게 보이게 해야함 -->
                                                     <option value="0" selected>0매</option>
-                                                    <option value="1" >1매</option>
-                                                    <option value="2" >2매</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -61,8 +59,6 @@
                                                 <select class="cnt-dropdown" id="cnt-youth" name="cnt-youth">
                                                     <!-- todo: 사용자가 선택한 매수에 따라 다르게 보이게 해야함 -->
                                                     <option value="0" selected>0매</option>
-                                                    <option value="1" >1매</option>
-                                                    <option value="2" >2매</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -80,8 +76,6 @@
                                                 <select class="cnt-dropdown" id="cnt-kids" name="cnt-kids">
                                                     <!-- todo: 사용자가 선택한 매수에 따라 다르게 보이게 해야함 -->
                                                     <option value="0" selected>0매</option>
-                                                    <option value="1" >1매</option>
-                                                    <option value="2" >2매</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -99,8 +93,6 @@
                                                 <select class="cnt-dropdown" id="cnt-senior" name="cnt-senior">
                                                     <!-- todo: 사용자가 선택한 매수에 따라 다르게 보이게 해야함 -->
                                                     <option value="0" selected>0매</option>
-                                                    <option value="1" >1매</option>
-                                                    <option value="2" >2매</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -118,8 +110,6 @@
                                                 <select class="cnt-dropdown" id="cnt-disabled" name="cnt-disabled">
                                                     <!-- todo: 사용자가 선택한 매수에 따라 다르게 보이게 해야함 -->
                                                     <option value="0" selected>0매</option>
-                                                    <option value="1" >1매</option>
-                                                    <option value="2" >2매</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -137,8 +127,6 @@
                                                 <select class="cnt-dropdown" id="cnt-soldier" name="cnt-soldier">
                                                     <!-- todo: 사용자가 선택한 매수에 따라 다르게 보이게 해야함 -->
                                                     <option value="0" selected>0매</option>
-                                                    <option value="1" >1매</option>
-                                                    <option value="2" >2매</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -156,8 +144,6 @@
                                                 <select class="cnt-dropdown" id="cnt-national" name="cnt-national">
                                                     <!-- todo: 사용자가 선택한 매수에 따라 다르게 보이게 해야함 -->
                                                     <option value="0" selected>0매</option>
-                                                    <option value="1" >1매</option>
-                                                    <option value="2" >2매</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -245,8 +231,8 @@
                 </div>
                 <div class="ticket-btn-container">
                     <div class="ticket-btn-wrapper">
-                        <img src="${pageContext.request.contextPath}/assets/img/reservation/backBtnSmall.svg" alt="이전버튼">
-                        <img src="${pageContext.request.contextPath}/assets/img/reservation/nextBtnSmall.svg" alt="다음버튼">
+                        <img id="backBtn" src="${pageContext.request.contextPath}/assets/img/reservation/backBtnSmall.svg" alt="이전버튼">
+                        <img id="nextBtn" src="${pageContext.request.contextPath}/assets/img/reservation/nextBtnSmall.svg" alt="다음버튼">
                     </div>
                 </div>
             </div>

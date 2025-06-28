@@ -109,7 +109,7 @@
   <div class="backgroundWrapper">
     <%@ include file="../include/headerImg.jsp" %>
   </div>
-  <%@ include file="../tickets/predict.jsp" %>
+<%--  <%@ include file="../tickets/predict.jsp" %>--%>
   <div class="container">
       <div class="filter-container">
         <form method="get" action="${pageContext.request.contextPath}/tickets/all">

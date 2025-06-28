@@ -3,9 +3,7 @@ package org.baseball.domain.reservation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.baseball.dto.ReserveGameInfoDTO;
-import org.baseball.dto.SoldSeatsReqDTO;
-import org.baseball.dto.ZoneDTO;
+import org.baseball.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,5 +64,52 @@ public class ReservationService {
         session.setAttribute("zoneMapDetail", new ObjectMapper().writeValueAsString(zoneDetail));
 
         return true;
+    }
+
+    public PreemptionResDTO preemptSeat(PreemptionDTO preemptionDTO, UserDTO userDTO) {
+        PreemptionResDTO response = new PreemptionResDTO();
+        int zonePk = preemptionDTO.getZonePk();
+        int gamePk =  preemptionDTO.getGamePk();
+
+
+        //선점 여부 확인
+        for(String seatNum : preemptionDTO.getSeats()) {
+            int result = reservationMapper.confirmPreemption(zonePk, seatNum, gamePk);
+
+            if(result == 1) {
+                response.setPreempted(false);
+                return response;
+            }
+        }
+        response.setPreempted(true);
+
+        //선점/판매가 되지 않았다면 선점
+        PreemptionListDTO preemptionListDTO = PreemptionListDTO
+                .builder()
+                .quantity(preemptionDTO.getQuantity())
+                .userPk(userDTO.getUserPk())
+                .gamePk(preemptionDTO.getGamePk())
+                .build();
+
+        reservationMapper.setPreemptionList(preemptionListDTO);
+        int reservelistPk = preemptionListDTO.getReservelistPk();
+        response.setReservelistPk(reservelistPk);
+
+        for(String seatNum : preemptionDTO.getSeats()) {
+            PreemptionReserveDTO preemptionReserveDTO = PreemptionReserveDTO
+                    .builder()
+                    .reservelistPk(reservelistPk)
+                    .zonePk(preemptionDTO.getZonePk())
+                    .seatNum(seatNum)
+                    .build();
+            reservationMapper.setPreemptionReserve(preemptionReserveDTO);
+        }
+
+        return response;
+    }
+
+    public void deletePreemption(int reservelistPk) {
+        reservationMapper.deletePreemptionReserve(reservelistPk);
+        reservationMapper.deletePreemptionList(reservelistPk);
     }
 }

@@ -13,8 +13,9 @@
 </head>
 <body>
 <script>
-    let map = ${zoneMapDetail};
-    let zoneInfo = ${zoneInfo};
+    let map = ${zoneMapDetail}; //구역 별 선점/판매 된 좌석 번호 배열
+    let zoneInfo = ${zoneInfo}; //구역 별 정보(pk, name, color, cost, total num, remaining num)
+
     let gameInfo = JSON.parse('${gameInfoJson}');
     sessionStorage.setItem('gameInfo', JSON.stringify(gameInfo));
 </script>

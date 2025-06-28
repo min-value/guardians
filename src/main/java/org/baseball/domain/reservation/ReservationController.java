@@ -3,7 +3,10 @@ package org.baseball.domain.reservation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.baseball.dto.PreemptionDTO;
+import org.baseball.dto.PreemptionResDTO;
 import org.baseball.dto.ReserveGameInfoDTO;
+import org.baseball.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -34,9 +37,9 @@ public class ReservationController {
     }
 
     //전체 구역 정보 불러오기
+    @GetMapping("/info")
     @ResponseBody
-    @GetMapping("/info/{gamePk}")
-    public Map<String, Object> getGameInfo(@PathVariable("gamePk") int gamePk, HttpSession session) throws JsonProcessingException {
+    public Map<String, Object> getGameInfo(@RequestParam("gamePk") int gamePk, HttpSession session) throws JsonProcessingException {
         reservationService.getSeatInfo(gamePk, session);
 
         Map<String, Object> result = new HashMap<>();
@@ -44,6 +47,32 @@ public class ReservationController {
         result.put("zoneInfo", session.getAttribute("zoneInfo"));
         result.put("zoneMapDetail", session.getAttribute("zoneMapDetail"));
         return result;
+    }
+
+    //해당 좌석 상태 확인 및 선점
+    @PostMapping("/preemption/add")
+    @ResponseBody
+    public PreemptionResDTO preemptSeat(@RequestBody PreemptionDTO preemptionDTO, HttpSession session) {
+        UserDTO user = (UserDTO) session.getAttribute("loginUser");
+        try {
+            return reservationService.preemptSeat(preemptionDTO, user);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    //선점 해제
+    @DeleteMapping("/preemption/delete")
+    @ResponseBody
+    public boolean deletePreemption(@RequestParam int reservelistPk) {
+        try {
+            reservationService.deletePreemption(reservelistPk);
+            return true;
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     //권종 및 할인 선택 페이지 로드
@@ -56,11 +85,5 @@ public class ReservationController {
     @GetMapping("/confirm")
     public String confirm() {
         return "reservation/tickets3";
-    }
-
-    //테스트용
-    @GetMapping("/test")
-    public String test() {
-        return "/reservation/autoAssigned";
     }
 }

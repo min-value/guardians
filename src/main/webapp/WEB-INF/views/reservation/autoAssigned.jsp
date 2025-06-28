@@ -27,4 +27,3 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/reservation/autoAssigned.js"></script>

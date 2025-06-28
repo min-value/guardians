@@ -42,18 +42,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //다음 단계 벼튼 리스너 추가
     //선택된 좌석이 없다면 다음 단계로 넘어가지 못함
+    document.getElementById('ticket-btn').addEventListener('dblclick', function(e) {
+        e.preventDefault();
+    });
+
     document.getElementById('ticket-btn' ).addEventListener('click', () => {
         if(selectedSeats.length === 0) {
             alert("선택된 좌석이 없습니다. 좌석을 선택하세요");
             return;
         }
-        //선택한 구역 세션 스토리지에 저장
-        sessionStorage.setItem('zone', lastColoredName);
+        //선택한 구역 정보 세션 스토리지에 저장 (구역 번호, 구역명, 가격, 구역 색상, 좌석 총 개수, 남은 개수)
+        sessionStorage.setItem('zone', JSON.stringify(zoneInfo[lastColoredName]));
 
         //선택한 좌석 목록 세션 스토리지에 저장
         sessionStorage.setItem('seats', JSON.stringify(selectedSeats));
 
-        location.href = '/reservation/discount';
+
+        //컨트롤러에서 선점 여부 확인 후 선점
+        const sendData = {
+            quantity: Number(selectedSeats.length),
+            gamePk: Number(JSON.parse(sessionStorage.getItem('gameInfo'))['gamePk']),
+            zonePk: Number(lastColoredName),
+            seats: selectedSeats
+        };
+
+        fetch('/reservation/preemption/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(sendData)
+        })
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                if(data.preempted === true) {
+                    sessionStorage.setItem('reservelistPk', JSON.stringify(data.reservelistPk));
+                    location.href = '/reservation/discount';
+                } else if(data.preempted === false) {
+                    alert(`해당 좌석은 이미 선점된 좌석입니다.`);
+                    location.reload();
+                }
+            })
+            .catch(error => {
+                alert(`서버 오류 발생`);
+            });
+
     });
 
     //리셋 버튼 리스너 추가
