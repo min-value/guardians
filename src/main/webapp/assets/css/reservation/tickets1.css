@@ -2,6 +2,19 @@
 
 /* left container */
 /* 게임 정보 표시 */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6); /* 반투명 검은색 */
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
 .gameinfo-container {
     height: 90px;
     width: 522px;
@@ -219,6 +232,8 @@
 }
 
 #ticket-btn {
+    position: absolute;
+    z-index: 11;
     width: 100%;
     cursor: pointer;
 }
@@ -368,4 +383,11 @@
     font-size: 11px;
     line-height: 30px;
     color: var(--white);
+}
+
+.autoAssigned {
+    position: absolute;
+    bottom: 36px;
+    display: none;
+    z-index: 11;
 }

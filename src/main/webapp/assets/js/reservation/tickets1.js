@@ -47,6 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("선택된 좌석이 없습니다. 좌석을 선택하세요");
             return;
         }
+        //선택한 구역 세션 스토리지에 저장
+        sessionStorage.setItem('zone', lastColoredName);
+
+        //선택한 좌석 목록 세션 스토리지에 저장
+        sessionStorage.setItem('seats', JSON.stringify(selectedSeats));
+
         location.href = '/reservation/discount';
     });
 
@@ -67,8 +73,42 @@ document.addEventListener('DOMContentLoaded', () => {
             changeZoneInfoListBox(zonePk);
         })
     })
+
+
+    //좌석 자동 배정 리스너 추가
+    document.querySelectorAll('.changeBtn').forEach(el => {
+        if(el.id === 'up') {
+            el.addEventListener('click', () => {
+                calCount(1);
+            });
+        } else if(el.id === 'down') {
+            el.addEventListener('click', () => {
+                calCount(2);
+            })
+        }
+    })
 })
 
+/* 좌석 자동 배정 리스너 함수 */
+function calCount(type) {
+    let cntEl = document.getElementById('count');
+    let cnt = Number(cntEl.value);
+    if(type === 1) {
+        //+
+        if(cnt >= 4) {
+            alert('1인당 최대 4매까지 예매 가능합니다.');
+        } else {
+            cntEl.value = cnt + 1;
+            selectedSeats.push('자동배정');
+        }
+    } else if(type === 2) {
+        //-
+        if(cnt > 0) {
+            cntEl.value = cnt - 1;
+            selectedSeats.pop();
+        }
+    }
+}
 /* 등급 선택 클릭 리스너 */
 function changeZoneInfoListBox(zonePk) {
     //svgMap에서 해당 존 가져오기
@@ -173,7 +213,15 @@ function changeColor(region) {
 /* seat으로 이동 */
 function switchToSeat() {
     setCurrentView(2);
-    getSeatsMap(setSeatType(lastColoredName));
+    let seatType = setSeatType(lastColoredName);
+
+    if(seatType === 4) {
+        //외야석 자동 배정
+        autoAssigned();
+        return;
+    } else {
+        getSeatsMap(seatType);
+    }
 
     document.querySelector('.stadium-container').style.display = 'none';
     document.querySelector('.seats-container').style.display = 'flex';
@@ -290,4 +338,32 @@ export function resetSelectedAll() {
 
 export function setColored(num) {
     colored = num;
+}
+
+/* 외야석 자동 배정 함수 */
+function autoAssigned() {
+    let popup = document.querySelector('.autoAssigned');
+    let overlay = document.querySelector('.overlay')
+    //팝업 보이기
+    document.getElementById('autoAssigned-choiceInfo').innerText = zoneInfo[lastColoredName]['zoneName'];
+    document.getElementById('remainingSeats').innerText = zoneInfo[lastColoredName]['remainingNum'] + '석';
+    popup.style.display = 'block';
+    overlay.style.display = 'flex';
+
+    //다른 요소들 안 눌리게 변경
+    document.addEventListener('mouseup', function(e) {
+        if(!popup.contains(e.target)) {
+            closePopup(popup, overlay);
+        }
+    })
+
+    document.querySelector('.autoAssigned-closeBtn > img').addEventListener('click', () => {
+        closePopup(popup, overlay);
+    })
+}
+
+function closePopup(popup, overlay) {
+    document.getElementById('count').value = '0';
+    popup.style.display = 'none';
+    overlay.style.display = 'none';
 }

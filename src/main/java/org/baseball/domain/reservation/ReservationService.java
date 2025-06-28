@@ -46,20 +46,20 @@ public class ReservationService {
         List<ZoneDTO> zoneDTOList = getZones();
 
         //구역 별 남은 좌석 수 저장
-        Map<ZoneDTO, Integer> zoneMap = new LinkedHashMap<>();
+//        Map<ZoneDTO, Integer> zoneMap = new LinkedHashMap<>();
         Map<Integer, ZoneDTO> zoneInfo = new LinkedHashMap<>();
         Map<Integer, List<String>> zoneDetail = new LinkedHashMap<>();
 
         //팔린 좌석들 가져오기
         for(ZoneDTO zoneDTO : zoneDTOList){
             List<String> seats = getSoldSeats(new SoldSeatsReqDTO(gamePk, zoneDTO.getZonePk()));
-            zoneMap.put(zoneDTO, zoneDTO.getTotalNum() - seats.size());
+            zoneDTO.setRemainingNum(zoneDTO.getTotalNum() - seats.size());
             zoneInfo.put(zoneDTO.getZonePk(), zoneDTO);
             zoneDetail.put(zoneDTO.getZonePk(), seats);
         }
 
         //구역 당 남은 좌석 수 세션에 저장
-        session.setAttribute("zoneMap", zoneMap);
+        session.setAttribute("zoneMap", zoneDTOList);
         session.setAttribute("zoneInfo", new ObjectMapper().writeValueAsString(zoneInfo));
 
         //구역 당 상세 정보 세션에 저장

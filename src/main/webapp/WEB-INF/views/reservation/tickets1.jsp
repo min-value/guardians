@@ -96,18 +96,18 @@
                                 <div class="zoneInfo-listBox">
                                     <!-- 구역 -->
                                     <c:forEach var="zone" items="${zoneMap}">
-                                        <div class="zoneInfo" id="${zone.key.zonePk}zone">
+                                        <div class="zoneInfo" id="${zone.zonePk}zone">
                                             <div class="zoneColor-wrapper">
-                                                <div id="zoneColor" style="background-color: ${zone.key.zoneColor}"></div>
+                                                <div id="zoneColor" style="background-color: ${zone.zoneColor}"></div>
                                             </div>
                                             <div class="zoneName-wrapper">
                                                 <div id="zoneName">
-                                                        ${zone.key.zoneName}
+                                                        ${zone.zoneName}
                                                 </div>
                                             </div>
                                             <div class="zoneVacancies-wrapper">
                                                 <div id="zoneVacancies">
-                                                        ${zone.value}석
+                                                        ${zone.remainingNum}석
                                                 </div>
                                             </div>
                                         </div>
@@ -121,11 +121,15 @@
                     <div class="ticket-btn-wrapper">
                         <img id="ticket-btn" src="${pageContext.request.contextPath}/assets/img/reservation/nextBtn.svg" alt="다음버튼">
                     </div>
+                    <div class="autoAssigned">
+                        <%@include file="autoAssigned.jsp"%>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<div class="overlay"></div>
 <script type="module" src="${pageContext.request.contextPath}/assets/js/reservation/tickets1.js"></script>
 </body>
 </html>

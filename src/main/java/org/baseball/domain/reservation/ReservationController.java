@@ -57,4 +57,10 @@ public class ReservationController {
     public String confirm() {
         return "reservation/tickets3";
     }
+
+    //테스트용
+    @GetMapping("/test")
+    public String test() {
+        return "/reservation/autoAssigned";
+    }
 }
