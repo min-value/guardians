@@ -58,4 +58,24 @@
         ORDER BY g.game_date ASC
     </select>
 
+    <!-- 랭킹 업데이트 -->
+    <insert id="updateTeamRank" parameterType="org.baseball.dto.RankDTO">
+        INSERT INTO team (
+            ranking, team_name, win, lose, draw, win_rate, behind, game_cnt, win_streak
+        )
+        VALUES (
+                   #{ranking}, #{teamName}, #{win}, #{lose}, #{draw},
+                   #{winRate}, #{behind}, #{gameCnt}, #{winStreak}
+               )
+            ON DUPLICATE KEY UPDATE
+                ranking = VALUES(ranking),
+                win = VALUES(win),
+                lose = VALUES(lose),
+                draw = VALUES(draw),
+                win_rate = VALUES(winRate),
+                behind = VALUES(behind),
+                game_cnt = VALUES(gameCnt),
+                win_streak = VALUES(winStreak)
+    </insert>
+
 </mapper>
