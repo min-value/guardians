@@ -18,6 +18,9 @@
 
     let gameInfo = JSON.parse('${gameInfoJson}');
     sessionStorage.setItem('gameInfo', JSON.stringify(gameInfo));
+
+    let discountInfo = JSON.parse('${discountInfo}');
+    sessionStorage.setItem('discountInfo', JSON.stringify(discountInfo));
 </script>
 <!-- 등급/좌석 선택 -->
 <div class="full-container">

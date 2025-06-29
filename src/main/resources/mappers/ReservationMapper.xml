@@ -61,4 +61,14 @@
         DELETE FROM reservations
         WHERE reservelist_pk = #{reservelistPk}
     </delete>
+
+    <resultMap id="DiscountInfo" type="org.baseball.dto.DiscountDTO">
+        <result property="discountPk" column="discount_pk"/>
+        <result property="type" column="type"/>
+        <result property="disRate" column="dis_rate"/>
+    </resultMap>
+    <select id="getDiscountInfo" resultMap="DiscountInfo">
+        SELECT discount_pk, type, dis_rate
+        FROM discount
+    </select>
 </mapper>

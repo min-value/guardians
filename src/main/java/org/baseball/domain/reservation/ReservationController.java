@@ -3,16 +3,14 @@ package org.baseball.domain.reservation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.baseball.dto.PreemptionDTO;
-import org.baseball.dto.PreemptionResDTO;
-import org.baseball.dto.ReserveGameInfoDTO;
-import org.baseball.dto.UserDTO;
+import org.baseball.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -31,7 +29,12 @@ public class ReservationController {
         session.setAttribute("gameInfo", reserveGameInfoDTO);
         session.setAttribute("gameInfoJson", new ObjectMapper().writeValueAsString(reserveGameInfoDTO));
 
+        //좌석 정보 세션에 저장
         reservationService.getSeatInfo(gamePk, session);
+
+        //할인 정보 세션에 저장
+        List<DiscountDTO> discountDTOList = reservationService.getDiscountInfo();
+        session.setAttribute("discountInfo", new ObjectMapper().writeValueAsString(discountDTOList));
 
         return "reservation/tickets1";
     }

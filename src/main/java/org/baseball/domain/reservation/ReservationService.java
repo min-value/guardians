@@ -112,4 +112,8 @@ public class ReservationService {
         reservationMapper.deletePreemptionReserve(reservelistPk);
         reservationMapper.deletePreemptionList(reservelistPk);
     }
+
+    public List<DiscountDTO> getDiscountInfo(){
+        return reservationMapper.getDiscountInfo();
+    }
 }

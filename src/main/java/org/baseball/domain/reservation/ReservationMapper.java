@@ -16,5 +16,6 @@ public interface ReservationMapper {
     void setPreemptionReserve(PreemptionReserveDTO dto);
     void deletePreemptionList(int reservelistPk);
     void deletePreemptionReserve(int reservelistPk);
+    List<DiscountDTO> getDiscountInfo();
 }
 
