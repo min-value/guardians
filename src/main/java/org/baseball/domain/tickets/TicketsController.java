@@ -17,31 +17,6 @@ public class TicketsController {
     @Autowired
     TicketsService ticketsService;
 
-    @GetMapping("/test")
-    public String test() {
-        return "reservation/stadium";
-    }
-
-    @GetMapping("/test2")
-    public String test2() {
-        return "reservation/seats";
-    }
-
-    @GetMapping("/test3")
-    public String test3() {
-        return "reservation/tickets1";
-    }
-
-    @GetMapping("/test4")
-    public String test4() {
-        return "reservation/tickets2";
-    }
-
-    @GetMapping("/test5")
-    public String test5() {
-        return "reservation/tickets3";
-    }
-
     @GetMapping("/all")
     public String showAllHomeGameList(
             @RequestParam(required = false, defaultValue = "0") String teamStatus,

@@ -1,3 +1,6 @@
+import {getSeatsMap, setSeatType} from "./seats.js";
+import {scrollToZoneInfo, updateZoneInfoHighlight} from "./tickets1.js";
+
 const standardX = 130;
 const standardY = 50;
 
@@ -16,7 +19,14 @@ let offsetY = 0;
 let startX = 0;
 let startY = 0;
 
-import {currentView, resetSelectedSeats, setColored, setCurrentView} from "./tickets1.js";
+import {
+    addSeatListener,
+    currentView,
+    lastColoredName,
+    resetSelectedAll,
+    setColored,
+    setCurrentView
+} from "./tickets1.js";
 import {selectedSeats} from "./tickets1.js";
 import {colored} from "./tickets1.js";
 
@@ -54,19 +64,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //리로드
     reloadBtn.addEventListener('click', () => {
-        location.reload();
+        reload();
     })
 })
 
 /* svgMap 내의 region 색상 회복 */
-function colorRestore(mask, overlay) {
+export function colorRestore(mask, overlay) {
     while (mask.children.length > 1) {
         mask.removeChild(mask.lastChild);
     }
 
     overlay.setAttribute('visibility', 'hidden');
 
-    setColored(1);
+    setColored(0);
+
+    //zoneInfo 포커싱 해제
+    scrollToZoneInfo(  null);
+    updateZoneInfoHighlight(null);
 }
 
 /* zone으로 이동 */
@@ -74,7 +88,7 @@ function switchToZone() {
     setCurrentView(1);
 
     //선택한 좌석들 초기화: 선택 0
-    resetSelectedSeats();
+    resetSelectedAll();
 
     //select 변경
     setZoom();
@@ -195,4 +209,24 @@ export function setZoom() {
         zoomC = zoomCs[1];
         zoomP = zoomPs[1];
     }
+}
+
+/* 리로드 함수 */
+export function reload() {
+    const gamePk = JSON.parse(sessionStorage.getItem('gameInfo'))['gamePk'];
+    fetch(`/reservation/info?gamePk=${gamePk}`)
+        .then(res => res.json())
+        .then(data => {
+            map = JSON.parse(data.zoneMapDetail);
+            zoneInfo = JSON.parse(data.zoneInfo);
+
+            $('.zoneInfo-wrapper').load(window.location.href + ' .zoneInfo-wrapper', function() {
+                scrollToZoneInfo(lastColoredName);
+                updateZoneInfoHighlight(lastColoredName);
+            });
+            resetSelectedAll();
+            getSeatsMap(setSeatType(lastColoredName));
+            addSeatListener();
+        });
+
 }

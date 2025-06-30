@@ -43,8 +43,6 @@
           <div id="bottom-infotext">예매 정보</div>
         </div>
         <div class="selectedSeat-wrapper">
-          <div id="zoneName"></div>
-          <div id="seatDetail"></div>
         </div>
         <div class="priceInfo-wrapper">
           <div id="priceInfotext">티켓 금액</div>
@@ -73,3 +71,4 @@
     </div>
   </div>
 </div>
+<script src="${pageContext.request.contextPath}/assets/js/reservation/reserveInfo.js"></script>
