@@ -1,9 +1,11 @@
 package org.baseball.domain.point;
 
+import org.baseball.domain.user.UserMapper;
 import org.baseball.dto.PointDTO;
 import org.baseball.domain.point.PointMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -11,10 +13,12 @@ import java.util.List;
 public class PointServiceImpl implements PointService {
 
     private final PointMapper pointMapper;
+    private final UserMapper userMapper;
 
     @Autowired
-    public PointServiceImpl(PointMapper pointMapper) {
+    public PointServiceImpl(PointMapper pointMapper, UserMapper userMapper) {
         this.pointMapper = pointMapper;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -22,10 +26,12 @@ public class PointServiceImpl implements PointService {
         return pointMapper.getPointsByUserPk(userPk);
     }
 
-    @Override
-    public int calculateTotalPoints(List<PointDTO> points) {
-        return points.stream()
-                .mapToInt(PointDTO::getPoint)
-                .sum();
+    @Transactional
+    public void addPoint(PointDTO pointDTO) {
+        // 포인트 내역 저장
+        pointMapper.insertPoint(pointDTO);
+
+        // 유저 포인트 총합 업데이트
+        userMapper.updateTotalPoint(pointDTO.getUserPk(), pointDTO.getPoint());
     }
 }

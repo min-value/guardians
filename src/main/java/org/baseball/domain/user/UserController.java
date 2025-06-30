@@ -177,4 +177,14 @@ public class UserController {
         return fakeTickets;
     }
 
+    @GetMapping("/user/point/total")
+    @ResponseBody
+    public int getUserTotalPoint(HttpSession session) {
+
+        UserDTO user = (UserDTO) session.getAttribute("loginUser");
+        if (user == null) return 0;
+
+        return userService.getTotalPoint(user.getUserPk());
+    }
+
 }

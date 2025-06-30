@@ -7,4 +7,5 @@ import java.util.List;
 @Mapper
 public interface PointMapper {
     List<PointDTO> getPointsByUserPk(int userPk);
+    void insertPoint(PointDTO pointDTO);
 }

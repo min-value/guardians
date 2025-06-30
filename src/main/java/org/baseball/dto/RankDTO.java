@@ -3,8 +3,7 @@ package org.baseball.dto;
 import lombok.Data;
 
 @Data
-public class TeamDTO {
-    private int teamPk;
+public class RankDTO {
     private int ranking;
     private String teamName;
     private int win;

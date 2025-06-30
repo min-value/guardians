@@ -130,7 +130,7 @@
                     });
             };
 
-            tryRender(); // 실행
+            tryRender();
         }
 
         // 포인트 내역 조회
@@ -143,47 +143,60 @@
                     return;
                 }
 
-                fetch('/user/points')
-                    .then(res => res.json())
-                    .then(data => {
-                        const points = data.points;
-                        const totalAmount = data.totalAmount;
+                Promise.all([
+                    fetch('/point/list').then(res => res.json()),
+                    fetch('/user/point/total').then(res => res.json())
+                ]).then(([points, totalAmount]) => {
+                    const totalDiv = document.querySelector('.point-total');
+                    if (totalDiv) {
+                        totalDiv.textContent = totalAmount + 'P';
+                    }
 
-                        const totalDiv = document.querySelector('.point-total');
+                    if (!points.length) {
+                        container.innerHTML = '<p class="no-points-msg">포인트 내역이 없습니다.</p>';
+                        return;
+                }
 
-                        if(totalDiv) {
-                            totalDiv.textContent = '';
-                            totalDiv.textContent = `\${totalAmount}P`;
-                        } else {
-                            console.error("point-total 요소를 찾지 못했습니다.");
+                    container.innerHTML = '';
+                    let lastDate = '';
+
+                    points.forEach(point => {
+                        if (point.formattedDate !== lastDate) {
+                            const group = document.createElement('div');
+                            group.className = 'date-group';
+                            container.appendChild(group);
+
+                            const dateDiv = document.createElement('div');
+                            dateDiv.className = 'point-date';
+                            dateDiv.textContent = point.formattedDate;
+                            group.appendChild(dateDiv);
+
+                            lastDate = point.formattedDate;
                         }
 
-                        const container = document.querySelector('.points-list');
-                        if (!points.length) {
-                            container.innerHTML = '<p class="no-points-msg">포인트 내역이 없습니다.</p>';
-                            return;
-                        }
-
-                        container.innerHTML = '';
-                        points.forEach(point => {
-                            const item = document.createElement('div');
-                            item.className = 'point-item';
-                            item.innerHTML = `
-                                <span class="point-date">\${point.date}</span>
-                                <span class="point-description">\${point.description}</span>
+                        const group = container.lastElementChild;
+                        const item = document.createElement('div');
+                        item.className = 'point-item';
+                        item.innerHTML = `
+                                <div class="detail-wrapper">
+                                    <div class="point-type">\${point.type}</div>
+                                    <div class="point-description">\${point.description}</div>
+                                </div>
                                 <span class="point-amount">\${point.point}P</span>
                             `;
-                            const amountSpan = item.querySelector('.point-amount');
+                        const amountSpan = item.querySelector('.point-amount');
 
-                            if (point.point < 0) {
-                                amountSpan.classList.add('negative');
-                                amountSpan.textContent = `\${point.point}P`;
-                            } else {
-                                amountSpan.textContent = `+\${point.point}P`;
-                            }
-                            container.appendChild(item);
-                        });
+                        if (point.point < 0) {
+                            amountSpan.classList.add('negative');
+                            amountSpan.textContent = `\${point.point}P`;
+                        } else {
+                            amountSpan.textContent = `+\${point.point}P`;
+                        }
+                        group.appendChild(item);
                     });
+                }).catch(err => {
+                    console.error("포인트 데이터 로딩 오류:", err);
+                });
             };
             tryRender();
         }
