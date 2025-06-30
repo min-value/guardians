@@ -8,13 +8,13 @@
             user_pwd,
             user_name,
             email,
-            tel,
+            tel
         ) VALUES (
             #{userId},
             #{userPwd},
             #{userName},
             #{email},
-         #{tel}
+            #{tel}
         )
     </insert>
 
