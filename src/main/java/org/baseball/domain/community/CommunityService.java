@@ -1,7 +1,7 @@
 package org.baseball.domain.community;
 
 import org.baseball.dto.CommentDTO;
-import org.baseball.dto.PostDto;
+import org.baseball.dto.PostDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +26,7 @@ public class CommunityService {
         param.put("type", type);
         param.put("keyword", keyword);
 
-        List<PostDto> list = mapper.getPostPageWithSearch(param);
+        List<PostDTO> list = mapper.getPostPageWithSearch(param);
         int count = mapper.countFiltered(param);
 
         Map<String, Object> result = new HashMap<>();
@@ -36,7 +36,7 @@ public class CommunityService {
         return result;
     }
 
-    public PostDto getPostById(int post_pk){
+    public PostDTO getPostById(int post_pk){
         return mapper.selectPostById(post_pk);
     }
 
@@ -59,7 +59,7 @@ public class CommunityService {
     }
 
     @Transactional
-    public void modifyPost(PostDto modifiedPost){
+    public void modifyPost(PostDTO modifiedPost){
         mapper.modifyPost(modifiedPost);
     }
 
@@ -77,7 +77,7 @@ public class CommunityService {
         mapper.deleteComment(comment_pk);
     }
 
-    public void addPost(PostDto dto){
+    public void addPost(PostDTO dto){
         mapper.addPost(dto);
     }
 
