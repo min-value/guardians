@@ -9,11 +9,18 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets-common.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets1.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <script>
-    const map = ${zoneMapDetail};
-    const zoneInfo = ${zoneInfo};
+    let map = ${zoneMapDetail}; //구역 별 선점/판매 된 좌석 번호 배열
+    let zoneInfo = ${zoneInfo}; //구역 별 정보(pk, name, color, cost, total num, remaining num)
+
+    let gameInfo = JSON.parse('${gameInfoJson}');
+    sessionStorage.setItem('gameInfo', JSON.stringify(gameInfo));
+
+    let discountInfo = JSON.parse('${discountInfo}');
+    sessionStorage.setItem('discountInfo', JSON.stringify(discountInfo));
 </script>
 <!-- 등급/좌석 선택 -->
 <div class="full-container">
@@ -42,7 +49,7 @@
                             <div class="selectedList-container">
                                 <div class="selectedList-info-container">
                                     <div class="selectedList-dropdown-wrapper">
-                                        <img id="selectedList-dropdown" src="/assets/img/reservation/dropDownWhiteDown.svg" alt="드롭다운">
+                                        <img id="selectedList-dropdown" src="/assets/img/reservation/dropDownWhiteUp.svg" alt="드롭다운">
                                     </div>
                                     <div class="selectedList-infoText-wrapper">
                                         <div id="selectedList-infoText">
@@ -53,7 +60,7 @@
                                         <img id="resetBtn" src="/assets/img/reservation/resetBtn.svg" alt="초기화 버튼">
                                     </div>
                                 </div>
-                                <div class="selectedList-comp-container">
+                                <div   class="selectedList-comp-container">
                                     <div class="selectedList-comp-wrapper">
 
                                     </div>
@@ -93,18 +100,18 @@
                                 <div class="zoneInfo-listBox">
                                     <!-- 구역 -->
                                     <c:forEach var="zone" items="${zoneMap}">
-                                        <div class="zoneInfo" id="${zone.key.zonePk}}">
+                                        <div class="zoneInfo" id="${zone.zonePk}zone">
                                             <div class="zoneColor-wrapper">
-                                                <div id="zoneColor" style="background-color: ${zone.key.zoneColor}"></div>
+                                                <div id="zoneColor" style="background-color: ${zone.zoneColor}"></div>
                                             </div>
                                             <div class="zoneName-wrapper">
                                                 <div id="zoneName">
-                                                        ${zone.key.zoneName}
+                                                        ${zone.zoneName}
                                                 </div>
                                             </div>
                                             <div class="zoneVacancies-wrapper">
                                                 <div id="zoneVacancies">
-                                                        ${zone.value}석
+                                                        ${zone.remainingNum}석
                                                 </div>
                                             </div>
                                         </div>
@@ -118,11 +125,15 @@
                     <div class="ticket-btn-wrapper">
                         <img id="ticket-btn" src="${pageContext.request.contextPath}/assets/img/reservation/nextBtn.svg" alt="다음버튼">
                     </div>
+                    <div class="autoAssigned">
+                        <%@include file="autoAssigned.jsp"%>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<div class="overlay"></div>
 <script type="module" src="${pageContext.request.contextPath}/assets/js/reservation/tickets1.js"></script>
 </body>
 </html>

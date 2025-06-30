@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
   String pageTitle = "티켓";
-  pageContext.setAttribute("pageTitle", pageTitle);
 %>
 <html>
 <head>
@@ -10,11 +9,17 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/colors.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/tickets/homegames.css">
-    <script type="module" src="${pageContext.request.contextPath}/assets/js/tickets/predict.js"></script>
 </head>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/include/pagination.js"></script>
 <script>
+    const user = {
+        userPk: "${sessionScope.loginUser.userPk}",
+        userName: "${sessionScope.loginUser.userName}",
+        tel: "${sessionScope.loginUser.tel}",
+        email: "${sessionScope.loginUser.email}",
+        totalPoint: "${sessionScope.loginUser.totalPoint}"
+    };
 
     function loadPage(page) {
         const params = new URLSearchParams(window.location.search);
@@ -49,14 +54,11 @@
               }
             list.forEach(dto => {
                 const now = new Date();
-                console.log(now);
                 const startDate = new Date(dto.startDate);
                 const isOnSale = startDate <= now;
-                console.log(startDate);
-                console.log(isOnSale);
 
                 const buttonHtml = isOnSale
-                    ? `<input class="onsale-ticket-btn" type="button" value="예매하기" onclick="location.href = '/reservation/seat?gamePk=\${dto.gameNo}';">`
+                    ? `<input class="onsale-ticket-btn" type="button" value="예매하기" onclick="window.open('/reservation/seat?gamePk=\${dto.gameNo}', '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');">`
                     : `
                         <div class="plan-ticket-btn">
                           <span class="plan-time">\${dto.date} \${dto.time}</span>
@@ -102,14 +104,16 @@
   }
 
   $(document).ready(function () {
-    loadPage(1);
+      loadPage(1);
+      const showModal = "${showModal}" === "true";
+      if (showModal) {
+          document.querySelector('.modal').style.display = 'flex';
+      }
   });
 </script>
 <body>
   <%@ include file="../include/header.jsp" %>
-  <div class="backgroundWrapper">
-    <%@ include file="../include/headerImg.jsp" %>
-  </div>
+  <%@ include file="../include/headerImg.jsp" %>
   <%@ include file="../tickets/predict.jsp" %>
   <div class="container">
       <div class="filter-container">

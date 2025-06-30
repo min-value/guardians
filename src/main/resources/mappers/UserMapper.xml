@@ -14,7 +14,7 @@
             #{userPwd},
             #{userName},
             #{email},
-         #{tel}
+            #{tel}
         )
     </insert>
 
@@ -25,7 +25,8 @@
                user_pk AS userPk,
                email,
                is_admin AS isAdmin,
-               tel
+               tel,
+               total_point as totalPoint
         FROM user
         WHERE user_id = #{userId}
     </select>

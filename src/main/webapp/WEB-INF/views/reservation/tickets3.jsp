@@ -6,7 +6,41 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets-common2.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets3.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">
+    <script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
+<script>
+    const user = {
+        userPk: "${sessionScope.loginUser.userPk}",
+        userName: "${sessionScope.loginUser.userName}",
+        tel: "${sessionScope.loginUser.tel}",
+        email: "${sessionScope.loginUser.email}",
+        totalPoint: "${sessionScope.loginUser.totalPoint}"
+    };
+
+    function validatePointInput(input) {
+        let value = input.value.replace(/[^0-9]/g, '');
+        const myPoint = parseInt(document.getElementById('myPoint').innerText.replace(/[^0-9]/g, ''));
+        const ticketPrice = parseInt(document.getElementById('price').innerText.replace(/[^0-9]/g, ''));
+        const availablePoint = parseInt(ticketPrice*0.1);
+
+        if (parseInt(value) > myPoint) {
+            value = myPoint;
+            document.getElementById("pointMsg").innerText = "포인트가 부족합니다";
+        }
+        if (parseInt(value) > availablePoint) {
+            value = availablePoint;
+            document.getElementById("pointMsg").innerText = "포인트는 결제금액의 10%만 사용 사능합니다";
+        }
+
+        input.value = value;
+
+        document.getElementById('usedPoint').innerText = `- ` + value;
+        document.getElementById('totalPay').innerText = ticketPrice - parseInt(value || 0);
+    }
+
+</script>
+
 <body>
 <!-- 권종/할인 선택 -->
 <div class="full-container">
@@ -37,16 +71,16 @@
                                     <br><br>
                                     <p>
                                         <strong>1. 개인정보를 제공받는 자</strong>
-                                        - kt wiz(구단)
+                                        - 신한 guardians(구단)
                                         <br><br>
                                         <strong>2. 제공하는 개인정보 항목</strong>
-                                        - kt wiz(구단) : 이름, 생년월일, 아이디, 휴대폰번호, (제공 시)이메일 주소, (배송 시)주문/배송정보
+                                        - 신한 guardians(구단) : 이름, 생년월일, 아이디, 휴대폰번호, (제공 시)이메일 주소, (배송 시)주문/배송정보
                                         <br><br>
                                         <strong>3. 개인정보를 제공받는 자의 이용목적</strong>
-                                        - kt wiz(구단) : 티켓현장발권, 예매서비스 제공에 따른 내역 관리이행 등 티켓 예매 대행, 민원처리 등 고객상담, 서비스 분석과 통계에 따른 혜택 및 맞춤 서비스 제공, 서비스 이용에 따른 설문조사 및 혜택제공
+                                        - 신한 guardians(구단) : 티켓현장발권, 예매서비스 제공에 따른 내역 관리이행 등 티켓 예매 대행, 민원처리 등 고객상담, 서비스 분석과 통계에 따른 혜택 및 맞춤 서비스 제공, 서비스 이용에 따른 설문조사 및 혜택제공
                                         <br><br>
                                         <strong>4. 개인정보를 제공받는 자의 개인정보 보유 및 이용기간</strong>
-                                        - kt wiz(구단) : 회원탈퇴 시 또는 개인정보 이용목적 달성 시까지. 단, 관계법령의 규정에 의해 보존의 필요가 있는 경우 및 사전 동의를 득한 경우 해당 보유기간까지
+                                        - 신한 guardians(구단) : 회원탈퇴 시 또는 개인정보 이용목적 달성 시까지. 단, 관계법령의 규정에 의해 보존의 필요가 있는 경우 및 사전 동의를 득한 경우 해당 보유기간까지
                                         <br><br>
                                         <strong>5. 동의거부권 등에 대한 고지</strong>
                                         - 본 개인정보 제공에 동의하지 않으시는 경우, 동의를 거부할 수 있으며, 이 경우 상품구매가 제한될 수 있습니다.
@@ -138,7 +172,7 @@
                                         </div>
                                         <div class="buyerName-detail-wrapper">
                                             <div class="buyerName-detail">
-                                                <div id="buyerName">예: 홍길동</div>
+                                                <div id="buyerName">정보 없음</div>
                                             </div>
                                         </div>
                                     </div>
@@ -148,7 +182,7 @@
                                         </div>
                                         <div class="buyerPhone-detail-wrapper">
                                             <div class="buyerPhone-detail">
-                                                <div id="buyerPhone">010-1111-1111</div>
+                                                <div id="buyerPhone">정보 없음</div>
                                             </div>
                                         </div>
                                     </div>
@@ -160,7 +194,7 @@
                                         </div>
                                         <div class="buyerEmail-detail-wrapper">
                                             <div class="buyerEmail-detail">
-                                                <div id="buyerEmail">example@naver.com</div>
+                                                <div id="buyerEmail">정보 없음</div>
                                             </div>
                                         </div>
                                     </div>
@@ -217,7 +251,7 @@
                                 <div class="paymentInfo-card-container">
                                     <div class="paymentInfo-card-wrapper">
                                         <img id="paymentInfo-card" src="${pageContext.request.contextPath}/assets/img/reservation/homeRunPay.svg" alt="홈런페이">
-                                        <div id="myPoint">3000원</div>
+                                        <div id="myPoint"></div>
                                     </div>
                                 </div>
                                 <div class="paymentInfo-point-container">
@@ -225,9 +259,12 @@
                                         <div id="pointInfo-text">사용하실 포인트를 입력해주세요. </div>
                                     </div>
                                     <div class="point-container">
-                                        <div class="point-wrapper">
-                                            <div id="point">1000원</div>
+                                        <div id="point">
+                                            <input type="text" id="usePoint"
+                                                   oninput="validatePointInput(this)"/>
+                                            <span>원</span>
                                         </div>
+                                        <div id="pointMsg"></div>
                                     </div>
                                 </div>
                             </div>
@@ -236,84 +273,11 @@
                 </div>
             </div>
             <div class="right-container">
-                <div class="right-wrapper">
-                    <div class="top-container">
-                        <div class="top-infotext-container">
-                            <div class="top-infotext-wrapper">
-                                <div id="infotext">경기 정보</div>
-                            </div>
-                        </div>
-                        <div class="top-infoImg-container">
-                            <div class="top-infoImg-wrapper">
-                                <div class="teamInfo-container">
-                                    <div class="teamInfo-wrapper">
-                                        <div class="teamImg-wrapper">
-                                            <img class="teamImg" id="team1Img" src="${pageContext.request.contextPath}/assets/img/teamlogos/1.png" alt="팀1 이미지">
-                                        </div>
-                                        <div class="teamName-wrapper">
-                                            <div class="teamName" id="team1Name">신한 가디언즈</div>
-                                        </div>
-                                    </div>
-                                    <div id="vs">VS</div>
-                                    <div class="teamInfo-wrapper">
-                                        <div class="teamImg-wrapper">
-                                            <img class="teamImg" id="team1Img" src="${pageContext.request.contextPath}/assets/img/teamlogos/1.png" alt="팀1 이미지">
-                                        </div>
-                                        <div class="teamName-wrapper">
-                                            <div class="teamName" id="team1Name">신한 가디언즈</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="right-gameInfo-container">
-                                    <div class="right-gameInfo-wrapper">
-                                        <div id="right-location">스타라이트 필드</div>
-                                        <div id="right-date">2025-06-15(월) 18:30</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bottom-container">
-                        <div class="bottom-wrapper">
-                            <div class="reserveInfo-container">
-                                <div class="bottom-infotext-wrapper">
-                                    <div id="bottom-infotext">예매 정보</div>
-                                </div>
-                                <div class="selectedSeat-wrapper">
-                                    <div id="zoneName">1루 퍼플석</div>
-                                    <div id="seatDetail">A열 19번</div>
-                                </div>
-                                <div class="priceInfo-wrapper">
-                                    <div id="priceInfotext">티켓 금액</div>
-                                    <div id="price">13000</div>
-                                </div>
-                                <div class="usedPointInfo-wrapper">
-                                    <div id="usedPointInfotext">사용 포인트</div>
-                                    <div id="usedPoint">- 1000</div>
-                                </div>
-                                <div class="totalPayInfo-wrapper">
-                                    <div id="totalPayInfotext">결제 금액</div>
-                                    <div id="totalPay">14000</div>
-                                </div>
-                            </div>
-                            <div class="cancelNotice-container">
-                                <div class="cancelNoticeText-wrapper">
-                                    <div id="cancelNoticeText">※ 경기 1일 전까지 취소 가능<br>이후 취소 시 환불이 불가합니다.</div>
-                                </div>
-                                <div class="cancelAgree-container">
-                                    <div class="cancelAgree-checkbox-wrapper">
-                                        <input type="checkbox" id="cancelAgree-checkbox"><label for="cancelAgree-checkbox"></label>
-                                        <div id="cancelAgree-text">취소 정책에 동의합니다</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <%@ include file="/WEB-INF/views/reservation/reserveInfo.jsp"%>
                 <div class="ticket-btn-container">
                     <div class="ticket-btn-wrapper">
-                        <img src="${pageContext.request.contextPath}/assets/img/reservation/backBtnSmall.svg" alt="이전버튼">
-                        <img src="${pageContext.request.contextPath}/assets/img/reservation/nextBtnSmall.svg" alt="다음버튼">
+                        <img src="${pageContext.request.contextPath}/assets/img/reservation/backBtnSmall.svg" alt="이전버튼" id="beforeBtn">
+                        <img src="${pageContext.request.contextPath}/assets/img/reservation/payBtn.svg" alt="결제버튼" id="payBtn" >
                     </div>
                 </div>
             </div>

@@ -5,7 +5,7 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
-public class PostDto {
+public class PostDTO {
     private int post_pk;
     private String title;
     private String p_content;

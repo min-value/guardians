@@ -13,4 +13,8 @@ public interface TicketsMapper {
     int countTicketsList(Map<String, Object> param);
     int updatePredict(Map<String, Object> param);
     PredictInfoDTO getGameInfoforPredict(int gamePk);
+    int updateReserveList(Map<String, Object> param);
+    int updateReservations(Map<String, Object> param);
+    int deductPoint(Map<String, Object> param);
+    int insertReservePointUsage(Map<String, Object> param);
 }

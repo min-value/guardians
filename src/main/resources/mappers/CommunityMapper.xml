@@ -3,34 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.baseball.domain.community.CommunityMapper">
 
-    <select id="getPostPageWithSearch" resultType="org.baseball.dto.PostDto" parameterType="map">
-        SELECT p.post_pk, p.title, p.p_content, p.p_date, u.user_name, u.user_pk
-        FROM post p
-        JOIN user u ON p.user_pk = u.user_pk
-        <where>
-            <if test="type != numm and type != '' and keyword != null and keyword != ''">
-                <choose>
-                    <when test="type == 'title'">
-                        p.title LIKE CONCAT('%',#{keyword},'%')
-                    </when>
-                    <when test="type == 'writer'">
-                        u.user_name LIKE CONCAT('%',#{keyword},'%')
-                    </when>
-                    <otherwise>
-                        (p.title LIKE CONCAT('%', #{keyword}, '%')
-                        OR u.user_name LIKE CONCAT('%', #{keyword}, '%'))
-                    </otherwise>
-                </choose>
-            </if>
-        </where>
-        ORDER BY p.p_date DESC, p.user_pk ASC, p.title ASC
-        LIMIT #{size} OFFSET #{offset}
-    </select>
-
-    <select id="countFiltered" resultType="int" parameterType="map">
-        SELECT COUNT(*)
-        FROM post p
-        JOIN user u ON p.user_pk = u.user_pk
+    <sql id="select">
         <where>
             <if test="type != null and type != '' and keyword != null and keyword != ''">
                 <choose>
@@ -40,6 +13,9 @@
                     <when test="type == 'writer'">
                         u.user_name LIKE CONCAT('%', #{keyword}, '%')
                     </when>
+                    <when test="type == 'mine'">
+                        u.user_pk = #{keyword}
+                    </when>
                     <otherwise>
                         (p.title LIKE CONCAT('%', #{keyword}, '%')
                         OR u.user_name LIKE CONCAT('%', #{keyword}, '%'))
@@ -47,9 +23,25 @@
                 </choose>
             </if>
         </where>
+    </sql>
+
+    <select id="getPostPageWithSearch" resultType="org.baseball.dto.PostDTO" parameterType="map">
+        SELECT p.post_pk, p.title, p.p_content, p.p_date, u.user_name, u.user_pk
+        FROM post p
+        JOIN user u ON p.user_pk = u.user_pk
+        <include refid="select"/>
+        ORDER BY p.p_date DESC, p.user_pk ASC, p.title ASC
+        LIMIT #{size} OFFSET #{offset}
     </select>
 
-    <select id="selectPostById" resultType="org.baseball.dto.PostDto" parameterType="int">
+    <select id="countFiltered" resultType="int" parameterType="map">
+        SELECT COUNT(*)
+        FROM post p
+        JOIN user u ON p.user_pk = u.user_pk
+        <include refid="select"/>
+    </select>
+
+    <select id="selectPostById" resultType="org.baseball.dto.PostDTO" parameterType="int">
         SELECT p.post_pk, p.title, p.p_content, p.p_date, u.user_name, u.user_pk
         FROM post p
         JOIN user u ON p.user_pk = u.user_pk
@@ -102,7 +94,7 @@
     </delete>
 
     <!--post 등록-->
-    <insert id="addPost" parameterType="org.baseball.dto.PostDto">
+    <insert id="addPost" parameterType="org.baseball.dto.PostDTO">
         INSERT INTO post(
             title,
             p_content,
@@ -117,7 +109,7 @@
     </insert>
 
     <!--post 수정-->
-    <update id="modifyPost" parameterType="org.baseball.dto.PostDto">
+    <update id="modifyPost" parameterType="org.baseball.dto.PostDTO">
         UPDATE post
         SET
             title = #{title},

@@ -61,6 +61,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-y: auto;
 }
 
 .ticket-options-wrapper {
@@ -126,5 +127,13 @@
 
     background-size: 10px;
     background: url("/assets/img/reservation/dropdown.svg") no-repeat right 10px center;
+    cursor: pointer;
+}
+
+#backBtn {
+    cursor: pointer;
+}
+
+#nextBtn {
     cursor: pointer;
 }
