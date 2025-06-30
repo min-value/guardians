@@ -17,13 +17,13 @@ import java.io.IOException;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/story")
+@RequestMapping("/story/news")
 public class NewsController {
 
     @Autowired
     private NewsService newsService;
 
-    @GetMapping("/news")
+    @GetMapping("")
     public String news(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(required = false) String type,
@@ -36,11 +36,10 @@ public class NewsController {
         model.addAttribute("keyword", result.get("keyword"));
         model.addAttribute("page", result.get("page"));
 
-
         return "story/news";
     }
 
-    @GetMapping("/news/page")
+    @GetMapping("/page")
     @ResponseBody
     public Map<String, Object> getNewsPage(
             @RequestParam(defaultValue = "1") int page,
@@ -49,8 +48,8 @@ public class NewsController {
         return newsService.getNews(page, type, keyword);
     }
 
-    @GetMapping("/news/crawl/sdfsdfsdfsfagfgas")
-    public String crawlNews(){
+    @GetMapping("/crawl/sdfsdfsdfsfagfgas")
+    public void crawlNews(){
         try{
             Document doc = Jsoup.connect("https://sports.daum.net/baseball").get();
             Elements newsHrefs = doc.select(".list_rank > li");
@@ -97,6 +96,5 @@ public class NewsController {
         } catch(Exception e){
             e.printStackTrace();
         }
-        return "redirect:/community/post";
     }
 }
