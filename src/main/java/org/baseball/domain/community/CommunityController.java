@@ -107,7 +107,8 @@ public class CommunityController {
     public String community(Model model){
         return "community/writePost";
     }
-// ================< comment >===================================
+
+    // ================< comment >===================================
     @GetMapping("/comment")
     @ResponseBody
     public Map<String, Object> getComments(
