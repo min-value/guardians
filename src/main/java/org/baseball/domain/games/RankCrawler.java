@@ -39,7 +39,9 @@ public class RankCrawler {
 
                 // 팀명, SSG는 신한으로 변경
                 String teamName = cols.get(1).text().trim();
-                if (teamName.equals("SSG")) teamName = "신한";
+                if (teamName.equals("SSG")) {
+                    teamName = "신한";
+                }
                 dto.setTeamName(teamName);
 
                 // 경기수

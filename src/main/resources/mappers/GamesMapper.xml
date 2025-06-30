@@ -77,5 +77,4 @@
                 game_cnt = VALUES(gameCnt),
                 win_streak = VALUES(winStreak)
     </insert>
-
 </mapper>
