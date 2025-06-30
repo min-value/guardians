@@ -187,10 +187,14 @@ public class UserController {
         if (loginUser == null) {
             return new MyFairyDTO();
         }
-        MyFairyDTO result = myFairyService.getMyFairyInfo(loginUser.getUserPk());
-        System.out.println(">>> MyFairyDTO result: " + result);
-
-        return result;
+        try {
+            MyFairyDTO result = myFairyService.getMyFairyInfo(loginUser.getUserPk());
+            System.out.println(">>> MyFairyDTO result: " + result);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new MyFairyDTO();
+        }
     }
 
 }

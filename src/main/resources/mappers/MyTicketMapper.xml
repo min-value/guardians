@@ -22,13 +22,29 @@
             s.location AS stadium,
             GROUP_CONCAT(CONCAT(z.zone_name, ' ', r.seat_num) SEPARATOR ', ') AS seatInfo,
             6 AS homeTeamPk,
-            g.team_pk AS oppTeamPk
+            g.team_pk AS oppTeamPk,
+
+            g.our_score,
+            g.opp_score,
+            g.result,
+            rl.predict,
+            gr.our_hit,
+            gr.our_homerun,
+            gr.our_strikeout,
+            gr.our_bb,
+            gr.our_miss,
+            gr.opp_hit,
+            gr.opp_homerun,
+            gr.opp_strikeout,
+            gr.opp_bb,
+            gr.opp_miss
         FROM reservation_list rl
                  JOIN user u ON rl.user_pk = u.user_pk
                  JOIN games g ON rl.game_pk = g.game_pk
                  JOIN stadium s ON g.stadium_pk = s.stadium_pk
                  JOIN reservations r ON rl.reservelist_pk = r.reservelist_pk
                  JOIN zone z ON r.zone_pk = z.zone_pk
+                 LEFT JOIN game_result gr ON g.game_pk = gr.game_pk
         WHERE rl.user_pk = #{userPk}
         GROUP BY rl.reservelist_pk
         ORDER BY g.game_date DESC

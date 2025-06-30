@@ -68,12 +68,6 @@
 .fairy-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-}
-
-.fairy-list {
-    display: flex;
-    flex-direction: column;
     gap: 10px;
     background: var(--white);
     align-items: center;
@@ -88,4 +82,147 @@
     background: var(--white);
     border-radius: 5px;
     box-shadow: 0 0 10px 0 #D9D9D9;
+}
+
+.fairy-item.expanded {
+    box-shadow: 0 0 10px 0 rgba(4, 113, 233, 0.5);
+}
+
+.fairy-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: nowrap;
+}
+
+.fairy-info {
+    max-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 16px;
+    font-size: 16px;
+    color: var(--black);
+}
+
+.fairy-item.expanded .fairy-info {
+    margin-top: 32px;
+    max-height: 1000px;
+}
+
+.fairy-info-main {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+}
+
+.fairy-details {
+    flex-grow: 1;
+}
+
+.fairy-top .predict-text {
+    width: 100px;
+    color: var(--black);
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.fairy-top .predict-success {
+    color: var(--subColor);
+}
+.fairy-top .predict-fail {
+    color: var(--errorColor);
+}
+.fairy-top .predict-draw {
+    color: var(--gray-02);
+}
+.fairy-top .predict-cancel {
+    color: var(--gray-02);
+}
+
+.fairy-top .logo-team {
+    width: 60px;
+    height: auto;
+    object-fit: contain;
+}
+
+.fairy-top .vs-text {
+    font-weight: 400;
+    font-size: 20px;
+    color: var(--black);
+    user-select: none;
+}
+
+.fairy-top .match-date {
+    margin-left: 52px;
+    margin-right: auto;
+    font-size: 20px;
+    color: var(--black);
+}
+
+.fairy-top .arrow-icon {
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.fairy-item.expanded .arrow-icon {
+    transform: rotate(90deg);
+}
+
+.fairy-details .info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+
+.fairy-details .label {
+    width: 80px;
+    margin: 0 24px;
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--black);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.fairy-details .data {
+    width: 25px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.cancel-msg {
+    padding: 20px;
+    color: var(--gray-03);
+    text-align: center;
+    font-size: 16px;
+}
+
+.bar-wrapper {
+    flex: 1;
+    margin: 0 10px;
+    background-color: var(--gray-05);
+    height: 8px;
+    border-radius: 4px;
+    position: relative;
+}
+
+.bar {
+    height: 8px;
+    border-radius: 2px;
+}
+
+.bar.our {
+    background-color: var(--mainColor);
+}
+
+.bar.opp {
+    background-color: var(--errorColor);
 }

@@ -79,16 +79,11 @@
                 fetch('/user/tickets')
                     .then(res => res.json())
                     .then(tickets => {
-                        console.log(">>> 받은 예매 데이터:", tickets);
 
                         if (!tickets.length) {
                             container.innerHTML = '<p class="no-tickets-msg">예매내역이 없습니다.</p>';
                             return;
                         }
-
-                        console.log("matchDate:", tickets[0]?.matchDate);
-                        console.log("stadium:", tickets[0]?.stadium);
-                        console.log("seatInfo:", tickets[0]?.seatInfo);
 
                         container.innerHTML = '';
                         tickets.forEach(ticket => {
@@ -233,8 +228,123 @@
                     document.querySelector('.stat:nth-child(4) .count').textContent = fairy.loseCnt + '회';
                     document.querySelector('.stat:nth-child(5) .count').textContent = fairy.winRate;
                 });
-        }
 
+            // 직관 내역 (결과가 나온 종료된 경기만)
+            const tryRender = () => {
+                const container = document.getElementById('fairy');
+                if (!container) {
+                    setTimeout(tryRender, 100);
+                    return;
+                }
+
+                fetch('/user/tickets')
+                    .then(res => res.json())
+                    .then(tickets => {
+                        const now = new Date();
+                        const pastTickets = tickets.filter(ticket => new Date(ticket.gameDate).getTime() <= now.getTime());
+
+                        if (!pastTickets.length) {
+                            container.innerHTML = '<p class="no-fairy-msg">직관 내역이 없습니다.</p>';
+                            return;
+                        }
+
+                        container.innerHTML = '';
+                        pastTickets.forEach(ticket => {
+                            console.log("ticket:", ticket);
+                            console.log('ticket keys:', Object.keys(ticket));
+                            const item = document.createElement('div');
+                            item.classList.add('fairy-item');
+
+                            item.innerHTML = `
+                                    <div class="fairy-top">
+                                        <span class ="predict-text"></span>
+                                        <img src="/assets/img/teamlogos/\${ticket.homeTeamPk}.png" class="logo-team">
+                                        <span class="vs-text">VS</span>
+                                        <img src="/assets/img/teamlogos/\${ticket.oppTeamPk}.png" class="logo-team">
+                                        <span class="match-date">\${ticket.matchDate}</span>
+                                        <img src="/assets/img/mypage/chevron-right.svg" class="arrow-icon">
+                                    </div>
+                                    <div class="fairy-info"></div>
+                                `;
+
+                            const fairyInfo = item.querySelector('.fairy-info');
+                            if (ticket.result === 'CANCEL') {
+                                fairyInfo.innerHTML = `<div class="cancel-msg">취소 경기는 경기 세부 내역이 없습니다.</div>`;
+                            } else {
+                                fairyInfo.innerHTML = `
+                                <div class="fairy-info-main">
+                                    <div class="fairy-details">
+                                        <div class="info-row">
+                                            <div class="bar-wrapper"><div class="bar our"></div></div>
+                                            <span class="data">\${ticket.our_hit}</span>
+                                            <span class="label">안타</span>
+                                            <span class="data">\${ticket.opp_hit}</span>
+                                            <div class="bar-wrapper"><div class="bar opp"></div></div>
+                                        </div>
+                                        <div class="info-row">
+                                            <div class="bar-wrapper"><div class="bar our"></div></div>
+                                            <span class="data">\${ticket.our_homerun}</span>
+                                            <span class="label">홈런</span>
+                                            <span class="data">\${ticket.opp_homerun}</span>
+                                            <div class="bar-wrapper"><div class="bar opp"></div></div>
+                                        </div>
+                                            <div class="info-row">
+                                                <div class="bar-wrapper"><div class="bar our"></div></div>
+                                                <span class="data">\${ticket.our_strikeout}</span>
+                                                <span class="label">삼진</span>
+                                                <span class="data">\${ticket.opp_strikeout}</span>
+                                                <div class="bar-wrapper"><div class="bar opp"></div></div>
+                                            </div>
+                                            <div class="info-row">
+                                                <div class="bar-wrapper"><div class="bar our"></div></div>
+                                                <span class="data">\${ticket.our_bb}</span>
+                                                <span class="label">4사구</span>
+                                                <span class="data">\${ticket.opp_bb}</span>
+                                                <div class="bar-wrapper"><div class="bar opp"></div></div>
+                                            </div>
+                                            <div class="info-row">
+                                                <div class="bar-wrapper"><div class="bar our"></div></div>
+                                                <span class="data">\${ticket.our_miss}</span>
+                                                <span class="label">실책</span>
+                                                <span class="data">\${ticket.opp_miss}</span>
+                                                <div class="bar-wrapper"><div class="bar opp"></div></div>
+                                            </div>
+                                    </div>
+                                </div>
+                            `;
+                            }
+
+                            // 예측 성공 실패 여부 판단
+                            const predictText = item.querySelector('.predict-text');
+                            predictText.classList.add('predict-text');
+
+                            if (ticket.result === 'CANCEL') {
+                                predictText.textContent = '경기 취소';
+                                predictText.classList.add('predict-cancel');
+                            } else if (ticket.result === 'DRAW') {
+                                predictText.textContent = '무승부';
+                                predictText.classList.add('predict-draw');
+                            } else if (ticket.result === 'WIN' || ticket.result === 'LOSE') {
+                                const isSuccess =
+                                    (ticket.result === 'WIN' && ticket.predict === false) ||
+                                    (ticket.result === 'LOSE' && ticket.predict === true);
+
+                                predictText.textContent = isSuccess ? '예측 성공' : '예측 실패';
+                                predictText.classList.add(isSuccess ? 'predict-success' : 'predict-fail');
+                            }
+
+                            const arrow = item.querySelector('.arrow-icon');
+                            arrow.addEventListener('click', () => {
+                                item.classList.toggle('expanded');
+                            });
+
+                            container.appendChild(item);
+                        });
+                    });
+            };
+
+            tryRender();
+        }
 
         function loadTabContent(tabName) {
             const url = '/user/mypage/' + tabName;

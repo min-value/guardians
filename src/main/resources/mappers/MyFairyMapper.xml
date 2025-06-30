@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.baseball.domain.myfairy.MyFairyMapper">
+    <select id="selectFairyGameResults" parameterType="int" resultType="map">
+        SELECT
+        SUM(gr.our_hit) AS ourHit,
+        SUM(gr.our_homerun) AS ourHomerun,
+        SUM(gr.our_strikeout) AS ourStrikeout,
+        SUM(gr.our_bb) AS ourBB,
+        SUM(gr.our_miss) AS ourMiss,
+
+        SUM(gr.opp_hit) AS oppHit,
+        SUM(gr.opp_homerun) AS oppHomerun,
+        SUM(gr.opp_strikeout) AS oppStrikeout,
+        SUM(gr.opp_bb) AS oppBB,
+        SUM(gr.opp_miss) AS oppMiss
+        FROM reservation_list rl
+        JOIN game_result gr ON rl.game_pk = gr.game_pk
+        WHERE rl.user_pk = #{userPk}
+        AND <![CDATA[ gr.date < NOW() ]]>
+    </select>
+</mapper>
