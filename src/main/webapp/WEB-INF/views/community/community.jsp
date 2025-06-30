@@ -6,12 +6,6 @@
     String content2Value = "writer";
     String content2Text = "작성자";
     String pageTitle = "커뮤니티";
-
-    pageContext.setAttribute("content1Value", content1Value);
-    pageContext.setAttribute("content1Text", content1Text);
-    pageContext.setAttribute("content2Value", content2Value);
-    pageContext.setAttribute("content2Text", content2Text);
-    pageContext.setAttribute("pageTitle", pageTitle);
 %>
 <html>
 <head>
