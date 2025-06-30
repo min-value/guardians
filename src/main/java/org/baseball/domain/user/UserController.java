@@ -1,6 +1,9 @@
 package org.baseball.domain.user;
 
 import javax.servlet.http.HttpSession;
+
+import org.baseball.domain.myfairy.MyFairyService;
+import org.baseball.dto.MyFairyDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.baseball.dto.UserDTO;
@@ -18,10 +21,12 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+    private final MyFairyService myFairyService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, MyFairyService myFairyService) {
         this.userService = userService;
+        this.myFairyService = myFairyService;
     }
 
     // 로그인 페이지
@@ -102,7 +107,6 @@ public class UserController {
         return "user/mypage/info";
     }
 
-
     @GetMapping("/user/mypage/tickets")
     public String getTicketsTab() {
         return "user/mypage/tickets";
@@ -116,6 +120,19 @@ public class UserController {
     @GetMapping("/user/mypage/fairy")
     public String getFairyTab() {
         return "user/mypage/fairy";
+    }
+
+    @GetMapping("/user/mypage/fairy/data")
+    @ResponseBody
+    public MyFairyDTO getFairyData(HttpSession session) {
+        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+        if (loginUser == null) {
+            return new MyFairyDTO();
+        }
+        MyFairyDTO result = myFairyService.getMyFairyInfo(loginUser.getUserPk());
+        System.out.println(">>> MyFairyDTO result: " + result);
+
+        return result;
     }
 
     // 마이페이지 내 정보 수정

@@ -201,6 +201,21 @@
             tryRender();
         }
 
+        // 승리요정
+        function bindFairy() {
+            fetch('/user/mypage/fairy/data')
+                .then(res => res.json())
+                .then(fairy => {
+                    console.log(">>> fairy 데이터 확인:", fairy);
+                    document.querySelector('.stat:nth-child(1) .count').textContent = fairy.totalCnt + '회';
+                    document.querySelector('.stat:nth-child(2) .count').textContent = fairy.winCnt + '회';
+                    document.querySelector('.stat:nth-child(3) .count').textContent = fairy.drawCnt + '회';
+                    document.querySelector('.stat:nth-child(4) .count').textContent = fairy.loseCnt + '회';
+                    document.querySelector('.stat:nth-child(5) .count').textContent = fairy.winRate;
+                });
+        }
+
+
         function loadTabContent(tabName) {
             const url = '/user/mypage/' + tabName;
             fetch(url)
@@ -214,8 +229,9 @@
                         bindTickets();
                     } else if (tabName === 'points') {
                         bindPoints();
+                    } else if (tabName === 'fairy') {
+                        bindFairy();
                     }
-                    // else if (tabName==='fairy')   bindFairy();
                 })
                 .catch(err => console.error(err));
         }
