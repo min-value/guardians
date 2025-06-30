@@ -43,8 +43,8 @@
           <div id="bottom-infotext">예매 정보</div>
         </div>
         <div class="selectedSeat-wrapper">
-          <div id="zoneName">1루 퍼플석</div>
-          <div id="seatDetail">A열 19번</div>
+          <div id="zoneName"></div>
+          <div id="seatDetail"></div>
         </div>
         <div class="priceInfo-wrapper">
           <div id="priceInfotext">티켓 금액</div>
