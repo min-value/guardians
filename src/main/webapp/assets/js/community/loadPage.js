@@ -84,6 +84,6 @@ $(document).ready(function(){
         loadPage(1);
     });
 
-    loadPage(1, null);
+    loadPage(1);
 });
 

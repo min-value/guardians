@@ -31,11 +31,18 @@ export function setSeatType(colorName) {
 /* 유형에 맞는 좌석 svg 불러오기 */
 export function getSeatsMap(type) {
     let svgType = '/assets/img/reservation/';
-    if (type === 1) svgType += '15-20.svg';
-    else if (type === 2) svgType += '20-9.svg';
-    else if (type === 3) svgType += '15-8.svg';
+    const timestamp = new Date().getTime();
 
-    document.getElementById('seatObj').data = svgType;
+    if (type === 1) svgType += `15-20.svg?t=${timestamp}`;
+    else if (type === 2) svgType += `20-9.svg?${timestamp}`;
+    else if (type === 3) svgType += `15-8.svg?${timestamp}`;
+
+    document.getElementById('seatObj').setAttribute('data', svgType);
+
+    //element 대체하기
+    let element = document.querySelector("object");
+    let cloneElement = element.cloneNode(true);
+    element.parentNode.replaceChild(cloneElement, element);
 }
 
 

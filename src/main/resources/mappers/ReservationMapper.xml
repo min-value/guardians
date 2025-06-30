@@ -35,4 +35,40 @@
         FROM zone
         ORDER BY cost DESC, zone_pk DESC
     </select>
+
+    <select id="confirmPreemption" resultType="int">
+        SELECT COUNT(*)
+        FROM reservations r LEFT JOIN reservation_list l ON r.reservelist_pk = l.reservelist_pk
+        WHERE r.zone_pk = #{zonePk} AND r.seat_num = #{seatNum} AND l.game_pk = #{gamePk}
+    </select>
+
+    <insert id="setPreemptionList" useGeneratedKeys="true" keyProperty="reservelistPk" keyColumn="reservelist_pk">
+        INSERT INTO reservation_list (quantity, user_pk, game_pk)
+        VALUES (#{quantity}, #{userPk}, #{gamePk})
+    </insert>
+
+    <insert id="setPreemptionReserve" useGeneratedKeys="true" keyProperty="reservePk" keyColumn="reserve_pk">
+        INSERT INTO reservations (reservelist_pk, zone_pk, seat_num, hold_started_at, state)
+        VALUES (#{reservelistPk}, #{zonePk}, #{seatNum}, NOW(), 'HELD')
+    </insert>
+
+    <delete id="deletePreemptionList">
+        DELETE FROM reservation_list
+        WHERE reservelist_pk = #{reservelistPk}
+    </delete>
+
+    <delete id="deletePreemptionReserve">
+        DELETE FROM reservations
+        WHERE reservelist_pk = #{reservelistPk}
+    </delete>
+
+    <resultMap id="DiscountInfo" type="org.baseball.dto.DiscountDTO">
+        <result property="discountPk" column="discount_pk"/>
+        <result property="type" column="type"/>
+        <result property="disRate" column="dis_rate"/>
+    </resultMap>
+    <select id="getDiscountInfo" resultMap="DiscountInfo">
+        SELECT discount_pk, type, dis_rate
+        FROM discount
+    </select>
 </mapper>

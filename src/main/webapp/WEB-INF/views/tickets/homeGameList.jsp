@@ -55,7 +55,7 @@
                 console.log(isOnSale);
 
                 const buttonHtml = isOnSale
-                    ? `<input class="onsale-ticket-btn" type="button" value="예매하기" onclick="location.href = '/reservation/seat?gamePk=\${dto.gameNo}';">`
+                    ? `<input class="onsale-ticket-btn" type="button" value="예매하기" onclick="window.open('/reservation/seat?gamePk=\${dto.gameNo}', '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');">`
                     : `
                         <div class="plan-ticket-btn">
                           <span class="plan-time">\${dto.date} \${dto.time}</span>
@@ -109,7 +109,7 @@
   <div class="backgroundWrapper">
     <%@ include file="../include/headerImg.jsp" %>
   </div>
-  <%@ include file="../tickets/predict.jsp" %>
+<%--  <%@ include file="../tickets/predict.jsp" %>--%>
   <div class="container">
       <div class="filter-container">
         <form method="get" action="${pageContext.request.contextPath}/tickets/all">
