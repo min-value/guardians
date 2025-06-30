@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets3.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">
     <script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
 <script>
     const user = {
@@ -16,36 +17,6 @@
         email: "${sessionScope.loginUser.email}",
         totalPoint: "${sessionScope.loginUser.totalPoint}"
     };
-
-    //test 용
-    sessionStorage.setItem("gameInfo", JSON.stringify({
-        gamePk: 87,
-        oppTeamPk: 1,
-        oppTeamName: "한화 Eagles",
-        gameDate: "2025-07-10"
-    }));
-
-    sessionStorage.setItem("priceInfo", JSON.stringify({
-        price : 1,
-        point: 0,
-        total: 1
-    }));
-
-    const gameData = JSON.parse(sessionStorage.getItem('gameInfo')) || {};
-    const zoneData = JSON.parse(sessionStorage.getItem('seatsInfo')) || "1루 퍼플석";
-    const seatsData = JSON.parse(sessionStorage.getItem('seats')) || ["A10", "A11", "A12", "A13"];
-    const priceData = JSON.parse(sessionStorage.getItem('priceInfo'));
-
-    sessionStorage.setItem("zoneInfo", zoneData);
-    sessionStorage.setItem("seatInfo", seatsData);
-    sessionStorage.setItem("priceInfo", JSON.stringify(priceData));
-
-    const zoneNameEl = document.getElementById("zoneName");
-    const seatDetailEl = document.getElementById("seatDetail");
-
-    const price = parseInt(priceData.price, 10);
-    const point = parseInt(priceData.point, 10);
-
 
     function validatePointInput(input) {
         let value = input.value.replace(/[^0-9]/g, '');
@@ -303,7 +274,7 @@
             </div>
             <div class="right-container">
                 <%@ include file="/WEB-INF/views/reservation/reserveInfo.jsp"%>
-            <div class="ticket-btn-container">
+                <div class="ticket-btn-container">
                     <div class="ticket-btn-wrapper">
                         <img src="${pageContext.request.contextPath}/assets/img/reservation/backBtnSmall.svg" alt="이전버튼" id="beforeBtn">
                         <img src="${pageContext.request.contextPath}/assets/img/reservation/payBtn.svg" alt="결제버튼" id="payBtn" >

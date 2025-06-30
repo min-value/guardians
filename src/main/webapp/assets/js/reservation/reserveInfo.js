@@ -1,6 +1,33 @@
+//test 용
+sessionStorage.setItem("gameInfo", JSON.stringify({
+    gamePk: 87,
+    oppTeamPk: 1,
+    oppTeamName: "한화 Eagles",
+    gameDate: "2025-05-26"
+}));
+
+sessionStorage.setItem("totalAmount", 110);
+sessionStorage.setItem("usedPoint", 0);
+sessionStorage.setItem("paidAmount", 110);
+sessionStorage.setItem("reservelistPk", 31);
+
+
+sessionStorage.setItem("zone", JSON.stringify({
+    zonePk: 1101,
+    zoneName:"1루 외야석",
+    zoneColor:"#0DB310",
+    cost: 11000,
+    totalNum:500,
+    remainingNum:500
+}));
+sessionStorage.setItem("seats", JSON.stringify(["a1", "a2", "a3"]));
+
 const gameInfo = JSON.parse(sessionStorage.getItem('gameInfo'));
 const zone = JSON.parse(sessionStorage.getItem('zone'));
 const seats = JSON.parse(sessionStorage.getItem('seats'));
+const totalAmount = JSON.parse(sessionStorage.getItem('totalAmount'));
+const usedPoint = JSON.parse(sessionStorage.getItem('usedPoint'));
+const paidAmount = JSON.parse(sessionStorage.getItem('paidAmount'));
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('opponentTeam').setAttribute('src', `/assets/img/teamlogos/${gameInfo['oppTeamPk']}.png`);
@@ -31,13 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     //가격 넣기
-    document.getElementById('price').innerText = '0';
+    document.getElementById('price').innerText = totalAmount || '0';
 
     //포인트 넣기
-    document.getElementById('usedPoint').innerText = '0';
+    document.getElementById('usedPoint').innerText = usedPoint || '0';
 
     //결제 금액 넣기
-    document.getElementById('totalPay').innerText = '0';
+    document.getElementById('totalPay').innerText = paidAmount ||'0';
 })
 
 function formatTimestamp(timestamp) {
