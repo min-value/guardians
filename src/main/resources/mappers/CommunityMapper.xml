@@ -13,6 +13,9 @@
                     <when test="type == 'writer'">
                         u.user_name LIKE CONCAT('%', #{keyword}, '%')
                     </when>
+                    <when test="type == 'mine'">
+                        u.user_pk = #{keyword}
+                    </when>
                     <otherwise>
                         (p.title LIKE CONCAT('%', #{keyword}, '%')
                         OR u.user_name LIKE CONCAT('%', #{keyword}, '%'))
@@ -22,7 +25,7 @@
         </where>
     </sql>
 
-    <select id="getPostPageWithSearch" resultType="org.baseball.dto.PostDto" parameterType="map">
+    <select id="getPostPageWithSearch" resultType="org.baseball.dto.PostDTO" parameterType="map">
         SELECT p.post_pk, p.title, p.p_content, p.p_date, u.user_name, u.user_pk
         FROM post p
         JOIN user u ON p.user_pk = u.user_pk
@@ -38,7 +41,7 @@
         <include refid="select"/>
     </select>
 
-    <select id="selectPostById" resultType="org.baseball.dto.PostDto" parameterType="int">
+    <select id="selectPostById" resultType="org.baseball.dto.PostDTO" parameterType="int">
         SELECT p.post_pk, p.title, p.p_content, p.p_date, u.user_name, u.user_pk
         FROM post p
         JOIN user u ON p.user_pk = u.user_pk
@@ -91,7 +94,7 @@
     </delete>
 
     <!--post 등록-->
-    <insert id="addPost" parameterType="org.baseball.dto.PostDto">
+    <insert id="addPost" parameterType="org.baseball.dto.PostDTO">
         INSERT INTO post(
             title,
             p_content,
@@ -106,7 +109,7 @@
     </insert>
 
     <!--post 수정-->
-    <update id="modifyPost" parameterType="org.baseball.dto.PostDto">
+    <update id="modifyPost" parameterType="org.baseball.dto.PostDTO">
         UPDATE post
         SET
             title = #{title},

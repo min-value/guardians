@@ -156,6 +156,26 @@
       <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
       <version>1.16</version>
     </dependency>
+    <!-- 유튜브 API 클라이언트 라이브러리 -->
+    <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-youtube</artifactId>
+      <version>v3-rev222-1.25.0</version>
+    </dependency>
+
+    <!-- Google API 클라이언트 코어 -->
+    <dependency>
+      <groupId>com.google.api-client</groupId>
+      <artifactId>google-api-client</artifactId>
+      <version>1.32.1</version>
+    </dependency>
+
+    <!-- JSON 파싱용 라이브러리 -->
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20210307</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>guardians</finalName>

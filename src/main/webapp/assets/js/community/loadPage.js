@@ -29,6 +29,7 @@ function loadPage(page){
         success: function(res){
             const list = res.list;
             const totalCount = res.totalCount;
+            console.log("total: " + totalCount);
 
             const container = $('#post-container').empty();
             list.forEach(post => {
@@ -54,6 +55,10 @@ function loadPage(page){
                     containerId: '#pagination'
                 });
             }
+            else{
+                const container2 = $('#pagination').empty();
+                container2.append(``);
+            }
         }
     });
 }
@@ -73,14 +78,14 @@ $(document).ready(function(){
         currentType = null;
         currentKeyword = null;
         updateButtonStyles('all');
-        history.pushState(null, null, '/community/post'); // URL 초기화 (선택)
+        history.pushState(null, null, '/community/post'); // URL 초기화
         loadPage(1);
     });
     $('#my-posts-btn').on('click', function(){
-        currentType = 'writer';
-        currentKeyword = loginUserName;
+        currentType = 'mine';
+        currentKeyword = loginUserPk;
         updateButtonStyles('my');
-        history.pushState(null, null, '/community/post'); // URL 초기화 (선택)
+        history.pushState(null, null, '/community/post'); // URL 초기화
         loadPage(1);
     });
 

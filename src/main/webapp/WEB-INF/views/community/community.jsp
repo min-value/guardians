@@ -17,7 +17,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/include/pagination.js"></script>
 <script>
-    const loginUserName = '${sessionScope.loginUser.userName}';
+    const loginUserPk = '${sessionScope.loginUser.userPk}';
 </script>
 <script src="${pageContext.request.contextPath}/assets/js/community/loadPage.js"></script>
 </head>

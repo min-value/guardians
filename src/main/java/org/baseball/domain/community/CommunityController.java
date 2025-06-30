@@ -1,8 +1,7 @@
 package org.baseball.domain.community;
 
-import oracle.jdbc.proxy.annotation.Post;
 import org.baseball.dto.CommentDTO;
-import org.baseball.dto.PostDto;
+import org.baseball.dto.PostDTO;
 import org.baseball.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -48,7 +45,7 @@ public class CommunityController {
 
     @GetMapping("/post/{post_pk}")
     public String post(@PathVariable("post_pk") int postPk, Model model) {
-        PostDto post = communityService.getPostById(postPk);
+        PostDTO post = communityService.getPostById(postPk);
         model.addAttribute("post", post);
         post.setP_content(post.getP_content().replace("\n", "<br/>"));
         return "community/postDetail";
@@ -63,7 +60,7 @@ public class CommunityController {
         if (loginUser == null) {
             return "redirect:/community/post";
         }
-        PostDto post = communityService.getPostById(postPk);
+        PostDTO post = communityService.getPostById(postPk);
         model.addAttribute("post", post);
 
         if(loginUser.getUserPk() == post.getUser_pk()){
@@ -76,7 +73,7 @@ public class CommunityController {
 
     @PostMapping("/post/{post_pk}/modify")
     public String updatePost(@PathVariable("post_pk") int postPk,
-                             @ModelAttribute PostDto modifiedPost,
+                             @ModelAttribute PostDTO modifiedPost,
                              HttpSession session) {
         UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
 
@@ -98,7 +95,7 @@ public class CommunityController {
     }
 
     @PostMapping("/post/add")
-    public String addPost(@ModelAttribute PostDto dto){
+    public String addPost(@ModelAttribute PostDTO dto){
         communityService.addPost(dto);
         return "redirect:/community/post";
     }
