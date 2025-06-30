@@ -67,7 +67,7 @@ function clickCheerBtn() {
         success: function (res) {
             alert("예측 완료!");
             document.querySelector('.modal').style.display = 'none';
-            window.location.href = '/all';
+            window.location.href = '/tickets/all';
         },
         error: function (err) {
             alert("데이터를 저장하지 못했습니다. 다시 시도해주세요.");
