@@ -14,7 +14,7 @@
             #{userPwd},
             #{userName},
             #{email},
-         #{tel}
+            #{tel}
         )
     </insert>
 

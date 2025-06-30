@@ -15,7 +15,7 @@ public class AdminCheckInterceptor implements HandlerInterceptor {
         UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
 
         if (loginUser == null) {
-            response.sendRedirect("/login");
+            response.sendRedirect("/user/login");
             return false;
         } else if (!loginUser.isAdmin()) {
             response.sendRedirect("/home");
