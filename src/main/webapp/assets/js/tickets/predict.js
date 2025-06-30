@@ -1,6 +1,3 @@
-// sessionStorage.setItem("gamePk", 87);
-// sessionStorage.setItem("reservelistPk", 1);
-
 let curPredict = null;
 let reservelistPk = JSON.parse(sessionStorage.getItem("reservelistPk"));
 let gameInfo = JSON.parse(sessionStorage.getItem("gameInfo"));
@@ -51,9 +48,6 @@ $(document).ready(function () {
         target.style.backgroundColor = "var(--mainColor)";
         target.style.color = "var(--white)";
     });
-
-    console.log(curPredict);
-    console.log(reservelistPk);
 
     document.querySelector('.modal-btn').addEventListener('click', clickCheerBtn);
 
