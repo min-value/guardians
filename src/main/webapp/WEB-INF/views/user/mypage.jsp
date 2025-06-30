@@ -72,7 +72,7 @@
             const tryRender = () => {
                 const container = document.getElementById('tickets');
                 if (!container) {
-                    setTimeout(tryRender, 100); // tickets.jsp가 완전히 렌더링될 때까지 기다림
+                    setTimeout(tryRender, 100);
                     return;
                 }
 
@@ -80,43 +80,62 @@
                     .then(res => res.json())
                     .then(tickets => {
                         console.log(">>> 받은 예매 데이터:", tickets);
-                        console.log("matchDate:", tickets[0].matchDate);
-                        console.log("stadium:", tickets[0].stadium);
-                        console.log("seatInfo:", tickets[0].seatInfo);
+
                         if (!tickets.length) {
                             container.innerHTML = '<p class="no-tickets-msg">예매내역이 없습니다.</p>';
                             return;
                         }
 
+                        console.log("matchDate:", tickets[0]?.matchDate);
+                        console.log("stadium:", tickets[0]?.stadium);
+                        console.log("seatInfo:", tickets[0]?.seatInfo);
+
                         container.innerHTML = '';
                         tickets.forEach(ticket => {
                             const item = document.createElement('div');
                             item.classList.add('ticket-item');
+
+                            const gameDate = new Date(ticket.gameDate);
+                            const now = new Date();
+
+                            console.log('gameDate:', gameDate.toString());
+                            console.log('now:', now.toString());
+
+                            const isCancelable = gameDate.getTime() > now.getTime();
+                            const cancelBtn = isCancelable
+                                ? `<div class="cancel-container"><button class="cancel-btn" data-ticket="\${ticket.ticketNumber}">예매취소</button></div>`
+                                : '';
+
                             item.innerHTML = `
                                 <div class="ticket-top">
-                                    <img src="/assets/img/teamlogos/6.png" class="logo-team">
+                                    <img src="/assets/img/teamlogos/\${ticket.homeTeamPk}.png" class="logo-team">
                                     <span class="vs-text">VS</span>
-                                    <img src="/assets/img/teamlogos/3.png" class="logo-team">
+                                    <img src="/assets/img/teamlogos/\${ticket.oppTeamPk}.png" class="logo-team">
                                     <span class="match-date">\${ticket.matchDate}</span>
                                     <img src="/assets/img/mypage/chevron-right.svg" class="arrow-icon">
                                 </div>
                                 <div class="ticket-info">
-                                       <div class="info-row">
-                                         <span class="label">예매자</span>
-                                         <span class="user">\${ticket.userName}</span>
-                                       </div>
-                                       <div class="info-row">
-                                         <span class="label">예매번호</span>
-                                         <span class="ticket-num">\${ticket.ticketNumber}</span>
-                                       </div>
-                                      <div class="info-row">
-                                        <span class="label">경기장</span>
-                                        <span class="stadium">\${ticket.stadium}</span>
-                                      </div>
-                                      <div class="info-row">
-                                        <span class="label">좌석번호</span>
-                                        <span class="seat">\${ticket.seatInfo}</span>
-                                      </div>
+                                       <div class="ticket-info-main">
+                                          <div class="ticket-details">
+                                            <div class="info-row">
+                                              <span class="label">예매자</span>
+                                              <span class="user">\${ticket.userName}</span>
+                                            </div>
+                                            <div class="info-row">
+                                              <span class="label">예매번호</span>
+                                              <span class="ticket-num">\${ticket.ticketNumber}</span>
+                                            </div>
+                                            <div class="info-row">
+                                              <span class="label">경기장</span>
+                                              <span class="stadium">\${ticket.stadium}</span>
+                                            </div>
+                                            <div class="info-row">
+                                              <span class="label">좌석번호</span>
+                                              <span class="seat">\${ticket.seatInfo.replace(/, /g, '<br>')}</span>
+                                            </div>
+                                          </div>
+                                          \${cancelBtn}
+                                        </div>
                                 </div>
                               `;
                             container.appendChild(item);
@@ -125,6 +144,8 @@
                             arrow.addEventListener('click', () => {
                                 item.classList.toggle('expanded');
                             });
+
+                            // 예매 취소 버튼 클릭 이벤트 추가 예정
                         });
 
                     });
@@ -203,10 +224,9 @@
 
         // 승리요정
         function bindFairy() {
-            fetch('/user/mypage/fairy/data')
+            fetch('/user/fairy/data')
                 .then(res => res.json())
                 .then(fairy => {
-                    console.log(">>> fairy 데이터 확인:", fairy);
                     document.querySelector('.stat:nth-child(1) .count').textContent = fairy.totalCnt + '회';
                     document.querySelector('.stat:nth-child(2) .count').textContent = fairy.winCnt + '회';
                     document.querySelector('.stat:nth-child(3) .count').textContent = fairy.drawCnt + '회';

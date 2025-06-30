@@ -35,3 +35,30 @@ html, body {
 .mypage-tabs .tab-btn.active {
     color: var(--black);
 }
+
+.cancel-container {
+    display: none;
+}
+
+.ticket-item.expanded .cancel-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.cancel-btn {
+    padding: 16px;
+    background-color: var(--mainColor);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+    justify-content: flex-end;
+}
+
+.cancel-btn:hover {
+    background-color: var(--mainHover);
+}
+
