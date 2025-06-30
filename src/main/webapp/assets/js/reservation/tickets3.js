@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
 IMP.init("imp56774166");  // 자신의 가맹점 식별코드로 바꾸세요
 
 async function requestPay() {
-    let totalAmount = JSON.parse(sessionStorage.getItem('totalAmount'));
+    let totalAmount = JSON.parse(sessionStorage.getItem('totalPay'));
     let usedPoint = JSON.parse(sessionStorage.getItem('usedPoint'));
     let paidAmount = JSON.parse(sessionStorage.getItem('paidAmount'));
 

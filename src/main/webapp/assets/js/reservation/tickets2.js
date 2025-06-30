@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('매수를 정확히 선택해주세요.')
         } else {
             sessionStorage.setItem('totalPay', totalPayment);
-            // location.href = '/reservation/confirm';
+            location.href = '/reservation/confirm';
         }
     });
 });

@@ -1,7 +1,7 @@
 const gameInfo = JSON.parse(sessionStorage.getItem('gameInfo'));
 const zone = JSON.parse(sessionStorage.getItem('zone'));
 const seats = JSON.parse(sessionStorage.getItem('seats'));
-const totalAmount = JSON.parse(sessionStorage.getItem('totalAmount'));
+const totalAmount = JSON.parse(sessionStorage.getItem('totalPay'));
 const usedPoint = JSON.parse(sessionStorage.getItem('usedPoint'));
 const paidAmount = JSON.parse(sessionStorage.getItem('paidAmount'));
 
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('usedPoint').innerText = usedPoint || '0';
 
     //결제 금액 넣기
-    document.getElementById('totalPay').innerText = paidAmount ||'0';
+    document.getElementById('totalPay').innerText = paidAmount ||totalAmount;
 })
 
 function formatTimestamp(timestamp) {

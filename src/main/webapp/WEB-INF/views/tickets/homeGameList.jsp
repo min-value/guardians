@@ -113,9 +113,7 @@
 </script>
 <body>
   <%@ include file="../include/header.jsp" %>
-  <div class="backgroundWrapper">
-    <%@ include file="../include/headerImg.jsp" %>
-  </div>
+  <%@ include file="../include/headerImg.jsp" %>
   <%@ include file="../tickets/predict.jsp" %>
   <div class="container">
       <div class="filter-container">

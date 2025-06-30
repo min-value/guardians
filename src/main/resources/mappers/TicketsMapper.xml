@@ -53,6 +53,7 @@
     <update id="updateReserveList" parameterType="map">
         UPDATE reservation_list
         set
+            reserve_date = NOW(),
             used_point = #{used_point},
             imp_uid = #{impUid},
             is_pay = 1,
