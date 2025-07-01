@@ -4,7 +4,7 @@
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 <html>
 <head>
-    <title>상세결과</title>
+    <title>신한 가디언즈</title>
     <link rel="stylesheet" href="/assets/css/games/details.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/assets/js/games/details.js"></script>
