@@ -50,4 +50,21 @@
         WHERE user_pk = #{userPk}
     </update>
 
+    <select id="findUserByPk" resultType="org.baseball.dto.UserDTO">
+        SELECT user_pk AS userPk,
+               user_id AS userId,
+               user_pwd AS userPwd,
+               user_name AS userName,
+               email,
+               tel,
+               is_admin AS isAdmin,
+               win_cnt AS winCnt,
+               draw_cnt AS drawCnt,
+               lose_cnt AS loseCnt,
+               total_point AS totalPoint
+        FROM user
+        WHERE user_pk = #{userPk}
+    </select>
+
+
 </mapper>

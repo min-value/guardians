@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.baseball.domain.myticket.MyTicketMapper">
+    <select id="selectTicketsByUserPk" parameterType="int" resultType="map">
+        SELECT
+            u.user_name AS userName,
+            rl.reservelist_pk AS ticketNumber,
+            CONCAT(DATE_FORMAT(g.game_date, '%Y-%m-%d'), ' (',
+                   CASE DAYOFWEEK(g.game_date)
+                       WHEN 1 THEN '일'
+                       WHEN 2 THEN '월'
+                       WHEN 3 THEN '화'
+                       WHEN 4 THEN '수'
+                       WHEN 5 THEN '목'
+                       WHEN 6 THEN '금'
+                       WHEN 7 THEN '토'
+                       END, ') ',
+                   DATE_FORMAT(g.game_date, '%H:%i')
+            ) AS matchDate,
+            DATE_FORMAT(g.game_date, '%Y-%m-%dT%H:%i:%s') AS gameDate,
+            s.location AS stadium,
+            GROUP_CONCAT(CONCAT(z.zone_name, ' ', r.seat_num) SEPARATOR ', ') AS seatInfo,
+            6 AS homeTeamPk,
+            g.team_pk AS oppTeamPk,
+
+            g.our_score,
+            g.opp_score,
+            g.result,
+            rl.predict,
+            gr.our_hit,
+            gr.our_homerun,
+            gr.our_strikeout,
+            gr.our_bb,
+            gr.our_miss,
+            gr.opp_hit,
+            gr.opp_homerun,
+            gr.opp_strikeout,
+            gr.opp_bb,
+            gr.opp_miss
+        FROM reservation_list rl
+                 JOIN user u ON rl.user_pk = u.user_pk
+                 JOIN games g ON rl.game_pk = g.game_pk
+                 JOIN stadium s ON g.stadium_pk = s.stadium_pk
+                 JOIN reservations r ON rl.reservelist_pk = r.reservelist_pk
+                 JOIN zone z ON r.zone_pk = z.zone_pk
+                 LEFT JOIN game_result gr ON g.game_pk = gr.game_pk
+        WHERE rl.user_pk = #{userPk}
+        GROUP BY rl.reservelist_pk
+        ORDER BY g.game_date DESC
+    </select>
+</mapper>

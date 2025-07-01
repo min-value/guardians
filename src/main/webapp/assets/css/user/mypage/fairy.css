@@ -1,0 +1,240 @@
+@import url('/assets/css/colors.css');
+@import url('/assets/css/font.css');
+
+.fairy-tab {
+    width: 780px;
+    margin: 48px auto 0 auto;
+    box-sizing: border-box;
+}
+
+.fairy-title-box {
+    width: 780px;
+    height: 209px;
+    padding: 24px 36px;
+    border-radius: 5px;
+    background: url("/assets/img/mypage/fairy-title.svg");
+    color: white;
+    display: flex;
+    margin-bottom: 64px;
+    box-sizing: border-box;
+    align-items: baseline;
+}
+
+.fairy-title {
+    width: 354px;
+    margin-right: 64px;
+    font-size: 32px;
+    font-weight: 400;
+}
+
+.fairy-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+}
+
+.stat .label {
+    flex: 0 0 100px;
+    margin-right: 36px;
+}
+
+.stat .count {
+    flex: 0 0 110px;
+    text-align: left;
+}
+
+.stat .count::before {
+    content: "|";
+    margin: 0 36px 0 0;
+    color: white;
+}
+
+.fairy-tab label {
+    display: block;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--black);
+    margin-bottom: 36px;
+}
+
+.fairy-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--white);
+    align-items: center;
+}
+
+.fairy-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 16px 36px;
+    margin-bottom: 10px;
+    background: var(--white);
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 #D9D9D9;
+}
+
+.fairy-item.expanded {
+    box-shadow: 0 0 10px 0 rgba(4, 113, 233, 0.5);
+}
+
+.fairy-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: nowrap;
+}
+
+.fairy-info {
+    max-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 16px;
+    font-size: 16px;
+    color: var(--black);
+}
+
+.fairy-item.expanded .fairy-info {
+    margin-top: 32px;
+    max-height: 1000px;
+}
+
+.fairy-info-main {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+}
+
+.fairy-details {
+    flex-grow: 1;
+}
+
+.fairy-top .predict-text {
+    width: 100px;
+    color: var(--black);
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.fairy-top .predict-success {
+    color: var(--subColor);
+}
+.fairy-top .predict-fail {
+    color: var(--errorColor);
+}
+.fairy-top .predict-draw {
+    color: var(--gray-02);
+}
+.fairy-top .predict-cancel {
+    color: var(--gray-02);
+}
+
+.fairy-top .logo-team {
+    width: 60px;
+    height: auto;
+    object-fit: contain;
+}
+
+.fairy-top .vs-text {
+    font-weight: 400;
+    font-size: 20px;
+    color: var(--black);
+    user-select: none;
+}
+
+.fairy-top .match-date {
+    margin-left: 52px;
+    margin-right: auto;
+    font-size: 20px;
+    color: var(--black);
+}
+
+.fairy-top .arrow-icon {
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.fairy-item.expanded .arrow-icon {
+    transform: rotate(90deg);
+}
+
+.cancel-msg {
+    padding: 20px;
+    color: var(--gray-03);
+    text-align: center;
+    font-size: 16px;
+}
+
+.fairy-bar-container .bar-row {
+    display: grid;
+    grid-template-columns: 2fr auto 80px auto 2fr;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+}
+
+.fairy-bar-container .bar-wrap {
+    position: relative;
+    height: 8px;
+    background: var(--gray-06);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.fairy-bar-container .bar-row > .bar-wrap:first-child {
+    justify-self: end;
+}
+
+.fairy-bar-container .bar-row > .bar-wrap:last-child {
+    justify-self: start;
+}
+
+.fairy-bar-container .bar {
+    position: absolute;
+    top: 0; bottom: 0;
+    border-radius: 2px;
+}
+
+.fairy-bar-container .bar.our {
+    background: var(--subColor);
+}
+
+.fairy-bar-container .bar.opp {
+    background: var(--errorColor);
+}
+
+.fairy-bar-container .bar-label {
+    width: 80px;
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--black);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.fairy-bar-container .bar-value {
+    width: 30px;
+    margin: 0 24px;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--black);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}

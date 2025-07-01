@@ -1,6 +1,11 @@
 package org.baseball.domain.user;
 
 import javax.servlet.http.HttpSession;
+
+import org.baseball.domain.myfairy.MyFairyService;
+import org.baseball.domain.myticket.MyTicketService;
+import org.baseball.domain.tickets.TicketsService;
+import org.baseball.dto.MyFairyDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.baseball.dto.UserDTO;
@@ -18,10 +23,14 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+    private final MyFairyService myFairyService;
+    private final MyTicketService myTicketService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, MyFairyService myFairyService, MyTicketService myTicketService) {
         this.userService = userService;
+        this.myFairyService = myFairyService;
+        this.myTicketService = myTicketService;
     }
 
     // 로그인 페이지
@@ -102,7 +111,6 @@ public class UserController {
         return "user/mypage/info";
     }
 
-
     @GetMapping("/user/mypage/tickets")
     public String getTicketsTab() {
         return "user/mypage/tickets";
@@ -156,27 +164,11 @@ public class UserController {
             return new ArrayList<>();
         }
 
-        List<Map<String, Object>> fakeTickets = new ArrayList<>();
-
-        Map<String, Object> ticket1 = new HashMap<>();
-        ticket1.put("userName", "홍길동");
-        ticket1.put("ticketNumber", "202506101234567");
-        ticket1.put("matchDate", "2025-06-10 (화) 18:30");
-        ticket1.put("stadium", "서울 스타라이트 필드");
-        ticket1.put("seatInfo", "320구역 오렌지석 D열 8번");
-        fakeTickets.add(ticket1);
-
-        Map<String, Object> ticket2 = new HashMap<>();
-        ticket2.put("userName", "홍길동");
-        ticket2.put("ticketNumber", "202506041234567");
-        ticket2.put("matchDate", "2025-06-04 (수) 18:30");
-        ticket2.put("stadium", "서울 스타라이트 필드");
-        ticket2.put("seatInfo", "110 외야석 A열 2번");
-        fakeTickets.add(ticket2);
-
-        return fakeTickets;
+        int userPk = loginUser.getUserPk();
+        return myTicketService.getTicketsByUserPk(userPk);
     }
 
+    // 마이페이지 포인트내역 조회
     @GetMapping("/user/point/total")
     @ResponseBody
     public int getUserTotalPoint(HttpSession session) {
@@ -185,6 +177,24 @@ public class UserController {
         if (user == null) return 0;
 
         return userService.getTotalPoint(user.getUserPk());
+    }
+    
+    // 마이페이지 승리요정 조회
+    @GetMapping("/user/fairy/data")
+    @ResponseBody
+    public MyFairyDTO getFairyData(HttpSession session) {
+        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+        if (loginUser == null) {
+            return new MyFairyDTO();
+        }
+        try {
+            MyFairyDTO result = myFairyService.getMyFairyInfo(loginUser.getUserPk());
+            System.out.println(">>> MyFairyDTO result: " + result);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new MyFairyDTO();
+        }
     }
 
 }
