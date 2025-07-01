@@ -3,7 +3,7 @@
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 <html>
 <head>
-    <title>구단 소개</title>
+    <title>신한 가디언즈</title>
     <link rel="stylesheet" href="/assets/css/teaminfo/club.css">
     <link rel="stylesheet" href="/assets/css/font.css">
 </head>

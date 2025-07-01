@@ -49,9 +49,9 @@
             <div class="depth2-column">
                 <ul class="depth2">
                     <li><a href="/teaminfo/club">구단 소개</a></li>
-                    <li><a href="#">경기장 소개</a></li>
-                    <li><a href="#">스폰서</a></li>
-                    <li><a href="#">선수 정보</a></li>
+                    <li><a href="/teaminfo/stadium">경기장 소개</a></li>
+                    <li><a href="/teaminfo/sponsor">스폰서</a></li>
+                    <li><a href="/teaminfo/player">선수 정보</a></li>
                 </ul>
             </div>
             <div class="depth2-column">
