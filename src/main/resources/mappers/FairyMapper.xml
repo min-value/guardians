@@ -3,8 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.baseball.domain.fairy.FairyMapper">
     <select id="showFairyRank" resultType="org.baseball.dto.FairyDTO">
-        SELECT user_pk as userNo, user_name as userName, win_cnt + lose_cnt as totalCnt,
-               win_cnt as winCnt, lose_cnt as loseCnt, draw_cnt as drawCnt, ROUND((win_cnt + 1) / (win_cnt + lose_cnt + 2), 3) as ratio
+        SELECT user_pk as userNo, user_name as userName, win_cnt + lose_cnt + draw_cnt as totalCnt,
+               win_cnt as winCnt, lose_cnt as loseCnt, draw_cnt as drawCnt, ROUND((win_cnt + 1) / (win_cnt + lose_cnt + draw_cnt + 2), 3) as ratio
         FROM user
         ORDER BY ratio DESC, totalCnt DESC, winCnt DESC
         LIMIT 3;

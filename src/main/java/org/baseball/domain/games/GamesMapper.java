@@ -14,4 +14,7 @@ public interface GamesMapper {
 
     // 경기 스케줄 조회
     List<ScheduleDTO> getScheduleMonth(@Param("year") int year, @Param("month") int month);
+
+    // 랭킹 업데이트
+    void updateTeamRank(RankDTO dto);
 }

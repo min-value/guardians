@@ -21,10 +21,12 @@ public class TicketsController {
     public String showAllHomeGameList(
             @RequestParam(required = false, defaultValue = "0") String teamStatus,
             @RequestParam(required = false, defaultValue = "0") String ticketStatus,
+            @RequestParam(required = false) String showModal,
             Model model) {
 
         model.addAttribute("selectedTeamStatus", teamStatus);
         model.addAttribute("selectedTicketStatus", ticketStatus);
+        model.addAttribute("showModal", showModal); // JSP로 넘김
         return "tickets/homeGameList";
     }
 
@@ -56,5 +58,17 @@ public class TicketsController {
     @ResponseBody
     public PredictInfoDTO getGameInfoforPredict(@RequestParam int gamePk) {
         return ticketsService.getGameInfoforPredict(gamePk);
+    }
+
+    @PostMapping("/purchase")
+    @ResponseBody
+    public boolean updatePurchase(@RequestBody Map<String, Object> paymentData) {
+        try {
+            System.out.println("paymentData = " + paymentData);
+            return ticketsService.updatePurchase(paymentData);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

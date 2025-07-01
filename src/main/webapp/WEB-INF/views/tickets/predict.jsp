@@ -4,7 +4,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/tickets/predict.css">
 <script type="module" src="${pageContext.request.contextPath}/assets/js/tickets/predict.js"></script>
-
 <div class="modal">
     <div class="modal-container">
         <div class="modal-header">승부예측</div>

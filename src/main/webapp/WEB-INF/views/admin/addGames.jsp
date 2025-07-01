@@ -15,6 +15,8 @@
         let currentPage = 1;
         function openModal(gameNo){
             document.querySelector('#modal-gameNo').value = gameNo;
+            document.querySelector("#startDate").value = "";
+            document.querySelector("#endDate").value = "";
 
             fetch('/admin/tickets/gameinfo?gameNo=' + gameNo)
                 .then(response => response.json())
@@ -32,16 +34,31 @@
 
         function saveHomeGame() {
             const gameNo = document.querySelector('#modal-gameNo').value;
-            const start = document.querySelector("#startDate").value;
-            const end = document.querySelector("#endDate").value;
+            const startInput = document.querySelector("#startDate").value;
+            const endInput = document.querySelector("#endDate").value;
+            const gameDateInput = document.querySelector('#modal-gameDate').value;
 
-            if (!start || !end) {
+            if (!startInput || !endInput) {
                 alert("날짜를 입력해주세요.");
                 return false;
             }
 
+            const start = new Date(startInput);
+            const end = new Date(endInput);
+            const gameDate = new Date(gameDateInput);
+
             if (start > end) {
                 alert("시작일과 마감일을 확인해주세요.");
+                return false;
+            }
+
+            if (start > gameDate) {
+                alert("시작일을 확인해주세요.");
+                return false;
+            }
+
+            if (end > gameDate) {
+                alert("마감일을 확인해주세요.");
                 return false;
             }
 
