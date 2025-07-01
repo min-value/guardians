@@ -52,12 +52,13 @@ function loadNews(page){
                 container.append(`
 
                     <div class="news">
-                        <div class="news-title">
-                            <a href="${news.news_url}">${news.n_title}</a>
+                        <div class="news-title" onclick="window.open('${news.news_url}');">
+                            ${news.n_title}
                         </div>
                         <div class="news-body">
-                            <div class="img" style="background: url('${news.img_url}') no-repeat center center"></div>
-                            <div class="news-text">${news.n_content}</div>
+                            <div class="img" style="background: url('${news.img_url}') no-repeat center center"
+                                onclick="window.open('${news.news_url}');"></div>
+                            <div class="news-text" onclick="window.open('${news.news_url}');">${news.n_content}</div>
                         </div>
                         <div class="news-date">${date}</div>
                     </div>

@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.*;
@@ -23,6 +24,7 @@ import javax.sql.DataSource;
 @Configuration
 @PropertySource({"classpath:db.properties", "classpath:iamport.properties"})
 @EnableWebMvc
+@EnableScheduling
 @ComponentScan("org.baseball")
 @MapperScan(basePackages = "org.baseball", annotationClass = Mapper.class)
 @EnableTransactionManagement //트랜잭션 활성화
