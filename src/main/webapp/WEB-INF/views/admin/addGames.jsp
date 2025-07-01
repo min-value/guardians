@@ -2,8 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Title</title>
-
+    <title>신한 가디언즈</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/colors.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin/admin.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/include/pagination.css">
@@ -95,7 +94,7 @@
                 success: function(res) {
                     const list = res.list;
                     const totalCount = res.totalCount;
-                    console.log(res);
+                    console.log(res.totalCount);
                     const container = $('#list').empty();
 
                     list.forEach(dto => {
@@ -119,7 +118,7 @@
                         currentPage: page,
                         totalCount: totalCount,
                         onPageChange: (newPage) => loadPage(newPage),
-                        pageSize: 10,
+                        pageSize: 7,
                         containerId: '#pagination'
                     });
                 },
