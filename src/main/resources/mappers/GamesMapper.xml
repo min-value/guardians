@@ -129,5 +129,44 @@
           AND MONTH(g.game_date) = #{month}
         ORDER BY g.game_date DESC
     </select>
+    <!-- 페이지네이션 목록 조회 -->
+    <select id="selectDetailList" resultMap="gameDetailsMap">
+        SELECT
+            g.game_pk,
+            g.game_date,
+            g.result,
+            g.our_score,
+            g.opp_score,
+            g.team_pk,
+            t.team_name,
+            gr.our_hit,
+            gr.our_homerun,
+            gr.our_strikeout,
+            gr.our_bb,
+            gr.our_miss,
+            gr.opp_hit,
+            gr.opp_homerun,
+            gr.opp_strikeout,
+            gr.opp_bb,
+            gr.opp_miss,
+            gr.win_pitcher,
+            gr.lose_pitcher
+        FROM games g
+                 JOIN game_result gr ON g.game_pk = gr.game_pk
+                 JOIN team t ON g.team_pk = t.team_pk
+        WHERE YEAR(g.game_date) = #{year}
+          AND MONTH(g.game_date) = #{month}
+        ORDER BY g.game_date DESC
+            LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <!-- 전체 개수 조회 -->
+    <select id="countDetail" resultType="int">
+        SELECT COUNT(*)
+        FROM games g
+                 JOIN game_result gr ON g.game_pk = gr.game_pk
+        WHERE YEAR(g.game_date) = #{year}
+          AND MONTH(g.game_date) = #{month}
+    </select>
 
 </mapper>

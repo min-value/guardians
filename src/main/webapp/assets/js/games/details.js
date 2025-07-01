@@ -10,8 +10,16 @@ $(document).ready(function () {
             method: 'GET',
             data: { year, month },
             success: function (data) {
-                renderGameCards(data);
+                renderGameCards(data.list);
                 bindSummaryToggle();
+
+                createPagination({
+                    currentPage: 1,
+                    totalCount: data.totalCount,
+                    pageSize: 5,
+                    containerId: '#pagination',
+                    onPageChange: (newPage) => loadGamePage(newPage)
+                });
             },
             error: function () {
                 alert('불러오기 실패');
@@ -110,7 +118,7 @@ function renderGameCards(gameList) {
                     <div class="hit">안타: ${game.ourHit} / ${game.oppHit}</div>
                     <div class="homerun">홈런: ${game.ourHomerun} / ${game.oppHomerun}</div>
                     <div class="strike-out">삼진: ${game.ourStrikeOut} / ${game.oppStrikeOut}</div>
-                    <div class="bb">사사구: ${game.ourBb} / ${game.oppBb}</div>
+                    <div class="bb">4사구: ${game.ourBb} / ${game.oppBb}</div>
                     <div class="miss">실책: ${game.ourMiss} / ${game.oppMiss}</div>
 
                     <div class="team-name">
@@ -137,7 +145,7 @@ function formatDate(dateString) {
 
 // 그래프
 function drawChart($detail, $container) {
-    const labels = ['안타', '홈런', '삼진', '사사구', '실책'];
+    const labels = ['안타', '홈런', '삼진', '4사구', '실책'];
     const classes = ['hit', 'homerun', 'strike-out', 'bb', 'miss'];
     const ourData = [], oppData = [];
 
@@ -167,3 +175,30 @@ function drawChart($detail, $container) {
 
     $container.html(html);
 }
+
+function loadGamePage(page) {
+    const year = $('#year-select').val();
+    const month = $('#month-select').val();
+
+    $.ajax({
+        url: '/games/details/filter',
+        method: 'GET',
+        data: { year, month, page, size: 5 },
+        success: function (data) {
+            renderGameCards(data.list);
+            bindSummaryToggle();
+
+            createPagination({
+                currentPage: page,
+                totalCount: data.totalCount,
+                pageSize: 5,
+                containerId: '#pagination',
+                onPageChange: (newPage) => loadGamePage(newPage)
+            });
+        },
+        error: function () {
+            alert('불러오기 실패');
+        }
+    });
+}
+

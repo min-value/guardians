@@ -35,4 +35,17 @@ public class GamesServiceImpl implements GamesService {
     @Override
     public List<GamedetailsDTO> getGameDetails(int year, int month) { return gamesMapper.getGameDetails(year, month); }
 
+    // 페이지네이션용 상세 조회
+    @Override
+    public List<GamedetailsDTO> getDetailList(int year, int month, int page, int size) {
+        int offset = (page - 1) * size;
+        return gamesMapper.selectDetailList(year, month, offset, size);
+    }
+
+    // 전체 개수 조회
+    @Override
+    public int getDetailCount(int year, int month) {
+        return gamesMapper.countDetail(year, month);
+    }
+
 }

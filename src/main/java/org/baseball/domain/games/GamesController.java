@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class GamesController {
@@ -63,7 +65,18 @@ public class GamesController {
     // 월별 필터링
     @GetMapping("/games/details/filter")
     @ResponseBody
-    public List<GamedetailsDTO> getDetailsByMonth(@RequestParam int year, @RequestParam int month) {
-        return gamesService.getGameDetails(year, month);
+    public Map<String, Object> getDetailsByMonth(
+            @RequestParam int year,
+            @RequestParam int month,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "6") int size) {
+
+        List<GamedetailsDTO> list = gamesService.getDetailList(year, month, page, size);
+        int totalCount = gamesService.getDetailCount(year, month);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("list", list);
+        result.put("totalCount", totalCount);
+        return result;
     }
 }
