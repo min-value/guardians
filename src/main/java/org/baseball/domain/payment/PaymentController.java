@@ -2,6 +2,7 @@ package org.baseball.domain.payment;
 
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +23,7 @@ public class PaymentController {
 
     private IamportClient api;
 
+    // 결제
     @RequestMapping("/verifyPayment/{imp_uid}")
     @ResponseBody
     public IamportResponse<Payment> paymentByImpUid(@PathVariable("imp_uid") String imp_uid)
@@ -30,5 +32,13 @@ public class PaymentController {
             api = new IamportClient(apiKey, apiSecret);
         }
         return api.paymentByImpUid(imp_uid);
+    }
+
+    // 결제 취소
+    @PostMapping("/cancelPayment/{imp_uid}")
+    @ResponseBody
+    public IamportResponse<Payment> cancelPayment(@PathVariable("imp_uid") String impUid) throws Exception {
+        CancelData cancelData = new CancelData(impUid, true); // 전액 환불
+        return api.cancelPaymentByImpUid(cancelData);
     }
 }
