@@ -52,7 +52,7 @@ public class VideoController {
         String query = "nc다이노스 하이라이트";
         String urlString = "https://www.googleapis.com/youtube/v3/search?part=snippet&q="
                 + java.net.URLEncoder.encode(query, "UTF-8")
-                + "&type=video&maxResults=14&key=" + apiKey;
+                + "&type=video&maxResults=6&key=" + apiKey;
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -79,6 +79,7 @@ public class VideoController {
                 dto.setV_title(title);
                 dto.setV_date(publishedAt.substring(0,10));
                 dto.setV_url(videoUrl);
+                dto.setV_id(videoId);
                 dto.setThumbnail_url(thumbnailUrl);
 
                 videoService.addVideo(dto);
