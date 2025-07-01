@@ -13,11 +13,15 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-x: hidden;
 }
 
 .container {
+    position: relative;
     margin: 0;
+    margin-bottom: -200px;
     width: 1536px;
+    min-height: 1700px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -30,14 +34,18 @@ html, body {
 }
 
 .title {
-    margin-top: 160px;
-    margin-bottom: 140px;
-    display: flex;
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
     width: 1175px;
-    height: 242px;
-    padding: 113px 50px;
+    height: auto;
+    padding: 60px 50px;
+
+    display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 10px;
     flex-shrink: 0;
@@ -65,18 +73,27 @@ html, body {
     line-height: 90px;
 }
 
+.content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 .fairy-container {
-    margin: 0;
-    width: 100vw;
+    top: 450px;
+    left: 0;
+    margin-top: 50px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
-    position: relative;
+    position: absolute;
 }
 
 .box-container {
-    margin-bottom: 100px;
+    margin-bottom: 20px;
 }
 
 .box {

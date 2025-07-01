@@ -149,5 +149,6 @@
     </div>
   </div>
   <div id="pagination"></div>
+  <%@ include file="../include/footer.jsp" %>
 </body>
 </html>

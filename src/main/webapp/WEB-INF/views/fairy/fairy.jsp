@@ -19,73 +19,75 @@
               이번 시즌의 승리 요정들!
           </div>
       </div>
-      <div class="fairy-container">
-          <div class="box-container">
-              <c:forEach var="dto" items="${list}">
-                  <div class="box">
-                      <img src="/assets/img/fairy/${dto.place}.png" alt="gold" class="medal" width="90px">
-                      <div class="name">${dto.userName}</div>
+      <div class="content">
+          <div class="fairy-container">
+              <div class="box-container">
+                  <c:forEach var="dto" items="${list}">
+                      <div class="box">
+                          <img src="/assets/img/fairy/${dto.place}.png" alt="gold" class="medal" width="90px">
+                          <div class="name">${dto.userName}</div>
 
-                      <table>
-                          <tr>
-                              <td>직관</td>
-                              <td style="padding: 0 20px;">|</td>
-                              <td>${dto.totalCnt} 회</td>
-                              <td>
-                                  <div class="bar-container">
-                                      <div class="bar" style="width: ${dto.totalCnt * 40}px;"></div>
-                                  </div>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td>승리</td>
-                              <td style="padding: 0 20px;">|</td>
-                              <td>${dto.winCnt} 회</td>
-                              <td>
-                                  <div class="bar-container">
-                                      <div class="bar" style="width: ${dto.winCnt * 40}px; background-color: #22C55E;"></div>
-                                  </div>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td>무승부</td>
-                              <td style="padding: 0 20px;">|</td>
-                              <td>${dto.drawCnt} 회</td>
-                              <td>
-                                  <div class="bar-container">
-                                      <div class="bar" style="width: ${dto.drawCnt * 40}px; background-color: #FACC15;"></div>
-                                  </div>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td>패배</td>
-                              <td style="padding: 0 20px;">|</td>
-                              <td>${dto.loseCnt} 회</td>
-                              <td>
-                                  <div class="bar-container">
-                                      <div class="bar" style="width: ${dto.loseCnt * 40}px; background-color: #EF4444;"></div>
-                                  </div>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td>승률</td>
-                              <td style="padding: 0 20px;">|</td>
-                              <td>${dto.ratio}</td>
-                              <td>
-                                  <div class="bar-container">
-                                      <div class="bar" style="width: ${dto.ratio * 300}px; background-color: #0EA5E9;"></div>
-                                  </div>
-                              </td>
-                          </tr>
-                      </table>
-                  </div>
-              </c:forEach>
-          </div>
-          <div class="fairy-img">
-              <img src="/assets/img/fairy/fairy.png" alt="fairy">
+                          <table>
+                              <tr>
+                                  <td>직관</td>
+                                  <td style="padding: 0 20px;">|</td>
+                                  <td>${dto.totalCnt} 회</td>
+                                  <td>
+                                      <div class="bar-container">
+                                          <div class="bar" style="width: ${dto.totalCnt * 40}px;"></div>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>승리</td>
+                                  <td style="padding: 0 20px;">|</td>
+                                  <td>${dto.winCnt} 회</td>
+                                  <td>
+                                      <div class="bar-container">
+                                          <div class="bar" style="width: ${dto.winCnt * 40}px; background-color: #22C55E;"></div>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>무승부</td>
+                                  <td style="padding: 0 20px;">|</td>
+                                  <td>${dto.drawCnt} 회</td>
+                                  <td>
+                                      <div class="bar-container">
+                                          <div class="bar" style="width: ${dto.drawCnt * 40}px; background-color: #FACC15;"></div>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>패배</td>
+                                  <td style="padding: 0 20px;">|</td>
+                                  <td>${dto.loseCnt} 회</td>
+                                  <td>
+                                      <div class="bar-container">
+                                          <div class="bar" style="width: ${dto.loseCnt * 40}px; background-color: #EF4444;"></div>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>승률</td>
+                                  <td style="padding: 0 20px;">|</td>
+                                  <td>${dto.ratio}</td>
+                                  <td>
+                                      <div class="bar-container">
+                                          <div class="bar" style="width: ${dto.ratio * 300}px; background-color: #0EA5E9;"></div>
+                                      </div>
+                                  </td>
+                              </tr>
+                          </table>
+                      </div>
+                  </c:forEach>
+              </div>
+              <div class="fairy-img">
+                  <img src="/assets/img/fairy/fairy.png" alt="fairy">
+              </div>
           </div>
       </div>
   </div>
-
+  <%@ include file="../include/footer.jsp"%>
 </body>
 </html>
