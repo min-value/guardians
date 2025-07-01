@@ -23,7 +23,7 @@
     <!-- 년도 -->
     <div class="dropdown-wrapper">
         <select id="year-select" class="year-select">
-            <c:forEach var="y" begin="2023" end="2026">
+            <c:forEach var="y" begin="2023" end="2025">
                 <option value="${y}">${y}년</option>
             </c:forEach>
         </select>

@@ -238,8 +238,8 @@ public class DetailCrawiler {
         checkStmt.close();
 
         String insertSql = "INSERT INTO game_result " +
-                "(game_pk, our_hit, our_homerun, our_strikeout, our_double, our_miss, " +
-                "opp_hit, opp_homerun, opp_strikeout, opp_double, opp_miss, " +
+                "(game_pk, our_hit, our_homerun, our_strikeout, our_bb, our_miss, " +
+                "opp_hit, opp_homerun, opp_strikeout, opp_bb, opp_miss, " +
                 "result, win_pitcher, lose_pitcher, date) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 

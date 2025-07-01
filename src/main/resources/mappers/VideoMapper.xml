@@ -11,10 +11,10 @@
     </sql>
 
     <insert id="insertVideo" parameterType="org.baseball.dto.VideoDTO">
-        INSERT INTO videos(
-             v_title, v_date, v_url, thumbnail_url
+        INSERT IGNORE INTO videos(
+             v_title, v_date, v_url, thumbnail_url, v_id
         ) VALUES (
-              #{v_title}, #{v_date}, #{v_url}, #{thumbnail_url}
+              #{v_title}, #{v_date}, #{v_url}, #{thumbnail_url}, #{v_id}
         )
     </insert>
 
