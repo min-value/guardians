@@ -93,9 +93,6 @@
                             const gameDate = new Date(ticket.gameDate);
                             const now = new Date();
 
-                            console.log('gameDate:', gameDate.toString());
-                            console.log('now:', now.toString());
-
                             const isCancelable = gameDate.getTime() > now.getTime();
                             const cancelBtn = isCancelable
                                 ? `<div class="cancel-container"><button class="cancel-btn" data-ticket="\${ticket.ticketNumber}">예매취소</button></div>`
@@ -229,7 +226,6 @@
                     document.querySelector('.stat:nth-child(5) .count').textContent = fairy.winRate;
                 });
 
-            // 직관 내역 (결과가 나온 종료된 경기만)
             const tryRender = () => {
                 const container = document.getElementById('fairy');
                 if (!container) {
@@ -250,71 +246,38 @@
 
                         container.innerHTML = '';
                         pastTickets.forEach(ticket => {
-                            console.log("ticket:", ticket);
-                            console.log('ticket keys:', Object.keys(ticket));
                             const item = document.createElement('div');
                             item.classList.add('fairy-item');
 
                             item.innerHTML = `
-                                    <div class="fairy-top">
-                                        <span class ="predict-text"></span>
-                                        <img src="/assets/img/teamlogos/\${ticket.homeTeamPk}.png" class="logo-team">
-                                        <span class="vs-text">VS</span>
-                                        <img src="/assets/img/teamlogos/\${ticket.oppTeamPk}.png" class="logo-team">
-                                        <span class="match-date">\${ticket.matchDate}</span>
-                                        <img src="/assets/img/mypage/chevron-right.svg" class="arrow-icon">
-                                    </div>
-                                    <div class="fairy-info"></div>
-                                `;
+                                <div class="fairy-top">
+                                    <span class ="predict-text"></span>
+                                    <img src="/assets/img/teamlogos/\${ticket.homeTeamPk}.png" class="logo-team">
+                                    <span class="vs-text">VS</span>
+                                    <img src="/assets/img/teamlogos/\${ticket.oppTeamPk}.png" class="logo-team">
+                                    <span class="match-date">\${ticket.matchDate}</span>
+                                    <img src="/assets/img/mypage/chevron-right.svg" class="arrow-icon">
+                                </div>
+                                <div class="fairy-info"></div>
+                            `;
 
                             const fairyInfo = item.querySelector('.fairy-info');
                             if (ticket.result === 'CANCEL') {
                                 fairyInfo.innerHTML = `<div class="cancel-msg">취소 경기는 경기 세부 내역이 없습니다.</div>`;
                             } else {
                                 fairyInfo.innerHTML = `
-                                <div class="fairy-info-main">
-                                    <div class="fairy-details">
-                                        <div class="info-row">
-                                            <div class="bar-wrapper"><div class="bar our"></div></div>
-                                            <span class="data">\${ticket.our_hit}</span>
-                                            <span class="label">안타</span>
-                                            <span class="data">\${ticket.opp_hit}</span>
-                                            <div class="bar-wrapper"><div class="bar opp"></div></div>
-                                        </div>
-                                        <div class="info-row">
-                                            <div class="bar-wrapper"><div class="bar our"></div></div>
-                                            <span class="data">\${ticket.our_homerun}</span>
-                                            <span class="label">홈런</span>
-                                            <span class="data">\${ticket.opp_homerun}</span>
-                                            <div class="bar-wrapper"><div class="bar opp"></div></div>
-                                        </div>
-                                            <div class="info-row">
-                                                <div class="bar-wrapper"><div class="bar our"></div></div>
-                                                <span class="data">\${ticket.our_strikeout}</span>
-                                                <span class="label">삼진</span>
-                                                <span class="data">\${ticket.opp_strikeout}</span>
-                                                <div class="bar-wrapper"><div class="bar opp"></div></div>
-                                            </div>
-                                            <div class="info-row">
-                                                <div class="bar-wrapper"><div class="bar our"></div></div>
-                                                <span class="data">\${ticket.our_bb}</span>
-                                                <span class="label">4사구</span>
-                                                <span class="data">\${ticket.opp_bb}</span>
-                                                <div class="bar-wrapper"><div class="bar opp"></div></div>
-                                            </div>
-                                            <div class="info-row">
-                                                <div class="bar-wrapper"><div class="bar our"></div></div>
-                                                <span class="data">\${ticket.our_miss}</span>
-                                                <span class="label">실책</span>
-                                                <span class="data">\${ticket.opp_miss}</span>
-                                                <div class="bar-wrapper"><div class="bar opp"></div></div>
-                                            </div>
-                                    </div>
+                                <div class="fairy-bar-source" style="display: none;">
+                                    <div class="hit">안타: \${ticket.our_hit} / \${ticket.opp_hit}</div>
+                                    <div class="homerun">홈런: \${ticket.our_homerun} / \${ticket.opp_homerun}</div>
+                                    <div class="strike-out">삼진: \${ticket.our_strikeout} / \${ticket.opp_strikeout}</div>
+                                    <div class="bb">4사구: \${ticket.our_bb} / \${ticket.opp_bb}</div>
+                                    <div class="miss">실책: \${ticket.our_miss} / \${ticket.opp_miss}</div>
                                 </div>
-                            `;
+                                <div class="fairy-bar-container"></div>
+                            </div>
+                        `;
                             }
 
-                            // 예측 성공 실패 여부 판단
                             const predictText = item.querySelector('.predict-text');
                             predictText.classList.add('predict-text');
 
@@ -333,6 +296,13 @@
                                 predictText.classList.add(isSuccess ? 'predict-success' : 'predict-fail');
                             }
 
+                            const detail = item.querySelector('.fairy-bar-source');
+                            const chart = item.querySelector('.fairy-bar-container');
+
+                            if (detail && chart) {
+                                drawFairyChart(detail, chart);
+                            }
+
                             const arrow = item.querySelector('.arrow-icon');
                             arrow.addEventListener('click', () => {
                                 item.classList.toggle('expanded');
@@ -344,6 +314,77 @@
             };
 
             tryRender();
+        }
+
+        function drawFairyChart(detailElem, containerElem) {
+            const classes = ['hit','homerun','strike-out','bb','miss'];
+            const labels  = ['안타','홈런','삼진','4사구','실책'];
+            const PIXEL_PER_UNIT = 10
+
+            const ourData = [], oppData = [];
+            classes.forEach(cn => {
+                const el = detailElem.getElementsByClassName(cn)[0];
+                if (!el || !el.textContent.includes(':')) {
+                    ourData.push(0);
+                    oppData.push(0);
+                } else {
+                    const [o,p] = el.textContent
+                        .split(':')[1]
+                        .split('/')
+                        .map(x => parseInt(x.trim(),10));
+                    ourData.push(isNaN(o)?0:o);
+                    oppData.push(isNaN(p)?0:p);
+                }
+            });
+
+            containerElem.innerHTML = '';
+
+            // 3) 그리드 row 단위로 DOM 조합하기
+            ourData.forEach((o,i) => {
+                const p    = oppData[i];
+                const ourW = o * PIXEL_PER_UNIT;
+                const oppW = p * PIXEL_PER_UNIT;
+
+                const row = document.createElement('div');
+                row.className = 'bar-row';
+
+                // 왼쪽 막대
+                const lw = document.createElement('div');
+                lw.className = 'bar-wrap';
+                lw.style.width = ourW + 'px';
+                const lb = document.createElement('div');
+                lb.className = 'bar our';
+                lb.style.width = ourW + 'px';
+                lw.appendChild(lb);
+
+                // 왼쪽 숫자
+                const lv = document.createElement('span');
+                lv.className = 'bar-value';
+                lv.textContent = o;
+
+                // 레이블
+                const lg = document.createElement('div');
+                lg.className = 'bar-label';
+                lg.textContent = labels[i];
+
+                // 오른쪽 숫자
+                const rv = document.createElement('span');
+                rv.className = 'bar-value';
+                rv.textContent = p;
+
+                // 오른쪽 막대
+                const rw = document.createElement('div');
+                rw.className = 'bar-wrap';
+                rw.style.width = oppW + 'px';
+                const rb = document.createElement('div');
+                rb.className = 'bar opp';
+                rb.style.width = oppW + 'px';
+                rw.appendChild(rb);
+
+                // 그리드 조합
+                row.append(lw, lv, lg, rv, rw);
+                containerElem.appendChild(row);
+            });
         }
 
         function loadTabContent(tabName) {
