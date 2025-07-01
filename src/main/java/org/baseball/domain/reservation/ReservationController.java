@@ -77,18 +77,51 @@ public class ReservationController {
     @ResponseBody
     public PreemptionResDTO preemptSeat(@RequestBody PreemptionDTO preemptionDTO, HttpSession session) {
         UserDTO user = (UserDTO) session.getAttribute("loginUser");
+        PreemptionResDTO result = null;
 
         if(user == null) {
-            throw new RuntimeException("로그인 필요");
+            result = new PreemptionResDTO();
+            result.setPreempted(0);
+            result.setErrorMsg("로그인이 필요합니다.");
         }
 
         try {
             //Redis에 선점 정보 넣기 (int gamePk, List<String> seats, int userPk)
-            redisService.preemptSeat(preemptionDTO.getGamePk(), preemptionDTO.getSeats(), user.getUserPk());
-            //DB에 선점 정보 넣기
-            return reservationService.preemptSeat(preemptionDTO, user);
+            if(preemptionDTO.getZonePk() == 1101 || preemptionDTO.getZonePk() == 1100) {
+                //외야석이라면
+                boolean isPreempt = redisService.getBleachers(preemptionDTO.getGamePk(), user.getUserPk());
+
+                //DB에 선점 정보 넣기
+                if(isPreempt) {
+                    result = reservationService.getBleachers(preemptionDTO, user);
+                } else {
+                    result = new PreemptionResDTO();
+                    result.setPreempted(0);
+                    result.setErrorMsg("이미 선점된 좌석입니다.");
+                }
+
+            } else {
+                //그 외 구역이라면
+
+                //좌석 선점하기
+                boolean isPreempt = redisService.preemptSeat(preemptionDTO.getGamePk(), preemptionDTO.getSeats(), user.getUserPk());
+
+                //DB에 선점 정보 넣기
+                if(isPreempt) {
+                    result = reservationService.preemptSeat(preemptionDTO, user);
+                } else {
+                    result = new PreemptionResDTO();
+                    result.setPreempted(0);
+                    result.setErrorMsg("이미 선점된 좌석입니다.");
+                }
+            }
+
+            return result;
         } catch(Exception e) {
             e.printStackTrace();
+            result = new PreemptionResDTO();
+            result.setPreempted(2);
+            result.setErrorMsg("내부 서버 오류 발생");
         }
         return null;
     }

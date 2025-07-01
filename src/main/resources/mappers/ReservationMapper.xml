@@ -78,9 +78,17 @@
         WHERE game_pk = #{gamePk}
     </select>
 
-    <select id="getRerservelistPk" resultType="int">
+    <select id="getReservelistPk" resultType="int">
         SELECT NULLIF(r.reservelist_pk, -1)
         FROM reservation_list l LEFT JOIN reservations r ON l.reservelist_pk = r.reservelist_pk
-        WHERE l.game_pk = #{gamePk} AND r.seat_num = #{seatNum}
+        WHERE l.game_pk = #{gamePk} AND r.seat_num = #{seatNum} AND r.state = 'HELD'
+        LIMIT 1
+    </select>
+
+    <select id="getReservelistPkAuto" resultType="int">
+        SELECT NULLIF(r.reservelist_pk, -1)
+        FROM reservation_list l LEFT JOIN reservations r ON l.reservelist_pk = r.reservelist_pk
+        WHERE l.game_pk = #{gamePk} AND l.user_pk = #{userPk} AND r.state = 'HELD' AND r.seat_num = '자동배정'
+        LIMIT 1
     </select>
 </mapper>

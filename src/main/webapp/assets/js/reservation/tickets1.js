@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('ticket-btn' ).addEventListener('click', () => {
+        console.log(selectedSeats);
         if(selectedSeats.length === 0) {
             alert("선택된 좌석이 없습니다. 좌석을 선택하세요");
             return;
@@ -66,6 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
             seats: selectedSeats
         };
 
+        //로딩 창 띄우기
+        openLoading();
         fetch('/reservation/preemption/add', {
             method: 'POST',
             headers: {
@@ -77,12 +80,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 return res.json();
             })
             .then(data => {
-                if(data.preempted === true) {
+                closeLoading();
+                if(data.preempted === 1) {
                     sessionStorage.setItem('reservelistPk', JSON.stringify(data.reservelistPk));
                     location.href = '/reservation/discount';
-                } else if(data.preempted === false) {
-                    alert(`해당 좌석은 이미 선점된 좌석입니다.`);
+                } else if(data.preempted === 0) {
+                    alert(`${data.errorMsg}`);
                     location.reload();
+                } else if(data.preempted === 2) {
+                    alert(`${data.errorMsg}`)
+                    window.close();
                 }
             })
             .catch(error => {
@@ -143,6 +150,7 @@ function calCount(type) {
             selectedSeats.pop();
         }
     }
+    console.log(selectedSeats)
 }
 /* 등급 선택 클릭 리스너 */
 function changeZoneInfoListBox(zonePk) {
@@ -247,7 +255,6 @@ function changeColor(region) {
 
 /* seat으로 이동 */
 function switchToSeat() {
-    setCurrentView(2);
     let seatType = setSeatType(lastColoredName);
 
     if(seatType === 4) {
@@ -255,6 +262,7 @@ function switchToSeat() {
         autoAssigned();
         return;
     } else {
+        setCurrentView(2);
         getSeatsMap(seatType);
     }
 
@@ -307,7 +315,6 @@ export function addSeatListener() {
                             el.setAttribute('stroke-width', '3');
 
                             selectedSeats.push(el.id);
-
                             document.getElementById('selectList-num').innerHTML = selectedSeats.length + '';
                             document.querySelector(".selectedList-comp-wrapper")
                                 .innerHTML += `
@@ -378,7 +385,8 @@ export function setColored(num) {
 /* 외야석 자동 배정 함수 */
 function autoAssigned() {
     let popup = document.querySelector('.autoAssigned');
-    let overlay = document.querySelector('.overlay')
+    let overlay = document.querySelector('.overlay');
+    const ticketBtn = document.getElementById('ticket-btn');
     //팝업 보이기
     document.getElementById('autoAssigned-choiceInfo').innerText = zoneInfo[lastColoredName]['zoneName'];
     document.getElementById('remainingSeats').innerText = zoneInfo[lastColoredName]['remainingNum'] + '석';
@@ -386,19 +394,40 @@ function autoAssigned() {
     overlay.style.display = 'flex';
 
     //다른 요소들 안 눌리게 변경
-    document.addEventListener('mouseup', function(e) {
-        if(!popup.contains(e.target)) {
+    function outsideClickHandler(e) {
+        if (!popup.contains(e.target) && e.target !== ticketBtn) {
             closePopup(popup, overlay);
+            document.removeEventListener('mouseup', outsideClickHandler);
         }
-    })
+    }
 
+    document.addEventListener('mouseup', outsideClickHandler);
+
+    // 닫기 버튼
     document.querySelector('.autoAssigned-closeBtn > img').addEventListener('click', () => {
         closePopup(popup, overlay);
-    })
+        document.removeEventListener('mouseup', outsideClickHandler);
+    });
 }
 
 function closePopup(popup, overlay) {
     document.getElementById('count').value = '0';
     popup.style.display = 'none';
     overlay.style.display = 'none';
+
+    for(let i = selectedSeats.length - 1; i >= 0; --i) {
+        selectedSeats.pop();
+    }
+}
+
+//로딩 띄우기
+function openLoading() {
+    document.querySelector('.loader').style.display = 'block';
+    document.querySelector('.overlay').style.display = 'flex';
+}
+
+//로딩 닫기
+function closeLoading() {
+    document.querySelector('.loader').style.display = 'none';
+    document.querySelector('.overlay').style.display = 'none';
 }

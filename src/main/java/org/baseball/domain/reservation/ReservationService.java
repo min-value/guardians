@@ -78,11 +78,12 @@ public class ReservationService {
             int result = reservationMapper.confirmPreemption(zonePk, seatNum, gamePk);
 
             if(result == 1) {
-                response.setPreempted(false);
+                response.setPreempted(0);
+                response.setErrorMsg("이미 선점된 좌석입니다.");
                 return response;
             }
         }
-        response.setPreempted(true);
+        response.setPreempted(1);
 
         //선점/판매가 되지 않았다면 선점
         PreemptionListDTO preemptionListDTO = PreemptionListDTO
@@ -92,6 +93,38 @@ public class ReservationService {
                 .gamePk(preemptionDTO.getGamePk())
                 .build();
 
+        reservationMapper.setPreemptionList(preemptionListDTO);
+        int reservelistPk = preemptionListDTO.getReservelistPk();
+        response.setReservelistPk(reservelistPk);
+
+        for(String seatNum : preemptionDTO.getSeats()) {
+            PreemptionReserveDTO preemptionReserveDTO = PreemptionReserveDTO
+                    .builder()
+                    .reservelistPk(reservelistPk)
+                    .zonePk(preemptionDTO.getZonePk())
+                    .seatNum(seatNum)
+                    .build();
+            reservationMapper.setPreemptionReserve(preemptionReserveDTO);
+        }
+
+        return response;
+    }
+
+    @Transactional
+    public PreemptionResDTO getBleachers(PreemptionDTO preemptionDTO, UserDTO userDTO) {
+        PreemptionResDTO response = new PreemptionResDTO();
+        int zonePk = preemptionDTO.getZonePk();
+        int gamePk =  preemptionDTO.getGamePk();
+
+        response.setPreempted(1);
+
+        //선점
+        PreemptionListDTO preemptionListDTO = PreemptionListDTO
+                .builder()
+                .quantity(preemptionDTO.getQuantity())
+                .userPk(userDTO.getUserPk())
+                .gamePk(preemptionDTO.getGamePk())
+                .build();
         reservationMapper.setPreemptionList(preemptionListDTO);
         int reservelistPk = preemptionListDTO.getReservelistPk();
         response.setReservelistPk(reservelistPk);

@@ -19,5 +19,6 @@ public interface ReservationMapper {
     List<DiscountDTO> getDiscountInfo();
     boolean isOurGame(int gamePk);
     int getReservelistPk(@Param("gamePk") int gamePk, @Param("seatNum") String seatNum);
+    int getReservelistPkAuto(@Param("gamePk") int gamePk, @Param("userPk") int userPk);
 }
 

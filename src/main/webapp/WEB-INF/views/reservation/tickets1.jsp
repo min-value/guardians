@@ -133,6 +133,7 @@
         </div>
     </div>
 </div>
+<div class="loader">Loading...</div>
 <div class="overlay"></div>
 <script type="module" src="${pageContext.request.contextPath}/assets/js/reservation/tickets1.js"></script>
 </body>

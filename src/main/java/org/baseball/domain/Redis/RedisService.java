@@ -74,6 +74,25 @@ public class RedisService {
         }
     }
 
+    //외야석 선점 구현(TTL을 위함) -> preempt:seat:{gamePk}:자동배정:{userPk}
+    public boolean getBleachers(int gamePk, int userPk) {
+        if(!tryLockSeat(gamePk, null)) {
+            return false;
+        }
+
+        String key = "preempt:seat:" + gamePk + ":자동배정:" + userPk;
+        try {
+            if(redisTemplate.hasKey(key)) {
+                return false;
+            }
+
+            return Boolean.TRUE.equals(redisTemplate.opsForValue()
+                    .setIfAbsent(key, String.valueOf(userPk), 1, TimeUnit.MINUTES)); //todo
+        } finally {
+            unlockSeat(gamePk, null);
+        }
+    }
+
     //타 구역에 대한 선점 등록(TTL: 10M) -> preempt:seat:{gamePk}:{seatNum} / paid:seat:{gamePk}:{seatNum}
     public boolean preemptSeat(int gamePk, List<String> seats, int userPk) {
         List<RLock> locks = new ArrayList<>();
@@ -104,14 +123,14 @@ public class RedisService {
 
                 if(existingPreempt != null || existingPaid != null) {
                     //이미 선점/판매된 좌석 발견 -> 전체 실패
-                    throw new IllegalStateException("해당 좌석은 이미 선점된 좌석입니다");
+                    return false;
                 }
             }
 
             //모든 좌석에 대해 선점 등록
             for(String seatNum: seats) {
                 String preemptKey = "preempt:seat:" + gamePk + ":" + seatNum;
-                redisTemplate.opsForValue().set(preemptKey, String.valueOf(userPk), 10, TimeUnit.MINUTES);
+                redisTemplate.opsForValue().set(preemptKey, String.valueOf(userPk), 1, TimeUnit.MINUTES); //todo: minute으로 변경
                 preemptedKeys.add(preemptKey); //나중에 실패 시 롤백용
             }
             return true;
