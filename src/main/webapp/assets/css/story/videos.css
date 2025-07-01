@@ -48,6 +48,9 @@ html, body {
     margin-top: 4px;
     cursor: pointer;
 }
+.video-title:hover{
+    text-decoration: underline;
+}
 .video-date{
     height:20px;
     font-size: 12px;

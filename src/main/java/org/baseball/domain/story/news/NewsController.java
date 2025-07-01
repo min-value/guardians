@@ -48,12 +48,14 @@ public class NewsController {
         return newsService.getNews(page, type, keyword);
     }
 
-    @GetMapping("/crawl/sdfsdfsdfsfagfgas")
+    @GetMapping("/crawl")
     public void crawlNews(){
         try{
             Document doc = Jsoup.connect("https://sports.daum.net/baseball").get();
             Elements newsHrefs = doc.select(".list_rank > li");
+            int count = 0;
             for(Element item : newsHrefs){
+                if (count >= 5) break;
                 Element linkTag = item.selectFirst("a");
                 if(linkTag !=null){
                     String href = linkTag.absUrl("href");
@@ -91,6 +93,7 @@ public class NewsController {
                     dto.setNews_url(href);
 
                     newsService.addNews(dto);
+                    count++;
                 }
             }
         } catch(Exception e){
