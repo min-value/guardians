@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.baseball.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.LinkedHashMap;
@@ -19,26 +20,25 @@ public class ReservationService {
     private ReservationMapper reservationMapper;
 
     //게임 정보(상대팀) 반환
+    @Transactional
     public ReserveGameInfoDTO getGameInfo(int gamePk) {
             return reservationMapper.getGameInfo(gamePk);
     }
 
     //팔린 좌석 목록 반환
+    @Transactional
     public List<String> getSoldSeats(SoldSeatsReqDTO dto) {
         return reservationMapper.getSoldSeats(dto);
     }
 
     //구역 정보 반환
+    @Transactional
     public List<ZoneDTO> getZones() {
         return reservationMapper.getZones();
     }
 
-    //구역 당 남은 좌석 수 계산한 map 반환
-    public int calRemainingNum(int total, int sold) {
-        return total - sold;
-    }
-
     // 구역 정보 가져오기
+    @Transactional
     public boolean getSeatInfo(int gamePk, HttpSession session) throws JsonProcessingException {
         //구역 정보 가져오기
         List<ZoneDTO> zoneDTOList = getZones();
@@ -66,6 +66,7 @@ public class ReservationService {
         return true;
     }
 
+    @Transactional
     public PreemptionResDTO preemptSeat(PreemptionDTO preemptionDTO, UserDTO userDTO) {
         PreemptionResDTO response = new PreemptionResDTO();
         int zonePk = preemptionDTO.getZonePk();
@@ -108,12 +109,17 @@ public class ReservationService {
         return response;
     }
 
+    @Transactional
     public void deletePreemption(int reservelistPk) {
         reservationMapper.deletePreemptionReserve(reservelistPk);
         reservationMapper.deletePreemptionList(reservelistPk);
     }
 
+    @Transactional
     public List<DiscountDTO> getDiscountInfo(){
         return reservationMapper.getDiscountInfo();
     }
+
+    @Transactional
+    public boolean isOurGame(int gamePk) { return reservationMapper.isOurGame(gamePk); }
 }

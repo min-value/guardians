@@ -3,6 +3,7 @@ package org.baseball.domain.reservation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.baseball.domain.Redis.RedisService;
 import org.baseball.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,9 +21,26 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
+    @Autowired
+    private RedisService redisService;
+
     //등급 및 좌석 선택 페이지 로드
     @GetMapping("/seat")
     public String seat(@RequestParam("gamePk") int gamePk, HttpSession session) throws JsonProcessingException {
+        //로그인 확인
+        try {
+            UserDTO user = (UserDTO) session.getAttribute("loginUser");
+
+
+        if(user == null) {
+            return "reservation/errors/needLogin";
+        }
+
+        //우리팀 경기인지 확인
+        if(!reservationService.isOurGame(gamePk)) {
+            return "reservation/errors/invalidGame";
+        }
+
         //경기 정보 가져오기(상대 팀 + 날짜)
         ReserveGameInfoDTO reserveGameInfoDTO = reservationService.getGameInfo(gamePk);
         //게임 정보 세션에 저장
@@ -35,7 +53,9 @@ public class ReservationController {
         //할인 정보 세션에 저장
         List<DiscountDTO> discountDTOList = reservationService.getDiscountInfo();
         session.setAttribute("discountInfo", new ObjectMapper().writeValueAsString(discountDTOList));
-
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
         return "reservation/tickets1";
     }
 
@@ -57,7 +77,15 @@ public class ReservationController {
     @ResponseBody
     public PreemptionResDTO preemptSeat(@RequestBody PreemptionDTO preemptionDTO, HttpSession session) {
         UserDTO user = (UserDTO) session.getAttribute("loginUser");
+
+        if(user == null) {
+            throw new RuntimeException("로그인 필요");
+        }
+
         try {
+            //Redis에 선점 정보 넣기 (int gamePk, List<String> seats, int userPk)
+            redisService.preemptSeat(preemptionDTO.getGamePk(), preemptionDTO.getSeats(), user.getUserPk());
+            //DB에 선점 정보 넣기
             return reservationService.preemptSeat(preemptionDTO, user);
         } catch(Exception e) {
             e.printStackTrace();

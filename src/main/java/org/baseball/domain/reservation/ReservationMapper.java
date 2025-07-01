@@ -17,5 +17,7 @@ public interface ReservationMapper {
     void deletePreemptionList(int reservelistPk);
     void deletePreemptionReserve(int reservelistPk);
     List<DiscountDTO> getDiscountInfo();
+    boolean isOurGame(int gamePk);
+    int getReservelistPk(@Param("gamePk") int gamePk, @Param("seatNum") String seatNum);
 }
 

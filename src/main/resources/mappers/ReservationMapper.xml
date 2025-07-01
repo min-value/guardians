@@ -71,4 +71,16 @@
         SELECT discount_pk, type, dis_rate
         FROM discount
     </select>
+
+    <select id="isOurGame" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM homegame
+        WHERE game_pk = #{gamePk}
+    </select>
+
+    <select id="getRerservelistPk" resultType="int">
+        SELECT NULLIF(r.reservelist_pk, -1)
+        FROM reservation_list l LEFT JOIN reservations r ON l.reservelist_pk = r.reservelist_pk
+        WHERE l.game_pk = #{gamePk} AND r.seat_num = #{seatNum}
+    </select>
 </mapper>

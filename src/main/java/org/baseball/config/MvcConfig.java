@@ -97,7 +97,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
     //트랜잭션 매니저 빈 등록
     @Bean
-    public TransactionManager tm() {
+    public TransactionManager transactionManager() {
         TransactionManager tm = new DataSourceTransactionManager(datasource());
         return tm;
     }
