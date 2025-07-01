@@ -84,6 +84,18 @@
     max-height: 1000px;
 }
 
+.ticket-info-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 10px;
+    width: 100%;
+}
+
+.ticket-details {
+    flex-grow: 1;
+}
+
 .info-row {
     display: flex;
     align-items: flex-start;

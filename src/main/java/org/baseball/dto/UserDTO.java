@@ -12,5 +12,8 @@ public class UserDTO {
     private String email;
     private String tel;
     private boolean isAdmin;
+    private int winCnt;
+    private int drawCnt;
+    private int loseCnt;
     private int totalPoint;
 }
