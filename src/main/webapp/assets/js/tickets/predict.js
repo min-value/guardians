@@ -67,6 +67,7 @@ function clickCheerBtn() {
         success: function (res) {
             alert("예측 완료!");
             document.querySelector('.modal').style.display = 'none';
+            sessionStorage.clear();
             window.location.href = '/tickets/all';
         },
         error: function (err) {
