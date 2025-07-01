@@ -1,5 +1,6 @@
 package org.baseball.domain.games;
 
+import org.baseball.dto.GamedetailsDTO;
 import org.baseball.dto.RankDTO;
 import org.baseball.dto.ScheduleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,4 +30,9 @@ public class GamesServiceImpl implements GamesService {
     public List<ScheduleDTO> getScheduleMonth(int year, int month) {
         return gamesMapper.getScheduleMonth(year, month);
     }
+
+    // 상세 경기 정보 조회
+    @Override
+    public List<GamedetailsDTO> getGameDetails(int year, int month) { return gamesMapper.getGameDetails(year, month); }
+
 }

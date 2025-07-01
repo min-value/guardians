@@ -43,7 +43,6 @@ html, body {
     width: 140px;
     height: 44px;
     font-size: 20px;
-    padding: 0 36px 0 16px;
     text-align: center;
     color: var(--white);
     border: 1px solid var(--black);
@@ -64,7 +63,6 @@ html, body {
     width: 140px;
     height: 44px;
     font-size: 20px;
-    padding: 0 36px 0 16px;
     text-align: center;
     color: var(--white);
     border: 1px solid var(--black);

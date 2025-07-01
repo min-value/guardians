@@ -1,5 +1,6 @@
 package org.baseball.domain.games;
 
+import org.baseball.dto.GamedetailsDTO;
 import org.baseball.dto.RankDTO;
 import org.baseball.dto.ScheduleDTO;
 
@@ -11,4 +12,7 @@ public interface GamesService {
 
     // 특정 년도, 월 경기 조회
     List<ScheduleDTO> getScheduleMonth(int year, int month);
+
+    // 상세 경기 정보 조회
+    List<GamedetailsDTO> getGameDetails(int year, int month);
 }

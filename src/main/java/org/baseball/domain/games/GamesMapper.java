@@ -2,6 +2,7 @@ package org.baseball.domain.games;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.baseball.dto.GamedetailsDTO;
 import org.baseball.dto.RankDTO;
 import org.baseball.dto.ScheduleDTO;
 
@@ -17,4 +18,6 @@ public interface GamesMapper {
 
     // 랭킹 업데이트
     void updateTeamRank(RankDTO dto);
+
+    List<GamedetailsDTO> getGameDetails(@Param("year") int year, @Param("month") int month);
 }
