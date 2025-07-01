@@ -1,6 +1,9 @@
 const gameInfo = JSON.parse(sessionStorage.getItem('gameInfo'));
 const zone = JSON.parse(sessionStorage.getItem('zone'));
 const seats = JSON.parse(sessionStorage.getItem('seats'));
+const totalAmount = JSON.parse(sessionStorage.getItem('totalPay'));
+const usedPoint = JSON.parse(sessionStorage.getItem('usedPoint'));
+const paidAmount = JSON.parse(sessionStorage.getItem('paidAmount'));
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('opponentTeam').setAttribute('src', `/assets/img/teamlogos/${gameInfo['oppTeamPk']}.png`);
@@ -31,13 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     //가격 넣기
-    document.getElementById('price').innerText = '0';
+    document.getElementById('price').innerText = totalAmount || '0';
 
     //포인트 넣기
-    document.getElementById('usedPoint').innerText = '0';
+    document.getElementById('usedPoint').innerText = usedPoint || '0';
 
     //결제 금액 넣기
-    document.getElementById('totalPay').innerText = '0';
+    document.getElementById('totalPay').innerText = paidAmount ||totalAmount;
 })
 
 function formatTimestamp(timestamp) {

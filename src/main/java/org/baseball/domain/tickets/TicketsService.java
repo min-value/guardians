@@ -4,6 +4,7 @@ import org.baseball.dto.PredictInfoDTO;
 import org.baseball.dto.TicketsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -62,4 +63,18 @@ public class TicketsService {
     public PredictInfoDTO getGameInfoforPredict(int gamePk) {
         return ticketsMapper.getGameInfoforPredict(gamePk);
     }
+
+    @Transactional
+    public boolean updatePurchase(Map<String, Object> param) {
+        System.out.println("param: " + param);
+
+        int updated1 = ticketsMapper.updateReserveList(param);
+        int updated2 = ticketsMapper.updateReservations(param);
+        int updated3 = ticketsMapper.deductPoint(param);
+        int updated4 = ticketsMapper.insertReservePointUsage(param);
+
+        return updated1 > 0 && updated2 > 0 && updated3 > 0 && updated4 > 0;
+    }
+
+
 }
