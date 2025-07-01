@@ -20,5 +20,25 @@ public class MyTicketServiceImpl implements MyTicketService {
     public List<Map<String, Object>> getTicketsByUserPk(int userPk) {
         return myTicketMapper.selectTicketsByUserPk(userPk);
     }
+
+    @Override
+    public int cancelReservationList(int reservelistPk) {
+        return myTicketMapper.cancelReservationList(reservelistPk);
+    }
+
+    @Override
+    public int cancelReservations(int reservelistPk) {
+        return myTicketMapper.cancelReservations(reservelistPk);
+    }
+
+    @Override
+    public int insertRefundPoint(Map<String, Object> map) {
+        return myTicketMapper.insertRefundPoint(map);
+    }
+
+    @Override
+    public int updateRefundPoint(Map<String, Object> map) {
+        return myTicketMapper.updateRefundPoint(map);
+    }
 }
 
