@@ -16,5 +16,6 @@ public interface UserMapper {
     Integer getTotalPoint(@Param("userPk") int userPk);
     // 포인트 총합 업데이트
     void updateTotalPoint(@Param("userPk") int userPk, @Param("amount") int amount);
-
+    // 마이페이지 승리요정 유저 조회
+    UserDTO findUserByPk(@Param("userPk") int userPk);
 }
