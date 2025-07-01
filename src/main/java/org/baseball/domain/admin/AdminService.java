@@ -61,9 +61,13 @@ public class AdminService {
             String[] zoneAndSeat = new String[zones.length];
             for (int i = 0; i < zones.length; i++) {
                 String seat = seats[i];
-                String row = seat.substring(0, 1);  // 예: A
-                String number = seat.substring(1); // 예: 2
-                zoneAndSeat[i] = zones[i] + "구역 " + row + "열 " + number + "번";
+                String row = seat.substring(0, 1);
+                String number = seat.substring(1);
+                if(seats[i].equals("자동배정")){
+                    zoneAndSeat[i] = zones[i] + "구역 " + seat + "석";
+                }else {
+                    zoneAndSeat[i] = zones[i] + "구역 " + row + "열 " + number + "석";
+                }
             }
             l.setZoneAndSeat(zoneAndSeat);
         }

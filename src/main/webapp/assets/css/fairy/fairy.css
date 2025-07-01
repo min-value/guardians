@@ -82,7 +82,7 @@ html, body {
 
 .fairy-container {
     top: 450px;
-    left: 0%;
+    left: 0;
     margin-top: 50px;
     width: 100%;
     display: flex;
