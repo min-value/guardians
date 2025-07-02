@@ -1,4 +1,6 @@
 package org.baseball.domain.user;
+import com.fasterxml.jackson.databind.JsonNode;
+import org.baseball.domain.kakao.Tokens;
 import org.baseball.dto.UserDTO;
 
 public interface UserService {
