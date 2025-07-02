@@ -302,13 +302,13 @@ public class ReservationService {
             if(zonePk == 1100 || zonePk == 1101) {
                 //외야석의 경우
                 if(reservationMapper.getReservelistPkAuto(gamePk, userPk, zonePk) != reservelistPk) {
-                    throw new Exception("예약 없음");
+                    return 2;
                 }
             } else {
                 //그 외 구역의 경우
                 for(String seat: seats) {
                     if(reservationMapper.getReservelistPkByUser(gamePk, seat, zonePk, userPk) == null) {
-                        throw new Exception("예약 없음");
+                        return 2;
                     }
                 }
             }

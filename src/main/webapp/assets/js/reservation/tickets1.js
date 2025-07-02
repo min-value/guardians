@@ -1,6 +1,6 @@
 import {colorRestore, reload, setZoom} from "./toolbar.js";
 import {getSeatsMap, setSeatType} from "./seats.js";
-
+import {openLoading, closeLoading} from "./loading.js";
 export let selectedSeats = [];
 export let currentView = 'zone'; //zone, seat
 export let colored = 0; //0: region 포커스 x, 1: region 포커스 o
@@ -9,6 +9,8 @@ export let lastColoredName = null;
 let seatSelectMap = {}; // key: seatId, value: true/false
 
 document.addEventListener('DOMContentLoaded', () => {
+    //세션에 존재 시 권종/할인 선택으로 todo
+
     const tooltip = document.getElementById('tooltip');
 
     //선택한 좌석 바 관련 리스너 추가
@@ -52,12 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("선택된 좌석이 없습니다. 좌석을 선택하세요");
             return;
         }
-        //선택한 구역 정보 세션 스토리지에 저장 (구역 번호, 구역명, 가격, 구역 색상, 좌석 총 개수, 남은 개수)
-        sessionStorage.setItem('zone', JSON.stringify(zoneInfo[lastColoredName]));
-
-        //선택한 좌석 목록 세션 스토리지에 저장
-        sessionStorage.setItem('seats', JSON.stringify(selectedSeats));
-
 
         //컨트롤러에서 선점 여부 확인 후 선점
         const sendData = {
@@ -66,6 +62,13 @@ document.addEventListener('DOMContentLoaded', () => {
             zonePk: Number(lastColoredName),
             seats: selectedSeats
         };
+
+        //다음 단계 오버레이 지우기
+        let popup = document.querySelector('.autoAssigned');
+        let overlay = document.querySelector('.overlay');
+
+        popup.style.display = 'none';
+        overlay.style.display = 'none';
 
         //로딩 창 띄우기
         openLoading();
@@ -82,18 +85,29 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 closeLoading();
                 if(data.preempted === 1) {
+                    //예약 번호 세션 스토리지에 저장
                     sessionStorage.setItem('reservelistPk', JSON.stringify(data.reservelistPk));
+
+                    //선택한 구역 정보 세션 스토리지에 저장 (구역 번호, 구역명, 가격, 구역 색상, 좌석 총 개수, 남은 개수)
+                    sessionStorage.setItem('zone', JSON.stringify(zoneInfo[lastColoredName]));
+
+                    //선택한 좌석 목록 세션 스토리지에 저장
+                    sessionStorage.setItem('seats', JSON.stringify(selectedSeats));
+
                     location.href = '/reservation/discount';
                 } else if(data.preempted === 0) {
                     alert(`${data.errorMsg}`);
                     location.reload();
                 } else if(data.preempted === 2) {
-                    alert(`${data.errorMsg}`)
+                    alert(`${data.errorMsg}`);
+                    sessionStorage.clear();
                     window.close();
                 }
             })
             .catch(error => {
                 alert(`서버 오류 발생`);
+                sessionStorage.clear();
+                window.close();
             });
 
     });
@@ -401,7 +415,7 @@ function autoAssigned() {
         }
     }
 
-    document.addEventListener('mouseup', outsideClickHandler);
+    document.querySelector('.overlay').addEventListener('mouseup', outsideClickHandler);
 
     // 닫기 버튼
     document.querySelector('.autoAssigned-closeBtn > img').addEventListener('click', () => {
@@ -420,14 +434,3 @@ function closePopup(popup, overlay) {
     }
 }
 
-//로딩 띄우기
-function openLoading() {
-    document.querySelector('.loader').style.display = 'block';
-    document.querySelector('.overlay').style.display = 'flex';
-}
-
-//로딩 닫기
-function closeLoading() {
-    document.querySelector('.loader').style.display = 'none';
-    document.querySelector('.overlay').style.display = 'none';
-}

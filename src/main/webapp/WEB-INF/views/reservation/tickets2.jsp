@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets-common2.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets2.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/loading.css">
 </head>
 <body>
 <!-- 권종/할인 선택 -->
@@ -47,6 +48,8 @@
         </div>
     </div>
 </div>
+<div class="loader">Loading...</div>
+<div class="loading-overlay"></div>
 <script type="module" src="${pageContext.request.contextPath}/assets/js/reservation/tickets2.js"></script>
 </body>
 </html>

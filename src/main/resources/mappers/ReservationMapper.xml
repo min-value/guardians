@@ -101,8 +101,8 @@
     <select id="getReservelistPkAuto" resultType="Integer">
         SELECT r.reservelist_pk
         FROM reservation_list l LEFT JOIN reservations r ON l.reservelist_pk = r.reservelist_pk
-        WHERE l.game_pk = #{gamePk} AND r.zone_pk = #{zonePk} AND l.user_pk = #{userPk} AND r.state = 'HELD' AND r.seat_num = '자동배정'
-        LIMIT 1
+        WHERE l.game_pk = #{gamePk} AND r.zone_pk = #{zonePk} AND l.user_pk = #{userPk} AND r.seat_num = '자동배정' AND r.state = 'HELD'
+        LIMIT 1;
     </select>
 
     <select id="countUserReserve" resultType="int">

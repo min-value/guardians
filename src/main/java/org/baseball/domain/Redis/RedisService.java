@@ -66,7 +66,7 @@ public class RedisService {
 
         //락 시도
         try {
-            if(lock.tryLock(3, 10, TimeUnit.SECONDS)) {
+            if(lock.tryLock(3, 3, TimeUnit.SECONDS)) {
                 //락 시도 성공 시
                 log.info("락 획득: {}, thread: {}", lockKey, Thread.currentThread().getId());
                 return true;
@@ -106,7 +106,7 @@ public class RedisService {
         }
 
         return Boolean.TRUE.equals(redisTemplate.opsForValue()
-                .setIfAbsent(key, String.valueOf(userPk), 1, TimeUnit.MINUTES)); //todo
+                .setIfAbsent(key, String.valueOf(userPk), 10, TimeUnit.SECONDS)); //todo
     }
 
     //타 구역에 대한 선점 등록(TTL: 10M) -> lock:seat:{gamePk}:{zonePk}:{seatNum} / preempt:seat:{gamePk}:{zonePk}:{seatNum}
@@ -124,7 +124,7 @@ public class RedisService {
             //Multilock 획득 시도
             RLock multiLock = redissonClient.getMultiLock(locks.toArray(new RLock[0]));
 
-            if(!multiLock.tryLock(3, 10, TimeUnit.SECONDS)) {
+            if(!multiLock.tryLock(3, 3, TimeUnit.SECONDS)) {
                 //락 획득 실패
                 return false;
             }
@@ -146,7 +146,7 @@ public class RedisService {
             //모든 좌석에 대해 선점 등록
             for(String seatNum: seats) {
                 String preemptKey = getPreemptkey(gamePk, seatNum, zonePk, userPk);
-                redisTemplate.opsForValue().set(preemptKey, String.valueOf(userPk), 1, TimeUnit.MINUTES); //todo: minute으로 변경
+                redisTemplate.opsForValue().set(preemptKey, String.valueOf(userPk), 10, TimeUnit.SECONDS); //todo: minute으로 변경
                 preemptedKeys.add(preemptKey); //나중에 실패 시 롤백용
             }
             return true;
@@ -185,7 +185,7 @@ public class RedisService {
             RLock multiLock = redissonClient.getMultiLock(locks.toArray(new RLock[0]));
 
             //락 획득 실패 시
-            if(!multiLock.tryLock(3, 30, TimeUnit.SECONDS)) {
+            if(!multiLock.tryLock(3, 3, TimeUnit.SECONDS)) {
                 return false;
             }
 
@@ -259,7 +259,7 @@ public class RedisService {
 
             // MultiLock 획득 시도
             RLock multiLock = redissonClient.getMultiLock(locks.toArray(new RLock[0]));
-            if (!multiLock.tryLock(3, 10, TimeUnit.SECONDS)) {
+            if (!multiLock.tryLock(3, 3, TimeUnit.SECONDS)) {
                 return false; // 락 실패
             }
 
@@ -305,7 +305,7 @@ public class RedisService {
 
             // MultiLock 획득 시도
             RLock multiLock = redissonClient.getMultiLock(locks.toArray(new RLock[0]));
-            if (!multiLock.tryLock(3, 10, TimeUnit.SECONDS)) {
+            if (!multiLock.tryLock(3, 3, TimeUnit.SECONDS)) {
                 return false;
             }
 

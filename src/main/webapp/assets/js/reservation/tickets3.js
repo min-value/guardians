@@ -1,3 +1,5 @@
+import {openLoading, closeLoading} from "./loading.js";
+
 const notifications = document.querySelectorAll('.notification');
 const closeButtons = document.querySelectorAll('.closeBtn');
 const befortBtn = document.querySelector('#beforeBtn');
