@@ -9,11 +9,6 @@
     <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
   </context-param>
 
-  <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>config.JpaConfig</param-value> <!-- JPA 설정 자바 클래스 경로 -->
-  </context-param>
-
   <!-- Creates the Spring Container shared by all Servlets and Filters -->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

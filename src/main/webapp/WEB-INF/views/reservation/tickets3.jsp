@@ -47,6 +47,7 @@
     <jsp:include page="topbar.jsp" flush="false">
         <jsp:param name="type" value="3"/>
     </jsp:include>
+    <%@ include file="../tickets/predict.jsp" %>
     <div class="mainback-container">
         <div class="main-container">
             <div class="left-container">
@@ -285,5 +286,6 @@
     </div>
 </div>
 <script type="module" src="${pageContext.request.contextPath}/assets/js/reservation/tickets3.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/assets/js/tickets/predict.js"></script>
 </body>
 </html>

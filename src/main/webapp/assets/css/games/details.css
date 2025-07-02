@@ -1,0 +1,340 @@
+@import url("/assets/css/colors.css");
+@import url("/assets/css/font.css");
+@import url("/assets/css/include/pagination.css");
+
+/* 헤더 */
+.header-title {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    background: url('/assets/img/header/header-title.png') no-repeat center center;
+    background-size: contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+html, body {
+    overflow-x: hidden;
+}
+
+/* 전체 */
+.details-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px;
+}
+
+/* 드롭다운 전체 */
+.dropdown-wrapper {
+    gap: 0;
+    display: flex;
+    width: 292px;
+    height: 44px;
+    margin-bottom: 24px;
+}
+
+/* 셀렉트 감싸는 개별 박스 */
+.select-wrapper {
+    position: relative;
+    width: 146px;
+    height: 44px;
+}
+
+/* 년도 드롭다운 */
+.year-select {
+    width: 146px;
+    height: 44px;
+    background: var(--mainColor);
+    color: var(--white);
+
+    font-size: 20px;
+    text-align: center;
+
+    /* 외곽선 */
+    border: 1px solid var(--black);
+    border-right: none;
+
+    /* 기본 꺽쇠 제거 */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+/* 월 드롭다운 */
+.month-select {
+    width: 146px;
+    height: 44px;
+    background: var(--mainColor);
+    color: var(--white);
+
+    font-size: 20px;
+    text-align: center;
+
+    /* 외곽선 */
+    border: 1px solid var(--black);
+
+    /* 기본 꺽쇠 제거 */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+/* 강조 효과 제거 */
+.month-select,
+.year-select:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* 드롭다운 내부요소 */
+.year-select option,
+.month-select option {
+    background: var(--white);
+    color: var(--black);
+}
+
+/* 꺽쇠 대용 아이콘 */
+.dropdown-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
+    width: 12px;
+    pointer-events: none;
+    z-index: 10;
+    filter: brightness(0) invert(1);
+}
+
+/* 상세정보 카드 */
+.summary {
+    position: relative;
+    width: 1178px;
+    height: 146px;
+    border: 1px solid var(--black);
+    margin-top: 24px;
+}
+/* 꺽쇠 */
+.summary-chevron {
+    position: absolute;
+    bottom: 13px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    opacity: 2;
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+.summary.open .summary-chevron {
+    transform: rotate(180deg);
+}
+
+.summary-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 1178px;
+    height: 146px;
+    padding: 0 72px;
+}
+
+.summary.win {
+    background: linear-gradient(to right, var(--subColor), var(--white) 40%);
+    border-radius: 5px;
+}
+
+.summary.lose {
+    background: linear-gradient(to right, var(--errorColor), var(--white) 40%);
+    border-radius: 5px;
+}
+
+.summary.draw {
+    background: linear-gradient(to right, var(--gray-03), var(--white) 40%);
+    border-radius: 5px;
+}
+
+.pitcher-with-result {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 110px;
+    height: 24px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    justify-content: center;
+}
+
+.game-result-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: bold;
+    box-shadow: 2px 2px 5px 1px rgb(0, 0, 0, 0.2);
+}
+
+.game-result-circle.win {
+    /*background: linear-gradient(to bottom right, var(--mainColor), var(--subColor));*/
+    background-color: var(--subColor);
+    color: var(--white);
+}
+
+.game-result-circle.lose {
+    /*background: linear-gradient(to bottom right, var(--errorColor), var(--white));*/
+    background-color: var(--errorColor);
+    color: var(--white);
+}
+
+.game-result-circle.draw {
+    /*background: linear-gradient(to bottom right, var(--gray-02), var(--gray-03));*/
+    background-color: var(--gray-03);
+    color: var(--white);
+}
+
+/* 팀로고 */
+.team-logo {
+    width: 120px;
+    height: 120px;
+}
+
+.game-score {
+    display: flex;
+    width: 84px;
+    height: 76px;
+    font-weight: bold;
+    font-size: 64px;
+    align-items: center;
+    justify-content: center;
+}
+
+.vs-block {
+    width: 54px;
+    height: 68px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+}
+
+.vs-text {
+    width: 54px;
+    height: 48px;
+    font-size: 36px;
+    font-weight: bold;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--black);
+    text-align: center;
+}
+
+.vs-date {
+    width: 54px;
+    height: 20px;
+    font-size: 14px;
+    color: var(--black);
+    text-align: center;
+}
+
+.detail {
+    background-image: url("/assets/img/games/detailDropdown.png");
+    width: 1178px;
+    height: 500px;
+    padding: 77px 50px 76px 298px;
+}
+
+/* 데이터 받기용 숨김처리 */
+.detail .hit,
+.detail .homerun,
+.detail .strike-out,
+.detail .bb,
+.detail .miss {
+    display: none;
+}
+
+.detail .team-name {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 250px;
+    height: 58px;
+    gap: 30px;
+    margin: 0 auto 24px auto;
+}
+.detail .team-name .our-team-name,
+.detail .team-name .opp-team-name {
+    display: flex;
+    width: 77px;
+    height: 58px;
+    font-size: 28px;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail .team-name .vs {
+    height: 58px;
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* 그래프 */
+.custom-bar-chart {
+    display: flex;
+    flex-direction: column;
+    width: 830px;
+    align-items: center;
+}
+
+.bar-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 830px;
+    height: 49px;
+    gap: 32px;
+}
+
+.bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    min-width: 300px;
+    justify-content: flex-end;
+}
+
+.bar-wrap.right {
+    justify-content: start;
+}
+
+.bar-value {
+    font-size: 20px;
+    width: 28px;
+    text-align: center;
+}
+
+.bar-label {
+    width: 77px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.bar {
+    height: 7px;
+    border-radius: 4px;
+}
+
+.bar.our {
+    background-color: var(--mainColor);
+}
+
+.bar.opp {
+    background-color: var(--errorColor);
+}
+
+#pagination {
+    margin-top: 60px;
+}

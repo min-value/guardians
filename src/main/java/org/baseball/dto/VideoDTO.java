@@ -8,4 +8,5 @@ public class VideoDTO {
     private String v_date;
     private String v_url;
     private String thumbnail_url;
+    private String v_id;
 }

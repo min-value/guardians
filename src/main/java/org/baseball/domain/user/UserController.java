@@ -1,12 +1,20 @@
 package org.baseball.domain.user;
 
-import org.baseball.dto.UserDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.servlet.http.HttpSession;
+
+import org.baseball.domain.myfairy.MyFairyService;
+import org.baseball.domain.myticket.MyTicketService;
+import org.baseball.domain.tickets.TicketsService;
+import org.baseball.dto.MyFairyDTO;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.baseball.dto.UserDTO;
+import org.baseball.domain.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,14 +24,20 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+    private final MyFairyService myFairyService;
+    private final MyTicketService myTicketService;
+    private final TicketsService ticketsService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, MyFairyService myFairyService, MyTicketService myTicketService, TicketsService ticketsService) {
         this.userService = userService;
+        this.myFairyService = myFairyService;
+        this.myTicketService = myTicketService;
+        this.ticketsService = ticketsService;
     }
 
     // 로그인 페이지
-    @GetMapping("/user/login")
+    @RequestMapping("/user/login")
     public String showLoginPage() {
         return "user/login";
     }
@@ -78,6 +92,11 @@ public class UserController {
             return "user/signup";
         }
     }
+    @RequestMapping("/user/signup/check")
+    @ResponseBody
+    public boolean checkUser(String userId){
+        return userService.checkUserId(userId);
+    }
 
     // 마이페이지
     @RequestMapping("/user/mypage")
@@ -99,7 +118,6 @@ public class UserController {
         model.addAttribute("user", loginUser);
         return "user/mypage/info";
     }
-
 
     @GetMapping("/user/mypage/tickets")
     public String getTicketsTab() {
@@ -154,27 +172,11 @@ public class UserController {
             return new ArrayList<>();
         }
 
-        List<Map<String, Object>> fakeTickets = new ArrayList<>();
-
-        Map<String, Object> ticket1 = new HashMap<>();
-        ticket1.put("userName", "홍길동");
-        ticket1.put("ticketNumber", "202506101234567");
-        ticket1.put("matchDate", "2025-06-10 (화) 18:30");
-        ticket1.put("stadium", "서울 스타라이트 필드");
-        ticket1.put("seatInfo", "320구역 오렌지석 D열 8번");
-        fakeTickets.add(ticket1);
-
-        Map<String, Object> ticket2 = new HashMap<>();
-        ticket2.put("userName", "홍길동");
-        ticket2.put("ticketNumber", "202506041234567");
-        ticket2.put("matchDate", "2025-06-04 (수) 18:30");
-        ticket2.put("stadium", "서울 스타라이트 필드");
-        ticket2.put("seatInfo", "110 외야석 A열 2번");
-        fakeTickets.add(ticket2);
-
-        return fakeTickets;
+        int userPk = loginUser.getUserPk();
+        return myTicketService.getTicketsByUserPk(userPk);
     }
 
+    // 마이페이지 포인트내역 조회
     @GetMapping("/user/point/total")
     @ResponseBody
     public int getUserTotalPoint(HttpSession session) {
@@ -183,6 +185,41 @@ public class UserController {
         if (user == null) return 0;
 
         return userService.getTotalPoint(user.getUserPk());
+    }
+    
+    // 마이페이지 승리요정 조회
+    @GetMapping("/user/fairy/data")
+    @ResponseBody
+    public MyFairyDTO getFairyData(HttpSession session) {
+        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+        if (loginUser == null) {
+            return new MyFairyDTO();
+        }
+        try {
+            MyFairyDTO result = myFairyService.getMyFairyInfo(loginUser.getUserPk());
+            System.out.println(">>> MyFairyDTO result: " + result);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new MyFairyDTO();
+        }
+    }
+
+    @PostMapping("/user/cancel")
+    @ResponseBody
+    @Transactional
+    public boolean cancelReservation(@RequestParam int reservelist_pk,
+                                     @RequestParam int user_pk,
+                                     @RequestParam int point) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("user_pk", user_pk);
+        map.put("point", point);
+        int updated1 = myTicketService.cancelReservationList(reservelist_pk);
+        int updated2 = myTicketService.cancelReservations(reservelist_pk);
+        int updated3 = myTicketService.insertRefundPoint(map);
+        int updated4 = myTicketService.updateRefundPoint(map);
+
+        return updated1>0 && updated2>0 && updated3>0 && updated4>0;
     }
 
 }
