@@ -1,14 +1,12 @@
 package org.baseball.domain.user;
 
-import javax.servlet.http.HttpSession;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.baseball.dto.UserDTO;
-import org.baseball.domain.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +23,7 @@ public class UserController {
     }
 
     // 로그인 페이지
-    @RequestMapping("/user/login")
+    @GetMapping("/user/login")
     public String showLoginPage() {
         return "user/login";
     }
