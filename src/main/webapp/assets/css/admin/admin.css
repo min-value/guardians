@@ -5,12 +5,13 @@ body {
     flex-direction: row;
     margin: 0;
     min-height: 100vh;
+    align-items: stretch;
 }
 
 /*  sidebar  */
 .sidebar {
     width: 270px;
-    min-height: 100vh;
+    height: 100%;
     background: var(--lightBlue);
     color: var(--black);
     display: flex;
