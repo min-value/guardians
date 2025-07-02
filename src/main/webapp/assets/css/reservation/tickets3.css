@@ -67,6 +67,10 @@
     cursor: pointer;
 }
 
+#payBtn, #beforeBtn {
+    cursor: pointer;
+}
+
 .notification-content-container {
     width: 482px;
     height: 435px;
@@ -332,6 +336,10 @@
     background-image: url('/assets/img/reservation/checkboxOff.svg');
     background-position: center center;
     background-size: contain;
+}
+
+.orderConfirm-checkbox + label {
+    cursor: pointer;
 }
 
 .orderConfirm-checkbox:checked+label {

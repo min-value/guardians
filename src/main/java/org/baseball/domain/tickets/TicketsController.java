@@ -1,6 +1,8 @@
 package org.baseball.domain.tickets;
 
+import org.baseball.domain.Redis.RedisService;
 import org.baseball.dto.PredictInfoDTO;
+import org.baseball.dto.PurchaseReqDTO;
 import org.baseball.dto.TicketsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,12 +12,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/tickets")
 public class TicketsController {
     @Autowired
     TicketsService ticketsService;
+
+    @Autowired
+    RedisService redisService;
 
     @GetMapping("/all")
     public String showAllHomeGameList(
@@ -62,10 +68,16 @@ public class TicketsController {
 
     @PostMapping("/purchase")
     @ResponseBody
-    public boolean updatePurchase(@RequestBody Map<String, Object> paymentData) {
+    public boolean updatePurchase(@RequestBody PurchaseReqDTO dto) {
         try {
-            System.out.println("paymentData = " + paymentData);
-            return ticketsService.updatePurchase(paymentData);
+            boolean r = redisService.confirmPayment(
+                    dto.getGame_pk(),
+                    dto.getSeats(),
+                    dto.getUser_pk(),
+                    dto.getZone_pk()
+            );
+
+            return r && ticketsService.updatePurchase(dto);
         } catch (Exception e) {
             e.printStackTrace();
             return false;

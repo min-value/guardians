@@ -1,6 +1,7 @@
 package org.baseball.domain.tickets;
 
 import org.baseball.dto.PredictInfoDTO;
+import org.baseball.dto.PurchaseReqDTO;
 import org.baseball.dto.TicketsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class TicketsService {
     TicketsMapper ticketsMapper;
 
     public List<TicketsDTO> getTicketsList(int page, int teamStatus, int ticketStatus) {
-        int size = 6;
+        int size = 5;
         int offset = (page - 1) * size;
 
         Map<String, Object> param = new HashMap<>();
@@ -65,15 +66,24 @@ public class TicketsService {
     }
 
     @Transactional
-    public boolean updatePurchase(Map<String, Object> param) {
-        System.out.println("param: " + param);
+    public boolean updatePurchase(PurchaseReqDTO dto) {
+        System.out.println("param: " + dto);
 
-        int updated1 = ticketsMapper.updateReserveList(param);
-        int updated2 = ticketsMapper.updateReservations(param);
-        int updated3 = ticketsMapper.deductPoint(param);
-        int updated4 = ticketsMapper.insertReservePointUsage(param);
+        int rl = ticketsMapper.updateReserveList(dto);
+        int dp = ticketsMapper.deductPoint(dto);
+        int rp = ticketsMapper.insertReservePointUsage(dto);
 
-        return updated1 > 0 && updated2 > 0 && updated3 > 0 && updated4 > 0;
+        // discountPk 리스트 꺼냄
+        List<Integer> discountList = dto.getDiscount_pk();
+        int cnt = 0;
+
+        for (int discount : discountList) {
+            dto.setDPk(discount);
+            int result = ticketsMapper.updateReservations(dto);
+            if (result > 0) cnt++;
+        }
+
+        return rl > 0 && cnt == discountList.size() && dp > 0 && rp > 0;
     }
 
 
