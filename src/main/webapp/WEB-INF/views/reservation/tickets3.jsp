@@ -18,6 +18,19 @@
         totalPoint: "${sessionScope.loginUser.totalPoint}"
     };
 
+    $.ajax({
+        type: "GET",
+        url: "/user/info",
+        success: function(user) {
+            console.log("최신 유저 정보:", user);
+            $("#pointDisplay").text(user.totalPoint);
+            window.user = user;
+        },
+        error: function(err) {
+            console.error("유저 정보 가져오기 실패", err);
+        }
+    });
+
     function validatePointInput(input) {
         let value = input.value.replace(/[^0-9]/g, '');
         const myPoint = parseInt(document.getElementById('myPoint').innerText.replace(/[^0-9]/g, ''));
@@ -47,6 +60,7 @@
     <jsp:include page="topbar.jsp" flush="false">
         <jsp:param name="type" value="3"/>
     </jsp:include>
+    <%@ include file="../tickets/predict.jsp" %>
     <div class="mainback-container">
         <div class="main-container">
             <div class="left-container">
@@ -285,5 +299,6 @@
     </div>
 </div>
 <script type="module" src="${pageContext.request.contextPath}/assets/js/reservation/tickets3.js"></script>
+<script type="module" src="${pageContext.request.contextPath}/assets/js/tickets/predict.js"></script>
 </body>
 </html>

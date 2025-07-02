@@ -18,7 +18,12 @@ public class FairyController {
     @GetMapping("/fairy")
     public String fairyMain(Model model) {
         List<FairyDTO> list = fairyService.showFairyRank();
+        int maxTotalCnt = list.stream()
+                        .mapToInt(FairyDTO::getTotalCnt)
+                        .max()
+                        .orElse(0);
         model.addAttribute("list", list);
+        model.addAttribute("maxTotalCnt", maxTotalCnt);
         return "/fairy/fairy";
     }
 

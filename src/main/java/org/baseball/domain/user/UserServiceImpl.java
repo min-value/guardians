@@ -28,6 +28,13 @@ public class UserServiceImpl implements UserService {
         userMapper.insertUser(user);
     }
 
+    @Override
+    public boolean checkUserId(String userId){
+        int numOfUser = userMapper.checkUser(userId);
+        if(numOfUser == 0) return true;
+        else return false;
+    }
+
     private boolean isValidPassword(String password) {
         if (password == null) return false;
         if (password.length() < 6 || password.length() > 10) return false;
@@ -122,4 +129,9 @@ public class UserServiceImpl implements UserService {
         userMapper.updateKakaoUserInfo(userPk, email, tel, accessToken, refreshToken);
     }
 
+
+    @Override
+    public UserDTO getUserInfoByPk(int userPk) {
+        return userMapper.findUserByPk(userPk);
+    }
 }

@@ -4,8 +4,12 @@
 <mapper namespace="org.baseball.domain.myticket.MyTicketMapper">
     <select id="selectTicketsByUserPk" parameterType="int" resultType="map">
         SELECT
+            u.user_pk AS userPk,
             u.user_name AS userName,
             rl.reservelist_pk AS ticketNumber,
+            rl.imp_uid,
+            rl.used_point,
+            rl.is_cancel AS cancel,
             CONCAT(DATE_FORMAT(g.game_date, '%Y-%m-%d'), ' (',
                    CASE DAYOFWEEK(g.game_date)
                        WHEN 1 THEN '일'
@@ -49,4 +53,17 @@
         GROUP BY rl.reservelist_pk
         ORDER BY g.game_date DESC
     </select>
+    <update id="cancelReservationList" parameterType="int">
+        UPDATE reservation_list set cancel_date = NOW(), is_cancel = 1 where reservelist_pk = #{reservelist_pk}
+    </update>
+    <update id="cancelReservations" parameterType="int">
+        UPDATE reservations set state = 'CANCELED' where reservelist_pk = #{reservelist_pk}
+    </update>
+    <insert id="insertRefundPoint" parameterType="map">
+        INSERT INTO point(user_pk, point, date, type, description)
+        VALUES (#{user_pk}, #{point}, NOW(), '티켓 예매 포인트 환불', '사용 환불')
+    </insert>
+    <update id="updateRefundPoint" parameterType="map">
+        UPDATE user SET total_point = total_point + #{point} where user_pk = #{user_pk}
+    </update>
 </mapper>

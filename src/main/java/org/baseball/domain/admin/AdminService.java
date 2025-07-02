@@ -33,7 +33,7 @@ public class AdminService {
         List<ReserveInfoDTO> list = adminMapper.showReservationList(param);
         Timestamp now = new Timestamp(System.currentTimeMillis());
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // 초 없이
-        int cnt =1;
+        int cnt =1+offset;
         for (ReserveInfoDTO l : list) {
             l.setNo(cnt++);
             if (l.isCancel()) {
@@ -61,9 +61,13 @@ public class AdminService {
             String[] zoneAndSeat = new String[zones.length];
             for (int i = 0; i < zones.length; i++) {
                 String seat = seats[i];
-                String row = seat.substring(0, 1);  // 예: A
-                String number = seat.substring(1); // 예: 2
-                zoneAndSeat[i] = zones[i] + "구역 " + row + "열 " + number + "번";
+                String row = seat.substring(0, 1);
+                String number = seat.substring(1);
+                if(seats[i].equals("자동배정")){
+                    zoneAndSeat[i] = zones[i] + "구역 " + seat + "석";
+                }else {
+                    zoneAndSeat[i] = zones[i] + "구역 " + row + "열 " + number + "석";
+                }
             }
             l.setZoneAndSeat(zoneAndSeat);
         }
@@ -79,7 +83,7 @@ public class AdminService {
         param.put("offset", offset);
 
         List<GamesInfoDTO> list = adminMapper.showGamesList(param);
-        int cnt =1;
+        int cnt =1+offset;
         for (GamesInfoDTO l : list){
             l.setNo(cnt++);
             l.setOurTeam("6");
@@ -121,7 +125,7 @@ public class AdminService {
         param.put("size", size);
 
         List<GamesInfoDTO> list = adminMapper.showGamesAddList(param);
-        int cnt =1;
+        int cnt =1+offset;
         for (GamesInfoDTO l : list){
             l.setNo(cnt++);
             l.setOurTeam("6");

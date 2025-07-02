@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>신한 가디언즈</title>
     <link rel="stylesheet" href="/assets/css/colors.css"/>
     <link rel="stylesheet" href="/assets/css/admin/admin.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/include/pagination.css"/>
@@ -46,7 +46,7 @@
                         currentPage: page,
                         totalCount: totalCount,
                         onPageChange: (newPage) => loadPage(newPage),
-                        pageSize: 10,
+                        pageSize: 7,
                         containerId: '#pagination'
                     });
                 },
@@ -83,8 +83,8 @@
             <img src="/assets/img/icon/list.png" alt="icon"/>
             <p>경기 목록 조회</p>
         </div>
-        <div class="logout">
-            <a href="/logout">로그아웃</a>
+        <div class="logout" onclick="location.href='/user/logout';">
+            <span class="logout-text">로그아웃</span>
             <img src="/assets/img/icon/logout.png" alt="icon"/>
         </div>
     </div>

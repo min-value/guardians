@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#nextBtn').addEventListener('click', () => {
         console.log(totalPayment);
         console.log(totalSelected);
-        if(totalSelected < quantity || totalSelected > quantity) {
+        if(totalSelected !== quantity) {
             alert('매수를 정확히 선택해주세요.')
         } else {
             sessionStorage.setItem('totalPay', totalPayment);

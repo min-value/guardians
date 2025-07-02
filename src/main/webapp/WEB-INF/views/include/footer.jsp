@@ -5,9 +5,9 @@
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-info">
-            <a href="#">서비스 이용약관</a>
+            <a href="/policy/service">서비스 이용약관</a>
             <span class="divider">|</span>
-            <a href="#">개인정보 처리방침</a>
+            <a href="/policy/personal">개인정보 처리방침</a>
         </div>
         <img src="/assets/img/footer/footer-logo.svg" alt="로고">
     </div>

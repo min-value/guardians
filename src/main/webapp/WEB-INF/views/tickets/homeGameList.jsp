@@ -21,6 +21,11 @@
         totalPoint: "${sessionScope.loginUser.totalPoint}"
     };
 
+    function openSeatReservation(gameNo) {
+        window.open(`/reservation/seat?gamePk=\${gameNo}`, '_blank',
+                'width=800,height=700,scrollbars=yes,resizable=no');
+    }
+
     function loadPage(page) {
         const params = new URLSearchParams(window.location.search);
         const teamStatus = params.get('teamStatus');
@@ -57,11 +62,18 @@
                 const startDate = new Date(dto.startDate);
                 const isOnSale = startDate <= now;
 
+                const month = String(startDate.getMonth() + 1).padStart(2, '0');  // 월은 0~11
+                const day = String(startDate.getDate()).padStart(2, '0');
+                const hours = String(startDate.getHours()).padStart(2, '0');
+                const minutes = String(startDate.getMinutes()).padStart(2, '0');
+
+                const formatted = month + "." + day + " " + hours + ":" + minutes;
+                console.log(formatted);
                 const buttonHtml = isOnSale
-                    ? `<input class="onsale-ticket-btn" type="button" value="예매하기" onclick="window.open('/reservation/seat?gamePk=\${dto.gameNo}', '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');">`
+                    ? `<input class="onsale-ticket-btn" type="button" value="예매하기" onclick="openSeatReservation(\${dto.gameNo})">`
                     : `
                         <div class="plan-ticket-btn">
-                          <span class="plan-time">\${dto.date} \${dto.time}</span>
+                          <span class="plan-time">\${formatted}</span>
                           <span class="plan-label">판매 예정</span>
                         </div>
                       `;
@@ -87,12 +99,12 @@
                                 </div>
                               `);
             });
-
+            console.log(totalCount);
             createPagination({
               currentPage: page,
               totalCount: totalCount,
               onPageChange: (newPage) => loadPage(newPage),
-              pageSize: 10,
+              pageSize: 5,
               containerId: '#pagination'
             });
           },
@@ -149,5 +161,6 @@
     </div>
   </div>
   <div id="pagination"></div>
+  <%@ include file="../include/footer.jsp" %>
 </body>
 </html>

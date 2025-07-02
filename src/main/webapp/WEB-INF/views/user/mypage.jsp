@@ -1,17 +1,19 @@
 <%@ page session="true" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String pageTitle = "마이페이지";
+%>
 <html>
 <head>
-    <title>마이페이지</title>
+    <title>신한 가디언즈</title>
     <link rel="stylesheet" href="/assets/css/user/mypage.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
-<div class="header-title" style="max-width: 100%; height: 320px; display: flex; justify-content: center;">
-    <!--나중에 컴포넌트로 바꿀 것.-->
-    <img src="/assets/img/header/header-title.png" alt="헤더 타이틀" style="max-width: 100%; height: 320px; display: flex; justify-content: center;">
-</div>
+<%@ include file="../include/headerImg.jsp" %>
+
 <div class="mypage-container">
     <div class="mypage-tabs">
         <button class="tab-btn active" data-tab="info">내 정보</button>
@@ -33,6 +35,59 @@
         function bindInfoForm() {
             const form = document.getElementById("infoForm");
             const editBtn = document.getElementById("editBtn");
+            const email = document.getElementById('email');
+            const phoneNumber = document.getElementById('phoneNumber');
+            const iconHTML = `<img src="/assets/img/user/error-message.svg" alt="에러 아이콘">`;
+
+            const regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+            const regPhone = /^(01[016789]|02|0[3-9][0-9])-[0-9]{3,4}-[0-9]{4}$/;
+
+            // 이메일 유효성 검사
+            function validEmail(){
+                const checkEmail = email.value.trim();
+                const emailError = document.getElementById('email-error');
+
+                if (checkEmail === "") {
+                    emailError.innerHTML = "";
+                    return false;
+                }
+                if(!regEmail.test(checkEmail)){
+                    emailError.innerHTML= iconHTML + '이메일 형식에 맞지 않습니다.';
+                    return false;
+                }
+                emailError.innerHTML = '';
+                return true;
+            }
+
+            // 전화번호 유효성 검사
+            function validPhone(){
+                const checkPhone = phoneNumber.value.trim();
+                const phoneError = document.getElementById('phone-error');
+
+                if (checkPhone === "") {
+                    phoneError.innerHTML = "";
+                    return false;
+                }
+                if(!regPhone.test(checkPhone)){
+                    phoneError.innerHTML= iconHTML + '전화번호 형식에 맞지 않습니다.';
+                    return false;
+                }
+                phoneError.innerHTML = '';
+                return true;
+            }
+
+            // 모든 입력 & 유효성 통과 여부 확인해서 버튼 활성화
+            function checkInputs() {
+                const emailOK = validEmail();
+                const phoneOK = validPhone();
+
+                editBtn.disabled = !(emailOK && phoneOK);
+            }
+
+            [email, phoneNumber].forEach(el => {
+                el.addEventListener('input', checkInputs);
+            });
+
             if (!form || !editBtn) return;
             let isEditMode = false;
             editBtn.addEventListener("click", () => {
@@ -44,6 +99,10 @@
                     editBtn.classList.replace("edit-mode", "save-mode");
                     isEditMode = true;
                 } else {
+
+                    if(!validEmail() || !validPhone()){
+                        return;
+                    }
                     const formData = new FormData(form);
                     fetch('/user/update', {
                         method: 'POST',
@@ -94,9 +153,27 @@
                             const now = new Date();
 
                             const isCancelable = gameDate.getTime() > now.getTime();
-                            const cancelBtn = isCancelable
-                                ? `<div class="cancel-container"><button class="cancel-btn" data-ticket="\${ticket.ticketNumber}">예매취소</button></div>`
-                                : '';
+                            const isCanceled = ticket.cancel === true;
+                            const cancelBtnId = "cancel-" + ticket.ticketNumber;
+
+                            let cancelBtn = '';
+                            if(isCanceled){
+                                cancelBtn = `<div class="cancel-container">
+                                        <button class="used-btn" disabled>취소 완료</button></div>`;
+                            }else if(!isCanceled && isCancelable){
+                                cancelBtn = `<div class="cancel-container">
+                                        <button class="cancel-btn"
+                                        data-ticket="\${ticket.ticketNumber}"
+                                        data-impuid="\${ticket.imp_uid}"
+                                        data-userpk="\${ticket.userPk}"
+                                        data-reservepk="\${ticket.ticketNumber}"
+                                        data-usedpoint="\${ticket.used_point}"
+                                        data-gamedate="\${ticket.gameDate}"
+                                        id="\${cancelBtnId}">예매취소</button></div>`;
+                            }else{
+                                cancelBtn = `<div class="cancel-container">
+                                        <button class="used-btn" disabled>사용 완료</button></div>`;
+                            }
 
                             item.innerHTML = `
                                 <div class="ticket-top">
@@ -138,6 +215,50 @@
                             });
 
                             // 예매 취소 버튼 클릭 이벤트 추가 예정
+                            if (isCancelable && !isCanceled) {
+                                const cancelBtn = document.getElementById(cancelBtnId);
+                                cancelBtn.addEventListener("click", () => {
+                                    const imp_uid = cancelBtn.dataset.impuid;
+                                    const user_pk = cancelBtn.dataset.userpk;
+                                    const reservelist_pk = cancelBtn.dataset.ticket;
+                                    const used_point = cancelBtn.dataset.usedpoint;
+                                    const game_date = new Date(cancelBtn.dataset.gamedate);
+                                    const now = new Date();
+                                    const gameDay = new Date(gameDate.getFullYear(), gameDate.getMonth(), gameDate.getDate());
+                                    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "/user/cancel",
+                                        data: {
+                                            user_pk: user_pk,
+                                            reservelist_pk: reservelist_pk,
+                                            point: used_point
+                                        },
+                                        success: function (res) {
+                                            alert("취소 처리 완료");
+                                            if(gameDay>today){
+                                                $.ajax({
+                                                    type: "POST",
+                                                    url: "/cancelPayment/" + imp_uid,
+                                                    success: function (response) {
+                                                        alert("결제 취소 완료");
+                                                    },
+                                                    error: function (error) {
+                                                        alert("결제 취소 실패");
+                                                        console.error(error);
+                                                    }
+                                                });
+                                            }
+                                            document.querySelector("")
+                                            location.reload();
+                                        },
+                                        error: function (error) {
+                                            alert("취소 처리 실패");
+                                            console.error(error);
+                                        }
+                                    });
+                                });
+                            }
                         });
 
                     });
@@ -168,7 +289,7 @@
                     if (!points.length) {
                         container.innerHTML = '<p class="no-points-msg">포인트 내역이 없습니다.</p>';
                         return;
-                }
+                    }
 
                     container.innerHTML = '';
                     let lastDate = '';
@@ -317,8 +438,8 @@
         }
 
         function drawFairyChart(detailElem, containerElem) {
-            const classes = ['hit','homerun','strike-out','bb','miss'];
-            const labels  = ['안타','홈런','삼진','4사구','실책'];
+            const classes = ['hit', 'homerun', 'strike-out', 'bb', 'miss'];
+            const labels = ['안타', '홈런', '삼진', '4사구', '실책'];
             const PIXEL_PER_UNIT = 10
 
             const ourData = [], oppData = [];
@@ -328,20 +449,20 @@
                     ourData.push(0);
                     oppData.push(0);
                 } else {
-                    const [o,p] = el.textContent
+                    const [o, p] = el.textContent
                         .split(':')[1]
                         .split('/')
-                        .map(x => parseInt(x.trim(),10));
-                    ourData.push(isNaN(o)?0:o);
-                    oppData.push(isNaN(p)?0:p);
+                        .map(x => parseInt(x.trim(), 10));
+                    ourData.push(isNaN(o) ? 0 : o);
+                    oppData.push(isNaN(p) ? 0 : p);
                 }
             });
 
             containerElem.innerHTML = '';
 
             // 3) 그리드 row 단위로 DOM 조합하기
-            ourData.forEach((o,i) => {
-                const p    = oppData[i];
+            ourData.forEach((o, i) => {
+                const p = oppData[i];
                 const ourW = o * PIXEL_PER_UNIT;
                 const oppW = p * PIXEL_PER_UNIT;
 

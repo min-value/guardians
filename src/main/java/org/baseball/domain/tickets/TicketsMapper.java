@@ -2,6 +2,7 @@ package org.baseball.domain.tickets;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.baseball.dto.PredictInfoDTO;
+import org.baseball.dto.PurchaseReqDTO;
 import org.baseball.dto.TicketsDTO;
 
 import java.util.List;
@@ -13,8 +14,8 @@ public interface TicketsMapper {
     int countTicketsList(Map<String, Object> param);
     int updatePredict(Map<String, Object> param);
     PredictInfoDTO getGameInfoforPredict(int gamePk);
-    int updateReserveList(Map<String, Object> param);
-    int updateReservations(Map<String, Object> param);
-    int deductPoint(Map<String, Object> param);
-    int insertReservePointUsage(Map<String, Object> param);
+    int updateReserveList(PurchaseReqDTO dto);
+    int updateReservations(PurchaseReqDTO dto);
+    int deductPoint(PurchaseReqDTO dto);
+    int insertReservePointUsage(PurchaseReqDTO dto);
 }

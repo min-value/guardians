@@ -22,7 +22,7 @@
     </sql>
 
     <insert id="insertNews" parameterType="org.baseball.dto.NewsDTO">
-        INSERT INTO news(
+        INSERT IGNORE INTO news(
              n_title, n_writer, n_content, n_year, n_month, n_date, n_hour, n_minute, img_url, news_url
         ) VALUES (
               #{n_title}, #{n_writer}, #{n_content}, #{n_year}, #{n_month}, #{n_date}, #{n_hour}, #{n_minute}, #{img_url}, #{news_url}
