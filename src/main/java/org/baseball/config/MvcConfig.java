@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.baseball.interceptor.AdminCheckInterceptor;
+import org.baseball.interceptor.LoginCheckInterceptor;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
@@ -100,7 +101,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
     //트랜잭션 매니저 빈 등록
     @Bean
-    public TransactionManager tm() {
+    public TransactionManager transactionManager() {
         TransactionManager tm = new DataSourceTransactionManager(datasource());
         return tm;
     }
@@ -109,6 +110,12 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AdminCheckInterceptor())
                 .addPathPatterns("/admin/**");
+
+        registry.addInterceptor(new LoginCheckInterceptor())
+                .addPathPatterns("/reservation/**")
+                .excludePathPatterns(
+                        "/reservation/errors/needLogin"  // 무한 리다이렉트 방지
+                );
     }
 
     @Bean

@@ -21,6 +21,9 @@
 
     let discountInfo = JSON.parse('${discountInfo}');
     sessionStorage.setItem('discountInfo', JSON.stringify(discountInfo));
+
+    const available = `${available}`;
+    console.log('예매 가능 장수: ' + available);
 </script>
 <!-- 등급/좌석 선택 -->
 <div class="full-container">
@@ -133,6 +136,7 @@
         </div>
     </div>
 </div>
+<div class="loader">Loading...</div>
 <div class="overlay"></div>
 <script type="module" src="${pageContext.request.contextPath}/assets/js/reservation/tickets1.js"></script>
 </body>
