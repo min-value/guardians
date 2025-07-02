@@ -7,6 +7,7 @@ import org.baseball.domain.myticket.MyTicketService;
 import org.baseball.domain.tickets.TicketsService;
 import org.baseball.dto.MyFairyDTO;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.baseball.dto.UserDTO;
 import org.baseball.domain.user.UserService;
@@ -25,12 +26,14 @@ public class UserController {
     private final UserService userService;
     private final MyFairyService myFairyService;
     private final MyTicketService myTicketService;
+    private final TicketsService ticketsService;
 
     @Autowired
-    public UserController(UserService userService, MyFairyService myFairyService, MyTicketService myTicketService) {
+    public UserController(UserService userService, MyFairyService myFairyService, MyTicketService myTicketService, TicketsService ticketsService) {
         this.userService = userService;
         this.myFairyService = myFairyService;
         this.myTicketService = myTicketService;
+        this.ticketsService = ticketsService;
     }
 
     // 로그인 페이지
@@ -200,6 +203,23 @@ public class UserController {
             e.printStackTrace();
             return new MyFairyDTO();
         }
+    }
+
+    @PostMapping("/user/cancel")
+    @ResponseBody
+    @Transactional
+    public boolean cancelReservation(@RequestParam int reservelist_pk,
+                                     @RequestParam int user_pk,
+                                     @RequestParam int point) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("user_pk", user_pk);
+        map.put("point", point);
+        int updated1 = myTicketService.cancelReservationList(reservelist_pk);
+        int updated2 = myTicketService.cancelReservations(reservelist_pk);
+        int updated3 = myTicketService.insertRefundPoint(map);
+        int updated4 = myTicketService.updateRefundPoint(map);
+
+        return updated1>0 && updated2>0 && updated3>0 && updated4>0;
     }
 
 }

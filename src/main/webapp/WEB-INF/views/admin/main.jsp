@@ -19,7 +19,7 @@
     <img class="symbol" src="/assets/img/symbol.png"/>
     <div class="logo">
       <img class="guardians" src="/assets/img/guardians.png"/>
-      <input class="main" type="button" value="main" onclick="location.href='/index.do'">
+      <input class="main" type="button" value="main" onclick="location.href='/home'">
     </div>
   </div>
 </div>

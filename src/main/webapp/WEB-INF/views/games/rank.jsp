@@ -4,7 +4,7 @@
 
 <html>
 <head>
-    <title>랭킹</title>
+    <title>신한 가디언즈</title>
     <link rel="stylesheet" href="/assets/css/games/rank.css">
     <link rel="stylesheet" href="/assets/css/font.css">
 </head>

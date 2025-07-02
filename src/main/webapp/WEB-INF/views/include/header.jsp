@@ -22,7 +22,7 @@
         <div class="header-inner">
             <ul class="menu-list">
                 <li><a href="/story/videos">STORY</a></li>
-                <li><a href="#">TEAMINFO</a></li>
+                <li><a href="/teaminfo/club">TEAMINFO</a></li>
                 <li><a href="/games/all">GAME</a></li>
                 <li><a href="/tickets/all">TICKET</a></li>
                 <li><a href="/community/post">COMMUNITY</a></li>
@@ -48,10 +48,10 @@
             </div>
             <div class="depth2-column">
                 <ul class="depth2">
-                    <li><a href="#">구단 소개</a></li>
-                    <li><a href="#">경기장 소개</a></li>
-                    <li><a href="#">스폰서</a></li>
-                    <li><a href="#">선수 정보</a></li>
+                    <li><a href="/teaminfo/club">구단 소개</a></li>
+                    <li><a href="/teaminfo/stadium">경기장 소개</a></li>
+                    <li><a href="/teaminfo/sponsor">스폰서</a></li>
+                    <li><a href="/teaminfo/player">선수 정보</a></li>
                 </ul>
             </div>
             <div class="depth2-column">

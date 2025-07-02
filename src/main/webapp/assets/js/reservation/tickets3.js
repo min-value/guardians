@@ -115,9 +115,14 @@ async function requestPay() {
                     }),
                     success: function(result) {
                         console.log("서버 응답:", result);
-                        if (result === true) {
+                        if (result === true || result === "true") {
                             alert("예매 성공!");
-                            window.location.href = "/tickets/all?showModal=true";
+                            if (window.opener && !window.opener.closed) {
+                                opener.sessionStorage.setItem("reservelistPk", sessionStorage.getItem("reservelistPk"));
+                                opener.sessionStorage.setItem("gameInfo", sessionStorage.getItem("gameInfo"));
+                                window.opener.location.href = "/tickets/all?showModal=true";
+                            }
+                            window.close();
                         } else {
                             alert("예매 저장 실패. 다시 시도해주세요.");
                         }
