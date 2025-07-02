@@ -22,6 +22,39 @@
     margin: 0;
     list-style: none;
 }
+.idInput{
+    width: 378px;
+    display: flex;
+    justify-content: space-between;
+}
+.double-check{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 74px;
+    height: 50px;
+    background-color: var(--lightBlue);
+    border: none;
+    color: var(--mainColor);
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 2px 12px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.double-check:hover{
+    background-color: var(--lightBlueHover);
+}
+
+.success-msg {
+    font-size: 16px;
+    color: var(--mainColor);
+    margin-left: 8px;
+    font-weight: 400;
+    gap: 8px;
+    display: inline-flex;
+    align-items: center;
+}
 
 .error-msg {
     font-size: 16px;
@@ -46,6 +79,20 @@
     color: var(--mainColor);
     display: inline-flex;
     align-items: center;
+}
+
+#id{
+    width: 292px;
+    height: 50px;
+    padding: 14px 20px;
+    background-color: var(--gray-06);
+    display: inline-flex;
+    font-size: 14px;
+    font-weight: 400;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin-bottom: 24px;
 }
 
 .input-form input[type="text"],
