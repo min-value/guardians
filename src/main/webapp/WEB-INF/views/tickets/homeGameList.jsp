@@ -99,12 +99,12 @@
                                 </div>
                               `);
             });
-
+            console.log(totalCount);
             createPagination({
               currentPage: page,
               totalCount: totalCount,
               onPageChange: (newPage) => loadPage(newPage),
-              pageSize: 10,
+              pageSize: 5,
               containerId: '#pagination'
             });
           },

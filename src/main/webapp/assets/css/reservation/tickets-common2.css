@@ -247,6 +247,7 @@
     background-image: url('/assets/img/reservation/checkboxOff.svg');
     background-position: center center;
     background-size: contain;
+    cursor: pointer !important;
 }
 
 #cancelAgree-checkbox:checked+label {

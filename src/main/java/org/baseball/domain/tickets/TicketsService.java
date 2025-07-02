@@ -19,7 +19,7 @@ public class TicketsService {
     TicketsMapper ticketsMapper;
 
     public List<TicketsDTO> getTicketsList(int page, int teamStatus, int ticketStatus) {
-        int size = 6;
+        int size = 5;
         int offset = (page - 1) * size;
 
         Map<String, Object> param = new HashMap<>();
