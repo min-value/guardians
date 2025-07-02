@@ -23,9 +23,7 @@
 </head>
 <body>
     <%@ include file="../include/header.jsp" %>
-    <div class="backgroundWrapper">
-        <%@ include file="../include/headerImg.jsp" %>
-    </div>
+    <%@ include file="../include/headerImg.jsp" %>
     <div class="content">
         <%@ include file="../include/search.jsp" %>
 
