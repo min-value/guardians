@@ -28,6 +28,15 @@ $(document).ready(function () {
     });
 
     bindSummaryToggle();
+
+    const now = new Date();
+    $('#year-select').val(now.getFullYear());
+    $('#month-select').val(now.getMonth() + 1);
+
+    // DOM 완성 후 트리거
+    setTimeout(() => {
+        $('#year-select, #month-select').trigger('change');
+    }, 100);
 });
 
 // 카드 토글
@@ -176,6 +185,7 @@ function drawChart($detail, $container) {
     $container.html(html);
 }
 
+// 페이지네이션
 function loadGamePage(page) {
     const year = $('#year-select').val();
     const month = $('#month-select').val();
@@ -201,4 +211,3 @@ function loadGamePage(page) {
         }
     });
 }
-
