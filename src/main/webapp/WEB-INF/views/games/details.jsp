@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 <html>
@@ -30,10 +31,12 @@
             <img src="/assets/img/icon/dropdownVector.png" class="dropdown-icon">
         </div>
         <div class="select-wrapper">
+            <!-- 월 드롭다운 -->
             <select id="month-select" class="month-select">
                 <c:forEach var="m" begin="1" end="12">
-                    <c:set var="mm" value="${m lt 10 ? '0' : ''}${m}" />
-                    <option value="${mm}" <c:if test="${m == selectedMonth}">selected</c:if>>${mm}월</option>
+                    <option value="${m}" <c:if test="${m == selectedMonth}">selected</c:if>>
+                        <fmt:formatNumber value="${m}" pattern="00"/>월
+                    </option>
                 </c:forEach>
             </select>
             <img src="/assets/img/icon/dropdownVector.png" class="dropdown-icon">
