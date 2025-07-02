@@ -11,8 +11,8 @@
 <%request.setAttribute("activePage", "main");%>
 <jsp:include page="sidebar.jsp" ></jsp:include>
 <div class="container">
-  <div class="logout">
-    <a href="/logout">로그아웃</a>
+  <div class="logout" onclick="location.href='/user/logout';">
+    <span class="logout-text">로그아웃</span>
     <img src="/assets/img/icon/logout.png" alt="icon"/>
   </div>
   <div class="box">
