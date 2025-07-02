@@ -181,7 +181,7 @@
                                     <span class="vs-text">VS</span>
                                     <img src="/assets/img/teamlogos/\${ticket.oppTeamPk}.png" class="logo-team">
                                     <span class="match-date">\${ticket.matchDate}</span>
-                                    <img src="/assets/img/mypage/chevron-right.svg" class="arrow-icon">
+                                    <img src="/assets/img/icon/chevron-right.svg" class="arrow-icon">
                                 </div>
                                 <div class="ticket-info">
                                        <div class="ticket-info-main">
@@ -377,7 +377,7 @@
                                     <span class="vs-text">VS</span>
                                     <img src="/assets/img/teamlogos/\${ticket.oppTeamPk}.png" class="logo-team">
                                     <span class="match-date">\${ticket.matchDate}</span>
-                                    <img src="/assets/img/mypage/chevron-right.svg" class="arrow-icon">
+                                    <img src="/assets/img/icon/chevron-right.svg" class="arrow-icon">
                                 </div>
                                 <div class="fairy-info"></div>
                             `;

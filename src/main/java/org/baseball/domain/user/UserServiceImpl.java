@@ -1,5 +1,7 @@
 package org.baseball.domain.user;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import org.baseball.domain.kakao.Tokens;
 import org.baseball.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,6 +77,58 @@ public class UserServiceImpl implements UserService {
         Integer result = userMapper.getTotalPoint(userPk);
         return result != null ? result : 0;
     }
+
+    // 카카오 로그인
+    @Override
+    public UserDTO findByKakaoToken(String kakaoToken) {
+        return userMapper.findByKakaoToken(kakaoToken);
+    }
+
+    @Override
+    public UserDTO loginOrRegisterKakao(JsonNode profile, Tokens tokens) {
+        String kakaoIdStr = profile.get("id").asText();
+        // 신규 회원 생성
+        String nickname = profile.path("properties").path("nickname").asText("카카오유저");
+        String email = profile.path("kakao_account").path("email").asText(null);
+
+        // 기존 유저 조회
+        UserDTO exist = userMapper.findByKakaoToken(kakaoIdStr);
+        if (exist != null) {
+            exist.setEmail(tokens != null ? email : exist.getEmail());
+            exist.setTel(exist.getTel());
+            exist.setAccessToken( tokens.getAccessToken() );
+            exist.setRefreshToken( tokens.getRefreshToken() );
+
+            userMapper.updateKakaoUserInfo(
+                    exist.getUserPk(),
+                    exist.getEmail(),
+                    exist.getTel(),
+                    exist.getAccessToken(),
+                    exist.getRefreshToken()
+            );
+            return exist;
+        }
+
+        UserDTO newUser = new UserDTO();
+        newUser.setUserId("kakao_" + kakaoIdStr);
+        newUser.setUserName(nickname);
+        newUser.setEmail(email);
+        newUser.setTel(null);
+        newUser.setKakaoToken(kakaoIdStr);
+        newUser.setKakao(true);
+        newUser.setAccessToken( tokens.getAccessToken() );
+        newUser.setRefreshToken( tokens.getRefreshToken() );
+
+
+        userMapper.insertKakaoUser(newUser);
+        return newUser;
+    }
+
+    @Override
+    public void updateKakaoUserInfo(int userPk, String email, String tel, String accessToken, String refreshToken) {
+        userMapper.updateKakaoUserInfo(userPk, email, tel, accessToken, refreshToken);
+    }
+
 
     @Override
     public UserDTO getUserInfoByPk(int userPk) {

@@ -72,5 +72,32 @@
         WHERE user_pk = #{userPk}
     </select>
 
+    <select id="findByKakaoToken" parameterType="string" resultType="org.baseball.dto.UserDTO">
+        SELECT
+        user_pk     AS userPk,
+        user_id     AS userId,
+        user_name   AS userName,
+        email,
+        kakao_token AS kakaoToken,
+        is_kakao    AS isKakao
+        FROM `user`
+        WHERE kakao_token = #{kakaoToken}
+    </select>
+
+    <insert id="insertKakaoUser" parameterType="org.baseball.dto.UserDTO" useGeneratedKeys="true" keyProperty="userPk">
+        INSERT INTO `user`
+            (user_id, user_name, email, kakao_token, is_kakao, access_token, refresh_token)
+        VALUES
+            (#{userId}, #{userName}, #{email}, #{kakaoToken}, #{isKakao}, #{accessToken}, #{refreshToken})
+    </insert>
+
+    <update id="updateKakaoUserInfo" parameterType="map">
+        UPDATE `user`
+        SET email = #{email},
+            tel = #{tel},
+            access_token = #{accessToken},
+            refresh_token = #{refreshToken}
+        WHERE user_pk = #{userPk}
+    </update>
 
 </mapper>
