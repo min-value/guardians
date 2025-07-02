@@ -34,7 +34,7 @@
                                   <td>${dto.totalCnt} 회</td>
                                   <td>
                                       <div class="bar-container">
-                                          <div class="bar" style="width: ${dto.totalCnt * 40}px;"></div>
+                                          <div class="bar" style="width: ${dto.totalCnt / maxTotalCnt * 320}px;"></div>
                                       </div>
                                   </td>
                               </tr>
@@ -44,7 +44,7 @@
                                   <td>${dto.winCnt} 회</td>
                                   <td>
                                       <div class="bar-container">
-                                          <div class="bar" style="width: ${dto.winCnt * 40}px; background-color: #22C55E;"></div>
+                                          <div class="bar" style="width: ${dto.winCnt / maxTotalCnt * 320}px; background-color: #22C55E;"></div>
                                       </div>
                                   </td>
                               </tr>
@@ -54,7 +54,7 @@
                                   <td>${dto.drawCnt} 회</td>
                                   <td>
                                       <div class="bar-container">
-                                          <div class="bar" style="width: ${dto.drawCnt * 40}px; background-color: #FACC15;"></div>
+                                          <div class="bar" style="width: ${dto.drawCnt / maxTotalCnt * 320}px; background-color: #FACC15;"></div>
                                       </div>
                                   </td>
                               </tr>
@@ -64,7 +64,7 @@
                                   <td>${dto.loseCnt} 회</td>
                                   <td>
                                       <div class="bar-container">
-                                          <div class="bar" style="width: ${dto.loseCnt * 40}px; background-color: #EF4444;"></div>
+                                          <div class="bar" style="width: ${dto.loseCnt / maxTotalCnt * 320}px; background-color: #EF4444;"></div>
                                       </div>
                                   </td>
                               </tr>
@@ -74,7 +74,7 @@
                                   <td>${dto.ratio}</td>
                                   <td>
                                       <div class="bar-container">
-                                          <div class="bar" style="width: ${dto.ratio * 300}px; background-color: #0EA5E9;"></div>
+                                          <div class="bar" style="width: ${dto.ratio * 320}px; background-color: #0EA5E9;"></div>
                                       </div>
                                   </td>
                               </tr>
@@ -83,7 +83,7 @@
                   </c:forEach>
               </div>
               <div class="fairy-img">
-                  <img src="/assets/img/fairy/fairy.png" alt="fairy">
+                  <img src="/assets/img/fairy/fairyMove.webp" width="850px" alt="fairy">
               </div>
           </div>
       </div>

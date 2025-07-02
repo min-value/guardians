@@ -7,6 +7,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +16,7 @@ public class RankCrawler {
 
     private final GamesMapper gamesMapper;
 
+    @Scheduled(cron = "0 0 2 * * *")
     public void crawlAndSave() {
         try {
             // 랭킹 페이지 URL
