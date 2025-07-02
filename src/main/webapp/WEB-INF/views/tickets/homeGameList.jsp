@@ -21,6 +21,16 @@
         totalPoint: "${sessionScope.loginUser.totalPoint}"
     };
 
+    function openSeatReservation(gameNo) {
+        if(user.userPk == null || user.userPk === ''){
+            alert("로그인이 필요합니다.");
+            window.location.href = "/user/login";
+        }else{
+            window.open(`/reservation/seat?gamePk=\${gameNo}`, '_blank',
+                'width=800,height=700,scrollbars=yes,resizable=no');
+        }
+    }
+
     function loadPage(page) {
         const params = new URLSearchParams(window.location.search);
         const teamStatus = params.get('teamStatus');
@@ -58,7 +68,7 @@
                 const isOnSale = startDate <= now;
 
                 const buttonHtml = isOnSale
-                    ? `<input class="onsale-ticket-btn" type="button" value="예매하기" onclick="window.open('/reservation/seat?gamePk=\${dto.gameNo}', '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');">`
+                    ? `<input class="onsale-ticket-btn" type="button" value="예매하기" onclick="openSeatReservation(\${dto.gameNo})">`
                     : `
                         <div class="plan-ticket-btn">
                           <span class="plan-time">\${dto.date} \${dto.time}</span>
