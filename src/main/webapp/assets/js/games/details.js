@@ -16,7 +16,7 @@ $(document).ready(function () {
                 createPagination({
                     currentPage: 1,
                     totalCount: data.totalCount,
-                    pageSize: 5,
+                    pageSize: 6,
                     containerId: '#pagination',
                     onPageChange: (newPage) => loadGamePage(newPage)
                 });
@@ -183,7 +183,7 @@ function loadGamePage(page) {
     $.ajax({
         url: '/games/details/filter',
         method: 'GET',
-        data: { year, month, page, size: 5 },
+        data: { year, month, page, size: 6 },
         success: function (data) {
             renderGameCards(data.list);
             bindSummaryToggle();
@@ -191,7 +191,7 @@ function loadGamePage(page) {
             createPagination({
                 currentPage: page,
                 totalCount: data.totalCount,
-                pageSize: 5,
+                pageSize: 6,
                 containerId: '#pagination',
                 onPageChange: (newPage) => loadGamePage(newPage)
             });
