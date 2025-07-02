@@ -22,13 +22,8 @@
     };
 
     function openSeatReservation(gameNo) {
-        if(user.userPk == null || user.userPk === ''){
-            alert("로그인이 필요합니다.");
-            window.location.href = "/user/login";
-        }else{
-            window.open(`/reservation/seat?gamePk=\${gameNo}`, '_blank',
+        window.open(`/reservation/seat?gamePk=\${gameNo}`, '_blank',
                 'width=800,height=700,scrollbars=yes,resizable=no');
-        }
     }
 
     function loadPage(page) {
