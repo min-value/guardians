@@ -137,8 +137,8 @@ function calCount(type) {
     let cnt = Number(cntEl.value);
     if(type === 1) {
         //+
-        if(cnt >= 4) {
-            alert('1인당 최대 4매까지 예매 가능합니다.');
+        if(cnt >= available) {
+            alert('최대 예매 가능 매수를 초과하였습니다.');
         } else {
             cntEl.value = cnt + 1;
             selectedSeats.push('자동배정');
@@ -308,7 +308,7 @@ export function addSeatListener() {
                             }
                         }
                     } else {
-                        if(selectedSeats.length < 4) {
+                        if(selectedSeats.length < available) {
                             el.setAttribute('rx', 10);
                             el.setAttribute('ry', 10);
                             el.setAttribute('stroke', 'black');
@@ -338,7 +338,7 @@ export function addSeatListener() {
                             </div>`;
                             seatSelectMap[el.id] = true;
                         } else {
-                            alert(`1인당 최대 4매까지 예매 가능합니다.`);
+                            alert(`최대 예매 가능 매수를 초과하였습니다.`);
                         }
                     }
                 })

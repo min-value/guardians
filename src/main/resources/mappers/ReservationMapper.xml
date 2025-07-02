@@ -36,6 +36,13 @@
         ORDER BY cost DESC, zone_pk DESC
     </select>
 
+    <select id="getZoneInfo" resultMap="Zone">
+        SELECT zone_pk, zone_name, zone_color, cost, total_num
+        FROM zone
+        WHERE zone_pk = #{zonePk}
+        ORDER BY cost DESC, zone_pk DESC
+    </select>
+
     <select id="confirmPreemption" resultType="int">
         SELECT COUNT(*)
         FROM reservations r LEFT JOIN reservation_list l ON r.reservelist_pk = l.reservelist_pk
@@ -43,8 +50,8 @@
     </select>
 
     <insert id="setPreemptionList" useGeneratedKeys="true" keyProperty="reservelistPk" keyColumn="reservelist_pk">
-        INSERT INTO reservation_list (quantity, user_pk, game_pk)
-        VALUES (#{quantity}, #{userPk}, #{gamePk})
+        INSERT INTO reservation_list (quantity, user_pk, game_pk, reserve_code)
+        VALUES (#{quantity}, #{userPk}, #{gamePk}, #{reserveCode})
     </insert>
 
     <insert id="setPreemptionReserve" useGeneratedKeys="true" keyProperty="reservePk" keyColumn="reserve_pk">
@@ -78,17 +85,29 @@
         WHERE game_pk = #{gamePk}
     </select>
 
-    <select id="getReservelistPk" resultType="int">
-        SELECT NULLIF(r.reservelist_pk, -1)
+    <select id="getReservelistPk" resultType="Integer">
+        SELECT r.reservelist_pk
         FROM reservation_list l LEFT JOIN reservations r ON l.reservelist_pk = r.reservelist_pk
-        WHERE l.game_pk = #{gamePk} AND r.seat_num = #{seatNum} AND r.state = 'HELD'
+        WHERE l.game_pk = #{gamePk} AND r.zone_pk = #{zonePk} AND r.seat_num = #{seatNum} AND r.state = 'HELD'
+        LIMIT 1
+    </select>
+    <select id="getReservelistPkByUser" resultType="Integer">
+        SELECT r.reservelist_pk
+        FROM reservation_list l LEFT JOIN reservations r ON l.reservelist_pk = r.reservelist_pk
+        WHERE l.game_pk = #{gamePk} AND r.zone_pk = #{zonePk} AND l.user_pk = #{userPk} AND r.seat_num = #{seatNum} AND r.state = 'HELD'
         LIMIT 1
     </select>
 
-    <select id="getReservelistPkAuto" resultType="int">
-        SELECT NULLIF(r.reservelist_pk, -1)
+    <select id="getReservelistPkAuto" resultType="Integer">
+        SELECT r.reservelist_pk
         FROM reservation_list l LEFT JOIN reservations r ON l.reservelist_pk = r.reservelist_pk
-        WHERE l.game_pk = #{gamePk} AND l.user_pk = #{userPk} AND r.state = 'HELD' AND r.seat_num = '자동배정'
+        WHERE l.game_pk = #{gamePk} AND r.zone_pk = #{zonePk} AND l.user_pk = #{userPk} AND r.state = 'HELD' AND r.seat_num = '자동배정'
         LIMIT 1
+    </select>
+
+    <select id="countUserReserve" resultType="int">
+        SELECT COUNT(*)
+        FROM reservations r LEFT JOIN reservation_list l ON l.reservelist_pk = r.reservelist_pk
+        WHERE l.game_pk = #{gamePk} AND l.user_pk = #{userPk} AND r.state = 'PAID'
     </select>
 </mapper>

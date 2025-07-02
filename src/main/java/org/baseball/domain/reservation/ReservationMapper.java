@@ -11,6 +11,7 @@ public interface ReservationMapper {
     ReserveGameInfoDTO getGameInfo(int gamePk);
     List<String> getSoldSeats(SoldSeatsReqDTO dto);
     List<ZoneDTO> getZones();
+    ZoneDTO getZoneInfo(@Param("zonePk") int zonePk);
     int confirmPreemption(@Param("zonePk") int zonePk,@Param("seatNum") String seatNum,@Param("gamePk") int gamePk);
     void setPreemptionList(PreemptionListDTO dto);
     void setPreemptionReserve(PreemptionReserveDTO dto);
@@ -18,7 +19,9 @@ public interface ReservationMapper {
     void deletePreemptionReserve(int reservelistPk);
     List<DiscountDTO> getDiscountInfo();
     boolean isOurGame(int gamePk);
-    int getReservelistPk(@Param("gamePk") int gamePk, @Param("seatNum") String seatNum);
-    int getReservelistPkAuto(@Param("gamePk") int gamePk, @Param("userPk") int userPk);
+    Integer getReservelistPk(@Param("gamePk") int gamePk, @Param("seatNum") String seatNum, @Param("zonePk") int zonePk);
+    Integer getReservelistPkByUser(@Param("gamePk") int gamePk, @Param("seatNum") String seatNum, @Param("zonePk") int zonePk, @Param("userPk") int userPk);
+    Integer getReservelistPkAuto(@Param("gamePk") int gamePk, @Param("userPk") int userPk, @Param("zonePk") int zonePk);
+    int countUserReserve(@Param("gamePk") int gamePk, @Param("userPk") int userPk);
 }
 

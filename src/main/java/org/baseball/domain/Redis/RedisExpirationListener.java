@@ -23,26 +23,29 @@ public class RedisExpirationListener extends KeyExpirationEventMessageListener {
         if (expiredKey.startsWith("preempt:seat")) {
             String[] parts = expiredKey.split(":");
             int gamePk = Integer.parseInt(parts[2]);
-            String seatNum = parts[3];
+            String seatNum = parts[4];
+            int zonePk = Integer.parseInt(parts[3]);
 
-            if(parts.length == 5) {
+            if(parts.length == 6) {
                 //자동 배정(gamePk, userPk로 삭제)
-                int userPk = Integer.parseInt(parts[4]);
+                int userPk = Integer.parseInt(parts[5]);
 
                 //로컬 DB 삭제 로직
-                int reservelistPk = reservationMapper.getReservelistPkAuto(gamePk, userPk);
-                if(reservelistPk == -1) {
+                Integer reservelistPk = reservationMapper.getReservelistPkAuto(gamePk, userPk, zonePk);
+                if(reservelistPk == null) {
                     log.warn("해당 예약 없음");
+                    return;
                 }
                 reservationMapper.deletePreemptionReserve(reservelistPk);
                 reservationMapper.deletePreemptionList(reservelistPk);
-            } else if(parts.length == 4) {
+            } else if(parts.length == 5) {
                 //그 외 구역
 
                 //로컬 DB 삭제 로직
-                int reservelistPk = reservationMapper.getReservelistPk(gamePk, seatNum);
-                if(reservelistPk == -1) {
+                Integer reservelistPk = reservationMapper.getReservelistPk(gamePk, seatNum, zonePk);
+                if(reservelistPk == null) {
                     log.warn("해당 예약 없음");
+                    return;
                 }
                 reservationMapper.deletePreemptionReserve(reservelistPk);
                 reservationMapper.deletePreemptionList(reservelistPk);
