@@ -11,6 +11,10 @@ public class UserDTO {
     private String userName;
     private String email;
     private String tel;
+    private String kakaoToken;
+    private String accessToken;
+    private String refreshToken;
+    private boolean isKakao;
     private boolean isAdmin;
     private int winCnt;
     private int drawCnt;

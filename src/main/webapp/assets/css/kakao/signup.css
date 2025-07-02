@@ -1,0 +1,209 @@
+@import url('/assets/css/colors.css');
+@import url('/assets/css/font.css');
+
+.signup-form {
+    width: 378px;
+    margin: 60px auto;
+    font-family: 'Pretendard', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signup-notice {
+    width: 378px;
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.signup-title {
+    width: 378px;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.signup-description {
+    width: 378px;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--gray-02);
+}
+
+.signup-input {
+    border: none;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.error-msg {
+    font-size: 16px;
+    color: var(--errorColor);
+    margin-left: 8px;
+    font-weight: 400;
+    gap: 8px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.error-msg img {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.input-form label {
+    font-size: 18px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--mainColor);
+    display: inline-flex;
+    align-items: center;
+}
+
+.input-form input[type="text"],
+.input-form input[type="email"],
+.input-form input[type="tel"]
+{
+    width: 378px;
+    height: 50px;
+    padding: 14px 20px;
+    background-color: var(--gray-06);
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin-bottom: 24px;
+}
+
+.input-form input[type="text"]::placeholder,
+.input-form input[type="email"]::placeholder,
+.input-form input[type="tel"]::placeholder{
+    color: var(--gray-04);
+}
+
+.input-form input[type="text"]:focus,
+.input-form input[type="password"]:focus,
+.input-form input[type="email"]:focus,
+.input-form input[type="tel"]:focus{
+    border-color: var(--mainColor);
+    outline: none;
+}
+
+.agree-item {
+    position: relative;
+    padding-left: 28px;
+    line-height: 1.2;
+    cursor: pointer;
+    align-items: center;
+}
+
+.agree-item input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.agree-item label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    background: url('/assets/img/icon/circle_check_no.svg') no-repeat center/contain;
+}
+
+.agree-item input[type="checkbox"]:checked + label::before {
+    background-image: url('/assets/img/icon/circle_check_yes.svg');
+}
+
+.agree-item label {
+    font-size: 14px;
+    font-weight: 400;
+    height: 24px;
+    margin: 0;
+    color: var(--black);
+}
+
+.divider-line {
+    border: none;
+    border-top: 2px solid var(--gray-05);
+    margin: 12px 0;
+    width: 100%;
+    max-width: 378px;
+}
+
+.agree-item.sub {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 1rem;
+}
+
+.agree-item.sub > label {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.agree-item.sub .agree-content {
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.agree-item.sub .agree-content h2 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.agree-item.sub .agree-content h3 {
+    font-size: 14px;
+    margin-top: 12px;
+    margin-bottom: 6px;
+}
+
+.agree-item.sub .agree-content p,
+.agree-item.sub .agree-content li {
+    font-size: 12px;
+}
+
+.agree-item.sub .agree-content ul {
+    padding-left: 20px;
+}
+
+.agree-item.sub .arrow-icon {
+    transition: transform 0.3s ease;
+    width: 24px;
+    height: 24px;
+}
+
+.input-form .kakao-signup-btn [type="submit"] {
+    width: 378px;
+    height: 50px;
+    margin-top: 40px;
+    background-color: var(--mainColor);
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.input-form .kakao-signup-btn [type="submit"]:hover {
+    background-color: var(--mainHover);
+}
+
+.input-form .kakao-signup-btn input[type="submit"]:disabled {
+    background-color: var(--gray-04);
+    color: var(--white);
+    cursor: not-allowed;
+}

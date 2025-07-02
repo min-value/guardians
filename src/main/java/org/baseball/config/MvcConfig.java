@@ -23,7 +23,7 @@ import org.springframework.web.servlet.config.annotation.*;
 import javax.sql.DataSource;
 
 @Configuration
-@PropertySource({"classpath:db.properties", "classpath:iamport.properties"})
+@PropertySource({"classpath:db.properties", "classpath:iamport.properties", "classpath:application.properties"})
 @EnableWebMvc
 @EnableScheduling
 @ComponentScan("org.baseball")
