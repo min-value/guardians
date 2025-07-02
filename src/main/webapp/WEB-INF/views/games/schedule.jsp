@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <title>경기 일정</title>
+    <title>신한 가디언즈</title>
     <link rel="stylesheet" href="/assets/css/games/schedule.css">
     <link rel="stylesheet" href="/assets/css/font.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
