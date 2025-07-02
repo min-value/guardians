@@ -10,7 +10,10 @@ body {
 /*  sidebar  */
 .sidebar {
     width: 270px;
-    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
     background: var(--lightBlue);
     color: var(--black);
     display: flex;
@@ -73,6 +76,8 @@ body {
     justify-content: flex-start;
     align-items: flex-start;
     padding: 40px 0;
+    margin-left: 270px;
+
 }
 
 .title_container {
