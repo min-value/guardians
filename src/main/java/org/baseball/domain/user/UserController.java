@@ -222,4 +222,10 @@ public class UserController {
         return updated1>0 && updated2>0 && updated3>0 && updated4>0;
     }
 
+    @GetMapping("/user/info")
+    @ResponseBody
+    public UserDTO getUserInfo(HttpSession session) {
+        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+        return userService.getUserInfoByPk(loginUser.getUserPk());
+    }
 }

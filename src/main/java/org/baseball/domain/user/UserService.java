@@ -12,4 +12,6 @@ public interface UserService {
     int getTotalPoint(int userPk);
     // 아이디 중복체크
     boolean checkUserId(String userId);
+
+    UserDTO getUserInfoByPk(int userPk);
 }

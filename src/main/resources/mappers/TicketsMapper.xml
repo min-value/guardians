@@ -50,7 +50,7 @@
     <update id="updatePredict" parameterType="map">
         UPDATE reservation_list set predict = #{predict} where reservelist_pk = #{reservelistPk} AND user_pk = #{userPk}
     </update>
-    <update id="updateReserveList" parameterType="map">
+    <update id="updateReserveList" parameterType="org.baseball.dto.PurchaseReqDTO">
         UPDATE reservation_list
         set
             reserve_date = NOW(),
@@ -64,13 +64,15 @@
             card_number = #{card_number}
         WHERE reservelist_pk = #{reservelist_pk} AND imp_uid IS NULL;
     </update>
-    <update id="updateReservations" parameterType="map">
-        UPDATE reservations set state = 'PAID' where reservelist_pk = #{reservelist_pk}
+    <update id="updateReservations" parameterType="org.baseball.dto.PurchaseReqDTO">
+        UPDATE reservations
+        SET state = 'PAID', discount_pk = #{dPk}
+        WHERE reservelist_pk = #{reservelist_pk}
     </update>
-    <update id="deductPoint" parameterType="map">
+    <update id="deductPoint" parameterType="org.baseball.dto.PurchaseReqDTO">
         UPDATE user set total_point= total_point-#{used_point} where user_pk = #{user_pk}
     </update>
-    <insert id="insertReservePointUsage" parameterType="map">
-        INSERT INTO point(user_pk, point, date, type, description) VALUES (#{user_pk}, #{used_point}, NOW(), "티켓 예매 포인트 차감", "결제 사용")
+    <insert id="insertReservePointUsage" parameterType="org.baseball.dto.PurchaseReqDTO">
+        INSERT INTO point(user_pk, point, date, type, description) VALUES (#{user_pk}, #{used_point}, NOW(), '티켓 예매 포인트 차감', '결제 사용')
     </insert>
 </mapper>
