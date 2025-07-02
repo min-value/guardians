@@ -75,4 +75,9 @@ public class UserServiceImpl implements UserService {
         Integer result = userMapper.getTotalPoint(userPk);
         return result != null ? result : 0;
     }
+
+    @Override
+    public UserDTO getUserInfoByPk(int userPk) {
+        return userMapper.findUserByPk(userPk);
+    }
 }

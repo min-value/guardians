@@ -11,7 +11,7 @@
         <result property="gameDate" column="game_date"/>
     </resultMap>
     <select id="getGameInfo" parameterType="int" resultMap="ReserveGameInfo">
-        SELECT g.game_pk, g.team_pk, g.game_date, t.team_name
+        SELECT g.game_pk, g.team_pk, g.game_date, t.full_name as team_name
         FROM games g LEFT JOIN team t ON g.team_pk = t.team_pk
         WHERE g.game_pk = #{game_pk}
     </select>

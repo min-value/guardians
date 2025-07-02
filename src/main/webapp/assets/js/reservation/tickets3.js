@@ -3,7 +3,12 @@ const closeButtons = document.querySelectorAll('.closeBtn');
 const befortBtn = document.querySelector('#beforeBtn');
 const payBtn = document.querySelector('#payBtn');
 
-
+const gameInfo = JSON.parse(sessionStorage.getItem('gameInfo'));
+const zone = JSON.parse(sessionStorage.getItem('zone'));
+const seats = JSON.parse(sessionStorage.getItem('seats'));
+let discountPk = JSON.parse(sessionStorage.getItem('discountPk')) || ["3"];
+discountPk = discountPk.map(Number);
+const reservelistPk = JSON.parse(sessionStorage.getItem('reservelistPk'));
 document.addEventListener('DOMContentLoaded', () => {
 
     /* 상세보기 오픈 */
@@ -54,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sessionStorage.setItem('usedPoint', JSON.stringify(usedPointNum));
             sessionStorage.setItem('paidAmount', JSON.stringify(document.getElementById('totalPay').innerText.replace(/,/g, '')));
             await requestPay();
+
         }
     });
 
@@ -96,13 +102,12 @@ async function requestPay() {
         }).done(function(data) {
             if(res.paid_amount === data.response.amount){
                 alert("결제 및 결제검증완료");
-
                 $.ajax({
                     type : "POST",
                     url: "/tickets/purchase",
                     contentType: "application/json",
                     data: JSON.stringify({
-                        reservelist_pk: JSON.parse(sessionStorage.getItem("reservelistPk")),
+                        reservelist_pk: reservelistPk,
                         impUid: res.imp_uid,
                         used_point: usedPoint,
                         total_amount: totalAmount,
@@ -111,7 +116,11 @@ async function requestPay() {
                         card_code: res.card_code,
                         card_name: res.card_name,
                         card_number: res.card_number,
-                        user_pk: user.userPk
+                        user_pk: user.userPk,
+                        game_pk: gameInfo.gamePk,
+                        zone_pk: zone.zonePk,
+                        seats: seats,
+                        discount_pk: discountPk
                     }),
                     success: function(result) {
                         console.log("서버 응답:", result);
@@ -125,6 +134,17 @@ async function requestPay() {
                             window.close();
                         } else {
                             alert("예매 저장 실패. 다시 시도해주세요.");
+                            $.ajax({
+                                type: "POST",
+                                url: "/cancelPayment/" + res.imp_uid,
+                                success: function (response) {
+                                    alert("결제 취소 완료");
+                                },
+                                error: function (error) {
+                                    alert("결제 취소 실패");
+                                    console.error(error);
+                                }
+                            });
                         }
                     },
                     error: function(err) {
