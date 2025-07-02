@@ -188,10 +188,18 @@
             checkBtn.addEventListener("click", idDoubleCheck);
             id.addEventListener('input', () => {
                 isIdChecked = false;
-                idCheck.innerHTML = '아이디 중복체크를 해주세요';
-                idCheck.classList.add('error-msg');
-                idCheck.classList.remove('success-msg');
-                checkInputs();
+                idCheck.innerHTML = '';
+                idCheck.classList.remove('error-msg', 'success-msg');
+            });
+
+            id.addEventListener('blur', () => {
+                if (!id.value.trim() || isIdChecked) return;
+
+                if (!isIdChecked) {
+                    idCheck.innerHTML = '아이디 중복체크를 해주세요';
+                    idCheck.classList.add('error-msg');
+                    idCheck.classList.remove('success-msg');
+                }
             });
 
             // 비밀번호 유효성 검사 우선순위 [자릿수 > 대문자 포함 > 특수문자 포함]으로 설정
@@ -314,14 +322,14 @@
             // 전체 동의
             agreeAll.addEventListener('change', () => {
                 agreeBoxes.forEach(cb => cb.checked = agreeAll.checked);
-                toggleSubmit();
+                checkInputs();
             });
 
             // 개별 동의
             agreeBoxes.forEach(cb => {
                 cb.addEventListener('change', () => {
                     agreeAll.checked = agreeBoxes.every(c => c.checked);
-                    toggleSubmit();
+                    checkInputs();
                 });
             });
 
@@ -345,22 +353,16 @@
 
             // 모든 입력 & 유효성 통과 여부 확인해서 버튼 활성화
             function checkInputs() {
-                const allFilled =
-                    id.value.trim() &&
-                    userName.value.trim() &&
-                    email.value.trim() &&
-                    phoneNumber.value.trim() &&
-                    pwd.value.trim() &&
-                    confirm.value.trim();
-
-                const pwdOK     = validatePassword();
-                const confirmOK = validateConfirmPwd();
-                const emailOK = validEmail();
-                const phoneOK = validPhone();
-                const agreeOK  = requiredBoxes.every(cb => cb.checked);
-
-                submitBtn.disabled = !(allFilled && pwdOK && confirmOK && isIdChecked && emailOK && phoneOK && agreeOK);
+                submitBtn.disabled = !isFormValid();
             }
+
+            window.signupCheck = function () {
+                if (!isIdChecked) {
+                    alert("아이디 중복체크를 해주세요.");
+                    return false;
+                }
+                return isFormValid();
+            };
 
             // 각 필드에 실시간 체크 등록
             [id, userName, email, phoneNumber, pwd, confirm].forEach(el => {
@@ -370,8 +372,7 @@
             // 비밀번호 규칙은 포커스 아웃할 시 추가 피드백
             pwd.addEventListener('blur', validatePassword);
 
-            // 최종 form 제출 시에도 검사
-            window.signupCheck = function () {
+            function isFormValid() {
                 const allFilled =
                     id.value.trim() &&
                     pwd.value.trim() &&
@@ -380,13 +381,15 @@
                     email.value.trim() &&
                     phoneNumber.value.trim();
 
-                const isValidPwd = validatePassword();
-                const isValidConfirm = validateConfirmPwd();
+                const pwdOK = validatePassword();
+                const confirmOK = validateConfirmPwd();
                 const emailOK = validEmail();
                 const phoneOK = validPhone();
+                const agreeOK = requiredBoxes.every(cb => cb.checked);
 
-                return allFilled && isValidPwd && isValidConfirm && isIdChecked && emailOK && phoneOK;
-            };
+                return allFilled && pwdOK && confirmOK && emailOK && phoneOK && agreeOK && isIdChecked;
+            }
+
         });
     </script>
 </body>
