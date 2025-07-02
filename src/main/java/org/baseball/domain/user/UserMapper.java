@@ -8,6 +8,8 @@ import org.baseball.dto.UserDTO;
 public interface UserMapper {
     // 회원가입
     void insertUser(UserDTO user);
+    // 중복체크
+    int checkUser(String userId);
     // 로그인
     UserDTO login(String userId);
     // 마이페이지 내 정보 수정

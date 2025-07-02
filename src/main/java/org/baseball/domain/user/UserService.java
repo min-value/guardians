@@ -10,4 +10,6 @@ public interface UserService {
     void updateUserInfo(UserDTO user);
     // 마이페이지 포인트 총합
     int getTotalPoint(int userPk);
+    // 아이디 중복체크
+    boolean checkUserId(String userId);
 }
