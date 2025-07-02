@@ -72,10 +72,10 @@
                 win = VALUES(win),
                 lose = VALUES(lose),
                 draw = VALUES(draw),
-                win_rate = VALUES(winRate),
+                win_rate = VALUES(win_rate),
                 behind = VALUES(behind),
-                game_cnt = VALUES(gameCnt),
-                win_streak = VALUES(winStreak)
+                game_cnt = VALUES(game_cnt),
+                win_streak = VALUES(win_streak)
     </insert>
 
     <!-- 경기 상세 정보 페이지 -->
