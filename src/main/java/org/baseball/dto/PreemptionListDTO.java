@@ -9,5 +9,6 @@ public class PreemptionListDTO {
     private int quantity;
     private int userPk;
     private int gamePk;
+    private String reserveCode;
     private int reservelistPk;
 }
