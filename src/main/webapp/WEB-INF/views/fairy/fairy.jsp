@@ -83,7 +83,7 @@
                   </c:forEach>
               </div>
               <div class="fairy-img">
-                  <img src="/assets/img/fairy/fairy.png" alt="fairy">
+                  <img src="/assets/img/fairy/fairyMove.webp" width="850px" alt="fairy">
               </div>
           </div>
       </div>
