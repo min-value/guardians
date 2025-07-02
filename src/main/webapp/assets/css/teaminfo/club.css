@@ -12,6 +12,10 @@
     align-items: center;
 }
 
+html, body {
+    overflow-x: hidden;
+}
+
 .club-wrapper {
     display: flex;
     flex-direction: column;
