@@ -89,4 +89,7 @@ public class ReservationController {
     public String confirm() {
         return "reservation/tickets3";
     }
+
+    @GetMapping("/errors/needLogin")
+    public String needLogin() {return "/reservation/errors/needLogin";}
 }
