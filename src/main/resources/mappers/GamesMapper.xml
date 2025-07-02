@@ -38,6 +38,8 @@
         <result property="gamePk" column="game_pk"/>
         <result property="gameDate" column="game_date"/>
         <result property="result" column="result"/>
+        <result property="ourScore" column="our_score"/>
+        <result property="oppScore" column="opp_score"/>
         <result property="stadiumPk" column="stadium_pk"/>
         <result property="teamPk" column="team_pk"/>
         <result property="location" column="location"/>
@@ -45,17 +47,70 @@
 
     <select id="getScheduleMonth" resultMap="gameSchedule">
         SELECT
-        g.game_pk,
-        g.game_date,
-        g.result,
-        g.stadium_pk,
-        g.team_pk,
-        s.location
+            g.game_pk,
+            g.game_date,
+            g.result,
+            g.our_score,
+            g.opp_score,
+            g.stadium_pk,
+            g.team_pk,
+            s.location
         FROM games g
-        JOIN stadium s ON g.stadium_pk = s.stadium_pk
+                 JOIN stadium s ON g.stadium_pk = s.stadium_pk
         WHERE YEAR(g.game_date) = #{year}
-        AND MONTH(g.game_date) = #{month}
+          AND MONTH(g.game_date) = #{month}
         ORDER BY g.game_date ASC
+    </select>
+
+    <!-- 기존 경기 존재 여부 조회 -->
+    <select id="findSchedule" resultMap="gameSchedule">
+        SELECT
+            g.game_pk,
+            g.game_date,
+            g.result,
+            g.our_score,
+            g.opp_score,
+            g.stadium_pk,
+            g.team_pk,
+            s.location
+        FROM games g
+                 JOIN stadium s ON g.stadium_pk = s.stadium_pk
+                 JOIN team t ON g.team_pk = t.team_pk
+        WHERE g.game_date = #{gameDate}
+          AND s.location = #{location}
+          AND t.team_name = #{teamName}
+    </select>
+
+    <!-- 신규 경기 저장 -->
+    <insert id="insertSchedule" parameterType="org.baseball.dto.ScheduleDTO">
+        INSERT INTO games (
+            game_date, result, our_score, opp_score, stadium_pk, team_pk
+        ) VALUES (
+                     #{gameDate}, #{result}, #{ourScore}, #{oppScore}, #{stadiumPk}, #{teamPk}
+                 )
+    </insert>
+
+    <!-- 경기 결과만 업데이트 -->
+    <update id="updateSchedule" parameterType="org.baseball.dto.ScheduleDTO">
+        UPDATE games
+        SET result = #{result},
+            our_score = #{ourScore},
+            opp_score = #{oppScore}
+        WHERE game_pk = #{gamePk}
+    </update>
+
+    <!-- 경기장 pk 얻기 -->
+    <select id="getStadiumPk" resultType="int">
+        SELECT stadium_pk
+        FROM stadium
+        WHERE location = #{location}
+    </select>
+
+    <!-- 팀 pk얻기 -->
+    <select id="getTeamPk" resultType="int">
+        SELECT team_pk
+        FROM team
+        WHERE team_name = #{teamName}
     </select>
 
     <!-- 랭킹 업데이트 -->

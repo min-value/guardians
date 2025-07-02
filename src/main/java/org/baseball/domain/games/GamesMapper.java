@@ -16,6 +16,19 @@ public interface GamesMapper {
     // 경기 스케줄 조회
     List<ScheduleDTO> getScheduleMonth(@Param("year") int year, @Param("month") int month);
 
+    int getStadiumPk(@Param("location") String location);
+
+    int getTeamPk(@Param("teamName") String teamName);
+
+    // 경기 존재 여부 확인
+    ScheduleDTO findSchedule(@Param("gameDate") String gameDate, @Param("location") String location, @Param("teamName") String teamName);
+
+    // 신규 경기 추가
+    void insertSchedule(ScheduleDTO dto);
+
+    // 경기 결과 업데이트
+    void updateSchedule(ScheduleDTO dto);
+
     // 랭킹 업데이트
     void updateTeamRank(RankDTO dto);
     
