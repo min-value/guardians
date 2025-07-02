@@ -42,6 +42,12 @@
             const regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
             const regPhone = /^(01[016789]|02|0[3-9][0-9])-[0-9]{3,4}-[0-9]{4}$/;
 
+            const openModalBtn = document.getElementById("openWithdrawModal");
+            const modal = document.getElementById("withdrawModal");
+            const cancelBtn = document.getElementById("cancelWithdraw");
+            const agreeCheckbox = document.getElementById("agreeCheckbox");
+            const confirmWithdrawBtn = document.getElementById("confirmWithdraw");
+
             // 이메일 유효성 검사
             function validEmail(){
                 const checkEmail = email.value.trim();
@@ -74,6 +80,46 @@
                 }
                 phoneError.innerHTML = '';
                 return true;
+            }
+
+            if (openModalBtn && modal && cancelBtn && agreeCheckbox && confirmWithdrawBtn) {
+                // 모달 열기
+                openModalBtn.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    modal.style.display = "block";
+                });
+
+                // 모달 닫기
+                cancelBtn.addEventListener("click", function () {
+                    modal.style.display = "none";
+                    agreeCheckbox.checked = false;
+                    confirmWithdrawBtn.disabled = true;
+                });
+
+                // 회원 탈퇴
+                confirmWithdrawBtn.addEventListener("click", () => {
+                    if (!agreeCheckbox.checked) return;
+
+                    fetch("/user/delete", {
+                        method: "POST",
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            alert(data.message);
+                            if (data.success) {
+                                window.location.href = "/user/logout";
+                            }
+                        })
+                        .catch(err => {
+                            alert("탈퇴 중 오류가 발생했습니다.");
+                            console.error(err);
+                        });
+                });
+
+                // 동의 체크 여부에 따라 버튼 활성화
+                agreeCheckbox.addEventListener("change", function () {
+                    confirmWithdrawBtn.disabled = !agreeCheckbox.checked;
+                });
             }
 
             // 모든 입력 & 유효성 통과 여부 확인해서 버튼 활성화
