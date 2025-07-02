@@ -20,7 +20,8 @@
 }
 
 .mypage-input {
-    width: 100%;
+    /*width: 100%;*/
+    width: 378px;
 }
 
 .mypage-form input[type="text"],
@@ -71,6 +72,11 @@
 .edit-mode:hover {
     background-color: var(--lightBlue);
     color: var(--mainColor);
+}
+
+#editBtn:disabled{
+    background-color: var(--gray-03);
+    cursor: default;
 }
 
 .save-mode {
