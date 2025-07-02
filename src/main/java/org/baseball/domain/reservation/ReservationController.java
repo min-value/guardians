@@ -145,4 +145,7 @@ public class ReservationController {
         log.info(reservationService.createReserveCode(gamePk, zonePk, userPk));
         return null;
     }
+
+    @GetMapping("/errors/needLogin")
+    public String needLogin() {return "/reservation/errors/needLogin";}
 }

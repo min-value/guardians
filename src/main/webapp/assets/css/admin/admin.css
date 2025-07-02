@@ -116,8 +116,8 @@ body {
     cursor: pointer;
 }
 
-.logout-text{
-    font-size: 14px;
+.logout a{
+    font-size: 1rem;
 }
 
 
