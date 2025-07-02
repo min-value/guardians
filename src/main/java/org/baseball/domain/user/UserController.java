@@ -89,6 +89,11 @@ public class UserController {
             return "user/signup";
         }
     }
+    @RequestMapping("/user/signup/check")
+    @ResponseBody
+    public boolean checkUser(String userId){
+        return userService.checkUserId(userId);
+    }
 
     // 마이페이지
     @RequestMapping("/user/mypage")

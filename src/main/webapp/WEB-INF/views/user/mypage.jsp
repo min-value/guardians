@@ -1,17 +1,18 @@
 <%@ page session="true" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String pageTitle = "마이페이지";
+%>
 <html>
 <head>
-    <title>마이페이지</title>
+    <title>신한 가디언즈</title>
     <link rel="stylesheet" href="/assets/css/user/mypage.css">
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
-<div class="header-title" style="max-width: 100%; height: 320px; display: flex; justify-content: center;">
-    <!--나중에 컴포넌트로 바꿀 것.-->
-    <img src="/assets/img/header/header-title.png" alt="헤더 타이틀" style="max-width: 100%; height: 320px; display: flex; justify-content: center;">
-</div>
+<%@ include file="../include/headerImg.jsp" %>
+
 <div class="mypage-container">
     <div class="mypage-tabs">
         <button class="tab-btn active" data-tab="info">내 정보</button>
@@ -33,6 +34,59 @@
         function bindInfoForm() {
             const form = document.getElementById("infoForm");
             const editBtn = document.getElementById("editBtn");
+            const email = document.getElementById('email');
+            const phoneNumber = document.getElementById('phoneNumber');
+            const iconHTML = `<img src="/assets/img/user/error-message.svg" alt="에러 아이콘">`;
+
+            const regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+            const regPhone = /^(01[016789]|02|0[3-9][0-9])-[0-9]{3,4}-[0-9]{4}$/;
+
+            // 이메일 유효성 검사
+            function validEmail(){
+                const checkEmail = email.value.trim();
+                const emailError = document.getElementById('email-error');
+
+                if (checkEmail === "") {
+                    emailError.innerHTML = "";
+                    return false;
+                }
+                if(!regEmail.test(checkEmail)){
+                    emailError.innerHTML= iconHTML + '이메일 형식에 맞지 않습니다.';
+                    return false;
+                }
+                emailError.innerHTML = '';
+                return true;
+            }
+
+            // 전화번호 유효성 검사
+            function validPhone(){
+                const checkPhone = phoneNumber.value.trim();
+                const phoneError = document.getElementById('phone-error');
+
+                if (checkPhone === "") {
+                    phoneError.innerHTML = "";
+                    return false;
+                }
+                if(!regPhone.test(checkPhone)){
+                    phoneError.innerHTML= iconHTML + '전화번호 형식에 맞지 않습니다.';
+                    return false;
+                }
+                phoneError.innerHTML = '';
+                return true;
+            }
+
+            // 모든 입력 & 유효성 통과 여부 확인해서 버튼 활성화
+            function checkInputs() {
+                const emailOK = validEmail();
+                const phoneOK = validPhone();
+
+                editBtn.disabled = !(emailOK && phoneOK);
+            }
+
+            [email, phoneNumber].forEach(el => {
+                el.addEventListener('input', checkInputs);
+            });
+
             if (!form || !editBtn) return;
             let isEditMode = false;
             editBtn.addEventListener("click", () => {
@@ -44,6 +98,10 @@
                     editBtn.classList.replace("edit-mode", "save-mode");
                     isEditMode = true;
                 } else {
+
+                    if(!validEmail() || !validPhone()){
+                        return;
+                    }
                     const formData = new FormData(form);
                     fetch('/user/update', {
                         method: 'POST',

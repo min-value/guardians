@@ -12,11 +12,13 @@
       <input type="text" id="userName" name="userName" value="${user.userName}" readonly>
     </div>
     <div class="mypage-input">
-      <label for="email">이메일</label>
+      <label for="email">이메일
+        <span class="error-msg" id="email-error"></span></label>
       <input type="email" id="email" name="email" value="${user.email}" readonly>
     </div>
     <div class="mypage-input">
-      <label for="phoneNumber">전화번호</label>
+      <label for="phoneNumber">전화번호
+        <span class="error-msg" id="phone-error"></span></label>
       <input type="tel" id="phoneNumber" name="tel" value="${user.tel}" readonly>
     </div>
 

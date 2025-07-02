@@ -61,3 +61,13 @@ html, body {
 .cancel-btn:hover {
     background-color: var(--mainHover);
 }
+
+.error-msg {
+    font-size: 16px;
+    color: var(--errorColor);
+    margin-left: 8px;
+    font-weight: 400;
+    gap: 8px;
+    display: inline-flex;
+    align-items: center;
+}

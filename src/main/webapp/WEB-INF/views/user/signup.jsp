@@ -1,21 +1,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String pageTitle = "회원가입";
+%>
 <html>
 <head>
-  <title>회원가입</title>
+  <title>신한 가디언즈</title>
   <link rel="stylesheet" href="/assets/css/user/signup.css">
 </head>
 <body>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
-    <div class="header-title" style="max-width: 100%; height: 320px; display: flex; justify-content: center;">
-        <!--나중에 컴포넌트로 바꿀 것.-->
-        <img src="/assets/img/header/header-title.png" alt="헤더 타이틀" style="max-width: 100%; height: 320px; display: flex; justify-content: center;">
-    </div>
+    <%@ include file="../include/headerImg.jsp" %>
     <div class="signup-form">
         <form action="${pageContext.request.contextPath}/user/signup" method="post" id="board1" onsubmit="return signupCheck();">
             <div class="input-form">
                 <div class="signup-input">
-                    <label for="id">아이디</label>
-                    <input type="text" id="id" name="userId" placeholder="아이디를 입력하세요">
+                    <label for="id">아이디
+                        <span class="success-msg" id="check-Id"></span></label>
+                    <div class="idInput">
+                        <input type="text" id="id" name="userId" placeholder="아이디를 입력하세요">
+                        <button id="checkBtn" type="button" class="double-check">중복체크</button>
+                    </div>
                 </div>
                 <div class="signup-input">
                     <label for="pwd">비밀번호
@@ -34,12 +38,14 @@
                     <input type="text" id="userName" name="userName" placeholder="이름을 입력하세요">
                 </div>
                 <div class="signup-input">
-                    <label for="email">이메일</label>
-                    <input type="email" id="email" name="email" placeholder="이메일을 입력하세요">
+                    <label for="email">이메일
+                        <span class="error-msg" id="email-error"></span></label>
+                    <input type="email" id="email" name="email" placeholder="example@email.com">
                 </div>
                 <div class="signup-input">
-                    <label for="phoneNumber">전화번호</label>
-                    <input type="tel" id="phoneNumber" name="tel" placeholder="전화번호를 입력하세요">
+                    <label for="phoneNumber">전화번호
+                        <span class="error-msg" id="phone-error"></span></label>
+                    <input type="tel" id="phoneNumber" name="tel" placeholder="010-XXXX-XXXX">
                 </div>
                 <div class="signup-btn"><input type="submit" value="완료" alt="완료" disabled></div>
             </div>
@@ -47,6 +53,10 @@
     </div>
 
     <script>
+        const errorMessage = "${(errorMessage)}";
+        if(errorMessage){
+            alert(errorMessage);
+        }
         document.addEventListener("DOMContentLoaded", () => {
             const id = document.getElementById('id');
             const pwd = document.getElementById('pwd');
@@ -56,12 +66,31 @@
             const phoneNumber = document.getElementById('phoneNumber');
             const pwdError = document.getElementById('pwd-error');
             const confirmError = document.getElementById('confirm-error');
+            const idCheck = document.getElementById('check-Id');
             const submitBtn = document.querySelector('.signup-btn input[type="submit"]');
             const iconHTML = `<img src="/assets/img/user/error-message.svg" alt="에러 아이콘">`;
+            const checkBtn = document.getElementById("checkBtn");
+            let isIdChecked = false;
+            const regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+            const regPhone = /^(01[016789]|02|0[3-9][0-9])-[0-9]{3,4}-[0-9]{4}$/;
+
+            checkBtn.addEventListener("click", idDoubleCheck);
+            id.addEventListener('input', () => {
+                isIdChecked = false;
+                idCheck.innerHTML = '아이디 중복체크를 해주세요';
+                idCheck.classList.add('error-msg');
+                idCheck.classList.remove('success-msg');
+                checkInputs();
+            });
 
             // 비밀번호 유효성 검사 우선순위 [자릿수 > 대문자 포함 > 특수문자 포함]으로 설정
             function validatePassword() {
                 const value = pwd.value.trim();
+
+                if (value === "") {
+                    pwdError.innerHTML = "";
+                    return false;
+                }
 
                 if (value.length < 6 || value.length > 10) {
                     pwdError.innerHTML = iconHTML + `6~10자리로 설정해주세요`;
@@ -83,6 +112,45 @@
                 return true;
             }
 
+            // 아이디 중복체크
+            function idDoubleCheck() {
+                const IdVal = id.value.trim();
+
+                if (!IdVal) {
+                    idCheck.innerHTML = iconHTML + '아이디를 입력해주세요.';
+                    idCheck.classList.remove('success-msg');
+                    idCheck.classList.add('error-msg');
+                    isIdChecked = false; // 체크 실패
+                    checkInputs();
+                    return;
+                }
+
+                fetch("/user/signup/check?userId=" + encodeURIComponent(IdVal))
+                    .then(res => res.json())
+                    .then(data => {
+                        if(data === true){
+                            idCheck.innerHTML = '사용할 수 있는 아이디입니다.';
+                            idCheck.classList.remove('error-msg');
+                            idCheck.classList.add('success-msg');
+                            isIdChecked = true;
+                        }else{
+                            idCheck.innerHTML = iconHTML + '중복되는 아이디입니다.';
+                            idCheck.classList.remove('success-msg');
+                            idCheck.classList.add('error-msg');
+                            isIdChecked = false;
+                        }
+                        checkInputs();
+                    })
+                    .catch(err => {
+                        idCheck.innerHTML = iconHTML + '서버 오류가 발생했습니다.';
+                        idCheck.classList.remove('success-msg');
+                        idCheck.classList.add('error-msg');
+                        isIdChecked = false;
+                        checkInputs();
+                        console.error(err);
+                    });
+            }
+
             // 비밀번호 일치 확인 검사
             function validateConfirmPwd() {
                 const confirmVal = confirm.value.trim();
@@ -98,6 +166,40 @@
                 return true;
             }
 
+            // 이메일 유효성 검사
+            function validEmail(){
+                const checkEmail = email.value.trim();
+                const emailError = document.getElementById('email-error');
+
+                if (checkEmail === "") {
+                    emailError.innerHTML = "";
+                    return false;
+                }
+                if(!regEmail.test(checkEmail)){
+                    emailError.innerHTML= iconHTML + '이메일 형식에 맞지 않습니다.';
+                    return false;
+                }
+                emailError.innerHTML = '';
+                return true;
+            }
+
+            // 전화번호 유효성 검사
+            function validPhone(){
+                const checkPhone = phoneNumber.value.trim();
+                const phoneError = document.getElementById('phone-error');
+
+                if (checkPhone === "") {
+                    phoneError.innerHTML = "";
+                    return false;
+                }
+                if(!regPhone.test(checkPhone)){
+                    phoneError.innerHTML= iconHTML + '전화번호 형식에 맞지 않습니다.';
+                    return false;
+                }
+                phoneError.innerHTML = '';
+                return true;
+            }
+
             // 모든 입력 & 유효성 통과 여부 확인해서 버튼 활성화
             function checkInputs() {
                 const allFilled =
@@ -110,8 +212,11 @@
 
                 const pwdOK     = validatePassword();
                 const confirmOK = validateConfirmPwd();
+                const emailOK = validEmail();
+                const phoneOK = validPhone();
 
-                submitBtn.disabled = !(allFilled && pwdOK && confirmOK);
+
+                submitBtn.disabled = !(allFilled && pwdOK && confirmOK && isIdChecked && emailOK && phoneOK);
             }
 
             // 각 필드에 실시간 체크 등록
@@ -134,11 +239,12 @@
 
                 const isValidPwd = validatePassword();
                 const isValidConfirm = validateConfirmPwd();
+                const emailOK = validEmail();
+                const phoneOK = validPhone();
 
-                return allFilled && isValidPwd && isValidConfirm;
+                return allFilled && isValidPwd && isValidConfirm && isIdChecked && emailOK && phoneOK;
             };
         });
     </script>
-
 </body>
 </html>
