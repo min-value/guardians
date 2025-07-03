@@ -84,7 +84,7 @@ export function colorRestore(mask, overlay) {
 }
 
 /* zone으로 이동 */
-function switchToZone() {
+export function switchToZone() {
     setCurrentView(1);
     //선택한 좌석들 초기화: 선택 0
     resetSelectedAll();

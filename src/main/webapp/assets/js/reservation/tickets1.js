@@ -1,4 +1,4 @@
-import {colorRestore, reload, setZoom} from "./toolbar.js";
+import {colorRestore, reload, setZoom, switchToZone} from "./toolbar.js";
 import {getSeatsMap, setSeatType} from "./seats.js";
 import {openLoading, closeLoading} from "./loading.js";
 export let selectedSeats = [];
@@ -189,12 +189,18 @@ function changeZoneInfoListBox(zonePk) {
 
     if(colored === 1 && zonePk === lastColoredName) {
         //포커스 O
-        updateZoneInfoHighlight(null);
-        colorRestore(mask, overlay);
+        if(currentView === 'zone') {
+            updateZoneInfoHighlight(null);
+            colorRestore(mask, overlay);
+        }
     } else {
         //포커스 X
         updateZoneInfoHighlight(zonePk);
         changeColor(region);
+
+        if(currentView === 'seat') {
+            switchToZone();
+        }
     }
 }
 /* 특정 zone 선택 시 해당 zonePk를 아이디로 가지고 있는 요소를 등급 선택존에서 포커스 */
