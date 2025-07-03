@@ -1,23 +1,32 @@
 package org.baseball.domain.games;
 
+import lombok.RequiredArgsConstructor;
+import org.baseball.dto.ScheduleDTO;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
-import java.sql.*;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class ScheduleCrawler {
 
-    public static void main(String[] args) throws InterruptedException {
+    private final GamesMapper gamesMapper;
+
+    @Scheduled(cron = "0 0 2 * * *")
+    public void crawlSchedule() {
         WebDriver driver = init();
 
         try {
-            for (int month = 3; month <= 8; month++) {
+            for (int month = 3; month <= 12; month++) {
                 load(driver, month);
                 parse(driver);
             }
@@ -38,13 +47,7 @@ public class ScheduleCrawler {
 
     // 월별 페이지 로드
     private static void load(WebDriver driver, int month) throws InterruptedException {
-        String m = "";
-        if (month < 10) {
-            m = "0" + month;
-        } else {
-            m = String.valueOf(month);
-        }
-
+        String m = (month < 10) ? "0" + month : String.valueOf(month);
         String url = "https://sports.daum.net/schedule/kbo?date=2025" + m;
         driver.get(url);
         Thread.sleep(2000);
@@ -55,7 +58,7 @@ public class ScheduleCrawler {
     }
 
     // 경기 리스트 파싱
-    private static void parse(WebDriver driver) {
+    private void parse(WebDriver driver) {
         List<WebElement> games = driver.findElements(By.cssSelector("tbody#scheduleList > tr[data-date]"));
 
         String lastDate = "";
@@ -77,9 +80,7 @@ public class ScheduleCrawler {
                 String areaRaw = tds.get(2).getText();
                 String area = areaRaw.substring(0, 2).trim();
 
-                if ("인천".equals(area)) {
-                    area = "연남";
-                }
+                if ("인천".equals(area)) area = "연남";
 
                 lastDate = date;
                 lastArea = area;
@@ -90,104 +91,70 @@ public class ScheduleCrawler {
     }
 
     // 경기 하나 파싱 후 DB 저장
-    private static void parseGame(WebElement game, String date, String time, String area) {
+    private void parseGame(WebElement game, String date, String time, String area) {
         String state = get(game, "td.td_team > span.state_game");
         String team1 = get(game, "td.td_team div.info_team.team_home span.txt_team");
         String team2 = get(game, "td.td_team div.info_team.team_away span.txt_team");
         String score1 = get(game, "td.td_team div.info_team.team_home .num_score");
         String score2 = get(game, "td.td_team div.info_team.team_away .num_score");
 
-        String opp = "";
-        Integer oppScore = null;
-        Integer ourScore = null;
+        String opp = !"SSG".equals(team1) ? team1 : team2;
+        Integer oppScore = toInt(!"SSG".equals(team1) ? score1 : score2);
+        Integer ourScore = toInt(!"SSG".equals(team1) ? score2 : score1);
 
-        if (!"SSG".equals(team1)) {
-            opp = team1;
-            oppScore = toInt(score1);
-            ourScore = toInt(score2);
-        } else {
-            opp = team2;
-            oppScore = toInt(score2);
-            ourScore = toInt(score1);
-        }
-
-        String result = "";
-
+        String result;
         if ("경기취소".equals(state)) {
             result = "CANCEL";
             ourScore = 0;
             oppScore = 0;
-        } else if (oppScore == null || ourScore == null) {
+        } else if (ourScore == null || oppScore == null) {
             result = null;
-        } else if (oppScore > ourScore) {
-            result = "LOSE";
-        } else if (oppScore < ourScore) {
+        } else if (ourScore > oppScore) {
             result = "WIN";
+        } else if (ourScore < oppScore) {
+            result = "LOSE";
         } else {
             result = "DRAW";
         }
 
+        // 날짜 + 시간 파싱
         String dt = "2025-" + date.replace(".", "-") + " " + time;
-        Timestamp ts = Timestamp.valueOf(LocalDateTime.parse(dt, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        Timestamp gameDate = null;
+        try {
+            gameDate = Timestamp.valueOf(LocalDateTime.parse(dt, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        } catch (Exception e) {
+            return; // 날짜 파싱 실패 시 해당 경기 스킵
+        }
 
-        try (
-                Connection conn = DriverManager.getConnection("jdbc:mariadb://guardians.cxs4smeqcbch.ap-northeast-2.rds.amazonaws.com:3306/guardians"
-                        , "admin"
-                        , "rkeldjswm");
-                PreparedStatement ps = conn.prepareStatement(
-                        "INSERT INTO games (game_date, result, our_score, opp_score, stadium_pk, team_pk) " +
-                                "SELECT ?, ?, ?, ?, s.stadium_pk, t.team_pk FROM stadium s, team t " +
-                                "WHERE s.location = ? AND t.team_name = ?"
-                )
-        ) {
-            ps.setTimestamp(1, ts);
+        int stadiumPk = gamesMapper.getStadiumPk(area);
+        int teamPk = gamesMapper.getTeamPk(opp);
 
-            if (result == null) {
-                ps.setNull(2, Types.VARCHAR);
+        ScheduleDTO dto = new ScheduleDTO();
+        dto.setGameDate(gameDate);
+        dto.setResult(result);
+        dto.setOurScore(ourScore);
+        dto.setOppScore(oppScore);
+        dto.setStadiumPk(stadiumPk);
+        dto.setTeamPk(teamPk);
+        dto.setLocation(area);
+
+        ScheduleDTO existing = gamesMapper.findSchedule(gameDate.toString(), area, opp);
+
+        if (existing != null) {
+            if (existing.getResult() == null && result != null) {
+                dto.setGamePk(existing.getGamePk());
+                gamesMapper.updateSchedule(dto);
+                System.out.println("경기정보 업데이트 날짜: " + date + ", 상대: " + opp + ", 결과: " + result);
             } else {
-                ps.setString(2, result);
+                System.out.println("경기정보 존재 날짜: " + date + ", 상대: " + opp);
             }
-
-            if (ourScore == null) {
-                ps.setNull(3, Types.INTEGER);
-            } else {
-                ps.setInt(3, ourScore);
-            }
-
-            if (oppScore == null) {
-                ps.setNull(4, Types.INTEGER);
-            } else {
-                ps.setInt(4, oppScore);
-            }
-
-            ps.setString(5, area);
-            ps.setString(6, opp);
-
-            int count = ps.executeUpdate();
-
-            if (count > 0) {
-                System.out.println("저장 -> 날짜: " + date + ", 상대: " + opp + ", 결과: " + result);
-
-                // 홈게임인 경우에만 homegame에 추가
-                if ("연남".equals(area)) {
-                    try (PreparedStatement ps2 = conn.prepareStatement(
-                            "INSERT IGNORE INTO homegame (game_pk, start_date, end_date) VALUES (LAST_INSERT_ID(), NULL, NULL)"
-                    )) {
-                        ps2.executeUpdate();
-                        System.out.println("-> homegame 테이블에 추가");
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
-            } else {
-                System.err.println("저장 실패");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } else {
+            gamesMapper.insertSchedule(dto);
+            System.out.println("신규 편성 경기 저장 날짜: " + date + ", 상대: " + opp + ", 결과: " + result);
         }
     }
 
-    // 텍스트 추출
+    // 셀렉터 텍스트 추출
     private static String get(WebElement el, String selector) {
         try {
             return el.findElement(By.cssSelector(selector)).getText().trim();

@@ -1,4 +1,6 @@
 package org.baseball.domain.user;
+import com.fasterxml.jackson.databind.JsonNode;
+import org.baseball.domain.kakao.Tokens;
 import org.baseball.dto.UserDTO;
 
 public interface UserService {
@@ -12,4 +14,10 @@ public interface UserService {
     int getTotalPoint(int userPk);
     // 아이디 중복체크
     boolean checkUserId(String userId);
+
+    UserDTO getUserInfoByPk(int userPk);
+    // 카카오 로그인
+    UserDTO findByKakaoToken(String kakaoToken);
+    UserDTO loginOrRegisterKakao(JsonNode profile, Tokens tokens);
+    void updateKakaoUserInfo(int userPk, String email, String tel, String accessToken, String refreshToken);
 }

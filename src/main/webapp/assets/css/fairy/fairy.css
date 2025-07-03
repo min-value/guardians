@@ -35,13 +35,13 @@ html, body {
 
 .title {
     position: absolute;
-    top: 100px;
+    top: 120px;
     left: 50%;
     transform: translateX(-50%);
     margin: 0;
-    width: 1175px;
+    width: 1000px;
     height: auto;
-    padding: 60px 50px;
+    padding: 30px 50px;
 
     display: flex;
     flex-direction: column;
@@ -57,7 +57,7 @@ html, body {
 .subtitle {
     color: var(--subColor);
     text-align: center;
-    font-size: 64px;
+    font-size: 58px;
     font-style: normal;
     font-weight: 900;
     line-height: 90px;
@@ -67,7 +67,7 @@ html, body {
     margin-top: -10px;
     margin-bottom: 20px;
     color: var(--mainColor);
-    font-size: 96px;
+    font-size: 88px;
     font-style: normal;
     font-weight: 900;
     line-height: 90px;
@@ -101,7 +101,7 @@ html, body {
     width: 650px;
     margin-bottom: 60px;
     margin-left: 180px;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
     border-radius: 5px;
     box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.25);
 }
@@ -109,11 +109,11 @@ html, body {
 .fairy-img {
     position: absolute;
     top: 100px;
-    left: 55%;
+    left: 74%;
     transform: translateX(-50%);
     z-index: 2;
-    width: 300px;
 }
+
 
 .medal {
     margin-top: -30px;
@@ -122,14 +122,14 @@ html, body {
 }
 
 .name {
-    margin: -40px 50px 10px 50px;
-    font-size: 40px;
+    margin: -40px 50px 5px 50px;
+    font-size: 36px;
     font-weight: 500;
 }
 
 table {
-    margin-left: 30px;
-    font-size: 24px;
+    margin-left: 40px;
+    font-size: 20px;
     font-weight: 400;
     border-spacing: 10px 10px;
     border-collapse: separate;

@@ -19,6 +19,19 @@
         totalPoint: "${sessionScope.loginUser.totalPoint}"
     };
 
+    $.ajax({
+        type: "GET",
+        url: "/user/info",
+        success: function(user) {
+            console.log("최신 유저 정보:", user);
+            $("#pointDisplay").text(user.totalPoint);
+            window.user = user;
+        },
+        error: function(err) {
+            console.error("유저 정보 가져오기 실패", err);
+        }
+    });
+
     function validatePointInput(input) {
         let value = input.value.replace(/[^0-9]/g, '');
         const myPoint = parseInt(document.getElementById('myPoint').innerText.replace(/[^0-9]/g, ''));

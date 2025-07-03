@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>예매 목록 조회</title>
+    <title>신한 가디언즈</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/colors.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin/admin.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/include/pagination.css"/>
@@ -28,21 +28,20 @@
                     const totalCount = res.totalCount;
                     console.log(res);
                     const container = $('#list').empty();
-                    let no = (page - 1) * 10 + 1;
 
                     list.forEach(dto => {
                         const seats = (dto.zoneAndSeat && dto.zoneAndSeat.join('<br>')) || '';
 
                         container.append(`
                             <tr>
-                                <td>\${no}</td>
-                                <td>\${dto.name}</td>
-                                <td>\${dto.reserveNo}</td>
-                                <td>\${dto.seatCount}</td>
-                                <td>\${seats}</td>
-                                <td>\${dto.status}</td>
-                                <td>\${dto.gameDateFormat}</td>
-                                <td>\${dto.cancelDateFormat}</td>
+                                <td style="padding: 20px 10px">\${dto.no}</td>
+                                <td style="padding: 20px 10px">\${dto.name}</td>
+                                <td style="padding: 20px 10px">\${dto.reserveNo}</td>
+                                <td style="padding: 20px 10px">\${dto.seatCount}</td>
+                                <td style="padding: 20px 10px">\${seats}</td>
+                                <td style="padding: 20px 10px">\${dto.status}</td>
+                                <td style="padding: 20px 10px">\${dto.gameDateFormat}</td>
+                                <td style="padding: 20px 10px">\${dto.cancelDateFormat}</td>
                             </tr>
                         `);
                     });
@@ -51,7 +50,7 @@
                         currentPage: page,
                         totalCount: totalCount,
                         onPageChange: (newPage) => loadPage(newPage),
-                        pageSize: 10,
+                        pageSize: 7,
                         containerId: '#pagination'
                     });
                 },
@@ -76,9 +75,9 @@
             <img src="/assets/img/icon/list.png" alt="icon"/>
             <p>예매 목록 조회</p>
         </div>
-        <div class="logout">
-            <a href="/logout">로그아웃</a>
-            <img src="/assets/img/icon/logout.png" alt="logout"/>
+        <div class="logout" onclick="location.href='/user/logout';">
+            <span class="logout-text">로그아웃</span>
+            <img src="/assets/img/icon/logout.png" alt="icon"/>
         </div>
     </div>
 
