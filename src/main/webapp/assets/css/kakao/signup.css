@@ -1,19 +1,33 @@
 @import url('/assets/css/colors.css');
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
-    font-weight: 100 900;
-    font-style: normal;
-    font-display: swap;
-}
+@import url('/assets/css/font.css');
 
 .signup-form {
     width: 378px;
-    margin: 80px auto;
+    margin: 60px auto;
     font-family: 'Pretendard', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.signup-notice {
+    width: 378px;
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.signup-title {
+    width: 378px;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.signup-description {
+    width: 378px;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--gray-02);
 }
 
 .signup-input {
@@ -21,39 +35,6 @@
     padding: 0;
     margin: 0;
     list-style: none;
-}
-.idInput{
-    width: 378px;
-    display: flex;
-    justify-content: space-between;
-}
-.double-check{
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 74px;
-    height: 50px;
-    background-color: var(--lightBlue);
-    border: none;
-    color: var(--mainColor);
-    border-radius: 5px;
-    cursor: pointer;
-    padding: 2px 12px;
-    font-size: 14px;
-    font-weight: 500;
-}
-.double-check:hover{
-    background-color: var(--lightBlueHover);
-}
-
-.success-msg {
-    font-size: 16px;
-    color: var(--mainColor);
-    margin-left: 8px;
-    font-weight: 400;
-    gap: 8px;
-    display: inline-flex;
-    align-items: center;
 }
 
 .error-msg {
@@ -81,22 +62,7 @@
     align-items: center;
 }
 
-#id{
-    width: 292px;
-    height: 50px;
-    padding: 14px 20px;
-    background-color: var(--gray-06);
-    display: inline-flex;
-    font-size: 14px;
-    font-weight: 400;
-    border: 2px solid transparent;
-    box-sizing: border-box;
-    border-radius: 5px;
-    margin-bottom: 24px;
-}
-
 .input-form input[type="text"],
-.input-form input[type="password"],
 .input-form input[type="email"],
 .input-form input[type="tel"]
 {
@@ -114,7 +80,6 @@
 }
 
 .input-form input[type="text"]::placeholder,
-.input-form input[type="password"]::placeholder,
 .input-form input[type="email"]::placeholder,
 .input-form input[type="tel"]::placeholder{
     color: var(--gray-04);
@@ -220,7 +185,7 @@
     height: 24px;
 }
 
-.input-form .signup-btn [type="submit"] {
+.input-form .kakao-signup-btn [type="submit"] {
     width: 378px;
     height: 50px;
     margin-top: 40px;
@@ -233,11 +198,11 @@
     cursor: pointer;
 }
 
-.input-form .signup-btn [type="submit"]:hover {
+.input-form .kakao-signup-btn [type="submit"]:hover {
     background-color: var(--mainHover);
 }
 
-.input-form .signup-btn input[type="submit"]:disabled {
+.input-form .kakao-signup-btn input[type="submit"]:disabled {
     background-color: var(--gray-04);
     color: var(--white);
     cursor: not-allowed;

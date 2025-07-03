@@ -2,8 +2,14 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>로그인</title>
+    <title>신한 가디언즈</title>
     <link rel="stylesheet" href="/assets/css/user/login.css">
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script>
+        Kakao.init('ceead2a16e86d5010c921c46bc602aa6');
+        console.log('Kakao SDK 초기화 여부:', Kakao.isInitialized());
+    </script>
+
 </head>
 <body>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
@@ -38,9 +44,29 @@
         <div class="kakao-login">
             <button type="button" class="kakao-btn">
                 <img src="/assets/img/user/kakao-logo.svg" alt="카카오 로고" class="kakao-logo" />
-                카카오로 시작하기
+                카카오 로그인
             </button>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.querySelector('.kakao-btn');
+            console.log('found kakao-btn:', btn);
+            if (!btn) return;
+
+            const contextPath = "${pageContext.request.contextPath}";
+            const redirectUri = window.location.origin + contextPath + '/user/kakao/callback';
+            console.log('will use redirectUri:', redirectUri);
+
+            btn.addEventListener('click', function() {
+                console.log('kakao-btn clicked');
+                Kakao.Auth.authorize({
+                    redirectUri: redirectUri,
+                    scope: 'profile_nickname, account_email'
+                });
+            });
+        });
+    </script>
 </body>
 </html>

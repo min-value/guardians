@@ -163,6 +163,34 @@ public class UserController {
         return result;
     }
 
+    // 마이페이지 회원 탈퇴
+    @PostMapping("/user/delete")
+    @ResponseBody
+    public Map<String, Object> deleteUser(HttpSession session) {
+        Map<String, Object> result = new HashMap<>();
+        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+
+        if (loginUser == null) {
+            result.put("success", false);
+            result.put("message", "로그인이 필요합니다.");
+            return result;
+        }
+
+        int userPk = loginUser.getUserPk();
+        boolean deleted = userService.deleteUserByPk(userPk);
+
+        if (deleted) {
+            session.invalidate(); // 세션 만료
+            result.put("success", true);
+            result.put("message", "탈퇴가 완료되었습니다.");
+        } else {
+            result.put("success", false);
+            result.put("message", "탈퇴에 실패했습니다.");
+        }
+
+        return result;
+    }
+
     // 마이페이지 예매내역
     @GetMapping("/user/tickets")
     @ResponseBody

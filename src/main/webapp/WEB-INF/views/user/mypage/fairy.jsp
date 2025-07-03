@@ -32,4 +32,5 @@
     <div id="fairy" class="fairy-list">
         <!-- 승리요정 동적 렌더링 -->
     </div>
+    <div id="fairy-pagination"></div>
 </div>
