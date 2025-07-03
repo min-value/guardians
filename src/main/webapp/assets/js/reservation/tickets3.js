@@ -5,14 +5,13 @@ const closeButtons = document.querySelectorAll('.closeBtn');
 const befortBtn = document.querySelector('#beforeBtn');
 const payBtn = document.querySelector('#payBtn');
 
-const gameInfo = JSON.parse(sessionStorage.getItem('gameInfo'));
-const zone = JSON.parse(sessionStorage.getItem('zone'));
-const seats = JSON.parse(sessionStorage.getItem('seats'));
-let discountPk = JSON.parse(sessionStorage.getItem('discountPk')) || ["3"];
+const gameInfo = JSON.parse(localStorage.getItem('gameInfo' + gamePk));
+const zone = JSON.parse(localStorage.getItem('zone' + gamePk));
+const seats = JSON.parse(localStorage.getItem('seats' + gamePk));
+let discountPk = JSON.parse(localStorage.getItem('discountPk' + gamePk)) || ["3"];
 discountPk = discountPk.map(Number);
-const reservelistPk = JSON.parse(sessionStorage.getItem('reservelistPk'));
+const reservelistPk = JSON.parse(localStorage.getItem('reservelistPk' + gamePk));
 document.addEventListener('DOMContentLoaded', () => {
-
     /* 상세보기 오픈 */
     notifications.forEach(noti => {
         noti.addEventListener('click', () => {
@@ -58,8 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             const usedPointStr = document.getElementById('usedPoint').innerText.replace(/,/g, '').replace(/[^0-9]/g, '');
             const usedPointNum = parseInt(usedPointStr, 10);
-            sessionStorage.setItem('usedPoint', JSON.stringify(usedPointNum));
-            sessionStorage.setItem('paidAmount', JSON.stringify(document.getElementById('totalPay').innerText.replace(/,/g, '')));
+            localStorage.setItem('usedPoint' + gamePk, JSON.stringify(usedPointNum));
+            localStorage.setItem('paidAmount' + gamePk, JSON.stringify(document.getElementById('totalPay').innerText.replace(/,/g, '')));
             await requestPay();
 
         }
@@ -76,9 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
 IMP.init("imp56774166");  // 자신의 가맹점 식별코드로 바꾸세요
 
 async function requestPay() {
-    let totalAmount = JSON.parse(sessionStorage.getItem('totalPay'));
-    let usedPoint = JSON.parse(sessionStorage.getItem('usedPoint'));
-    let paidAmount = JSON.parse(sessionStorage.getItem('paidAmount'));
+    let totalAmount = JSON.parse(localStorage.getItem('totalPay' + gamePk));
+    let usedPoint = JSON.parse(localStorage.getItem('usedPoint' + gamePk));
+    let paidAmount = JSON.parse(localStorage.getItem('paidAmount' + gamePk));
 
     IMP.request_pay({
         pg: "html5_inicis",
@@ -129,10 +128,11 @@ async function requestPay() {
                         if (result === true || result === "true") {
                             alert("예매 성공!");
                             if (window.opener && !window.opener.closed) {
-                                opener.sessionStorage.setItem("reservelistPk", sessionStorage.getItem("reservelistPk"));
-                                opener.sessionStorage.setItem("gameInfo", sessionStorage.getItem("gameInfo"));
+                                opener.localStorage.setItem("reservelistPk", localStorage.getItem("reservelistPk" + gamePk));
+                                opener.localStorage.setItem("gameInfo", localStorage.getItem("gameInfo" + gamePk));
                                 window.opener.location.href = "/tickets/all?showModal=true";
                             }
+                            removeData();
                             window.close();
                         } else {
                             alert("예매 저장 실패. 다시 시도해주세요.");
@@ -159,4 +159,9 @@ async function requestPay() {
             }
         });
     });
+}
+
+function removeData() {
+    localStorage.clear();
+    navigator.sendBeacon('${pageContext.request.contextPath}/session/clear');
 }

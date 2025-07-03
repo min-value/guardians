@@ -58,7 +58,7 @@
                 const isOnSale = startDate <= now;
 
                 const buttonHtml = isOnSale
-                    ? `<input class="onsale-ticket-btn" type="button" value="예매하기" onclick="redirectIfSessionExists(${dto.gameNo})">`
+                    ? `<input class="onsale-ticket-btn" type="button" value="예매하기" onclick="redirectIfSessionExists(\${dto.gameNo})">`
                     : `
                         <div class="plan-ticket-btn">
                           <span class="plan-time">\${dto.date} \${dto.time}</span>
@@ -102,7 +102,67 @@
           }
         });
   }
+    function redirectIfSessionExists(gamePk) {
+        //권종/할인 선택
+        let discountInfo = JSON.parse(localStorage.getItem('discountInfo' + gamePk));
+        let gameInfo = JSON.parse(localStorage.getItem('gameInfo' + gamePk));
+        let reservelistPk = Number(localStorage.getItem('redirectIfSessionExists' + gamePk));
+        let seats = JSON.parse(localStorage.getItem('seats' + gamePk));
+        let zone = JSON.parse(localStorage.getItem('zone' + gamePk));
+        console.log(gameInfo);
+        console.log(reservelistPk);
+        console.log(seats);
+        console.log(zone);
+        //예매 확인
+        let discountPk = JSON.parse(localStorage.getItem('discountPk' + gamePk));
+        let totalPay = Number(localStorage.getItem('totalPay' + gamePk));
 
+        if(discountInfo !== null && gameInfo !== null && reservelistPk !== null && seats !== null && zone !== null) {
+            if(gamePk === gameInfo['gamePk']) {
+                //세션에 존재 -> redis확인
+                const sendConfirm = {
+                    gamePk: gameInfo['gamePk'],
+                    seats: seats,
+                    zonePk: zone['zonePk']
+                }
+
+                fetch(`/reservation/preemption/confirm`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(sendConfirm)
+                })
+                    .then(res => {
+                        return res.json();
+                    })
+                    .then(data => {
+                        if (data === 2) {
+                            localStorage.clear();
+                        } else if (data === 0) {
+                            localStorage.clear();
+                        } else {
+                            //선점이 되어있으면
+                            if (!discountPk.isEmpty() && !totalPay.isEmpty()) {
+                                window.open(`/reservation/discount?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
+                            } else {
+                                localStorage.removeItem('discountPk');
+                                localStorage.removeItem('totalPay');
+
+                                window.open(`/reservation/confirm?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        alert(`서버 오류 발생`);
+                        localStorage.clear();
+                    });
+            }
+        } else {
+            localStorage.clear();
+            window.open(`/reservation/seat?gamePk=\${gamePk}`, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
+        }
+    }
   $(document).ready(function () {
       loadPage(1);
       const showModal = "${showModal}" === "true";
@@ -150,6 +210,5 @@
   </div>
   <div id="pagination"></div>
   <%@ include file="../include/footer.jsp" %>
-  <script src="${pageContext.request.contextPath}/assets/js/tickets/homeGameList.js"></script>
 </body>
 </html>

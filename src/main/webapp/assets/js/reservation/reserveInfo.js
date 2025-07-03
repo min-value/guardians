@@ -1,8 +1,8 @@
-const zone = JSON.parse(sessionStorage.getItem('zone' + gamePk));
-const seats = JSON.parse(sessionStorage.getItem('seats'+ gamePk));
-const totalAmount = JSON.parse(sessionStorage.getItem('totalPay' + gamePk));
-const usedPoint = JSON.parse(sessionStorage.getItem('usedPoint' + gamePk));
-const paidAmount = JSON.parse(sessionStorage.getItem('paidAmount' + gamePk));
+const zone = JSON.parse(localStorage.getItem('zone' + gamePk));
+const seats = JSON.parse(localStorage.getItem('seats'+ gamePk));
+const totalAmount = JSON.parse(localStorage.getItem('totalPay' + gamePk));
+const usedPoint = JSON.parse(localStorage.getItem('usedPoint' + gamePk));
+const paidAmount = JSON.parse(localStorage.getItem('paidAmount' + gamePk));
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('opponentTeam').setAttribute('src', `/assets/img/teamlogos/${gameInfo['oppTeamPk']}.png`);

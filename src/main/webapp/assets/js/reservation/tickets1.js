@@ -9,8 +9,6 @@ export let lastColoredName = null;
 let seatSelectMap = {}; // key: seatId, value: true/false
 
 document.addEventListener('DOMContentLoaded', () => {
-    //세션에 존재 시 권종/할인 선택으로 todo
-
     const tooltip = document.getElementById('tooltip');
 
     //선택한 좌석 바 관련 리스너 추가
@@ -86,27 +84,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 closeLoading();
                 if(data.preempted === 1) {
                     //예약 번호 세션 스토리지에 저장
-                    sessionStorage.setItem('reservelistPk' + gamePk, JSON.stringify(data.reservelistPk));
+                    localStorage.setItem('reservelistPk' + gamePk, JSON.stringify(data.reservelistPk));
 
                     //선택한 구역 정보 세션 스토리지에 저장 (구역 번호, 구역명, 가격, 구역 색상, 좌석 총 개수, 남은 개수)
-                    sessionStorage.setItem('zone' + gamePk, JSON.stringify(zoneInfo[lastColoredName]));
+                    localStorage.setItem('zone' + gamePk, JSON.stringify(zoneInfo[lastColoredName]));
 
                     //선택한 좌석 목록 세션 스토리지에 저장
-                    sessionStorage.setItem('seats' + gamePk, JSON.stringify(selectedSeats));
+                    localStorage.setItem('seats' + gamePk, JSON.stringify(selectedSeats));
 
-                    location.href = '/reservation/discount';
+                    location.href = `/reservation/discount?gamePk=${gamePk}`;
                 } else if(data.preempted === 0) {
                     alert(`${data.errorMsg}`);
                     location.reload();
                 } else if(data.preempted === 2) {
                     alert(`${data.errorMsg}`);
-                    sessionStorage.clear();
+                    removeData();
                     window.close();
                 }
             })
             .catch(error => {
                 alert(`서버 오류 발생`);
-                sessionStorage.clear();
+                removeData();
                 window.close();
             });
 
@@ -434,3 +432,8 @@ function closePopup(popup, overlay) {
     }
 }
 
+
+function removeData() {
+    localStorage.clear();
+    navigator.sendBeacon('${pageContext.request.contextPath}/session/clear');
+}
