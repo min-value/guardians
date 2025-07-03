@@ -74,9 +74,26 @@ public class UserServiceImpl implements UserService {
     // 마이페이지 회원 탈퇴
     @Override
     public boolean deleteUserByPk(int userPk) {
-        return userMapper.deleteUser(userPk) > 0;
-    }
+        try {
+            // 1. 예약 관련 데이터 삭제
+            userMapper.deleteReservationsByUser(userPk);
+            userMapper.deleteReservationListByUser(userPk);
 
+            // 2. 포인트 기록 삭제
+            userMapper.deletePointsByUser(userPk);
+
+            // 3. 커뮤니티 기록 삭제
+            userMapper.deleteCommentsByUser(userPk);
+            userMapper.deletePostsByUser(userPk);
+
+            // 4. user 삭제
+            int result = userMapper.deleteUser(userPk);
+            return result > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     // 포인트 내역 조회
     @Override
