@@ -99,6 +99,7 @@
 .info-row {
     display: flex;
     align-items: flex-start;
+    margin-bottom: 4px;
 }
 
 .label {
@@ -112,6 +113,7 @@
 
 .user, .ticket-num, .stadium, .seat {
     width: 300px;
+    line-height: 32px;
     display: inline-block;
 }
 

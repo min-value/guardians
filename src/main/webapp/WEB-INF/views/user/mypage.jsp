@@ -237,6 +237,10 @@
                                               <span class="user">\${ticket.userName}</span>
                                             </div>
                                             <div class="info-row">
+                                              <span class="label">예매일</span>
+                                              <span class="ticket-num">\${ticket.reserveDate}</span>
+                                            </div>
+                                            <div class="info-row">
                                               <span class="label">예매번호</span>
                                               <span class="ticket-num">\${ticket.ticketNumber}</span>
                                             </div>
