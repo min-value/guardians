@@ -2,7 +2,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
     String pageTitle = "커뮤니티";
-    pageContext.setAttribute("pageTitle", pageTitle);
 %>
 <html>
 <head>
@@ -21,6 +20,7 @@
         <form id="writePost" action="/community/post/add" method="post" onsubmit="return checkPost();">
             <div class="postHeader">
                 <input id="postTitle" class="title" name="title" placeholder="제목을 입력하세요" autofocus>
+                <button id="recommendBtn" type="button" onclick="recommendContent()">AI 내용 추천</button>
             </div>
             <div id="post-container">
                 <textarea id="write-post" name="p_content" type="text" row="1"
@@ -47,6 +47,30 @@
             return false;
         }
         return true;
+    }
+
+    function recommendContent(){
+        const title = document.getElementById("postTitle").value;
+
+        if(!title){
+            alert("제목을 입력하세요");
+            return;
+        }
+
+        $.ajax({
+            url: "/gpt/aiRecommend",
+            method: "POST",
+            //dataType: 'json',
+            //contentType: 'application/json; charset=utf-8',
+            //data: JSON.stringify({title}),
+            data:{'title':title},
+            success: function (res){
+                $('#write-post').val(res.recommendation);
+            },
+            error: function(){
+                alert("AI 추천에 실패했습니다.");
+            }
+        });
     }
 </script>
 </body>
