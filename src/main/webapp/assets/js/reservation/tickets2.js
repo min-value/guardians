@@ -1,9 +1,9 @@
 import {openLoading, closeLoading} from "./loading.js";
 
-const seats = JSON.parse(sessionStorage.getItem('seats'));
+const seats = JSON.parse(sessionStorage.getItem('seats' + gamePk));
 const quantity = seats.length;
-const discountInfo = JSON.parse(sessionStorage.getItem('discountInfo'));
-const cost = Number(JSON.parse(sessionStorage.getItem('zone'))['cost']);
+const discountInfo = JSON.parse(sessionStorage.getItem('discountInfo' + gamePk));
+const cost = Number(JSON.parse(sessionStorage.getItem('zone' + gamePk))['cost']);
 let totalSelected = 0;
 let totalPayment = 0;
 
@@ -72,14 +72,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.querySelector('#backBtn').addEventListener('click', () => {
-        const reservelistPk = Number(sessionStorage.getItem('reservelistPk'));
-        const gamePk = Number(JSON.parse(sessionStorage.getItem('gameInfo'))['gamePk']);
-        const zonePk = Number(JSON.parse(sessionStorage.getItem('zone'))['zonePk']);
+        const reservelistPk = Number(sessionStorage.getItem('reservelistPk' + gamePk));
+        const zonePk = Number(JSON.parse(sessionStorage.getItem('zone' + gamePk))['zonePk']);
         if(confirm(`이전 페이지로 돌아가면 지금까지의 기록이 삭제됩니다. 돌아가시겠습니까?`)) {
             //선점 여부 확인
             const sendConfirm = {
                 gamePk: gamePk,
-                seats: JSON.parse(sessionStorage.getItem('seats')),
+                seats: JSON.parse(sessionStorage.getItem('seats' + gamePk)),
                 zonePk: zonePk
             }
 
@@ -108,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         //컨트롤러에서 선점 여부 확인 후 선점
                         const sendData = {
                             gamePk: gamePk,
-                            seats: JSON.parse(sessionStorage.getItem('seats')),
+                            seats: JSON.parse(sessionStorage.getItem('seats' + gamePk)),
                             zonePk: Number(zonePk),
                             reservelistPk: Number(reservelistPk)
                         };
@@ -135,13 +134,13 @@ document.addEventListener('DOMContentLoaded', () => {
                                 } else {
                                     closeLoading();
                                     //예약 번호 세션 스토리지에서 삭제
-                                    sessionStorage.removeItem('reservelistPk');
+                                    sessionStorage.removeItem('reservelistPk' + gamePk);
 
                                     //선택한 구역 정보 세션 스토리지에서 삭제 (구역 번호, 구역명, 가격, 구역 색상, 좌석 총 개수, 남은 개수)
-                                    sessionStorage.removeItem('seats');
+                                    sessionStorage.removeItem('seats' + gamePk);
 
                                     ////선택한 좌석 목록 세션 스토리지에서 삭제
-                                    sessionStorage.removeItem('zone');
+                                    sessionStorage.removeItem('zone' + gamePk);
 
                                     location.href = `/reservation/seat?gamePk=${gamePk}`;
                                 }
@@ -172,15 +171,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if(totalSelected !== quantity) {
             alert('매수를 정확히 선택해주세요.')
         } else {
-            sessionStorage.setItem('totalPay', totalPayment);
+            sessionStorage.setItem('totalPay' + gamePk, totalPayment);
 
             //선점 확인
-            const gamePk = Number(JSON.parse(sessionStorage.getItem('gameInfo'))['gamePk']);
-            const zonePk = Number(JSON.parse(sessionStorage.getItem('zone'))['zonePk']);
+            const zonePk = Number(JSON.parse(sessionStorage.getItem('zone' + gamePk))['zonePk']);
 
             const sendConfirm = {
                 gamePk: gamePk,
-                seats: JSON.parse(sessionStorage.getItem('seats')),
+                seats: JSON.parse(sessionStorage.getItem('seats' + gamePk)),
                 zonePk: zonePk
             }
 
@@ -218,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
 
                         //세션에 저장
-                        sessionStorage.setItem('discountPk', JSON.stringify(discountPk));
+                        sessionStorage.setItem('discountPk' + gamePk, JSON.stringify(discountPk));
 
                         location.href = '/reservation/confirm';
                     }

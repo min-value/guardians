@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/loading.css">
 </head>
 <body>
+<script>
+    let gameInfo = JSON.parse('${gameInfoJson}');
+    const gamePk = Number(gameInfo['gamePk']);
+</script>
 <!-- 권종/할인 선택 -->
 <div class="full-container">
     <jsp:include page="topbar.jsp" flush="false">

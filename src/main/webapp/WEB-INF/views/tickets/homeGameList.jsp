@@ -58,7 +58,7 @@
                 const isOnSale = startDate <= now;
 
                 const buttonHtml = isOnSale
-                    ? `<input class="onsale-ticket-btn" type="button" value="예매하기" onclick="window.open('/reservation/seat?gamePk=\${dto.gameNo}', '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');">`
+                    ? `<input class="onsale-ticket-btn" type="button" value="예매하기" onclick="redirectIfSessionExists(${dto.gameNo})">`
                     : `
                         <div class="plan-ticket-btn">
                           <span class="plan-time">\${dto.date} \${dto.time}</span>
@@ -150,5 +150,6 @@
   </div>
   <div id="pagination"></div>
   <%@ include file="../include/footer.jsp" %>
+  <script src="${pageContext.request.contextPath}/assets/js/tickets/homeGameList.js"></script>
 </body>
 </html>

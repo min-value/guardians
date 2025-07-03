@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //컨트롤러에서 선점 여부 확인 후 선점
         const sendData = {
             quantity: Number(selectedSeats.length),
-            gamePk: Number(JSON.parse(sessionStorage.getItem('gameInfo'))['gamePk']),
+            gamePk: gamePk,
             zonePk: Number(lastColoredName),
             seats: selectedSeats
         };
@@ -86,13 +86,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 closeLoading();
                 if(data.preempted === 1) {
                     //예약 번호 세션 스토리지에 저장
-                    sessionStorage.setItem('reservelistPk', JSON.stringify(data.reservelistPk));
+                    sessionStorage.setItem('reservelistPk' + gamePk, JSON.stringify(data.reservelistPk));
 
                     //선택한 구역 정보 세션 스토리지에 저장 (구역 번호, 구역명, 가격, 구역 색상, 좌석 총 개수, 남은 개수)
-                    sessionStorage.setItem('zone', JSON.stringify(zoneInfo[lastColoredName]));
+                    sessionStorage.setItem('zone' + gamePk, JSON.stringify(zoneInfo[lastColoredName]));
 
                     //선택한 좌석 목록 세션 스토리지에 저장
-                    sessionStorage.setItem('seats', JSON.stringify(selectedSeats));
+                    sessionStorage.setItem('seats' + gamePk, JSON.stringify(selectedSeats));
 
                     location.href = '/reservation/discount';
                 } else if(data.preempted === 0) {

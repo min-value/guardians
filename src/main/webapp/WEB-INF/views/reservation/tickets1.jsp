@@ -18,10 +18,11 @@
     let zoneInfo = ${zoneInfo}; //구역 별 정보(pk, name, color, cost, total num, remaining num)
 
     let gameInfo = JSON.parse('${gameInfoJson}');
-    sessionStorage.setItem('gameInfo', JSON.stringify(gameInfo));
+    const gamePk = Number(JSON.parse('${gameInfoJson}')['gamePk']);
+    sessionStorage.setItem('gameInfo' + gamePk, JSON.stringify(gameInfo));
 
     let discountInfo = JSON.parse('${discountInfo}');
-    sessionStorage.setItem('discountInfo', JSON.stringify(discountInfo));
+    sessionStorage.setItem('discountInfo' + gameInfo['gamePk'], JSON.stringify(discountInfo));
 
     const available = `${available}`;
     console.log('예매 가능 장수: ' + available);
