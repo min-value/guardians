@@ -14,6 +14,10 @@
                 <a href="${pageContext.request.contextPath}/user/logout">로그아웃</a>
                 <span class="divider">|</span>
                 <a href="${pageContext.request.contextPath}/user/mypage">마이페이지</a>
+                <c:if test="${sessionScope.loginUser.admin}">
+                    <span class="divider">|</span>
+                    <a href="${pageContext.request.contextPath}/admin/home">관리자페이지</a>
+                </c:if>
             </c:if>
         </div>
     </div>
