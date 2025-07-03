@@ -26,7 +26,8 @@
             <span class="title-text-2"> SHINHAN가디언즈</span>
         </div>
         <div class="second-text">
-            <span class="title-text-3">우리는 지킨다, 승리를. 그리고 가치를.</span>
+            <span class="title-text-3">
+                우리는 지킨다, 승리를. 그리고 가치를.</span>
         </div>
         <br>
     </div>

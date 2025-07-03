@@ -1,6 +1,6 @@
 import {colorRestore, reload, setZoom} from "./toolbar.js";
 import {getSeatsMap, setSeatType} from "./seats.js";
-
+import {openLoading, closeLoading} from "./loading.js";
 export let selectedSeats = [];
 export let currentView = 'zone'; //zone, seat
 export let colored = 0; //0: region 포커스 x, 1: region 포커스 o
@@ -52,49 +52,25 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("선택된 좌석이 없습니다. 좌석을 선택하세요");
             return;
         }
-        //선택한 구역 정보 세션 스토리지에 저장 (구역 번호, 구역명, 가격, 구역 색상, 좌석 총 개수, 남은 개수)
-        sessionStorage.setItem('zone', JSON.stringify(zoneInfo[lastColoredName]));
-
-        //선택한 좌석 목록 세션 스토리지에 저장
-        sessionStorage.setItem('seats', JSON.stringify(selectedSeats));
-
 
         //컨트롤러에서 선점 여부 확인 후 선점
         const sendData = {
             quantity: Number(selectedSeats.length),
-            gamePk: Number(JSON.parse(sessionStorage.getItem('gameInfo'))['gamePk']),
+            gamePk: gamePk,
             zonePk: Number(lastColoredName),
             seats: selectedSeats
         };
 
+        //다음 단계 오버레이 지우기
+        let popup = document.querySelector('.autoAssigned');
+        let overlay = document.querySelector('.overlay');
+
+        popup.style.display = 'none';
+        overlay.style.display = 'none';
+
         //로딩 창 띄우기
         openLoading();
-        fetch('/reservation/preemption/add', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(sendData)
-        })
-            .then(res => {
-                return res.json();
-            })
-            .then(data => {
-                closeLoading();
-                if(data.preempted === 1) {
-                    sessionStorage.setItem('reservelistPk', JSON.stringify(data.reservelistPk));
-                    location.href = '/reservation/discount';
-                } else if(data.preempted === 0) {
-                    alert(`${data.errorMsg}`);
-                    location.reload();
-                } else if(data.preempted === 2) {
-                    alert(`${data.errorMsg}`)
-                    window.close();
-                }
-            })
-            .catch(error => {
-                alert(`서버 오류 발생`);
-            });
+        tryPreempt(sendData, gamePk, zoneInfo, selectedSeats, lastColoredName)
 
     });
 
@@ -130,6 +106,58 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 })
+
+/* 선점 함수 */
+function tryPreempt(sendData, gamePk, zoneInfo, selectedSeats, lastColoredName) {
+    fetch('/reservation/preemption/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(sendData)
+    })
+        .then(res => res.json())
+        .then(data => {
+            closeLoading();
+
+            if (data.preempted === 1) {
+                localStorage.setItem('reservelistPk' + gamePk, JSON.stringify(data.reservelistPk));
+                localStorage.setItem('zone' + gamePk, JSON.stringify(zoneInfo[lastColoredName]));
+                localStorage.setItem('seats' + gamePk, JSON.stringify(selectedSeats));
+                location.href = `/reservation/discount?gamePk=${gamePk}`;
+            } else if (data.preempted === 0) {
+                // 외야석인 경우에만 delete 후 재시도
+                if (Number(lastColoredName) === 1100 || Number(lastColoredName) === 1101) {
+                    fetch(`/reservation/preemption/delete/auto?gamePk=${gamePk}&zonePk=${Number(lastColoredName)}`, {
+                        method: 'DELETE'
+                    })
+                        .then(() => {
+                            // delete 성공 후 재시도
+                            tryPreempt(sendData, gamePk, zoneInfo, selectedSeats, lastColoredName);
+                        })
+                        .catch(err => {
+                            alert("삭제 요청 중 오류 발생");
+                            location.reload();
+                        });
+                } else {
+                    alert(`${data.errorMsg}`);
+                    location.reload();
+                }
+            } else if (data.preempted === 3) {
+                alert(`${data.errorMsg}`);
+                removeData();
+                window.close();
+            } else {
+                alert(`${data.errorMsg}`);
+                location.reload();
+            }
+        })
+        .catch(error => {
+            alert(`서버 오류 발생`);
+            removeData();
+            window.close();
+        });
+}
 
 /* 좌석 자동 배정 리스너 함수 */
 function calCount(type) {
@@ -401,7 +429,7 @@ function autoAssigned() {
         }
     }
 
-    document.addEventListener('mouseup', outsideClickHandler);
+    document.querySelector('.overlay').addEventListener('mouseup', outsideClickHandler);
 
     // 닫기 버튼
     document.querySelector('.autoAssigned-closeBtn > img').addEventListener('click', () => {
@@ -420,14 +448,8 @@ function closePopup(popup, overlay) {
     }
 }
 
-//로딩 띄우기
-function openLoading() {
-    document.querySelector('.loader').style.display = 'block';
-    document.querySelector('.overlay').style.display = 'flex';
-}
 
-//로딩 닫기
-function closeLoading() {
-    document.querySelector('.loader').style.display = 'none';
-    document.querySelector('.overlay').style.display = 'none';
+function removeData() {
+    localStorage.clear();
+    navigator.sendBeacon('${pageContext.request.contextPath}/session/clear');
 }

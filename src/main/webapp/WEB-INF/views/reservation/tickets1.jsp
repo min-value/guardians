@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets-common.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets1.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/loading.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -17,10 +18,11 @@
     let zoneInfo = ${zoneInfo}; //구역 별 정보(pk, name, color, cost, total num, remaining num)
 
     let gameInfo = JSON.parse('${gameInfoJson}');
-    sessionStorage.setItem('gameInfo', JSON.stringify(gameInfo));
+    const gamePk = Number(gameInfo['gamePk']);
+    localStorage.setItem('gameInfo' + gamePk, JSON.stringify(gameInfo));
 
     let discountInfo = JSON.parse('${discountInfo}');
-    sessionStorage.setItem('discountInfo', JSON.stringify(discountInfo));
+    localStorage.setItem('discountInfo' + gamePk, JSON.stringify(discountInfo));
 
     const available = `${available}`;
     console.log('예매 가능 장수: ' + available);
@@ -137,6 +139,7 @@
     </div>
 </div>
 <div class="loader">Loading...</div>
+<div class="loading-overlay"></div>
 <div class="overlay"></div>
 <script type="module" src="${pageContext.request.contextPath}/assets/js/reservation/tickets1.js"></script>
 </body>

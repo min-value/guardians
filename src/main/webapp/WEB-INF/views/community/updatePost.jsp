@@ -2,7 +2,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
     String pageTitle = "커뮤니티";
-    pageContext.setAttribute("pageTitle", pageTitle);
 %>
 <html>
 <head>
