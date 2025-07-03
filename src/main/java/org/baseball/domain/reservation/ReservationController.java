@@ -129,6 +129,13 @@ public class ReservationController {
         return reservationService.deletePreemption(preemptdeleteReqDTO, user);
     }
 
+    @DeleteMapping("/preemption/delete/auto")
+    public void deletePreemptionAuto(@RequestParam int gamePk, @RequestParam int zonePk, HttpSession session) {
+        UserDTO user = (UserDTO) session.getAttribute("loginUser");
+        //Redis 삭제
+        reservationService.deletePreemptionAuto(gamePk, zonePk, user);
+    }
+
     //권종 및 할인 선택 페이지 로드
     @GetMapping("/discount")
     public String discount(@RequestParam int gamePk, HttpSession session) {

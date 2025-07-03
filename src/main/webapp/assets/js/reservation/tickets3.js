@@ -42,7 +42,48 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     befortBtn.addEventListener("click", (e) => {
-        window.location.href="/reservation/discount";
+        const reservelistPk = Number(localStorage.getItem('reservelistPk' + gamePk));
+        const zonePk = Number(JSON.parse(localStorage.getItem('zone' + gamePk))['zonePk']);
+
+        //선점 여부 확인
+        const sendConfirm = {
+            gamePk: gamePk,
+            seats: JSON.parse(localStorage.getItem('seats' + gamePk)),
+            zonePk: zonePk
+        }
+
+        openLoading();
+        fetch(`/reservation/preemption/confirm`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(sendConfirm)
+        })
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                if(data === 2) {
+                    alert("선점 시간이 만료되었습니다. 다시 시도해주세요.");
+                    removeData();
+                    window.close();
+                } else if(data === 0) {
+                    alert("로그인이 필요합니다.");
+                    removeData();
+                    window.close();
+                } else {
+                    //선점이 되어있으면 돌아가기
+                    window.location.href = `/reservation/discount?gamePk=${gamePk}`;
+                }
+            })
+            .catch(error => {
+                alert(`서버 오류 발생`);
+                removeData();
+                window.close();
+            });
+
+
     });
 
 

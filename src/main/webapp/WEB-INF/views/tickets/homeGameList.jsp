@@ -106,13 +106,10 @@
         //권종/할인 선택
         let discountInfo = JSON.parse(localStorage.getItem('discountInfo' + gamePk));
         let gameInfo = JSON.parse(localStorage.getItem('gameInfo' + gamePk));
-        let reservelistPk = Number(localStorage.getItem('redirectIfSessionExists' + gamePk));
+        let reservelistPk = Number(localStorage.getItem('reservelistPk' + gamePk));
         let seats = JSON.parse(localStorage.getItem('seats' + gamePk));
         let zone = JSON.parse(localStorage.getItem('zone' + gamePk));
-        console.log(gameInfo);
-        console.log(reservelistPk);
-        console.log(seats);
-        console.log(zone);
+
         //예매 확인
         let discountPk = JSON.parse(localStorage.getItem('discountPk' + gamePk));
         let totalPay = Number(localStorage.getItem('totalPay' + gamePk));
@@ -143,26 +140,72 @@
                             localStorage.clear();
                         } else {
                             //선점이 되어있으면
-                            if (!discountPk.isEmpty() && !totalPay.isEmpty()) {
-                                window.open(`/reservation/discount?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
-                            } else {
-                                localStorage.removeItem('discountPk');
-                                localStorage.removeItem('totalPay');
+                            if (discountPk !== null && totalPay !== null && !isNaN(totalPay)) {
+                                if(confirm(`이전 예매 기록이 있습니다. 불러오시겠습니까?`)) {
+                                    localStorage.removeItem('discountPk');
+                                    localStorage.removeItem('totalPay');
 
-                                window.open(`/reservation/confirm?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
+                                    window.open(`/reservation/confirm?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
+                                } else {
+                                    //DB에서 삭제
+                                    let sendData = {
+                                        gamePk: gamePk,
+                                        seats: seats,
+                                        zonePk: Number(zone['zonePk']),
+                                        reservelistPk: reservelistPk
+                                    };
+
+                                    console.log(sendData);
+                                    fetch(`/reservation/preemption/delete`, {
+                                        method: 'DELETE',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify(sendData)
+                                    })
+                                        .finally(() => {
+                                            localStorage.clear();
+                                            window.open(`/reservation/seat?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
+                                        });
+                                }
+                            } else {
+                                if(confirm(`이전 예매 기록이 있습니다. 불러오시겠습니까?`)) {
+                                    window.open(`/reservation/discount?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
+                                } else {
+                                    //DB에서 삭제
+                                    let sendData = {
+                                        gamePk: gamePk,
+                                        seats: seats,
+                                        zonePk: Number(zone['zonePk']),
+                                        reservelistPk: reservelistPk
+                                    };
+                                    console.log(sendData);
+                                    fetch(`/reservation/preemption/delete`, {
+                                        method: 'DELETE',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify(sendData)
+                                    })
+                                        .finally(() => {
+                                            localStorage.clear();
+                                            window.open(`/reservation/seat?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
+                                        });
+                                }
                             }
                         }
                     })
                     .catch(error => {
-                        alert(`서버 오류 발생`);
+                        alert(`서버 오류 발생` + error);
                         localStorage.clear();
                     });
             }
         } else {
             localStorage.clear();
-            window.open(`/reservation/seat?gamePk=\${gamePk}`, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
+            window.open(`/reservation/seat?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
         }
     }
+
   $(document).ready(function () {
       loadPage(1);
       const showModal = "${showModal}" === "true";

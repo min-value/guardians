@@ -70,43 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //로딩 창 띄우기
         openLoading();
-        fetch('/reservation/preemption/add', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(sendData)
-        })
-            .then(res => {
-                return res.json();
-            })
-            .then(data => {
-                closeLoading();
-                if(data.preempted === 1) {
-                    //예약 번호 세션 스토리지에 저장
-                    localStorage.setItem('reservelistPk' + gamePk, JSON.stringify(data.reservelistPk));
-
-                    //선택한 구역 정보 세션 스토리지에 저장 (구역 번호, 구역명, 가격, 구역 색상, 좌석 총 개수, 남은 개수)
-                    localStorage.setItem('zone' + gamePk, JSON.stringify(zoneInfo[lastColoredName]));
-
-                    //선택한 좌석 목록 세션 스토리지에 저장
-                    localStorage.setItem('seats' + gamePk, JSON.stringify(selectedSeats));
-
-                    location.href = `/reservation/discount?gamePk=${gamePk}`;
-                } else if(data.preempted === 0) {
-                    alert(`${data.errorMsg}`);
-                    location.reload();
-                } else if(data.preempted === 2) {
-                    alert(`${data.errorMsg}`);
-                    removeData();
-                    window.close();
-                }
-            })
-            .catch(error => {
-                alert(`서버 오류 발생`);
-                removeData();
-                window.close();
-            });
+        tryPreempt(sendData, gamePk, zoneInfo, selectedSeats, lastColoredName)
 
     });
 
@@ -142,6 +106,58 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 })
+
+/* 선점 함수 */
+function tryPreempt(sendData, gamePk, zoneInfo, selectedSeats, lastColoredName) {
+    fetch('/reservation/preemption/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(sendData)
+    })
+        .then(res => res.json())
+        .then(data => {
+            closeLoading();
+
+            if (data.preempted === 1) {
+                localStorage.setItem('reservelistPk' + gamePk, JSON.stringify(data.reservelistPk));
+                localStorage.setItem('zone' + gamePk, JSON.stringify(zoneInfo[lastColoredName]));
+                localStorage.setItem('seats' + gamePk, JSON.stringify(selectedSeats));
+                location.href = `/reservation/discount?gamePk=${gamePk}`;
+            } else if (data.preempted === 0) {
+                // 외야석인 경우에만 delete 후 재시도
+                if (Number(lastColoredName) === 1100 || Number(lastColoredName) === 1101) {
+                    fetch(`/reservation/preemption/delete/auto?gamePk=${gamePk}&zonePk=${Number(lastColoredName)}`, {
+                        method: 'DELETE'
+                    })
+                        .then(() => {
+                            // delete 성공 후 재시도
+                            tryPreempt(sendData, gamePk, zoneInfo, selectedSeats, lastColoredName);
+                        })
+                        .catch(err => {
+                            alert("삭제 요청 중 오류 발생");
+                            location.reload();
+                        });
+                } else {
+                    alert(`${data.errorMsg}`);
+                    location.reload();
+                }
+            } else if (data.preempted === 3) {
+                alert(`${data.errorMsg}`);
+                removeData();
+                window.close();
+            } else {
+                alert(`${data.errorMsg}`);
+                location.reload();
+            }
+        })
+        .catch(error => {
+            alert(`서버 오류 발생`);
+            removeData();
+            window.close();
+        });
+}
 
 /* 좌석 자동 배정 리스너 함수 */
 function calCount(type) {
