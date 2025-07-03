@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class PreemptionDTO {
+public class    PreemptionDTO {
     private int quantity;
     private int gamePk;
     private int zonePk;

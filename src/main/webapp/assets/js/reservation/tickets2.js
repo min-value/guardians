@@ -1,13 +1,16 @@
-const seats = JSON.parse(sessionStorage.getItem('seats'));
+import {openLoading, closeLoading} from "./loading.js";
+
+const seats = JSON.parse(localStorage.getItem('seats' + gamePk));
 const quantity = seats.length;
-const discountInfo = JSON.parse(sessionStorage.getItem('discountInfo'));
-const cost = Number(JSON.parse(sessionStorage.getItem('zone'))['cost']);
+const discountInfo = JSON.parse(localStorage.getItem('discountInfo' + gamePk));
+const cost = Number(JSON.parse(localStorage.getItem('zone' + gamePk))['cost']);
 let totalSelected = 0;
 let totalPayment = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
     //가격 띄우기
     const optionWrapper = document.querySelector('.ticket-options-wrapper');
+
     discountInfo.forEach(dis => {
         let price = 0;
         if(dis.disRate === 0) {
@@ -26,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
               <div class="option-cnt-wrapper">
                 <div class="option-cnt">
-                  <select class="cnt-dropdown" id="discnt-${dis.discountPk}" name="cnt-${dis.id}">
+                  <select class="cnt-dropdown" id="discnt-${dis.discountPk}" name="cnt-${dis.discountPk}">
                     <option value="0" selected>0매</option>
                   </select>
                 </div>
@@ -69,27 +72,92 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.querySelector('#backBtn').addEventListener('click', () => {
-        const reservelistPk = Number(sessionStorage.getItem('reservelistPk'));
-        const gamePk = Number(JSON.parse(sessionStorage.getItem('gameInfo'))['gamePk']);
+        const reservelistPk = Number(localStorage.getItem('reservelistPk' + gamePk));
+        const zonePk = Number(JSON.parse(localStorage.getItem('zone' + gamePk))['zonePk']);
         if(confirm(`이전 페이지로 돌아가면 지금까지의 기록이 삭제됩니다. 돌아가시겠습니까?`)) {
-            fetch(`/reservation/preemption/delete?reservelistPk=${reservelistPk}`, {
-                method: 'DELETE',
+            //선점 여부 확인
+            const sendConfirm = {
+                gamePk: gamePk,
+                seats: JSON.parse(localStorage.getItem('seats' + gamePk)),
+                zonePk: zonePk
+            }
+
+            openLoading();
+            fetch(`/reservation/preemption/confirm`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(sendConfirm)
             })
                 .then(res => {
                     return res.json();
                 })
                 .then(data => {
-                    if(data === false) {
-                        throw new Error('삭제 실패');
-                    }
-                    sessionStorage.removeItem('seats');
-                    sessionStorage.removeItem('zone');
+                    if(data === 2) {
+                        alert("선점 시간이 만료되었습니다. 다시 시도해주세요.");
+                        removeData();
+                        window.close();
+                    } else if(data === 0) {
+                        alert("로그인이 필요합니다.");
+                        removeData();
+                        window.close();
+                    } else {
+                        //선점이 되어있으면
+                        //컨트롤러에서 선점 여부 확인 후 선점
+                        const sendData = {
+                            gamePk: gamePk,
+                            seats: JSON.parse(localStorage.getItem('seats' + gamePk)),
+                            zonePk: Number(zonePk),
+                            reservelistPk: Number(reservelistPk)
+                        };
 
-                    location.href = `/reservation/seat?gamePk=${gamePk}`;
+                        fetch(`/reservation/preemption/delete`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(sendData)
+                        })
+                            .then(res => {
+                                return res.json();
+                            })
+                            .then(data => {
+                                if(data === 2) {
+                                    alert("서버 오류");
+                                    removeData();
+                                    window.close();
+                                } else if(data === 0) {
+                                    alert("로그인이 필요합니다.");
+                                    removeData();
+                                    window.close();
+                                } else {
+                                    closeLoading();
+                                    //예약 번호 세션 스토리지에서 삭제
+                                    localStorage.removeItem('reservelistPk' + gamePk);
+
+                                    //선택한 구역 정보 세션 스토리지에서 삭제 (구역 번호, 구역명, 가격, 구역 색상, 좌석 총 개수, 남은 개수)
+                                    localStorage.removeItem('seats' + gamePk);
+
+                                    ////선택한 좌석 목록 세션 스토리지에서 삭제
+                                    localStorage.removeItem('zone' + gamePk);
+
+                                    location.href = `/reservation/seat?gamePk=${gamePk}`;
+                                }
+                            })
+                            .catch(error => {
+                                alert(`서버 오류 발생`);
+                                removeData();
+                                window.close();
+                            });
+                    }
                 })
                 .catch(error => {
                     alert(`서버 오류 발생`);
+                    removeData();
+                    window.close();
                 });
+
         }
     });
 
@@ -103,8 +171,63 @@ document.addEventListener('DOMContentLoaded', () => {
         if(totalSelected !== quantity) {
             alert('매수를 정확히 선택해주세요.')
         } else {
-            sessionStorage.setItem('totalPay', totalPayment);
-            location.href = '/reservation/confirm';
+            localStorage.setItem('totalPay' + gamePk, totalPayment);
+
+            //선점 확인
+            const zonePk = Number(JSON.parse(localStorage.getItem('zone' + gamePk))['zonePk']);
+
+            const sendConfirm = {
+                gamePk: gamePk,
+                seats: JSON.parse(localStorage.getItem('seats' + gamePk)),
+                zonePk: zonePk
+            }
+
+            openLoading();
+            fetch(`/reservation/preemption/confirm`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(sendConfirm)
+            })
+                .then(res => {
+                    return res.json();
+                })
+                .then(data => {
+                    if(data === 2) {
+                        alert("선점 시간이 만료되었습니다. 다시 시도해주세요.");
+                        removeData();
+                        window.close();
+                    } else if(data === 0) {
+                        alert("로그인이 필요합니다.");
+                        removeData();
+                        window.close();
+                    } else {
+                        closeLoading();
+                        //선택한 할인 정보 불러오기
+                        let discountPk = [];
+                        document.querySelectorAll('.cnt-dropdown').forEach(el => {
+                            let cnt = el.value; //선택 매수
+                            let id = el.id.split('-')[1];
+
+                            for(let i = 0; i < cnt; ++i) {
+                                discountPk.push(id);
+                            }
+                        });
+
+                        //세션에 저장
+                        localStorage.setItem('discountPk' + gamePk, JSON.stringify(discountPk));
+
+                        location.href = `/reservation/confirm?gamePk=${gamePk}`;
+                    }
+                })
+                .catch(error => {
+                    alert(`서버 오류 발생`);
+                    removeData();
+                    window.close();
+                });
+
+
         }
     });
 });
@@ -126,4 +249,9 @@ function updateTotalPay() {
     totalPayment = totalPay;
     document.querySelector('#price').innerText = totalPay + '';
     document.querySelector('#totalPay').innerText = totalPay + '';
+}
+
+function removeData() {
+    localStorage.clear();
+    navigator.sendBeacon('${pageContext.request.contextPath}/session/clear');
 }
