@@ -22,6 +22,17 @@
     };
 
     function openSeatReservation(gameNo) {
+        const width = 500;
+        const height = 400;
+
+        const left = (window.screen.width - width) / 2;
+        const top = (window.screen.height - height) / 2;
+
+        window.open(
+            '/tickets/queue',
+            '_blank',
+            `width=\${width},height=\${height},left=\${left},top=\${top},scrollbars=no,resizable=no`
+        );
         window.open(`/reservation/seat?gamePk=\${gameNo}`, '_blank',
                 'width=800,height=700,scrollbars=yes,resizable=no');
     }
