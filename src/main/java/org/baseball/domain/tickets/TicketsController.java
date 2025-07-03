@@ -83,4 +83,9 @@ public class TicketsController {
             return false;
         }
     }
+
+    @GetMapping("/queue")
+    public  String showQueueList(Model model) {
+        return "tickets/queueModal";
+    }
 }

@@ -20,6 +20,9 @@ public class RedisService {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
+    @Autowired
+    private QueueService queueService;
+
 
     public String getLockKey(int gamePk, String seatNum, int zonePk) {
         StringBuilder sb = new StringBuilder("lock:seat:" + gamePk + ":" + zonePk + ":");
@@ -338,4 +341,14 @@ public class RedisService {
         }
     }
 
+    public boolean reserveWithQueue(int gamePk, List<String> seats, int userPk, int zonePk) {
+        if (!queueService.canReserve(gamePk, userPk)) return false;
+
+        boolean success = preemptSeat(gamePk, seats, userPk, zonePk);
+        if (success) {
+            queueService.dequeueUser(gamePk, userPk);
+            queueService.notifyNext(gamePk);
+        }
+        return success;
+    }
 }
