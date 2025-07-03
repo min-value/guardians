@@ -32,41 +32,42 @@ public class ReservationController {
     public String seat(@RequestParam("gamePk") int gamePk, HttpSession session, Model model) throws JsonProcessingException {
         //로그인 확인
         try {
-        UserDTO user = (UserDTO) session.getAttribute("loginUser");
+            UserDTO user = (UserDTO) session.getAttribute("loginUser");
 
 
-        if(user == null) {
-            return "reservation/errors/needLogin";
-        }
+            if(user == null) {
+                return "reservation/errors/needLogin";
+            }
 
-        //해당 유저가 해당 게임에 구매한 좌석이 4개 이하인지 확인
-        int cnt = reservationService.countUserReserve(gamePk, user.getUserPk());
-        if(cnt >= 4) {
-            model.addAttribute("errorMsg", "최대 4장까지만 구매가 가능합니다.");
-            return "reservation/errors/generalError";
-        }
+            //해당 유저가 해당 게임에 구매한 좌석이 4개 이하인지 확인
+            int cnt = reservationService.countUserReserve(gamePk, user.getUserPk());
+            if(cnt >= 4) {
+                model.addAttribute("errorMsg", "최대 4장까지만 구매가 가능합니다.");
+                return "reservation/errors/generalError";
+            }
 
-        //남은 개수 세션에 저장
-        session.setAttribute("available", 4 - cnt);
+            //남은 개수 세션에 저장
+            session.setAttribute("available", 4 - cnt);
 
-        //우리팀 경기인지 확인
-        if(!reservationService.isOurGame(gamePk)) {
-            model.addAttribute("errorMsg", "존재하지 않는 경기입니다.");
-            return "reservation/errors/generalError";
-        }
+            //우리팀 경기인지 확인
+            if(!reservationService.isOurGame(gamePk)) {
+                model.addAttribute("errorMsg", "존재하지 않는 경기입니다.");
+                return "reservation/errors/generalError";
+            }
 
-        //경기 정보 가져오기(상대 팀 + 날짜)
-        ReserveGameInfoDTO reserveGameInfoDTO = reservationService.getGameInfo(gamePk);
-        //게임 정보 세션에 저장
-        session.setAttribute("gameInfo", reserveGameInfoDTO);
-        session.setAttribute("gameInfoJson", new ObjectMapper().writeValueAsString(reserveGameInfoDTO));
+            //경기 정보 가져오기(상대 팀 + 날짜)
+            ReserveGameInfoDTO reserveGameInfoDTO = reservationService.getGameInfo(gamePk);
+            //게임 정보 세션에 저장
+            session.setAttribute("gamePk", reserveGameInfoDTO.getGamePk());
+            session.setAttribute("gameInfo", reserveGameInfoDTO);
+            session.setAttribute("gameInfoJson", new ObjectMapper().writeValueAsString(reserveGameInfoDTO));
 
-        //좌석 정보 세션에 저장
-        reservationService.getSeatInfo(gamePk, session);
+            //좌석 정보 세션에 저장
+            reservationService.getSeatInfo(gamePk, session);
 
-        //할인 정보 세션에 저장
-        List<DiscountDTO> discountDTOList = reservationService.getDiscountInfo();
-        session.setAttribute("discountInfo", new ObjectMapper().writeValueAsString(discountDTOList));
+            //할인 정보 세션에 저장
+            List<DiscountDTO> discountDTOList = reservationService.getDiscountInfo();
+            session.setAttribute("discountInfo", new ObjectMapper().writeValueAsString(discountDTOList));
         } catch(Exception e) {
             e.printStackTrace();
             model.addAttribute("errorMsg", "내부 서버 오류");
@@ -128,24 +129,41 @@ public class ReservationController {
         return reservationService.deletePreemption(preemptdeleteReqDTO, user);
     }
 
+    @DeleteMapping("/preemption/delete/auto")
+    public void deletePreemptionAuto(@RequestParam int gamePk, @RequestParam int zonePk, HttpSession session) {
+        UserDTO user = (UserDTO) session.getAttribute("loginUser");
+        //Redis 삭제
+        reservationService.deletePreemptionAuto(gamePk, zonePk, user);
+    }
+
     //권종 및 할인 선택 페이지 로드
     @GetMapping("/discount")
-    public String discount() {
+    public String discount(@RequestParam int gamePk, HttpSession session) {
+        session.setAttribute("gamePk", gamePk);
         return "reservation/tickets2";
     }
 
     //예매 확인 페이지 로드
     @GetMapping("/confirm")
-    public String confirm() {
+    public String confirm(@RequestParam int gamePk, HttpSession session) {
+        session.setAttribute("gamePk", gamePk);
         return "reservation/tickets3";
-    }
-
-    @GetMapping("/test")
-    public String test(@RequestParam("gamePk") int gamePk, @RequestParam("zonePk") int zonePk, @RequestParam("userPk") int userPk) {
-        log.info(reservationService.createReserveCode(gamePk, zonePk, userPk));
-        return null;
     }
 
     @GetMapping("/errors/needLogin")
     public String needLogin() {return "/reservation/errors/needLogin";}
+
+    //세션 삭제
+    @PostMapping("/session/clear")
+    @ResponseBody
+    public void clearSession(HttpSession session) {
+        session.removeAttribute("gamePk");
+        session.removeAttribute("gameInfo");
+        session.removeAttribute("gameInfoJson");
+        session.removeAttribute("zoneMap");
+        session.removeAttribute("zoneInfo");
+        session.removeAttribute("zoneMapDetail");
+        session.removeAttribute("discountInfo");
+        session.removeAttribute("available");
+    }
 }

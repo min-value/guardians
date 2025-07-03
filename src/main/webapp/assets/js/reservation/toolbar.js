@@ -212,7 +212,6 @@ export function setZoom() {
 
 /* 리로드 함수 */
 export function reload() {
-    const gamePk = JSON.parse(sessionStorage.getItem('gameInfo'))['gamePk'];
     fetch(`/reservation/info?gamePk=${gamePk}`)
         .then(res => res.json())
         .then(data => {
