@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.baseball.interceptor.AdminCheckInterceptor;
 import org.baseball.interceptor.LoginCheckInterceptor;
+import org.baseball.interceptor.MypageCheckInterceptor;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
@@ -116,6 +117,9 @@ public class MvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns(
                         "/reservation/errors/needLogin"  // 무한 리다이렉트 방지
                 );
+
+        registry.addInterceptor(new MypageCheckInterceptor())
+                .addPathPatterns("/user/mypage/**");
     }
 
     @Bean

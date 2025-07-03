@@ -12,4 +12,5 @@
         <div class="point-item"></div>
         <!-- 포인트 내역 리스트 동적 렌더링 -->
     </div>
+    <div id="points-pagination"></div>
 </div>

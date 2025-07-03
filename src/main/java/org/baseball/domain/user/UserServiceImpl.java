@@ -71,6 +71,13 @@ public class UserServiceImpl implements UserService {
         userMapper.updateUser(user);
     }
 
+    // 마이페이지 회원 탈퇴
+    @Override
+    public boolean deleteUserByPk(int userPk) {
+        return userMapper.deleteUser(userPk) > 0;
+    }
+
+
     // 포인트 내역 조회
     @Override
     public int getTotalPoint(int userPk) {

@@ -48,6 +48,19 @@ html, body {
 .postHeader .title:focus {
     outline: none;
 }
+#recommendBtn{
+    width: 120px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: var(--lightBlue);
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+#recommendBtn:hover{
+    background-color: var(--lightBlueHover);
+}
 
 #post-container{
     padding: 40px 40px;

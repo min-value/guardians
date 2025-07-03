@@ -6,4 +6,5 @@
     <div id="tickets" class="tickets-list">
         <!-- 예매내역 리스트 동적 렌더링 -->
     </div>
+    <div id="pagination"></div>
 </div>
