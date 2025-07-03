@@ -245,3 +245,9 @@
     align-items: center;
     margin-top: 50px;
 }
+
+.no-fairy-msg {
+    font-size: 16px;
+    color: var(--gray-02);
+    padding: 20px;
+}

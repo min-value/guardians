@@ -434,7 +434,7 @@
                     document.querySelector('.stat:nth-child(2) .count').textContent = fairy.winCnt + '회';
                     document.querySelector('.stat:nth-child(3) .count').textContent = fairy.drawCnt + '회';
                     document.querySelector('.stat:nth-child(4) .count').textContent = fairy.loseCnt + '회';
-                    document.querySelector('.stat:nth-child(5) .count').textContent = fairy.winRate;
+                    document.querySelector('.stat:nth-child(5) .count').textContent = fairy.winRateFormatted;
                 });
 
             const tryRender = () => {
