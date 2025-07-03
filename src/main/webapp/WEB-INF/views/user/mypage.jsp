@@ -8,7 +8,9 @@
 <head>
     <title>신한 가디언즈</title>
     <link rel="stylesheet" href="/assets/css/user/mypage.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/include/pagination.css">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/include/pagination.js"></script>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
@@ -42,6 +44,12 @@
             const regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
             const regPhone = /^(01[016789]|02|0[3-9][0-9])-[0-9]{3,4}-[0-9]{4}$/;
 
+            const openModalBtn = document.getElementById("openWithdrawModal");
+            const modal = document.getElementById("withdrawModal");
+            const cancelBtn = document.getElementById("cancelWithdraw");
+            const agreeCheckbox = document.getElementById("agreeCheckbox");
+            const confirmWithdrawBtn = document.getElementById("confirmWithdraw");
+
             // 이메일 유효성 검사
             function validEmail(){
                 const checkEmail = email.value.trim();
@@ -74,6 +82,46 @@
                 }
                 phoneError.innerHTML = '';
                 return true;
+            }
+
+            if (openModalBtn && modal && cancelBtn && agreeCheckbox && confirmWithdrawBtn) {
+                // 모달 열기
+                openModalBtn.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    modal.style.display = "block";
+                });
+
+                // 모달 닫기
+                cancelBtn.addEventListener("click", function () {
+                    modal.style.display = "none";
+                    agreeCheckbox.checked = false;
+                    confirmWithdrawBtn.disabled = true;
+                });
+
+                // 회원 탈퇴
+                confirmWithdrawBtn.addEventListener("click", () => {
+                    if (!agreeCheckbox.checked) return;
+
+                    fetch("/user/delete", {
+                        method: "POST",
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            alert(data.message);
+                            if (data.success) {
+                                window.location.href = "/user/logout";
+                            }
+                        })
+                        .catch(err => {
+                            alert("탈퇴 중 오류가 발생했습니다.");
+                            console.error(err);
+                        });
+                });
+
+                // 동의 체크 여부에 따라 버튼 활성화
+                agreeCheckbox.addEventListener("change", function () {
+                    confirmWithdrawBtn.disabled = !agreeCheckbox.checked;
+                });
             }
 
             // 모든 입력 & 유효성 통과 여부 확인해서 버튼 활성화
@@ -127,11 +175,11 @@
         }
 
         // 예매내역 조회
-        function bindTickets() {
+        function bindTickets(page = 1) {
             const tryRender = () => {
                 const container = document.getElementById('tickets');
                 if (!container) {
-                    setTimeout(tryRender, 100);
+                    setTimeout(() => bindTickets(page), 100);
                     return;
                 }
 
@@ -139,8 +187,15 @@
                     .then(res => res.json())
                     .then(tickets => {
 
-                        if (!tickets.length) {
+                        const pageSize = 5;
+                        const totalCount = tickets.length;
+                        const start = (page - 1) * pageSize;
+                        const end = start + pageSize;
+                        const pageItems = tickets.slice(start, end);
+
+                        if (!totalCount) {
                             container.innerHTML = '<p class="no-tickets-msg">예매내역이 없습니다.</p>';
+                            $(paginationContainerId).empty();
                             return;
                         }
 
@@ -191,6 +246,10 @@
                                               <span class="user">\${ticket.userName}</span>
                                             </div>
                                             <div class="info-row">
+                                              <span class="label">예매일</span>
+                                              <span class="ticket-num">\${ticket.reserveDate}</span>
+                                            </div>
+                                            <div class="info-row">
                                               <span class="label">예매번호</span>
                                               <span class="ticket-num">\${ticket.ticketNumber}</span>
                                             </div>
@@ -214,7 +273,7 @@
                                 item.classList.toggle('expanded');
                             });
 
-                            // 예매 취소 버튼 클릭 이벤트 추가 예정
+                            // 예매 취소 버튼 클릭 이벤트
                             if (isCancelable && !isCanceled) {
                                 const cancelBtn = document.getElementById(cancelBtnId);
                                 cancelBtn.addEventListener("click", () => {
@@ -260,7 +319,16 @@
                                 });
                             }
                         });
-
+                        // 페이지네이션
+                        createPagination({
+                            currentPage: page,
+                            totalCount,
+                            pageSize,
+                            containerId: '#pagination',
+                            onPageChange: (newPage) => {
+                                bindTickets(newPage);
+                            }
+                        });
                     });
             };
 
@@ -268,12 +336,15 @@
         }
 
         // 포인트 내역 조회
-        function bindPoints() {
+        function bindPoints(page = 1) {
             const tryRender = () => {
                 const container = document.querySelector('.points-list');
                 const totalDiv = document.querySelector('.point-total');
+                const paginationContainerId = '#points-pagination';
+                const pageSize = 10;
+
                 if (!container || !totalDiv) {
-                    setTimeout(tryRender, 100);
+                    setTimeout(() => bindPoints(page), 100);
                     return;
                 }
 
@@ -282,19 +353,25 @@
                     fetch('/user/point/total').then(res => res.json())
                 ]).then(([points, totalAmount]) => {
                     const totalDiv = document.querySelector('.point-total');
+                    const totalCount = points.length;
+                    const start = (page - 1) * pageSize;
+                    const end = start + pageSize;
+                    const pageItems = points.slice(start, end);
+
                     if (totalDiv) {
                         totalDiv.textContent = totalAmount + 'P';
                     }
 
                     if (!points.length) {
                         container.innerHTML = '<p class="no-points-msg">포인트 내역이 없습니다.</p>';
+                        $(paginationContainerId).empty();
                         return;
                     }
 
                     container.innerHTML = '';
                     let lastDate = '';
 
-                    points.forEach(point => {
+                    pageItems.forEach(point => {
                         if (point.formattedDate !== lastDate) {
                             const group = document.createElement('div');
                             group.className = 'date-group';
@@ -328,6 +405,17 @@
                         }
                         group.appendChild(item);
                     });
+
+                    // 페이지네이션
+                    createPagination({
+                        currentPage: page,
+                        totalCount: totalCount,
+                        pageSize: pageSize,
+                        containerId: paginationContainerId,
+                        onPageChange: (newPage) => {
+                            bindPoints(newPage);
+                        }
+                    });
                 }).catch(err => {
                     console.error("포인트 데이터 로딩 오류:", err);
                 });
@@ -336,7 +424,9 @@
         }
 
         // 승리요정
-        function bindFairy() {
+        function bindFairy(page = 1) {
+            const pageSize = 5;
+            const paginationContainerId = '#fairy-pagination';
             fetch('/user/fairy/data')
                 .then(res => res.json())
                 .then(fairy => {
@@ -350,7 +440,7 @@
             const tryRender = () => {
                 const container = document.getElementById('fairy');
                 if (!container) {
-                    setTimeout(tryRender, 100);
+                    setTimeout(() => bindFairy(page), 100);
                     return;
                 }
 
@@ -360,13 +450,19 @@
                         const now = new Date();
                         const pastTickets = tickets.filter(ticket => new Date(ticket.gameDate).getTime() <= now.getTime());
 
+                        const totalCount = pastTickets.length;
+                        const start = (page - 1) * pageSize;
+                        const end = start + pageSize;
+                        const pageItems = pastTickets.slice(start, end);
+
                         if (!pastTickets.length) {
                             container.innerHTML = '<p class="no-fairy-msg">직관 내역이 없습니다.</p>';
+                            $(paginationContainerId).empty();
                             return;
                         }
 
                         container.innerHTML = '';
-                        pastTickets.forEach(ticket => {
+                        pageItems.forEach(ticket => {
                             const item = document.createElement('div');
                             item.classList.add('fairy-item');
 
@@ -430,6 +526,17 @@
                             });
 
                             container.appendChild(item);
+                        });
+
+                        // 페이지네이션
+                        createPagination({
+                            currentPage: page,
+                            totalCount: totalCount,
+                            pageSize: pageSize,
+                            containerId: paginationContainerId,
+                            onPageChange: (newPage) => {
+                                bindFairy(newPage);
+                            }
                         });
                     });
             };

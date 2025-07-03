@@ -2,6 +2,8 @@ package org.baseball.domain.story.videos;
 
 import org.baseball.dto.VideoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +19,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+@PropertySource("classpath:application.properties")
 @RequestMapping("/story/videos")
 public class VideoController {
 
     @Autowired
     private VideoService videoService;
+
+    @Value("${youtube.api.key}")
+    private String youtubeApiKey;
 
     @GetMapping("")
     public String videos(@RequestParam(defaultValue = "1") int page,
@@ -48,11 +54,10 @@ public class VideoController {
 
     @GetMapping("/crawl")
     public void crawlYoutube()throws Exception{
-        String apiKey = "AIzaSyD6khCzj3c_ggnzMWFjCHOoa-EEO5-SvpA";
         String query = "nc다이노스 하이라이트";
         String urlString = "https://www.googleapis.com/youtube/v3/search?part=snippet&q="
                 + java.net.URLEncoder.encode(query, "UTF-8")
-                + "&type=video&maxResults=6&key=" + apiKey;
+                + "&type=video&maxResults=6&key=" + youtubeApiKey;
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");

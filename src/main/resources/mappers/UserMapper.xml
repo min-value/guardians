@@ -46,6 +46,10 @@
         WHERE user_id = #{userId}
     </update>
 
+    <delete id="deleteUser" parameterType="int">
+        DELETE FROM user WHERE user_pk = #{userPk}
+    </delete>
+
     <select id="getTotalPoint" parameterType="int" resultType="int">
         SELECT total_point FROM user WHERE user_pk = #{userPk}
     </select>
