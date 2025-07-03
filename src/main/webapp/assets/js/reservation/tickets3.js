@@ -169,11 +169,8 @@ async function requestPay() {
                         if (result === true || result === "true") {
                             alert("예매 성공!");
                             if (window.opener && !window.opener.closed) {
-                                opener.localStorage.setItem("reservelistPk", localStorage.getItem("reservelistPk" + gamePk));
-                                opener.localStorage.setItem("gameInfo", localStorage.getItem("gameInfo" + gamePk));
                                 window.opener.location.href = "/tickets/all?showModal=true";
                             }
-                            removeData();
                             window.close();
                         } else {
                             alert("예매 저장 실패. 다시 시도해주세요.");

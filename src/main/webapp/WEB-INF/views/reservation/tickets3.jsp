@@ -12,7 +12,7 @@
 </head>
 <script>
     let gameInfo = JSON.parse('${gameInfoJson}');
-    const gamePk = Number(gameInfo['gamePk']);
+    const gamePk = Number(JSON.parse('${gameInfoJson}')['gamePk']);
 
     const user = {
         userPk: "${sessionScope.loginUser.userPk}",
@@ -64,7 +64,6 @@
     <jsp:include page="topbar.jsp" flush="false">
         <jsp:param name="type" value="3"/>
     </jsp:include>
-    <%@ include file="../tickets/predict.jsp" %>
     <div class="mainback-container">
         <div class="main-container">
             <div class="left-container">
@@ -190,7 +189,7 @@
                                         </div>
                                         <div class="buyerName-detail-wrapper">
                                             <div class="buyerName-detail">
-                                                <div id="buyerName">정보 없음</div>
+                                                <div id="buyerName">${loginUser.userName}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -200,7 +199,7 @@
                                         </div>
                                         <div class="buyerPhone-detail-wrapper">
                                             <div class="buyerPhone-detail">
-                                                <div id="buyerPhone">정보 없음</div>
+                                                <div id="buyerPhone">${loginUser.tel}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -212,7 +211,7 @@
                                         </div>
                                         <div class="buyerEmail-detail-wrapper">
                                             <div class="buyerEmail-detail">
-                                                <div id="buyerEmail">정보 없음</div>
+                                                <div id="buyerEmail">${loginUser.email}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -305,6 +304,5 @@
 <div class="loader">Loading...</div>
 <div class="loading-overlay"></div>
 <script type="module" src="${pageContext.request.contextPath}/assets/js/reservation/tickets3.js"></script>
-<script type="module" src="${pageContext.request.contextPath}/assets/js/tickets/predict.js"></script>
 </body>
 </html>

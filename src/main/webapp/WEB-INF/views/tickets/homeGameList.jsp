@@ -28,11 +28,11 @@
         const left = (window.screen.width - width) / 2;
         const top = (window.screen.height - height) / 2;
 
-        window.open(
-            '/tickets/queue',
-            '_blank',
-            `width=\${width},height=\${height},left=\${left},top=\${top},scrollbars=no,resizable=no`
-        );
+        // window.open(
+        //     '/tickets/queue',
+        //     '_blank',
+        //     `width=\${width},height=\${height},left=\${left},top=\${top},scrollbars=no,resizable=no`
+        // );
         window.open(`/reservation/seat?gamePk=\${gameNo}`, '_blank',
                 'width=800,height=700,scrollbars=yes,resizable=no');
     }
@@ -45,7 +45,7 @@
         const finalTicketStatus = (ticketStatus=== null || ticketStatus.trim() === '') ? '0' : ticketStatus;
 
         console.log({ page, teamStatus: finalTeamStatus, ticketStatus: finalTicketStatus });
-
+        console.log("???");
         $.ajax({
           url: '/tickets/allgames',
           method: 'GET',
