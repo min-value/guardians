@@ -186,7 +186,6 @@
                 fetch('/user/tickets')
                     .then(res => res.json())
                     .then(tickets => {
-
                         const pageSize = 5;
                         const totalCount = tickets.length;
                         const start = (page - 1) * pageSize;
@@ -201,6 +200,7 @@
 
                         container.innerHTML = '';
                         tickets.forEach(ticket => {
+                            console.log(ticket);
                             const item = document.createElement('div');
                             item.classList.add('ticket-item');
 
@@ -224,6 +224,9 @@
                                         data-reservepk="\${ticket.ticketNumber}"
                                         data-usedpoint="\${ticket.used_point}"
                                         data-gamedate="\${ticket.gameDate}"
+                                        data-gamepk = "\${ticket.gamePk}"
+                                        data-zonepk = "\${ticket.zonePk}"
+                                        data-seats = "\${ticket.seats}"
                                         id="\${cancelBtnId}">예매취소</button></div>`;
                             }else{
                                 cancelBtn = `<div class="cancel-container">
@@ -281,7 +284,10 @@
                                     const user_pk = cancelBtn.dataset.userpk;
                                     const reservelist_pk = cancelBtn.dataset.ticket;
                                     const used_point = cancelBtn.dataset.usedpoint;
-                                    const game_date = new Date(cancelBtn.dataset.gamedate);
+                                    const gameDate = new Date(cancelBtn.dataset.gamedate);
+                                    const game_pk = cancelBtn.dataset.gamepk;
+                                    const zone_pk = cancelBtn.dataset.zonepk;
+                                    const seats = cancelBtn.dataset.seats;
                                     const now = new Date();
                                     const gameDay = new Date(gameDate.getFullYear(), gameDate.getMonth(), gameDate.getDate());
                                     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -291,20 +297,43 @@
                                         data: {
                                             user_pk: user_pk,
                                             reservelist_pk: reservelist_pk,
-                                            point: used_point
+                                            point: used_point,
+                                            game_pk: game_pk,
+                                            zone_pk: zone_pk,
+                                            seats: seats
                                         },
                                         success: function (res) {
-                                            alert("취소 처리 완료");
+                                            alert("취소 신청 완료");
                                             if(gameDay>today){
+                                                console.log(res);
                                                 $.ajax({
                                                     type: "POST",
                                                     url: "/cancelPayment/" + imp_uid,
                                                     success: function (response) {
                                                         alert("결제 취소 완료");
+                                                        alert("예약 취소 완료");
                                                     },
                                                     error: function (error) {
                                                         alert("결제 취소 실패");
                                                         console.error(error);
+                                                        $.ajax({
+                                                            type: "POST",
+                                                            url: "/user/restoreCancel",
+                                                            data: {
+                                                                user_pk: user_pk,
+                                                                reservelist_pk: reservelist_pk,
+                                                                point: used_point,
+                                                                game_pk: game_pk,
+                                                                zone_pk: zone_pk,
+                                                                seats: seats
+                                                            },
+                                                            success: function (response) {
+                                                                alert("예약 취소 실패");
+                                                            },
+                                                            error: function (error) {
+                                                                alert("에러가 발생하였습니다. 관리자에게 문의해주세요.");
+                                                            }
+                                                        });
                                                     }
                                                 });
                                             }
@@ -397,9 +426,9 @@
                             `;
                         const amountSpan = item.querySelector('.point-amount');
 
-                        if (point.point < 0) {
+                        if (point.type === '티켓 예매 포인트 차감') {
                             amountSpan.classList.add('negative');
-                            amountSpan.textContent = `\${point.point}P`;
+                            amountSpan.textContent = `-\${point.point}P`;
                         } else {
                             amountSpan.textContent = `+\${point.point}P`;
                         }

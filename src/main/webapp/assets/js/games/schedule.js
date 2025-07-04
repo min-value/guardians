@@ -10,6 +10,8 @@ $(document).ready(function () {
         const startDayOfWeek = firstDay.getDay();
         const totalDays = lastDay.getDate();
 
+        const today = new Date();
+
         // 앞쪽 날짜 없는 셀
         for (let i = 0; i < startDayOfWeek; i++) {
             const emptyCell = document.createElement("div");
@@ -21,8 +23,27 @@ $(document).ready(function () {
         for (let d = 1; d <= totalDays; d++) {
             const cell = document.createElement("div");
             cell.classList.add("calendar-day");
+            var dateNum = "";
+            if(d<10){dateNum = "0" + d.toString();}
+            else dateNum = d.toString();
+
+            const isToday = (
+                year === today.getFullYear() &&
+                month === (today.getMonth() + 1) &&
+                d === today.getDate()
+            );
+            if (isToday) {
+                cell.classList.add("today");
+                cell.innerHTML = `
+                <div class="date-line-t"></div>
+                <div class="date-number-t">${dateNum}</div>`;
+            }
+            else{
+                cell.innerHTML = `
+                <div class="date-line"></div>
+                <div class="date-number">${dateNum}</div>`;
+            }
             cell.setAttribute("data-day", d);
-            cell.innerHTML = `<div class="date-number">${d}</div>`;
             calendarGrid.appendChild(cell);
         }
 

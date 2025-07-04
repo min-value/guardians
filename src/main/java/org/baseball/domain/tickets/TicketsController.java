@@ -69,6 +69,10 @@ public class TicketsController {
     @ResponseBody
     public boolean updatePurchase(@RequestBody PurchaseReqDTO dto) {
         try {
+            if(dto.getZone_pk()==1101 || dto.getZone_pk()==1100){
+                dto.setSeats(null);
+            }
+
             boolean r = redisService.confirmPayment(
                     dto.getGame_pk(),
                     dto.getSeats(),

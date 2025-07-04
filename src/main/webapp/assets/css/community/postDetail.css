@@ -1,9 +1,4 @@
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
-    font-style: normal;
-    font-display: swap;
-}
+@import "/assets/css/font.css";
 * {
     margin: 0;
     padding: 0;
@@ -39,12 +34,18 @@ html, body {
     text-align: left;
     font-size: 20px;
     font-weight: 500;
+    margin-right: 20px;
 }
 .postHeader .writer {
     flex: 1;
     text-align: left;
     font-size: 16px;
     font-weight: 400;
+    margin-right: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 .postHeader .date {
     flex: 1;

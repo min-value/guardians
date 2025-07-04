@@ -1,9 +1,4 @@
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2307@1.0/PretendardVariable.woff2') format('woff2-variations');
-    font-style: normal;
-    font-display: swap;
-}
+@import "/assets/css/font.css";
 * {
     margin: 0;
     padding: 0;
@@ -100,7 +95,6 @@ hr {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    font-family: "Pretendard Variable";
     height: 50px;
 }
 
@@ -145,10 +139,20 @@ hr {
 #post .title {
     flex: 3;
     text-align: left;
+    margin-right: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 #post .writer {
     flex: 1;
     text-align: left;
+    margin-right: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 #post .date {
     flex: 1;

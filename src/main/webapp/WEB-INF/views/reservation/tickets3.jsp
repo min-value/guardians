@@ -14,7 +14,7 @@
     const gamePk = Number(${gamePk});
     const gameInfo = JSON.parse(localStorage.getItem('gameInfo' + gamePk));
 
-    const user = {
+    let user = {
         userPk: "${sessionScope.loginUser.userPk}",
         userName: "${sessionScope.loginUser.userName}",
         tel: "${sessionScope.loginUser.tel}",
@@ -22,13 +22,14 @@
         totalPoint: "${sessionScope.loginUser.totalPoint}"
     };
 
+    console.log(user);
     $.ajax({
         type: "GET",
         url: "/user/info",
-        success: function(user) {
-            console.log("최신 유저 정보:", user);
-            $("#pointDisplay").text(user.totalPoint);
-            window.user = user;
+        success: function(res) {
+            console.log("최신 유저 정보:", res);
+            user = res;
+            $("#myPoint").text(user.totalPoint);
         },
         error: function(err) {
             console.error("유저 정보 가져오기 실패", err);
@@ -199,7 +200,7 @@
                                         </div>
                                         <div class="buyerPhone-detail-wrapper">
                                             <div class="buyerPhone-detail">
-                                                <div id="buyerPhone">${loginUser.tel}</div>
+                                                <div id="buyerPhone">${user.tel}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -211,7 +212,7 @@
                                         </div>
                                         <div class="buyerEmail-detail-wrapper">
                                             <div class="buyerEmail-detail">
-                                                <div id="buyerEmail">${loginUser.email}</div>
+                                                <div id="buyerEmail">${user.email}</div>
                                             </div>
                                         </div>
                                     </div>
