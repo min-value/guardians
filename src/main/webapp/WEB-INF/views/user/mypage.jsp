@@ -268,7 +268,7 @@
                               `;
                             container.appendChild(item);
 
-                            const arrow = item.querySelector('.arrow-icon');
+                            const arrow = item.querySelector('.ticket-top');
                             arrow.addEventListener('click', () => {
                                 item.classList.toggle('expanded');
                             });
@@ -520,7 +520,7 @@
                                 drawFairyChart(detail, chart);
                             }
 
-                            const arrow = item.querySelector('.arrow-icon');
+                            const arrow = item.querySelector('.fairy-top');
                             arrow.addEventListener('click', () => {
                                 item.classList.toggle('expanded');
                             });
