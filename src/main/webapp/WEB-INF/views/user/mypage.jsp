@@ -635,6 +635,11 @@
                 .catch(err => console.error(err));
         }
 
+        const navType = performance.getEntriesByType("navigation")[0]?.type;
+        if (navType !== "reload") {
+            localStorage.removeItem("lastMypageTab");
+        }
+
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const name = tab.getAttribute('data-tab');
