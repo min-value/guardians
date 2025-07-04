@@ -232,9 +232,9 @@
 
                             item.innerHTML = `
                                 <div class="ticket-top">
-                                    <img src="/assets/img/teamlogos/\${ticket.homeTeamPk}.png" class="logo-team">
+                                    <img src="/assets/img/teamlogos/\${ticket.homeTeamPk}.svg" class="logo-team">
                                     <span class="vs-text">VS</span>
-                                    <img src="/assets/img/teamlogos/\${ticket.oppTeamPk}.png" class="logo-team">
+                                    <img src="/assets/img/teamlogos/\${ticket.oppTeamPk}.svg" class="logo-team">
                                     <span class="match-date">\${ticket.matchDate}</span>
                                     <img src="/assets/img/icon/chevron-right.svg" class="arrow-icon">
                                 </div>
@@ -469,9 +469,9 @@
                             item.innerHTML = `
                                 <div class="fairy-top">
                                     <span class ="predict-text"></span>
-                                    <img src="/assets/img/teamlogos/\${ticket.homeTeamPk}.png" class="logo-team">
+                                    <img src="/assets/img/teamlogos/\${ticket.homeTeamPk}.svg" class="logo-team">
                                     <span class="vs-text">VS</span>
-                                    <img src="/assets/img/teamlogos/\${ticket.oppTeamPk}.png" class="logo-team">
+                                    <img src="/assets/img/teamlogos/\${ticket.oppTeamPk}.svg" class="logo-team">
                                     <span class="match-date">\${ticket.matchDate}</span>
                                     <img src="/assets/img/icon/chevron-right.svg" class="arrow-icon">
                                 </div>
