@@ -8,6 +8,8 @@ $(function(){
             data: $(this).serialize(),
             success:function(res){
                 loadComment(1);
+                $('#write').val("");
+                $('#sendBtn').prop('disabled', false);
                 $('#commentForm')[0].reset();
             }
         });
