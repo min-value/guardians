@@ -41,7 +41,7 @@ $(document).ready(function () {
 
 // 카드 토글
 function bindSummaryToggle() {
-    $('.summary-chevron').off('click').on('click', function (e) {
+    $('.summary').off('click').on('click', function (e) {
         e.stopPropagation();
 
         const $summary = $(this).closest('.summary');
