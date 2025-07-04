@@ -1,6 +1,6 @@
 package org.baseball.domain.tickets;
 
-import org.baseball.domain.Redis.RedisService;
+import org.baseball.domain.redis.RedisService;
 import org.baseball.dto.PredictInfoDTO;
 import org.baseball.dto.PurchaseReqDTO;
 import org.baseball.dto.TicketsDTO;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/tickets")
