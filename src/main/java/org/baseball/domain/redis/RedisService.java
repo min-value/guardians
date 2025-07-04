@@ -202,7 +202,7 @@ public class RedisService {
                 if (!String.valueOf(userPk).equals(preemptUser)) {
                     return false;
                 }
-
+                redisTemplate.delete(preemptKey);
                 String paidKey = getPaidKey(gamePk, seatNum, zonePk, userPk);
                 redisTemplate.opsForValue().set(paidKey, String.valueOf(userPk));
                 paidKeys.add(paidKey); //나중에 실패 시 롤백 용
