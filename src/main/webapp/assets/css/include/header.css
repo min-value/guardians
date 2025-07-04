@@ -18,6 +18,7 @@
 .login-wrapper {
     width: 100%;
     background-color: #fff;
+    margin-top: 8px;
 }
 .login {
     max-width: 1200px;
