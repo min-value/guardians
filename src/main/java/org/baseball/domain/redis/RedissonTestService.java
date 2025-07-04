@@ -1,4 +1,4 @@
-package org.baseball.domain.Redis;
+package org.baseball.domain.redis;
 
 import org.redisson.api.RedissonClient;
 import org.redisson.api.RBucket;

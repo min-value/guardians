@@ -13,6 +13,8 @@
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/include/pagination.js"></script>
 <script>
+    const gamePk = Number(${gamePk});
+
     const user = {
         userPk: "${sessionScope.loginUser.userPk}",
         userName: "${sessionScope.loginUser.userName}",
@@ -20,6 +22,22 @@
         email: "${sessionScope.loginUser.email}",
         totalPoint: "${sessionScope.loginUser.totalPoint}"
     };
+
+    function openSeatReservation(gameNo) {
+        const width = 500;
+        const height = 400;
+
+        const left = (window.screen.width - width) / 2;
+        const top = (window.screen.height - height) / 2;
+
+        // window.open(
+        //     '/tickets/queue',
+        //     '_blank',
+        //     `width=\${width},height=\${height},left=\${left},top=\${top},scrollbars=no,resizable=no`
+        // );
+        window.open(`/reservation/seat?gamePk=\${gameNo}`, '_blank',
+                'width=800,height=700,scrollbars=yes,resizable=no');
+    }
 
     function loadPage(page) {
         const params = new URLSearchParams(window.location.search);
@@ -29,7 +47,7 @@
         const finalTicketStatus = (ticketStatus=== null || ticketStatus.trim() === '') ? '0' : ticketStatus;
 
         console.log({ page, teamStatus: finalTeamStatus, ticketStatus: finalTicketStatus });
-
+        console.log("???");
         $.ajax({
           url: '/tickets/allgames',
           method: 'GET',
@@ -75,8 +93,8 @@
                                     </div>
                                   </div>
                                   <div class="team-container">
-                                    <img class="teamlogo" src="/assets/img/teamlogos/\${dto.ourTeam}.png" alt="ourTeam">
-                                    vs <img class="teamlogo" src="/assets/img/teamlogos/\${dto.opponentTeam}.png" alt="opponentTeam">
+                                    <img class="teamlogo" src="/assets/img/teamlogos/\${dto.ourTeam}.svg" alt="ourTeam">
+                                    vs <img class="teamlogo" src="/assets/img/teamlogos/\${dto.opponentTeam}.svg" alt="opponentTeam">
                                   </div>
                                   <div>
                                     <p class="stadium">구장</p>

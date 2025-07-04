@@ -11,7 +11,7 @@
         <div class="teamInfo-container">
           <div class="teamInfo-wrapper">
             <div class="teamImg-wrapper">
-              <img class="teamImg" id="ourTeam" src="${pageContext.request.contextPath}/assets/img/teamlogos/6.png" alt="ourTeam">
+              <img class="teamImg" id="ourTeam" src="${pageContext.request.contextPath}/assets/img/teamlogos/6.svg" alt="ourTeam">
             </div>
             <div class="teamName-wrapper">
               <div class="teamName" id="ourTeamName">신한 가디언즈</div>
@@ -20,10 +20,10 @@
           <div id="vs">VS</div>
           <div class="teamInfo-wrapper">
             <div class="teamImg-wrapper">
-              <img class="teamImg" id="opponentTeam" src="${pageContext.request.contextPath}/assets/img/teamlogos/6.png" alt="팀1 이미지">
+              <img class="teamImg" id="opponentTeam" src="${pageContext.request.contextPath}/assets/img/teamlogos/${gameInfo.oppTeamPk}.svg" alt="팀1 이미지">
             </div>
             <div class="teamName-wrapper">
-              <div class="teamName" id="opponentTeamName"></div>
+              <div class="teamName" id="opponentTeamName">${gameInfo.oppTeamName}</div>
             </div>
           </div>
         </div>

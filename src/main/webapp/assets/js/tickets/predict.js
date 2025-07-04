@@ -1,9 +1,9 @@
 let curPredict = null;
-let reservelistPk = JSON.parse(sessionStorage.getItem("reservelistPk"));
-let gameInfo = JSON.parse(sessionStorage.getItem("gameInfo"));
+let reservelistPk = JSON.parse(localStorage.getItem("reservelistPk" +  gamePk));
+const gameInfo = JSON.parse(localStorage.getItem('gameInfo' + gamePk));
 
 $(document).ready(function () {
-    $("#opponentTeam").attr("src", `/assets/img/teamlogos/${gameInfo.oppTeamPk}.png`);
+    $("#opponentTeam").attr("src", `/assets/img/teamlogos/${gameInfo['oppTeamPk']}.svg`);
 
     $("#ourTeam").on("mouseenter", function () {
         $(this).css({ opacity: 1, height: "170px" });
@@ -67,7 +67,7 @@ function clickCheerBtn() {
         success: function (res) {
             alert("예측 완료!");
             document.querySelector('.modal').style.display = 'none';
-            sessionStorage.clear();
+            removeData();
             window.location.href = '/tickets/all';
         },
         error: function (err) {
@@ -75,4 +75,9 @@ function clickCheerBtn() {
             console.error(err);
         }
     });
+}
+
+function removeData() {
+    localStorage.clear();
+    navigator.sendBeacon('${pageContext.request.contextPath}/session/clear');
 }

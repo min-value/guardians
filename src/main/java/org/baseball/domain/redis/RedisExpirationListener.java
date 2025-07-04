@@ -1,4 +1,4 @@
-package org.baseball.domain.Redis;
+package org.baseball.domain.redis;
 
 import lombok.extern.slf4j.Slf4j;
 import org.baseball.domain.reservation.ReservationMapper;

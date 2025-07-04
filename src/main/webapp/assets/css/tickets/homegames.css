@@ -93,8 +93,9 @@ form {
 }
 
 .teamlogo {
-    height: 90px;
-    margin: 20px;
+    width: 90px;
+    height: auto;
+    margin: 10px;
 }
 
 .date {
