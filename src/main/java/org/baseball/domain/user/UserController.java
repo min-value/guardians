@@ -112,7 +112,10 @@ public class UserController {
         if (loginUser == null) {
             return "user/login";
         }
-        model.addAttribute("user", loginUser);
+
+        UserDTO updatedUser = userService.getUserInfoByPk(loginUser.getUserPk());
+        session.setAttribute("loginUser", updatedUser);
+        model.addAttribute("user", updatedUser);
         return "user/mypage/info";
     }
 

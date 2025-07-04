@@ -426,9 +426,9 @@
                             `;
                         const amountSpan = item.querySelector('.point-amount');
 
-                        if (point.point < 0) {
+                        if (point.type === '티켓 예매 포인트 차감') {
                             amountSpan.classList.add('negative');
-                            amountSpan.textContent = `\${point.point}P`;
+                            amountSpan.textContent = `-\${point.point}P`;
                         } else {
                             amountSpan.textContent = `+\${point.point}P`;
                         }
