@@ -244,7 +244,7 @@ public class UserController {
         map.put("user_pk", user_pk);
         map.put("point", point);
 
-        List<String> seat = Arrays.asList(seats.split(","));
+        List<String> seat = Arrays.asList(seats.replace(" ", "").split(","));
         System.out.println(seat.toString());
 
         try {
