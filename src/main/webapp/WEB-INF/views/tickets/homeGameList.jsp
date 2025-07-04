@@ -93,8 +93,8 @@
                                     </div>
                                   </div>
                                   <div class="team-container">
-                                    <img class="teamlogo" src="/assets/img/teamlogos/\${dto.ourTeam}.png" alt="ourTeam">
-                                    vs <img class="teamlogo" src="/assets/img/teamlogos/\${dto.opponentTeam}.png" alt="opponentTeam">
+                                    <img class="teamlogo" src="/assets/img/teamlogos/\${dto.ourTeam}.svg" alt="ourTeam">
+                                    vs <img class="teamlogo" src="/assets/img/teamlogos/\${dto.opponentTeam}.svg" alt="opponentTeam">
                                   </div>
                                   <div>
                                     <p class="stadium">구장</p>

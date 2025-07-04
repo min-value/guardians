@@ -3,7 +3,7 @@ let reservelistPk = JSON.parse(localStorage.getItem("reservelistPk" +  gamePk));
 const gameInfo = JSON.parse(localStorage.getItem('gameInfo' + gamePk));
 
 $(document).ready(function () {
-    $("#opponentTeam").attr("src", `/assets/img/teamlogos/${gameInfo['oppTeamPk']}.png`);
+    $("#opponentTeam").attr("src", `/assets/img/teamlogos/${gameInfo['oppTeamPk']}.svg`);
 
     $("#ourTeam").on("mouseenter", function () {
         $(this).css({ opacity: 1, height: "170px" });

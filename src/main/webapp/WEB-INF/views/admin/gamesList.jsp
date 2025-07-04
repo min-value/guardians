@@ -33,8 +33,8 @@
                         container.append(`
                             <tr>
                                 <td>\${dto.no}</td>
-                                <td><img class="teamlogo" src="/assets/img/teamlogos/\${dto.ourTeam}.png" alt="ourTeam">
-                                     vs <img class="teamlogo" src="/assets/img/teamlogos/\${dto.opponentTeam}.png" alt="opponentTeam"></td>
+                                <td><img class="teamlogo" src="/assets/img/teamlogos/\${dto.ourTeam}.svg" alt="ourTeam">
+                                     vs <img class="teamlogo" src="/assets/img/teamlogos/\${dto.opponentTeam}.svg" alt="opponentTeam"></td>
                                 <td>\${dto.ourScore}:\${dto.opponentScore}</td>
                                 <td>\${dto.result}</td>
                                 <td>\${dto.gameDate}</td>

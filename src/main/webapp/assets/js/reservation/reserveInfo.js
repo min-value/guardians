@@ -5,7 +5,7 @@ const usedPoint = JSON.parse(localStorage.getItem('usedPoint' + gamePk));
 const paidAmount = JSON.parse(localStorage.getItem('paidAmount' + gamePk));
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('opponentTeam').setAttribute('src', `/assets/img/teamlogos/${gameInfo['oppTeamPk']}.png`);
+    document.getElementById('opponentTeam').setAttribute('src', `/assets/img/teamlogos/${gameInfo['oppTeamPk']}.svg`);
     document.getElementById('opponentTeamName').innerText = gameInfo['oppTeamName'];
     document.getElementById('right-date').innerText = formatTimestamp(gameInfo['gameDate']);
 
