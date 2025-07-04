@@ -87,7 +87,7 @@ $(document).ready(function () {
 
                         if (isSameTeamAndStadium) {
                             // 더블헤더 시 로고 한 번만 출력
-                            logoImg = `<img src="/assets/img/games/${teamPk}.png" class="team-logo">`;
+                            logoImg = `<img src="/assets/img/teamlogos/${teamPk}.svg" class="team-logo">`;
 
                             const timeList = games.map(g => {
                                 const date = new Date(g.gameDate);

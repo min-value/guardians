@@ -1,4 +1,4 @@
-package org.baseball.domain.Redis;
+package org.baseball.domain.redis;
 
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
@@ -19,6 +19,9 @@ public class RedisService {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
+
+    @Autowired
+    private QueueService queueService;
 
 
     public String getLockKey(int gamePk, String seatNum, int zonePk) {
@@ -66,7 +69,7 @@ public class RedisService {
 
         //락 시도
         try {
-            if(lock.tryLock(3, 3, TimeUnit.SECONDS)) {
+            if(lock.tryLock(3, 10, TimeUnit.SECONDS)) {
                 //락 시도 성공 시
                 log.info("락 획득: {}, thread: {}", lockKey, Thread.currentThread().getId());
                 return true;
@@ -124,7 +127,7 @@ public class RedisService {
             //Multilock 획득 시도
             RLock multiLock = redissonClient.getMultiLock(locks.toArray(new RLock[0]));
 
-            if(!multiLock.tryLock(3, 3, TimeUnit.SECONDS)) {
+            if(!multiLock.tryLock(3, 10, TimeUnit.SECONDS)) {
                 //락 획득 실패
                 return false;
             }
@@ -162,7 +165,8 @@ public class RedisService {
                 if (lock.isHeldByCurrentThread()) {
                     try {
                         lock.unlock();
-                    } catch (Exception ignore) {}
+                    } catch (Exception ignore) {
+                    }
                 }
             }
         }
@@ -172,11 +176,11 @@ public class RedisService {
     public boolean confirmPayment(int gamePk, List<String> seats, int userPk, int zonePk) {
         List<RLock> locks = new ArrayList<>();
         List<String> paidKeys = new ArrayList<>();
-        List<String> preemptKeys =  new ArrayList<>();
+        List<String> preemptKeys = new ArrayList<>();
 
         try {
             //락 리스트 생성
-            for(String seatNum: seats) {
+            for (String seatNum : seats) {
                 RLock lock = redissonClient.getLock(getLockKey(gamePk, seatNum, zonePk));
                 locks.add(lock);
             }
@@ -185,20 +189,20 @@ public class RedisService {
             RLock multiLock = redissonClient.getMultiLock(locks.toArray(new RLock[0]));
 
             //락 획득 실패 시
-            if(!multiLock.tryLock(3, 3, TimeUnit.SECONDS)) {
+            if (!multiLock.tryLock(3, 30, TimeUnit.SECONDS)) {
                 return false;
             }
 
             //이미 선점/판매된 좌석이 있는지 확인
-            for(String seatNum: seats) {
+            for (String seatNum : seats) {
                 String preemptKey = getPreemptkey(gamePk, seatNum, zonePk, userPk);
                 String preemptUser = redisTemplate.opsForValue().get(preemptKey);
                 preemptKeys.add(preemptKey);
 
-                if(!String.valueOf(userPk).equals(preemptUser)) {
+                if (!String.valueOf(userPk).equals(preemptUser)) {
                     return false;
                 }
-
+                redisTemplate.delete(preemptKey);
                 String paidKey = getPaidKey(gamePk, seatNum, zonePk, userPk);
                 redisTemplate.opsForValue().set(paidKey, String.valueOf(userPk));
                 paidKeys.add(paidKey); //나중에 실패 시 롤백 용
@@ -207,23 +211,24 @@ public class RedisService {
             return true;
         } catch (Exception e) {
             //롤백
-            for(String key: paidKeys) {
+            for (String key : paidKeys) {
                 redisTemplate.delete(key);
             }
 
             //선점 해제
-            for(String key: preemptKeys) {
+            for (String key : preemptKeys) {
                 redisTemplate.delete(key);
             }
 
             return false;
         } finally {
             //락 해제
-            for(RLock lock: locks) {
-                if(lock.isHeldByCurrentThread()) {
+            for (RLock lock : locks) {
+                if (lock.isHeldByCurrentThread()) {
                     try {
                         lock.unlock();
-                    } catch (Exception ignore) {}
+                    } catch (Exception ignore) {
+                    }
                 }
             }
         }
@@ -259,7 +264,7 @@ public class RedisService {
 
             // MultiLock 획득 시도
             RLock multiLock = redissonClient.getMultiLock(locks.toArray(new RLock[0]));
-            if (!multiLock.tryLock(3, 3, TimeUnit.SECONDS)) {
+            if (!multiLock.tryLock(3, 10, TimeUnit.SECONDS)) {
                 return false; // 락 실패
             }
 
@@ -286,7 +291,8 @@ public class RedisService {
                 if (lock.isHeldByCurrentThread()) {
                     try {
                         lock.unlock();
-                    } catch (Exception ignore) {}
+                    } catch (Exception ignore) {
+                    }
                 }
             }
         }
@@ -305,7 +311,7 @@ public class RedisService {
 
             // MultiLock 획득 시도
             RLock multiLock = redissonClient.getMultiLock(locks.toArray(new RLock[0]));
-            if (!multiLock.tryLock(3, 3, TimeUnit.SECONDS)) {
+            if (!multiLock.tryLock(3, 10, TimeUnit.SECONDS)) {
                 return false;
             }
 
@@ -332,10 +338,67 @@ public class RedisService {
                 if (lock.isHeldByCurrentThread()) {
                     try {
                         lock.unlock();
-                    } catch (Exception ignore) {}
+                    } catch (Exception ignore) {
+                    }
                 }
             }
         }
     }
 
+    //결제 실패 시 복구
+    public boolean restorePayment(int gamePk, List<String> seats, int userPk, int zonePk) {
+        List<RLock> locks = new ArrayList<>();
+        List<String> paidKeys = new ArrayList<>();
+
+        try {
+            //락 리스트 생성
+            for(String seatNum: seats) {
+                RLock lock = redissonClient.getLock(getLockKey(gamePk, seatNum, zonePk));
+                locks.add(lock);
+            }
+
+            //Multilock 획득 시도
+            RLock multiLock = redissonClient.getMultiLock(locks.toArray(new RLock[0]));
+
+            if(!multiLock.tryLock(3, 10, TimeUnit.SECONDS)) {
+                //락 획득 실패
+                return false;
+            }
+
+            //모든 좌석에 대해 선점 등록
+            for(String seatNum: seats) {
+                String paidKey = getPaidKey(gamePk, seatNum, zonePk, userPk);
+                redisTemplate.opsForValue().set(paidKey, String.valueOf(userPk)); //todo: minute으로 변경
+                paidKeys.add(paidKey); //나중에 실패 시 롤백용
+            }
+            return true;
+        } catch (Exception e) {
+            //롤백
+            for(String key: paidKeys) {
+                redisTemplate.delete(key);
+            }
+            return false;
+        } finally {
+            //락 해제
+            for(RLock lock: locks) {
+                if (lock.isHeldByCurrentThread()) {
+                    try {
+                        lock.unlock();
+                    } catch (Exception ignore) {
+                    }
+                }
+            }
+        }
+    }
+
+    public boolean reserveWithQueue(int gamePk, List<String> seats, int userPk, int zonePk) {
+        if (!queueService.canReserve(gamePk, userPk)) return false;
+
+        boolean success = preemptSeat(gamePk, seats, userPk, zonePk);
+        if (success) {
+            queueService.dequeueUser(gamePk, userPk);
+            queueService.notifyNext(gamePk);
+        }
+        return success;
+    }
 }

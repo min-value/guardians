@@ -12,7 +12,7 @@
             <div class="text2">경기 결과를 맞추고 포인트 받아가세요!</div>
             <div class="team-containers">
                 <div class="logo-container">
-                    <img class="teamlogos" src="${pageContext.request.contextPath}/assets/img/teamlogos/6.png" alt="ourTeam" id="ourTeam">
+                    <img class="teamlogos" src="${pageContext.request.contextPath}/assets/img/teamlogos/6.svg" alt="ourTeam" id="ourTeam">
                 </div>
                 vs
                 <div class="logo-container">

@@ -14,18 +14,7 @@
 </head>
 <body>
 <script>
-    let map = ${zoneMapDetail}; //구역 별 선점/판매 된 좌석 번호 배열
-    let zoneInfo = ${zoneInfo}; //구역 별 정보(pk, name, color, cost, total num, remaining num)
-
-    let gameInfo = JSON.parse('${gameInfoJson}');
-    const gamePk = Number(gameInfo['gamePk']);
-    localStorage.setItem('gameInfo' + gamePk, JSON.stringify(gameInfo));
-
-    let discountInfo = JSON.parse('${discountInfo}');
-    localStorage.setItem('discountInfo' + gamePk, JSON.stringify(discountInfo));
-
-    const available = `${available}`;
-    console.log('예매 가능 장수: ' + available);
+    const gamePk = Number(${gamePk});
 </script>
 <!-- 등급/좌석 선택 -->
 <div class="full-container">
@@ -115,7 +104,7 @@
                                                 </div>
                                             </div>
                                             <div class="zoneVacancies-wrapper">
-                                                <div id="zoneVacancies">
+                                                <div class="zoneVacancies">
                                                         ${zone.remainingNum}석
                                                 </div>
                                             </div>

@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Map;
 
 @Data
-public class SeatGameInfoResDTO {
+public class SeatLoadResDTO {
     private boolean error;
     private String errorMsg;
     private Map<String, Object> result;

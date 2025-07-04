@@ -104,7 +104,7 @@ function renderGameCards(gameList) {
                             <div class="game-result-circle ${ourResultClass}">${myResultText}</div>
                             <div class="game-pitcher">${myPitcher || ""}</div>
                         </div>
-                        <img class="team-logo" src="/assets/img/games/6.png" alt="ourlogo" />
+                        <img class="team-logo" src="/assets/img/teamlogos/6.svg" alt="ourlogo" />
                         <div class="game-score">${game.ourScore}</div>
 
                         <div class="vs-block">
@@ -113,7 +113,7 @@ function renderGameCards(gameList) {
                         </div>
 
                         <div class="game-score">${game.oppScore}</div>
-                        <img class="team-logo" src="/assets/img/games/${game.oppTeamPk}.png" alt="opplogo" />
+                        <img class="team-logo" src="/assets/img/teamlogos/${game.oppTeamPk}.svg" alt="opplogo" />
 
                         <div class="pitcher-with-result" style="${game.result === 'DRAW' ? 'visibility: hidden;' : ''}">
                             <div class="game-result-circle ${oppResultClass}">${oppResultText}</div>

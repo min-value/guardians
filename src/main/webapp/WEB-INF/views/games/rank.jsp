@@ -42,34 +42,34 @@
                 <td>
                     <c:choose>
                         <c:when test="${team.teamName eq '신한'}">
-                            <img src="/assets/img/teamlogos/6.png" alt="신한">
+                            <img src="/assets/img/teamlogos/6.svg" alt="신한">
                         </c:when>
                         <c:when test="${team.teamName eq '삼성'}">
-                            <img src="/assets/img/teamlogos/5.png" alt="삼성">
+                            <img src="/assets/img/teamlogos/5.svg" alt="삼성">
                         </c:when>
                         <c:when test="${team.teamName eq '키움'}">
-                            <img src="/assets/img/teamlogos/10.png" alt="키움">
+                            <img src="/assets/img/teamlogos/10.svg" alt="키움">
                         </c:when>
                         <c:when test="${team.teamName eq '롯데'}">
-                            <img src="/assets/img/teamlogos/3.png" alt="롯데">
+                            <img src="/assets/img/teamlogos/3.svg" alt="롯데">
                         </c:when>
                         <c:when test="${team.teamName eq 'LG'}">
-                            <img src="/assets/img/teamlogos/2.png" alt="LG">
+                            <img src="/assets/img/teamlogos/2.svg" alt="LG">
                         </c:when>
                         <c:when test="${team.teamName eq 'NC'}">
-                            <img src="/assets/img/teamlogos/8.png" alt="NC">
+                            <img src="/assets/img/teamlogos/8.svg" alt="NC">
                         </c:when>
                         <c:when test="${team.teamName eq '두산'}">
-                            <img src="/assets/img/teamlogos/9.png" alt="두산">
+                            <img src="/assets/img/teamlogos/9.svg" alt="두산">
                         </c:when>
                         <c:when test="${team.teamName eq 'KT'}">
-                            <img src="/assets/img/teamlogos/7.png" alt="KT">
+                            <img src="/assets/img/teamlogos/7.svg" alt="KT">
                         </c:when>
                         <c:when test="${team.teamName eq '한화'}">
-                            <img src="/assets/img/teamlogos/1.png" alt="한화">
+                            <img src="/assets/img/teamlogos/1.svg" alt="한화">
                         </c:when>
                         <c:when test="${team.teamName eq 'KIA'}">
-                            <img src="/assets/img/teamlogos/4.png" alt="KIA">
+                            <img src="/assets/img/teamlogos/4.svg" alt="KIA">
                         </c:when>
                     </c:choose>
                     <span class="team-name-text">${team.teamName}</span>
