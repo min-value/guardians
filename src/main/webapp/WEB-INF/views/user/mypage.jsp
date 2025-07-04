@@ -635,18 +635,28 @@
                 .catch(err => console.error(err));
         }
 
-
-        // 초기 로드
-        loadTabContent('info');
-
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const name = tab.getAttribute('data-tab');
                 tabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
+                localStorage.setItem('lastMypageTab', name);
                 loadTabContent(name);
             });
         });
+
+        // 초기 로드
+        const savedTab = localStorage.getItem('lastMypageTab') || 'info';
+
+        tabs.forEach(tab => {
+            if (tab.getAttribute('data-tab') === savedTab) {
+                tab.classList.add('active');
+            } else {
+                tab.classList.remove('active');
+            }
+        });
+
+        loadTabContent(savedTab);
     });
 </script>
 
