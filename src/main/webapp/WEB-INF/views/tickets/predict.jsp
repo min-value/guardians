@@ -20,7 +20,7 @@
                 </div>
             </div>
             <input class="modal-btn" type="button" value="응원하기" disabled>
-            <div class="text3">결과를 맞추면 예매 금액의 8%, 틀리면 2%를 포인트로 드려요</div>
+            <div class="text3">결과를 맞추면 예매 금액의 1.2%, 틀리면 0.6%를 포인트로 드려요</div>
         </div>
     </div>
 </div>

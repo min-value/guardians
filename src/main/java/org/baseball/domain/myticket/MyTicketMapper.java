@@ -8,8 +8,12 @@ import java.util.Map;
 @Mapper
 public interface MyTicketMapper {
     List<Map<String, Object>> selectTicketsByUserPk(int userPk);
-    int cancelReservationList(int reservelistPk);
-    int cancelReservations(int reservelistPk);
+    int cancelReservationList(Map<String, Object> map);
+    int cancelReservations(Map<String, Object> map);
     int insertRefundPoint(Map<String, Object> map);
     int updateRefundPoint(Map<String, Object> map);
+    int restoreReservationList(Map<String, Object> map);
+    int restoreReservations(Map<String, Object> map);
+    int deleteRefundPoint(Map<String, Object> map);
+    int restoreRefundPoint(Map<String, Object> map);
 }

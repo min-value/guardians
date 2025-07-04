@@ -4,21 +4,18 @@ import javax.servlet.http.HttpSession;
 
 import org.baseball.domain.myfairy.MyFairyService;
 import org.baseball.domain.myticket.MyTicketService;
+import org.baseball.domain.redis.RedisService;
 import org.baseball.domain.tickets.TicketsService;
 import org.baseball.dto.MyFairyDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.baseball.dto.UserDTO;
 import org.baseball.domain.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class UserController {
@@ -26,18 +23,18 @@ public class UserController {
     private final UserService userService;
     private final MyFairyService myFairyService;
     private final MyTicketService myTicketService;
-    private final TicketsService ticketsService;
+    private final RedisService redisService;
 
     @Autowired
-    public UserController(UserService userService, MyFairyService myFairyService, MyTicketService myTicketService, TicketsService ticketsService) {
+    public UserController(UserService userService, MyFairyService myFairyService, MyTicketService myTicketService, RedisService redisService) {
         this.userService = userService;
         this.myFairyService = myFairyService;
         this.myTicketService = myTicketService;
-        this.ticketsService = ticketsService;
+        this.redisService = redisService;
     }
 
     // 로그인 페이지
-    @RequestMapping("/user/login")
+    @GetMapping("/user/login")
     public String showLoginPage() {
         return "user/login";
     }
@@ -63,14 +60,14 @@ public class UserController {
     }
 
     // 로그아웃 처리
-    @RequestMapping("/user/logout")
+    @GetMapping("/user/logout")
     public String logout(HttpSession session) {
         session.invalidate(); // 로그인 정보 삭제
         return "redirect:/home";
     }
 
     // 회원가입 페이지
-    @RequestMapping("/user/signup")
+    @GetMapping("/user/signup")
     public String showSignupPage() {
         return "user/signup";
     }
@@ -92,14 +89,14 @@ public class UserController {
             return "user/signup";
         }
     }
-    @RequestMapping("/user/signup/check")
+    @GetMapping("/user/signup/check")
     @ResponseBody
     public boolean checkUser(String userId){
         return userService.checkUserId(userId);
     }
 
     // 마이페이지
-    @RequestMapping("/user/mypage")
+    @GetMapping("/user/mypage")
     public String showMypage(HttpSession session, Model model) {
         UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
         if (loginUser != null) {
@@ -238,16 +235,72 @@ public class UserController {
     @Transactional
     public boolean cancelReservation(@RequestParam int reservelist_pk,
                                      @RequestParam int user_pk,
-                                     @RequestParam int point) {
+                                     @RequestParam int point,
+                                     @RequestParam int game_pk,
+                                     @RequestParam int zone_pk,
+                                     @RequestParam String seats) {
         Map<String, Object> map = new HashMap<>();
+        map.put("reservelist_pk", reservelist_pk);
         map.put("user_pk", user_pk);
         map.put("point", point);
-        int updated1 = myTicketService.cancelReservationList(reservelist_pk);
-        int updated2 = myTicketService.cancelReservations(reservelist_pk);
-        int updated3 = myTicketService.insertRefundPoint(map);
-        int updated4 = myTicketService.updateRefundPoint(map);
 
-        return updated1>0 && updated2>0 && updated3>0 && updated4>0;
+        List<String> seat = Arrays.asList(seats.split(","));
+
+        try {
+            if(zone_pk==1101 || zone_pk==1100){
+                seat = null;
+            }
+
+            boolean r = redisService.cancelPayment(
+                    game_pk,
+                    seat,
+                    user_pk,
+                    zone_pk
+            );
+
+            return r && myTicketService.cancelReservation(map);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    @PostMapping("/user/restoreCancel")
+    @ResponseBody
+    @Transactional
+    public boolean restoreCanceledReservation(@RequestParam int reservelist_pk,
+                                     @RequestParam int user_pk,
+                                     @RequestParam int point,
+                                     @RequestParam int game_pk,
+                                     @RequestParam int zone_pk,
+                                     @RequestParam String seats) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("reservelist_pk", reservelist_pk);
+        map.put("user_pk", user_pk);
+        map.put("point", point);
+
+        List<String> seat = Arrays.asList(seats.split(","));
+
+        try {
+            if(zone_pk==1101 || zone_pk==1100){
+                seat = null;
+            }
+
+            boolean r = redisService.restorePayment(
+                    game_pk,
+                    seat,
+                    user_pk,
+                    zone_pk
+            );
+            return r && myTicketService.restoreCanceledReservation(map);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
     @GetMapping("/user/info")

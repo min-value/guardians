@@ -46,6 +46,29 @@
         WHERE user_id = #{userId}
     </update>
 
+    <delete id="deleteReservationsByUser" parameterType="int">
+        DELETE FROM reservations
+        WHERE reservelist_pk IN (
+            SELECT reservelist_pk FROM reservation_list WHERE user_pk = #{userPk}
+        )
+    </delete>
+
+    <delete id="deleteReservationListByUser" parameterType="int">
+        DELETE FROM reservation_list WHERE user_pk = #{userPk}
+    </delete>
+
+    <delete id="deletePointsByUser" parameterType="int">
+        DELETE FROM point WHERE user_pk = #{userPk}
+    </delete>
+
+    <delete id="deleteCommentsByUser" parameterType="int">
+        DELETE FROM comment WHERE user_pk = #{userPk}
+    </delete>
+
+    <delete id="deletePostsByUser" parameterType="int">
+        DELETE FROM post WHERE user_pk = #{userPk}
+    </delete>
+
     <delete id="deleteUser" parameterType="int">
         DELETE FROM user WHERE user_pk = #{userPk}
     </delete>
