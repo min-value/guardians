@@ -247,7 +247,8 @@ public class UserController {
         map.put("user_pk", user_pk);
         map.put("point", point);
 
-        List<String> seat = Arrays.asList(seats.split(","));
+        List<String> seat = Arrays.asList(seats.replace(" ", "").split(","));
+        System.out.println(seat.toString());
 
         try {
             if(zone_pk==1101 || zone_pk==1100){
@@ -285,7 +286,7 @@ public class UserController {
         map.put("point", point);
 
         List<String> seat = Arrays.asList(seats.split(","));
-
+        System.out.println(seat.toString());
         try {
             if(zone_pk==1101 || zone_pk==1100){
                 seat = null;
