@@ -39,7 +39,9 @@
             GROUP_CONCAT(CONCAT(z.zone_name, ' ', r.seat_num) SEPARATOR ', ') AS seatInfo,
             6 AS homeTeamPk,
             g.team_pk AS oppTeamPk,
-
+            g.game_pk AS gamePk,
+            z.zone_pk AS zonePk,
+            GROUP_CONCAT(r.seat_num SEPARATOR ', ') AS seats,
             g.our_score,
             g.opp_score,
             g.result,
@@ -65,10 +67,10 @@
         GROUP BY rl.reservelist_pk
         ORDER BY rl.reserve_date DESC
     </select>
-    <update id="cancelReservationList" parameterType="int">
+    <update id="cancelReservationList" parameterType="map">
         UPDATE reservation_list set cancel_date = NOW(), is_cancel = 1 where reservelist_pk = #{reservelist_pk}
     </update>
-    <update id="cancelReservations" parameterType="int">
+    <update id="cancelReservations" parameterType="map">
         UPDATE reservations set state = 'CANCELED' where reservelist_pk = #{reservelist_pk}
     </update>
     <insert id="insertRefundPoint" parameterType="map">
@@ -77,5 +79,24 @@
     </insert>
     <update id="updateRefundPoint" parameterType="map">
         UPDATE user SET total_point = total_point + #{point} where user_pk = #{user_pk}
+    </update>
+    <update id="restoreReservationList" parameterType="map">
+        UPDATE reservation_list set cancel_date = null, is_cancel = 0 where reservelist_pk = #{reservelist_pk}
+    </update>
+    <update id="restoreReservations" parameterType="map">
+        UPDATE reservations set state = 'PAID' where reservelist_pk = #{reservelist_pk}
+    </update>
+    <!--todo-->
+    <delete id="deleteRefundPoint" parameterType="map">
+        DELETE FROM point
+        WHERE user_pk = #{user_pk}
+          AND point = #{point}
+          AND type = '티켓 예매 포인트 환불'
+          AND description = '사용 환불'
+            ORDER BY date DESC
+    LIMIT 1
+    </delete>
+    <update id="restoreRefundPoint" parameterType="map">
+        UPDATE user SET total_point = total_point - #{point} where user_pk = #{user_pk}
     </update>
 </mapper>
