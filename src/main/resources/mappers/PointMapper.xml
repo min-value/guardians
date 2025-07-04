@@ -21,6 +21,7 @@
         END AS day
     FROM point
     WHERE user_pk = #{userPk}
+        AND point != 0
         ORDER BY date DESC
     </select>
 

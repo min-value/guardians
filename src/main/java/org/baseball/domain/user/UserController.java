@@ -9,7 +9,6 @@ import org.baseball.domain.tickets.TicketsService;
 import org.baseball.dto.MyFairyDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.baseball.dto.UserDTO;
 import org.baseball.domain.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ public class UserController {
     }
 
     // 로그인 페이지
-    @RequestMapping("/user/login")
+    @GetMapping("/user/login")
     public String showLoginPage() {
         return "user/login";
     }
@@ -61,14 +60,14 @@ public class UserController {
     }
 
     // 로그아웃 처리
-    @RequestMapping("/user/logout")
+    @GetMapping("/user/logout")
     public String logout(HttpSession session) {
         session.invalidate(); // 로그인 정보 삭제
         return "redirect:/home";
     }
 
     // 회원가입 페이지
-    @RequestMapping("/user/signup")
+    @GetMapping("/user/signup")
     public String showSignupPage() {
         return "user/signup";
     }
@@ -90,14 +89,14 @@ public class UserController {
             return "user/signup";
         }
     }
-    @RequestMapping("/user/signup/check")
+    @GetMapping("/user/signup/check")
     @ResponseBody
     public boolean checkUser(String userId){
         return userService.checkUserId(userId);
     }
 
     // 마이페이지
-    @RequestMapping("/user/mypage")
+    @GetMapping("/user/mypage")
     public String showMypage(HttpSession session, Model model) {
         UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
         if (loginUser != null) {

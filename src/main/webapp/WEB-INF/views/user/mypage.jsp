@@ -235,9 +235,9 @@
 
                             item.innerHTML = `
                                 <div class="ticket-top">
-                                    <img src="/assets/img/teamlogos/\${ticket.homeTeamPk}.png" class="logo-team">
+                                    <img src="/assets/img/teamlogos/\${ticket.homeTeamPk}.svg" class="logo-team">
                                     <span class="vs-text">VS</span>
-                                    <img src="/assets/img/teamlogos/\${ticket.oppTeamPk}.png" class="logo-team">
+                                    <img src="/assets/img/teamlogos/\${ticket.oppTeamPk}.svg" class="logo-team">
                                     <span class="match-date">\${ticket.matchDate}</span>
                                     <img src="/assets/img/icon/chevron-right.svg" class="arrow-icon">
                                 </div>
@@ -271,7 +271,7 @@
                               `;
                             container.appendChild(item);
 
-                            const arrow = item.querySelector('.arrow-icon');
+                            const arrow = item.querySelector('.ticket-top');
                             arrow.addEventListener('click', () => {
                                 item.classList.toggle('expanded');
                             });
@@ -463,7 +463,7 @@
                     document.querySelector('.stat:nth-child(2) .count').textContent = fairy.winCnt + '회';
                     document.querySelector('.stat:nth-child(3) .count').textContent = fairy.drawCnt + '회';
                     document.querySelector('.stat:nth-child(4) .count').textContent = fairy.loseCnt + '회';
-                    document.querySelector('.stat:nth-child(5) .count').textContent = fairy.winRate;
+                    document.querySelector('.stat:nth-child(5) .count').textContent = fairy.winRateFormatted;
                 });
 
             const tryRender = () => {
@@ -498,9 +498,9 @@
                             item.innerHTML = `
                                 <div class="fairy-top">
                                     <span class ="predict-text"></span>
-                                    <img src="/assets/img/teamlogos/\${ticket.homeTeamPk}.png" class="logo-team">
+                                    <img src="/assets/img/teamlogos/\${ticket.homeTeamPk}.svg" class="logo-team">
                                     <span class="vs-text">VS</span>
-                                    <img src="/assets/img/teamlogos/\${ticket.oppTeamPk}.png" class="logo-team">
+                                    <img src="/assets/img/teamlogos/\${ticket.oppTeamPk}.svg" class="logo-team">
                                     <span class="match-date">\${ticket.matchDate}</span>
                                     <img src="/assets/img/icon/chevron-right.svg" class="arrow-icon">
                                 </div>
@@ -549,7 +549,7 @@
                                 drawFairyChart(detail, chart);
                             }
 
-                            const arrow = item.querySelector('.arrow-icon');
+                            const arrow = item.querySelector('.fairy-top');
                             arrow.addEventListener('click', () => {
                                 item.classList.toggle('expanded');
                             });
@@ -664,18 +664,33 @@
                 .catch(err => console.error(err));
         }
 
-
-        // 초기 로드
-        loadTabContent('info');
+        const navType = performance.getEntriesByType("navigation")[0]?.type;
+        if (navType !== "reload") {
+            localStorage.removeItem("lastMypageTab");
+        }
 
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const name = tab.getAttribute('data-tab');
                 tabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
+                localStorage.setItem('lastMypageTab', name);
                 loadTabContent(name);
             });
         });
+
+        // 초기 로드
+        const savedTab = localStorage.getItem('lastMypageTab') || 'info';
+
+        tabs.forEach(tab => {
+            if (tab.getAttribute('data-tab') === savedTab) {
+                tab.classList.add('active');
+            } else {
+                tab.classList.remove('active');
+            }
+        });
+
+        loadTabContent(savedTab);
     });
 </script>
 

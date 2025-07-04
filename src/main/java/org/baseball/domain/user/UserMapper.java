@@ -16,6 +16,11 @@ public interface UserMapper {
     void updateUser(UserDTO user);
     // 마이페이지 회원 탈퇴
     int deleteUser(int userPk);
+    void deleteReservationsByUser(@Param("userPk") int userPk);
+    void deleteReservationListByUser(@Param("userPk") int userPk);
+    void deletePointsByUser(@Param("userPk") int userPk);
+    void deleteCommentsByUser(int userPk);
+    void deletePostsByUser(int userPk);
     // 포인트 총합 조회
     Integer getTotalPoint(@Param("userPk") int userPk);
     // 포인트 총합 업데이트
