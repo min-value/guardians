@@ -1,6 +1,6 @@
 package org.baseball.config;
 
-import org.baseball.domain.Redis.RedisExpirationListener;
+import org.baseball.domain.redis.RedisExpirationListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

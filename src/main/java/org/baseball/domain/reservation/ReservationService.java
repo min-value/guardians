@@ -3,7 +3,7 @@ package org.baseball.domain.reservation;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.baseball.domain.Redis.RedisService;
+import org.baseball.domain.redis.RedisService;
 import org.baseball.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
