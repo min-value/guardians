@@ -11,6 +11,7 @@ function loadComment(page){
             const totalCount = res.totalCount;
             const container = $('#comment-container').empty();
             const deleteForm = $('#deleteComment').empty();
+            $('#write').val("");
             $('#sendBtn').prop('disabled', false);
             commentList.forEach(comment =>{
                 const date = new Date(comment.c_date);
