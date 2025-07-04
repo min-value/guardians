@@ -30,7 +30,7 @@ public class ReservationService {
     //게임 정보(상대팀) 반환
     @Transactional
     public ReserveGameInfoDTO getGameInfo(int gamePk) {
-            return reservationMapper.getGameInfo(gamePk);
+        return reservationMapper.getGameInfo(gamePk);
     }
 
     //팔린 좌석 목록 반환
@@ -41,8 +41,16 @@ public class ReservationService {
 
     //구역 정보 반환
     @Transactional
-    public List<ZoneDTO> getZones() {
-        return reservationMapper.getZones();
+    public List<ZoneDTO> getZones(int gamePk) {
+        List<ZoneDTO> result = reservationMapper.getZones();
+
+        //팔린 좌석들 가져오기
+        for(ZoneDTO zoneDTO :result){
+            List<String> seats = getSoldSeats(new SoldSeatsReqDTO(gamePk, zoneDTO.getZonePk()));
+            zoneDTO.setRemainingNum(zoneDTO.getTotalNum() - seats.size());
+        }
+
+        return result;
     }
 
     @Transactional
@@ -54,7 +62,7 @@ public class ReservationService {
     @Transactional
     public boolean getSeatInfo(int gamePk, HttpSession session) throws JsonProcessingException {
         //구역 정보 가져오기
-        List<ZoneDTO> zoneDTOList = getZones();
+        List<ZoneDTO> zoneDTOList = getZones(gamePk);
 
         //구역 별 남은 좌석 수 저장
 //        Map<ZoneDTO, Integer> zoneMap = new LinkedHashMap<>();
@@ -64,7 +72,6 @@ public class ReservationService {
         //팔린 좌석들 가져오기
         for(ZoneDTO zoneDTO : zoneDTOList){
             List<String> seats = getSoldSeats(new SoldSeatsReqDTO(gamePk, zoneDTO.getZonePk()));
-            zoneDTO.setRemainingNum(zoneDTO.getTotalNum() - seats.size());
             zoneInfo.put(zoneDTO.getZonePk(), zoneDTO);
             zoneDetail.put(zoneDTO.getZonePk(), seats);
         }
@@ -77,6 +84,32 @@ public class ReservationService {
         session.setAttribute("zoneMapDetail", new ObjectMapper().writeValueAsString(zoneDetail));
 
         return true;
+    }
+
+    // 구역 정보 가져오기
+    @Transactional
+    public void getSeatsInfo(int gamePk, Map<String, Object> result) {
+        List<ZoneDTO> zoneDTOList = getZones(gamePk);
+
+        //구역 별 남은 좌석 수 저장
+        Map<Integer, ZoneDTO> zoneInfo = new LinkedHashMap<>();
+        Map<Integer, List<String>> zoneMapDetail = new LinkedHashMap<>();
+
+        //팔린 좌석들 가져오기
+        for(ZoneDTO zoneDTO : zoneDTOList){
+            List<String> seats = getSoldSeats(new SoldSeatsReqDTO(gamePk, zoneDTO.getZonePk())); //구역 별로 팔린 좌석 목록 불러오기
+
+            zoneDTO.setRemainingNum(zoneDTO.getTotalNum() - seats.size()); //남은 좌석 수 계산
+
+            zoneInfo.put(zoneDTO.getZonePk(), zoneDTO); //zoneMap 세팅
+            zoneMapDetail.put(zoneDTO.getZonePk(), seats); //zoneMapDetail 세팅
+        }
+
+        //구역 당 남은 좌석 수 저장
+        result.put("zoneInfo", zoneInfo);
+
+        //구역 당 상세 정보 세션에 저장
+        result.put("zoneMapDetail", zoneMapDetail);
     }
 
     @Transactional

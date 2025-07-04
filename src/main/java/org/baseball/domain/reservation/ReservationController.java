@@ -1,9 +1,7 @@
 package org.baseball.domain.reservation;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.baseball.domain.Redis.RedisService;
 import org.baseball.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,70 +20,76 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
-    @Autowired
-    private RedisService redisService;
-    @Autowired
-    private ReservationMapper reservationMapper;
-
     //등급 및 좌석 선택 페이지 로드
     @GetMapping("/seat")
     public String seat(@RequestParam("gamePk") int gamePk, HttpSession session, Model model) throws JsonProcessingException {
-        //로그인 확인
+        //게임 정보 세션에 저장
+        session.setAttribute("gamePk", gamePk);
+
+        //구역 정보 세션에 저장
+        model.addAttribute("zoneMap", reservationService.getZones(gamePk));
+
+
+        return "reservation/tickets1";
+    }
+
+    //seat 페이지 최초 로드 시 정보 불러오기
+    @GetMapping("/seat/load")
+    @ResponseBody
+    public SeatLoadResDTO seatLoad(@RequestParam int gamePk, HttpSession session) throws JsonProcessingException {
         try {
+            SeatLoadResDTO result = new SeatLoadResDTO();
+            result.setError(false);
+            result.setResult(new HashMap<>());
+
+            //유저 정보 가져오기
             UserDTO user = (UserDTO) session.getAttribute("loginUser");
 
-
-            if(user == null) {
-                return "reservation/errors/needLogin";
-            }
-
-            //해당 유저가 해당 게임에 구매한 좌석이 4개 이하인지 확인
-            int cnt = reservationService.countUserReserve(gamePk, user.getUserPk());
-            if(cnt >= 4) {
-                model.addAttribute("errorMsg", "최대 4장까지만 구매가 가능합니다.");
-                return "reservation/errors/generalError";
-            }
-
-            //남은 개수 세션에 저장
-            session.setAttribute("available", 4 - cnt);
-
             //우리팀 경기인지 확인
-            if(!reservationService.isOurGame(gamePk)) {
-                model.addAttribute("errorMsg", "존재하지 않는 경기입니다.");
-                return "reservation/errors/generalError";
+            if (!reservationService.isOurGame(gamePk)) {
+                result.setError(true);
+                result.setErrorMsg("존재하지 않는 경기입니다.");
+                return result;
             }
 
-            //경기 정보 가져오기(상대 팀 + 날짜)
+            //해당 유저가 해당 게임에서 구매한 좌석이 4개 이하인지 확인
+            int cnt = reservationService.countUserReserve(gamePk, user.getUserPk());
+
+            //남은 좌석 수 저장 - available(세션)
+            if (cnt >= 4) {
+                result.setError(true);
+                result.setErrorMsg("최대 4장까지만 구매가 가능합니다");
+                return result;
+            }
+            int remainingCnt = 4 - cnt;
+            session.setAttribute("available", remainingCnt); //세션에 저장
+            result.getResult().put("available", remainingCnt);
+
+            //경기 정보 저장 (gameInfo) - gameInfo(세션), gamePk
             ReserveGameInfoDTO reserveGameInfoDTO = reservationService.getGameInfo(gamePk);
-            //게임 정보 세션에 저장
-            session.setAttribute("gamePk", reserveGameInfoDTO.getGamePk());
-            session.setAttribute("gameInfo", reserveGameInfoDTO);
-            session.setAttribute("gameInfoJson", new ObjectMapper().writeValueAsString(reserveGameInfoDTO));
+            result.getResult().put("gameInfo", reserveGameInfoDTO);
+            session.setAttribute("gameInfo", reserveGameInfoDTO); //세션에 저장(JSON으로 파싱)
 
-            //좌석 정보 세션에 저장
-            reservationService.getSeatInfo(gamePk, session);
+            //좌석 정보 저장 - zoneInfo(구역 별 상세 정보), zoneMapDetail(구역별 팔린 좌석 목록)
+            reservationService.getSeatsInfo(gamePk, result.getResult());
 
-            //할인 정보 세션에 저장
+            //할인 정보 저장 - discountInfo
             List<DiscountDTO> discountDTOList = reservationService.getDiscountInfo();
-            session.setAttribute("discountInfo", new ObjectMapper().writeValueAsString(discountDTOList));
-        } catch(Exception e) {
+            result.getResult().put("discountInfo", discountDTOList);
+
+            return result;
+        } catch (Exception e){
             e.printStackTrace();
-            model.addAttribute("errorMsg", "내부 서버 오류");
-            return "reservation/errors/generalError";
+            return null;
         }
-        return "reservation/tickets1";
     }
 
     //전체 구역 정보 불러오기
     @GetMapping("/info")
     @ResponseBody
     public Map<String, Object> getGameInfo(@RequestParam("gamePk") int gamePk, HttpSession session) throws JsonProcessingException {
-        reservationService.getSeatInfo(gamePk, session);
-
         Map<String, Object> result = new HashMap<>();
-        result.put("zoneMap", session.getAttribute("zoneMap"));
-        result.put("zoneInfo", session.getAttribute("zoneInfo"));
-        result.put("zoneMapDetail", session.getAttribute("zoneMapDetail"));
+        reservationService.getSeatsInfo(gamePk, result);
         return result;
     }
 
@@ -159,11 +163,7 @@ public class ReservationController {
     public void clearSession(HttpSession session) {
         session.removeAttribute("gamePk");
         session.removeAttribute("gameInfo");
-        session.removeAttribute("gameInfoJson");
         session.removeAttribute("zoneMap");
-        session.removeAttribute("zoneInfo");
-        session.removeAttribute("zoneMapDetail");
-        session.removeAttribute("discountInfo");
         session.removeAttribute("available");
     }
 }

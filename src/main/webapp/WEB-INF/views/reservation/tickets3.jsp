@@ -11,8 +11,8 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
 <script>
-    let gameInfo = JSON.parse('${gameInfoJson}');
-    const gamePk = Number(gameInfo['gamePk']);
+    const gamePk = Number(${gamePk});
+    const gameInfo = JSON.parse(localStorage.getItem('gameInfo' + gamePk));
 
     const user = {
         userPk: "${sessionScope.loginUser.userPk}",

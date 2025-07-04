@@ -1,5 +1,14 @@
 import {getSeatsMap, setSeatType} from "./seats.js";
-import {scrollToZoneInfo, updateZoneInfoHighlight} from "./tickets1.js";
+import {openLoading, closeLoading} from "./loading.js";
+
+import {
+    changeZoneInfoListBox,
+    map,
+    scrollToZoneInfo,
+    setMap,
+    setZoneInfo,
+    updateZoneInfoHighlight, zoneInfo
+} from "./tickets1.js";
 
 const standardX = 130;
 const standardY = 50;
@@ -212,19 +221,39 @@ export function setZoom() {
 
 /* 리로드 함수 */
 export function reload() {
+    openLoading();
     fetch(`/reservation/info?gamePk=${gamePk}`)
         .then(res => res.json())
         .then(data => {
-            map = JSON.parse(data.zoneMapDetail);
-            zoneInfo = JSON.parse(data.zoneInfo);
+            setMap(data.zoneMapDetail);
+            setZoneInfo(data.zoneInfo);
+            console.log(map);
+            console.log(zoneInfo);
+            /* 새로고침 방식 변경 */
+            // $('.zoneInfo-wrapper').load(window.location.href + ' .zoneInfo-wrapper', function() {
+            //     scrollToZoneInfo(lastColoredName);
+            //     updateZoneInfoHighlight(lastColoredName);
+            //     document.querySelectorAll('.zoneInfo').forEach(el => {
+            //         el.addEventListener('click', () => {
+            //             let zonePk = el.id.split('zone')[0];
+            //             changeZoneInfoListBox(zonePk);
+            //         });
+            //     });
+            // });
+            reloadSelectZone();
 
-            $('.zoneInfo-wrapper').load(window.location.href + ' .zoneInfo-wrapper', function() {
-                scrollToZoneInfo(lastColoredName);
-                updateZoneInfoHighlight(lastColoredName);
-            });
             resetSelectedAll();
             getSeatsMap(setSeatType(lastColoredName));
             addSeatListener();
+
+            closeLoading();
         });
 
+}
+/* 등급 선택 정보 리로드 */
+function reloadSelectZone() {
+    document.querySelectorAll(".zoneInfo").forEach(el => {
+        let zonePk = el.id.split('zone')[0];
+        el.querySelector('.zoneVacancies').innerHTML = zoneInfo[zonePk]['remainingNum'] + '석';
+    });
 }
