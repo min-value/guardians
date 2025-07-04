@@ -10,8 +10,8 @@
 </head>
 <body>
 <script>
-    let gameInfo = JSON.parse('${gameInfoJson}');
-    const gamePk = Number(JSON.parse('${gameInfoJson}')['gamePk']);
+    const gamePk = Number(${gamePk});
+    const gameInfo = JSON.parse(localStorage.getItem('gameInfo' + gamePk));
 </script>
 <!-- 권종/할인 선택 -->
 <div class="full-container">

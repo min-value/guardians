@@ -1,4 +1,4 @@
-import {colorRestore, reload, setZoom} from "./toolbar.js";
+import {colorRestore, reload, setZoom, switchToZone} from "./toolbar.js";
 import {getSeatsMap, setSeatType} from "./seats.js";
 import {openLoading, closeLoading} from "./loading.js";
 export let selectedSeats = [];
@@ -8,7 +8,52 @@ export let lastColoredName = null;
 
 let seatSelectMap = {}; // key: seatId, value: true/false
 
+export let map = null;
+export let zoneInfo = null;
+export let gameInfo = null;
+export let discountInfo = null;
+export let available = null;
+
 document.addEventListener('DOMContentLoaded', () => {
+    //정보 로드
+    fetch(`/reservation/seat/load?gamePk=${gamePk}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.error === true) {
+                alert(data.errorMsg);
+                removeData();
+                window.close();
+            }
+
+            map = data.result.zoneMapDetail;
+            zoneInfo = data.result.zoneInfo;
+            gameInfo = data.result.gameInfo;
+            discountInfo = data.result.discountInfo;
+            available = Number(data.result.available);
+
+            localStorage.setItem('available' + gamePk, JSON.stringify(available));
+            localStorage.setItem('discountInfo' + gamePk, JSON.stringify(discountInfo));
+            localStorage.setItem('gameInfo' + gamePk, JSON.stringify(gameInfo));
+
+            console.log(map);
+            console.log(zoneInfo);
+            console.log(gameInfo);
+            console.log(discountInfo);
+            console.log(available);
+
+        })
+        .catch(error => {
+            alert(`내부 서버 오류 발생으로 작업을 중단합니다.`);
+            removeData();
+            window.close();
+        });
+
+
     const tooltip = document.getElementById('tooltip');
 
     //선택한 좌석 바 관련 리스너 추가
@@ -181,7 +226,7 @@ function calCount(type) {
     console.log(selectedSeats)
 }
 /* 등급 선택 클릭 리스너 */
-function changeZoneInfoListBox(zonePk) {
+export function changeZoneInfoListBox(zonePk) {
     //svgMap에서 해당 존 가져오기
     let region = document.getElementById(zonePk);
     const mask = document.getElementById('highlight-mask');
@@ -189,12 +234,18 @@ function changeZoneInfoListBox(zonePk) {
 
     if(colored === 1 && zonePk === lastColoredName) {
         //포커스 O
-        updateZoneInfoHighlight(null);
-        colorRestore(mask, overlay);
+        if(currentView === 'zone') {
+            updateZoneInfoHighlight(null);
+            colorRestore(mask, overlay);
+        }
     } else {
         //포커스 X
         updateZoneInfoHighlight(zonePk);
         changeColor(region);
+
+        if(currentView === 'seat') {
+            switchToZone();
+        }
     }
 }
 /* 특정 zone 선택 시 해당 zonePk를 아이디로 가지고 있는 요소를 등급 선택존에서 포커스 */
@@ -452,4 +503,12 @@ function closePopup(popup, overlay) {
 function removeData() {
     localStorage.clear();
     navigator.sendBeacon('${pageContext.request.contextPath}/session/clear');
+}
+
+export function setMap(newMap) {
+    map = newMap;
+}
+
+export function setZoneInfo(newZoneInfo) {
+    zoneInfo = newZoneInfo;
 }

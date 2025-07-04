@@ -1,4 +1,4 @@
-package org.baseball.domain.Redis;
+package org.baseball.domain.redis;
 
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
@@ -335,6 +335,52 @@ public class RedisService {
         } finally {
             // 락 해제
             for (RLock lock : locks) {
+                if (lock.isHeldByCurrentThread()) {
+                    try {
+                        lock.unlock();
+                    } catch (Exception ignore) {
+                    }
+                }
+            }
+        }
+    }
+
+    //결제 실패 시 복구
+    public boolean restorePayment(int gamePk, List<String> seats, int userPk, int zonePk) {
+        List<RLock> locks = new ArrayList<>();
+        List<String> paidKeys = new ArrayList<>();
+
+        try {
+            //락 리스트 생성
+            for(String seatNum: seats) {
+                RLock lock = redissonClient.getLock(getLockKey(gamePk, seatNum, zonePk));
+                locks.add(lock);
+            }
+
+            //Multilock 획득 시도
+            RLock multiLock = redissonClient.getMultiLock(locks.toArray(new RLock[0]));
+
+            if(!multiLock.tryLock(3, 10, TimeUnit.SECONDS)) {
+                //락 획득 실패
+                return false;
+            }
+
+            //모든 좌석에 대해 선점 등록
+            for(String seatNum: seats) {
+                String paidKey = getPaidKey(gamePk, seatNum, zonePk, userPk);
+                redisTemplate.opsForValue().set(paidKey, String.valueOf(userPk), 3, TimeUnit.MINUTES); //todo: minute으로 변경
+                paidKeys.add(paidKey); //나중에 실패 시 롤백용
+            }
+            return true;
+        } catch (Exception e) {
+            //롤백
+            for(String key: paidKeys) {
+                redisTemplate.delete(key);
+            }
+            return false;
+        } finally {
+            //락 해제
+            for(RLock lock: locks) {
                 if (lock.isHeldByCurrentThread()) {
                     try {
                         lock.unlock();
