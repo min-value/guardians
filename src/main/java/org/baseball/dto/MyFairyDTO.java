@@ -9,6 +9,7 @@ public class MyFairyDTO {
     private int loseCnt;
     private int drawCnt;
     private double winRate;
+    private String winRateFormatted;
 
     private int ourHit;
     private int ourHomerun;
