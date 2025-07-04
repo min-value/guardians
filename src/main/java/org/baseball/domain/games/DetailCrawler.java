@@ -50,12 +50,12 @@ public class DetailCrawler {
         String url = "https://sports.daum.net/schedule/kbo?date=2025" + m;
         driver.get(url);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("li[data-team-id='384'] > a"))).click();
     }
 
     private void parseGames(WebDriver driver, Set<Integer> processedPk) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("tbody#scheduleList")));
         List<WebElement> rows = driver.findElements(By.cssSelector("tbody#scheduleList > tr[data-date]"));
@@ -66,7 +66,10 @@ public class DetailCrawler {
                 state = row.findElement(By.cssSelector("span.state_game")).getText().trim();
             } catch (Exception ignored) {}
 
-            if (state.equals("경기전") || state.equals("경기취소")) continue;
+            if (state.equals("경기전") || state.equals("경기취소")) {
+                System.out.println("미진행, 취소 경기");
+                continue;
+            }
 
             WebElement linkTag;
             try {
@@ -79,7 +82,7 @@ public class DetailCrawler {
             if (link == null || link.isEmpty()) continue;
 
             ((JavascriptExecutor) driver).executeScript("window.open('" + link + "', '_blank');");
-            new WebDriverWait(driver, Duration.ofSeconds(5))
+            new WebDriverWait(driver, Duration.ofSeconds(10))
                     .until(d -> driver.getWindowHandles().size() > 1);
 
             List<String> tabs = new ArrayList<>(driver.getWindowHandles());
