@@ -13,8 +13,7 @@
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/include/pagination.js"></script>
 <script>
-    let gameInfo = JSON.parse('${gameInfoJson}');
-    const gamePk = Number(JSON.parse('${gameInfoJson}')['gamePk']);
+    const gamePk = Number(${gamePk});
 
     const user = {
         userPk: "${sessionScope.loginUser.userPk}",

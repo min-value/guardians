@@ -2,7 +2,6 @@ let curPredict = null;
 let reservelistPk = JSON.parse(localStorage.getItem("reservelistPk" +  gamePk));
 const gameInfo = JSON.parse(localStorage.getItem('gameInfo' + gamePk));
 
-
 $(document).ready(function () {
     $("#opponentTeam").attr("src", `/assets/img/teamlogos/${gameInfo['oppTeamPk']}.png`);
 
