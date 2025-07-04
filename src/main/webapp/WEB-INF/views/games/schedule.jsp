@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%
+    String pageTitle = "경기 일정";
+%>
 <html>
 <head>
     <title>신한 가디언즈</title>
@@ -11,12 +13,7 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
-<div class="header-title">
-    <img src="/assets/img/header/header-title.png" alt="헤더">
-    <div style="position: absolute; color: black; font-size: 48px; font-weight: 600;">
-        경기 일정
-    </div>
-</div>
+<%@ include file="../include/headerImg.jsp" %>
 
 <!-- 드롭다운 -->
 <div class="calendar-dropdown">

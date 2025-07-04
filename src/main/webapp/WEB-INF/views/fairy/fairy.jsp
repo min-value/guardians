@@ -86,6 +86,10 @@
                   <img src="/assets/img/fairy/fairyMove.webp" width="850px" alt="fairy">
               </div>
           </div>
+          <div class="notice">
+              승률은 라플라스 변환을 적용하여 <strong>(이긴 직관 수 + 1) / (총 직관 수 + 2)</strong>로 계산됩니다.<br>
+              동일한 승률일 경우, 총 직관 수가 많은 순으로 정렬됩니다.
+          </div>
       </div>
   </div>
   <%@ include file="../include/footer.jsp"%>

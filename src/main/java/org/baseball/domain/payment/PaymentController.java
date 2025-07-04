@@ -38,6 +38,9 @@ public class PaymentController {
     @PostMapping("/cancelPayment/{imp_uid}")
     @ResponseBody
     public IamportResponse<Payment> cancelPayment(@PathVariable("imp_uid") String impUid) throws Exception {
+        if (api == null) {
+            api = new IamportClient(apiKey, apiSecret);
+        }
         CancelData cancelData = new CancelData(impUid, true); // 전액 환불
         return api.cancelPaymentByImpUid(cancelData);
     }

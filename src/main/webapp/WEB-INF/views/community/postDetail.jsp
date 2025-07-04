@@ -87,6 +87,7 @@
 
     function checkLogin(){
         let find = document.commentForm;
+        const sendBtn = document.getElementById("sendBtn");
         const isLoggedIn = document.querySelector("#sendBtn").dataset.login === 'true';
         const commentContent = document.getElementById("write").value.trim();
 
@@ -99,6 +100,8 @@
             alert("내용을 작성하세요");
             return false;
         }
+
+        sendBtn.disabled = true;
 
         return true;
     }

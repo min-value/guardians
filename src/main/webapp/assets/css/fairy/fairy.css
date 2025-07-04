@@ -146,3 +146,13 @@ table {
     height: 10px;
     background-color: #3B82F6;
 }
+
+.notice {
+    position: absolute;
+    bottom: 10px;
+    right: 30px;
+    font-size: 14px;
+    color: var(--gray-01);
+    text-align: right;
+    line-height: 1.4;
+}
