@@ -19,7 +19,7 @@
     <div class="content">
         <form id="writePost" action="/community/post/add" method="post" onsubmit="return checkPost();">
             <div class="postHeader">
-                <input id="postTitle" class="title" name="title" placeholder="제목을 입력하세요" autofocus>
+                <input id="postTitle" class="title" name="title" maxlength="28" placeholder="제목을 입력하세요(최대28자)" autofocus>
                 <button id="recommendBtn" type="button" onclick="recommendContent()">AI 내용 추천</button>
             </div>
             <div id="post-container">

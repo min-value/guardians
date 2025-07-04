@@ -11,6 +11,8 @@ function loadComment(page){
             const totalCount = res.totalCount;
             const container = $('#comment-container').empty();
             const deleteForm = $('#deleteComment').empty();
+            $('#write').val("");
+            $('#sendBtn').prop('disabled', false);
             commentList.forEach(comment =>{
                 const date = new Date(comment.c_date);
                 const formattedDate = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')} ${date.getHours().toString().padStart(2,'0')}:${date.getMinutes().toString().padStart(2,'0')}`;

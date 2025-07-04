@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String pageTitle = "로그인";
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -13,16 +16,13 @@
 </head>
 <body>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
-    <div class="header-title" style="max-width: 100%; height: 320px; display: flex; justify-content: center;">
-        <!--나중에 컴포넌트로 바꿀 것.-->
-        <img src="/assets/img/header/header-title.png" alt="헤더 타이틀" style="max-width: 100%; height: 320px; display: flex; justify-content: center;">
-    </div>
+    <%@ include file="../include/headerImg.jsp" %>
     <div class="login-form">
         <form action="${pageContext.request.contextPath}/user/login" method="post" id="loginForm">
             <div class="input-form">
                 <div class="login-input">
                     <label for="id">아이디</label>
-                    <input type="text" id="id" name="userId" placeholder="아이디를 입력하세요" required>
+                    <input type="text" id="id" name="userId" placeholder="아이디를 입력하세요" required autofocus>
                 </div>
                 <div class="login-input">
                     <label for="pwd">비밀번호</label>
