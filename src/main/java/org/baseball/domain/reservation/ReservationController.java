@@ -2,6 +2,7 @@ package org.baseball.domain.reservation;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
+import org.baseball.domain.redis.RedisService;
 import org.baseball.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,8 @@ import java.util.Map;
 public class ReservationController {
     @Autowired
     private ReservationService reservationService;
+    @Autowired
+    private RedisService redisService;
 
     //등급 및 좌석 선택 페이지 로드
     @GetMapping("/seat")
@@ -165,5 +168,11 @@ public class ReservationController {
         session.removeAttribute("gameInfo");
         session.removeAttribute("zoneMap");
         session.removeAttribute("available");
+    }
+
+    @GetMapping("/test")
+    public void test(@RequestParam int gamePk, int zonePk, HttpSession session) {
+        UserDTO user = (UserDTO) session.getAttribute("loginUser");
+        redisService.cancelPayment(gamePk, null, user.getUserPk(), zonePk);
     }
 }
