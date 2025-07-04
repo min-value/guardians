@@ -31,8 +31,14 @@ public class MyFairyServiceImpl implements MyFairyService {
         int total = win + draw + lose;
 
         int wlTotal = win + lose;
-        double rate = (double) (win + 1) / (wlTotal + 2);
+        double rate;
+        if (wlTotal == 0) {
+            rate = 0.0;
+        } else {
+            rate = (double) (win + 1) / (wlTotal + 2);
+        }
         double roundedRate = Math.round(rate * 1000.0) / 1000.0;
+        String formattedRate = String.format("%.3f", rate);
 
         Map<String, Object> resultMap = myFairyMapper.selectFairyGameResults(userPk);
         if (resultMap == null) {
@@ -45,6 +51,7 @@ public class MyFairyServiceImpl implements MyFairyService {
         dto.setLoseCnt(lose);
         dto.setTotalCnt(total);
         dto.setWinRate(roundedRate);
+        dto.setWinRateFormatted(formattedRate);
 
         dto.setOurHit(castToInt(resultMap.get("ourHit")));
         dto.setOurHomerun(castToInt(resultMap.get("ourHomerun")));
