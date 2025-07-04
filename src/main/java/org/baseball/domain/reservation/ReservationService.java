@@ -8,6 +8,7 @@ import org.baseball.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.security.SecureRandom;
@@ -229,7 +230,7 @@ public class ReservationService {
 
                 if(remainingSeats < quantity) {
                     //좌석 수가 충분하지 않다면
-                    result.setPreempted(0);
+                    result.setPreempted(2);
                     result.setErrorMsg("좌석 수가 충분하지 않습니다.");
                     return result;
                 }
@@ -248,7 +249,7 @@ public class ReservationService {
                 //redis 롤백
                 redisService.cancelBleachers(gamePk, userPk, zonePk);
                 //오류메시지
-                result.setPreempted(2);
+                result.setPreempted(3);
                 result.setErrorMsg("내부 오류로 선점이 취소되었습니다.");
             } finally{
                 //락 해제
@@ -302,13 +303,13 @@ public class ReservationService {
             if(zonePk == 1100 || zonePk == 1101) {
                 //외야석의 경우
                 if(reservationMapper.getReservelistPkAuto(gamePk, userPk, zonePk) != reservelistPk) {
-                    throw new Exception("예약 없음");
+                    return 2;
                 }
             } else {
                 //그 외 구역의 경우
                 for(String seat: seats) {
                     if(reservationMapper.getReservelistPkByUser(gamePk, seat, zonePk, userPk) == null) {
-                        throw new Exception("예약 없음");
+                        return 2;
                     }
                 }
             }
@@ -328,6 +329,18 @@ public class ReservationService {
 
             return 2; // 실패
         }
+    }
+
+
+    public void deletePreemptionAuto(@RequestParam int gamePk, @RequestParam int zonePk, UserDTO user) {
+        //Redis 삭제
+        redisService.cancelBleachers(gamePk, user.getUserPk(), zonePk);
+
+        //DB 삭제
+        Integer reservelistPk = reservationMapper.getReservelistPkAuto(gamePk, user.getUserPk(), zonePk);
+
+        reservationMapper.deletePreemptionReserve(reservelistPk);
+        reservationMapper.deletePreemptionList(reservelistPk);
     }
 
     public String createReserveCode(int gamePk, int userPk, int zonePk) {

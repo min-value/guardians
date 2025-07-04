@@ -6,4 +6,5 @@ import java.util.List;
 public interface PointService {
     List<PointDTO> getPointsByUserPk(int userPk);
     void addPoint(PointDTO dto);
+    void earnPredictionPoints();
 }
