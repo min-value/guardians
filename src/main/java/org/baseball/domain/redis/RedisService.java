@@ -202,8 +202,9 @@ public class RedisService {
                 preemptKeys.add(preemptKey);
 
                 if (!String.valueOf(userPk).equals(preemptUser)) {
-                    return false;
+                    throw new Exception("이미 선점된 좌석입니다.");
                 }
+
                 redisTemplate.delete(preemptKey);
                 String paidKey = getPaidKey(gamePk, seatNum, zonePk, userPk);
                 redisTemplate.opsForValue().set(paidKey, String.valueOf(userPk));
@@ -217,9 +218,9 @@ public class RedisService {
                 redisTemplate.delete(key);
             }
 
-            //선점 해제
+            //선점 롤백
             for (String key : preemptKeys) {
-                redisTemplate.delete(key);
+                redisTemplate.opsForValue().set(key, String.valueOf(userPk), PREEMPT_TTL, TimeUnit.MINUTES);
             }
 
             return false;
@@ -256,6 +257,7 @@ public class RedisService {
     //선점 취소
     public boolean cancelPreempt(int gamePk, List<String> seats, int userPk, int zonePk) {
         List<RLock> locks = new ArrayList<>();
+        List<String> preemptKeys = new ArrayList<>(); //롤백용
 
         try {
             // 락 리스트 생성
@@ -277,15 +279,20 @@ public class RedisService {
 
                 if (String.valueOf(userPk).equals(owner)) {
                     redisTemplate.delete(preemptKey);
+                    preemptKeys.add(preemptKey);
                 } else {
                     // 내 선점이 아닌 좌석이 있으면 전체 실패 처리
-                    return false;
+                    throw new Exception("이미 선점된 좌석입니다.");
                 }
             }
 
             return true;
         } catch (Exception e) {
             e.printStackTrace();
+            //선점 롤백
+            for (String key : preemptKeys) {
+                redisTemplate.opsForValue().set(key, String.valueOf(userPk), PREEMPT_TTL, TimeUnit.MINUTES);
+            }
             return false;
         } finally {
             // 락 해제
@@ -303,7 +310,7 @@ public class RedisService {
     //결제 취소
     public boolean cancelPayment(int gamePk, List<String> seats, int userPk, int zonePk) {
         List<RLock> locks = new ArrayList<>();
-
+        List<String> paidKeys = new ArrayList<>(); //롤백용
         try {
             // 락 리스트 생성
             for (String seatNum : seats) {
@@ -324,15 +331,20 @@ public class RedisService {
 
                 if (String.valueOf(userPk).equals(owner)) {
                     redisTemplate.delete(paidKey);
+                    paidKeys.add(paidKey);
                 } else {
                     // 내 결제가 아닌 경우 전체 실패 처리
-                    return false;
+                    throw new Exception("결제 취소에 실패하였습니다.");
                 }
             }
 
             return true;
         } catch (Exception e) {
             e.printStackTrace();
+            //paid 키 롤백
+            for (String key : paidKeys) {
+                redisTemplate.opsForValue().set(key, String.valueOf(userPk));
+            }
             return false;
         } finally {
             // 락 해제
@@ -349,6 +361,10 @@ public class RedisService {
 
     //결제 실패 시 복구
     public boolean restorePayment(int gamePk, List<String> seats, int userPk, int zonePk) {
+        if(seats == null || seats.isEmpty()) {
+            return true;
+        }
+
         List<RLock> locks = new ArrayList<>();
         List<String> paidKeys = new ArrayList<>();
 
