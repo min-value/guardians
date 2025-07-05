@@ -106,9 +106,10 @@ public class RedisService {
     public boolean getBleachers(int gamePk, int userPk, int zonePk) {
         String key = getPreemptkey(gamePk, null, zonePk, userPk);
 
-        if(redisTemplate.hasKey(key)) {
-            return false;
-        }
+//        if(redisTemplate.hasKey(key)) {
+//            redisTemplate.expire(key, PREEMPT_TTL, TimeUnit.MINUTES);
+//            return true;
+//        }
 
         return Boolean.TRUE.equals(redisTemplate.opsForValue()
                 .setIfAbsent(key, String.valueOf(userPk), PREEMPT_TTL, TimeUnit.MINUTES)); //todo

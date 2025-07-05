@@ -125,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             .then(data => {
                                 if(data === 2) {
                                     alert("서버 오류");
-                                    removeData();
                                     window.close();
                                 } else if(data === 0) {
                                     alert("로그인이 필요합니다.");
