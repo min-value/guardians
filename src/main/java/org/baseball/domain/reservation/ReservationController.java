@@ -172,10 +172,4 @@ public class ReservationController {
         session.removeAttribute("zoneMap");
         session.removeAttribute("available");
     }
-
-    @GetMapping("/test")
-    public void test(@RequestParam int gamePk, int zonePk, HttpSession session) {
-        UserDTO user = (UserDTO) session.getAttribute("loginUser");
-        redisService.cancelPayment(gamePk, null, user.getUserPk(), zonePk);
-    }
 }
