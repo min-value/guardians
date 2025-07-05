@@ -391,3 +391,18 @@
     display: none;
     z-index: 11;
 }
+
+/* 툴팁 스타일 */
+#tooltip {
+    position: absolute;
+    background: rgba(51, 51, 51, 0.8);
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 1000;
+}
