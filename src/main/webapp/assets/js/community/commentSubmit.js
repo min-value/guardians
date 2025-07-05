@@ -15,7 +15,7 @@ $(function(){
         });
     });
 
-    $('#write').keydown(function(e){
+    $('#write').keypress(function(e){
         if(e.key === 'Enter' && !e.shiftKey){
             e.preventDefault();
             $('#commentForm').submit();

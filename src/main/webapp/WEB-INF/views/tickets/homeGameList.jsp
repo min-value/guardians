@@ -4,7 +4,7 @@
 %>
 <html>
 <head>
-    <title>Title</title>
+    <title>신한 가디언즈</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/include/pagination.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/colors.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">
