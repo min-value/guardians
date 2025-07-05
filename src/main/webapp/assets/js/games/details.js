@@ -44,21 +44,29 @@ function bindSummaryToggle() {
     $('.summary').off('click').on('click', function (e) {
         e.stopPropagation();
 
+        if ($('body').hasClass('is-animating')) return;
+        $('body').addClass('is-animating');
+
         const $summary = $(this).closest('.summary');
         const $detail = $summary.next('.detail');
         const isOpen = $summary.hasClass('open');
 
         $('.summary').removeClass('open');
-        $('.detail').slideUp();
+        $('.detail').stop(true, true).slideUp();
 
         if (!isOpen) {
             $summary.addClass('open');
-            $detail.slideDown(() => {
+            $detail.stop(true, true).slideDown(300, () => {
                 const $container = $detail.find('.custom-bar-chart');
                 if ($container.length && !$container.data('loaded')) {
                     drawChart($detail, $container);
                     $container.data('loaded', true);
                 }
+                $('body').removeClass('is-animating');
+            });
+        } else {
+            $('.detail').promise().done(() => {
+                $('body').removeClass('is-animating');
             });
         }
     });
