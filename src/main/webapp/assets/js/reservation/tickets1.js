@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert(data.errorMsg);
                 removeData();
                 window.close();
+                return;
             }
 
             map = data.result.zoneMapDetail;

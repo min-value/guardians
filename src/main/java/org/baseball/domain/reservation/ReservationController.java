@@ -32,6 +32,9 @@ public class ReservationController {
         //구역 정보 세션에 저장
         model.addAttribute("zoneMap", reservationService.getZones(gamePk));
 
+        //경기 정보 세션에 저장
+        ReserveGameInfoDTO reserveGameInfoDTO = reservationService.getGameInfo(gamePk);
+        session.setAttribute("gameInfo", reserveGameInfoDTO);
 
         return "reservation/tickets1";
     }

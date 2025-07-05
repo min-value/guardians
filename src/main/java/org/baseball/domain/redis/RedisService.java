@@ -23,6 +23,8 @@ public class RedisService {
     @Autowired
     private QueueService queueService;
 
+    private static final long PREEMPT_TTL = 10; //선점 시간: 10분
+
 
     public String getLockKey(int gamePk, String seatNum, int zonePk) {
         StringBuilder sb = new StringBuilder("lock:seat:" + gamePk + ":" + zonePk + ":");
@@ -109,7 +111,7 @@ public class RedisService {
         }
 
         return Boolean.TRUE.equals(redisTemplate.opsForValue()
-                .setIfAbsent(key, String.valueOf(userPk), 10, TimeUnit.MINUTES)); //todo
+                .setIfAbsent(key, String.valueOf(userPk), PREEMPT_TTL, TimeUnit.MINUTES)); //todo
     }
 
     //타 구역에 대한 선점 등록(TTL: 10M) -> lock:seat:{gamePk}:{zonePk}:{seatNum} / preempt:seat:{gamePk}:{zonePk}:{seatNum}
@@ -149,7 +151,7 @@ public class RedisService {
             //모든 좌석에 대해 선점 등록
             for(String seatNum: seats) {
                 String preemptKey = getPreemptkey(gamePk, seatNum, zonePk, userPk);
-                redisTemplate.opsForValue().set(preemptKey, String.valueOf(userPk), 10, TimeUnit.MINUTES); //todo: minute으로 변경
+                redisTemplate.opsForValue().set(preemptKey, String.valueOf(userPk), PREEMPT_TTL, TimeUnit.MINUTES); //todo: minute으로 변경
                 preemptedKeys.add(preemptKey); //나중에 실패 시 롤백용
             }
             return true;
@@ -193,7 +195,7 @@ public class RedisService {
                 return false;
             }
 
-            //이미 선점/판매된 좌석이 있는지 확인
+            //내 선점 자리인지 확인 후 선점 키 삭제 -> 판매 키 등록
             for (String seatNum : seats) {
                 String preemptKey = getPreemptkey(gamePk, seatNum, zonePk, userPk);
                 String preemptUser = redisTemplate.opsForValue().get(preemptKey);
@@ -368,7 +370,7 @@ public class RedisService {
             //모든 좌석에 대해 선점 등록
             for(String seatNum: seats) {
                 String paidKey = getPaidKey(gamePk, seatNum, zonePk, userPk);
-                redisTemplate.opsForValue().set(paidKey, String.valueOf(userPk)); //todo: minute으로 변경
+                redisTemplate.opsForValue().set(paidKey, String.valueOf(userPk));
                 paidKeys.add(paidKey); //나중에 실패 시 롤백용
             }
             return true;
