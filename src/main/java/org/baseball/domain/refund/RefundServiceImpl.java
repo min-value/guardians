@@ -36,7 +36,7 @@ public class RefundServiceImpl implements RefundService {
         int refundCount = 0;
 
         List<RefundDTO> targetList = refundMapper.getRefundTargets();
-        log.info("환불 대상 건수: {}", targetList.size());
+        log.info("환불 건수: {}", targetList.size());
 
         for (RefundDTO dto : targetList) {
             try {
@@ -46,7 +46,7 @@ public class RefundServiceImpl implements RefundService {
                 if (dto.getImpUid() != null && !dto.getImpUid().isEmpty() && dto.getPaidAmount() > 0) {
                     CancelData cancelData = new CancelData(dto.getImpUid(), false);
                     IamportResponse<Payment> response = iamportClient.cancelPaymentByImpUid(cancelData);
-                    log.info("아임포트 환불 성공 - impUid: {}", dto.getImpUid());
+                    log.info("환불 성공 - impUid: {}", dto.getImpUid());
                 }
 
                 // 포인트 환불

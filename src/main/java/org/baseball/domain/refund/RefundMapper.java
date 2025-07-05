@@ -12,10 +12,10 @@ public interface RefundMapper {
     // 환불 대상 조회
     List<RefundDTO> getRefundTargets();
 
-    // 예약 상태를 CANCELED로 변경 (reservations 테이블)
+    // 예약 상태를 CANCELED로 변경
     void updateReservationState(@Param("reservelistPk") int reservelistPk, @Param("state") String state);
 
-    // 예약리스트 상태를 취소로 변경 (reservation_list 테이블)
+    // 예약리스트 상태를 취소로 변경
     void updateReservationCancel(@Param("reservelistPk") int reservelistPk);
 
     // 환불 시간 기록
