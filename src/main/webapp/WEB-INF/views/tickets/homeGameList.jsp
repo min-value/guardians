@@ -148,6 +148,14 @@
                     },
                     body: JSON.stringify(sendConfirm)
                 })
+                    .then(async res => {
+                        const contentType = res.headers.get("content-type");
+                        if (contentType && contentType.includes("application/json")) {
+                            return res.json();
+                        } else {
+                            throw new Error("서버가 JSON이 아닌 응답을 반환했습니다.");
+                        }
+                    })
                     .then(res => {
                         return res.json();
                     })
