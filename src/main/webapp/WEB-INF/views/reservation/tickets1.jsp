@@ -66,6 +66,7 @@
                     </div>
                 </div>
             </div>
+            <div id="tooltip"></div>
             <div class="right-container">
                 <div class="right-wrapper">
                     <div class="top-container">
