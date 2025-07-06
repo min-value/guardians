@@ -79,7 +79,7 @@ public class TicketsController {
                     dto.getUser_pk(),
                     dto.getZone_pk()
             );
-
+            System.out.println(r);
             return r && ticketsService.updatePurchase(dto);
         } catch (Exception e) {
             e.printStackTrace();

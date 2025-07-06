@@ -172,6 +172,7 @@ async function requestPay() {
                                 window.opener.location.href = "/tickets/all?showModal=true";
                             }
                             window.close();
+                            console.log(result);
                         } else {
                             alert("예매 저장 실패. 다시 시도해주세요.");
                             $.ajax({
