@@ -13,8 +13,9 @@
 </head>
 <body>
     <%@ include file="../include/header.jsp" %>
-    <div class="backgroundWrapper">
-        <%@ include file="../include/headerImg.jsp" %>
+    <%@ include file="../include/headerImg.jsp" %>
+    <div id="loading-background">
+        <div id="loader"></div>
     </div>
     <div class="content">
         <form id="writePost" action="/community/post/add" method="post" onsubmit="return checkPost();">
@@ -38,7 +39,7 @@
         const title = document.getElementById("postTitle").value.trim();
         const postContent = document.getElementById("write-post").value.trim();
 
-        if(title === ""){
+        if(title === "") {
             alert("제목을 작성하세요");
             return false;
         }
@@ -56,19 +57,19 @@
             alert("제목을 입력하세요");
             return;
         }
-
+        $("#loading-background").css("display", "block");
         $.ajax({
             url: "/gpt/aiRecommend",
             method: "POST",
-            //dataType: 'json',
-            //contentType: 'application/json; charset=utf-8',
-            //data: JSON.stringify({title}),
             data:{'title':title},
             success: function (res){
                 $('#write-post').val(res.recommendation);
             },
             error: function(){
                 alert("AI 추천에 실패했습니다.");
+            },
+            complete: function(){
+                $("#loading-background").css("display", "none");
             }
         });
     }

@@ -16,7 +16,7 @@
                 </div>
                 vs
                 <div class="logo-container">
-                    <img class="teamlogos" src="" alt="opponentTeam" id="opponentTeam">
+                    <img class="teamlogos" src="${pageContext.request.contextPath}/assets/img/teamlogos/${gameInfo.oppTeamPk}.svg" alt="opponentTeam" id="opponentTeam">
                 </div>
             </div>
             <input class="modal-btn" type="button" value="응원하기" disabled>

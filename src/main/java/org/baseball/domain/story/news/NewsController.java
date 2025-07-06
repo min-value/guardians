@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/story/news")
-public class NewsController {
+public class    NewsController {
 
     @Autowired
     private NewsService newsService;

@@ -116,7 +116,7 @@ public class CommunityController {
 
     @PostMapping("/comment/add")
     @ResponseBody
-    public boolean addComment(@ModelAttribute CommentDTO dto, RedirectAttributes redirectAttrs){
+    public boolean addComment(@ModelAttribute CommentDTO dto){
         if(dto.getC_content() == null || dto.getC_content().trim().equals("")){
             return false;
         }
