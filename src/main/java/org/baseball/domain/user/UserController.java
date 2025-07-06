@@ -1,20 +1,17 @@
 package org.baseball.domain.user;
 
-import javax.servlet.http.HttpSession;
-
 import org.baseball.domain.myfairy.MyFairyService;
 import org.baseball.domain.myticket.MyTicketService;
 import org.baseball.domain.redis.RedisService;
-import org.baseball.domain.tickets.TicketsService;
 import org.baseball.dto.MyFairyDTO;
+import org.baseball.dto.UserDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.baseball.dto.UserDTO;
-import org.baseball.domain.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Controller
@@ -251,16 +248,18 @@ public class UserController {
         System.out.println(seat.toString());
 
         try {
+            boolean r = true;
+
             if(zone_pk==1101 || zone_pk==1100){
                 seat = null;
+            } else {
+                r = redisService.cancelPayment(
+                        game_pk,
+                        seat,
+                        user_pk,
+                        zone_pk
+                );
             }
-
-            boolean r = redisService.cancelPayment(
-                    game_pk,
-                    seat,
-                    user_pk,
-                    zone_pk
-            );
 
             return r && myTicketService.cancelReservation(map);
 

@@ -14,7 +14,15 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
 
         if (loginUser == null) {
-            response.sendRedirect("/reservation/errors/needLogin");
+            String requestType = request.getHeader("X-Requested-With");
+
+            if("XMLHttpRequest".equals(requestType)) {
+                //ajax 요청일 경우(return type: JSON)
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setHeader("Location", "/reservation/errors/needLogin");
+            } else {
+                response.sendRedirect("/reservation/errors/needLogin");
+            }
             return false;
         }
         return true;

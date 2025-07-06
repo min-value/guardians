@@ -252,6 +252,7 @@ public class ReservationService {
                     result.setErrorMsg("이미 선점된 좌석입니다.");
                     return result;
                 }
+
                 //DB 탐색해 남은 좌석 개수 판단
                 SoldSeatsReqDTO soldSeatsReqDTO = new SoldSeatsReqDTO(gamePk, zonePk);
 
@@ -267,20 +268,17 @@ public class ReservationService {
                     result.setErrorMsg("좌석 수가 충분하지 않습니다.");
                     return result;
                 }
+                //DB에 등록
+                result = getBleachers(preemptionDTO, user, result, createReserveCode(gamePk, zonePk, userPk));
 
+                //Redis에 선점 정보 등록
                 if(!redisService.getBleachers(gamePk, userPk, zonePk)) {
                     result.setPreempted(0);
                     result.setErrorMsg("이미 선점된 좌석입니다.");
                     return result;
                 }
 
-                //좌석 수 OK -> Redis에 선점
-                //DB에 등록
-                result = getBleachers(preemptionDTO, user, result, createReserveCode(gamePk, zonePk, userPk));
             } catch(Exception e) {
-                //롤백
-                //redis 롤백
-                redisService.cancelBleachers(gamePk, userPk, zonePk);
                 //오류메시지
                 result.setPreempted(3);
                 result.setErrorMsg("내부 오류로 선점이 취소되었습니다.");
@@ -290,10 +288,6 @@ public class ReservationService {
             }
         } else {
             //그 외 구역이라면
-
-            //좌석 선점하기
-
-            //DB에 선점 정보 넣기
             try {
                 if(redisService.preemptSeat(gamePk, seats, userPk, zonePk)) {
                     result = preemptSeat(preemptionDTO, user, result, createReserveCode(gamePk, zonePk, userPk));
@@ -321,21 +315,11 @@ public class ReservationService {
         int reservelistPk = preemptdeleteReqDTO.getReservelistPk();
 
         try {
-            // Redis 선점 해제
-            boolean redisDeleted = true;
-            if(zonePk == 1100 || zonePk == 1101) {
-                redisDeleted = redisService.cancelBleachers(gamePk, userPk, zonePk);
-            } else {
-                redisDeleted = redisService.cancelPreempt(gamePk, seats, userPk, zonePk);
-            }
-
-            if (!redisDeleted) return 2; // Redis 해제 실패
-
-
             //해당 정보의 예약이 있는지 확인 todo
             if(zonePk == 1100 || zonePk == 1101) {
                 //외야석의 경우
-                if(reservationMapper.getReservelistPkAuto(gamePk, userPk, zonePk) != reservelistPk) {
+                int check = reservationMapper.getReservelistPkAuto(gamePk, userPk, zonePk);
+                if(check != reservelistPk) {
                     return 2;
                 }
             } else {
@@ -349,6 +333,17 @@ public class ReservationService {
 
             // DB 선점 정보 삭제
             deletePreemption(reservelistPk);
+
+            // Redis 선점 해제
+            boolean redisDeleted = true;
+            if(zonePk == 1100 || zonePk == 1101) {
+                redisDeleted = redisService.cancelBleachers(gamePk, userPk, zonePk);
+            } else {
+                redisDeleted = redisService.cancelPreempt(gamePk, seats, userPk, zonePk);
+            }
+
+            if (!redisDeleted) return 2; // Redis 해제 실패
+
             return 1;
         } catch (Exception e) {
             e.printStackTrace();

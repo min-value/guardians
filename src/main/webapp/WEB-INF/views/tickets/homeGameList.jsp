@@ -149,7 +149,13 @@
                     body: JSON.stringify(sendConfirm)
                 })
                     .then(res => {
-                        return res.json();
+                        if(res.status === 401) {
+                            const redirectUrl = res.headers.get("Location") || "/reservation/errors/needLogin";
+                            window.location.href = redirectUrl;
+                            return;
+                        } else {
+                            return res.json();
+                        }
                     })
                     .then(data => {
                         if (data === 2) {

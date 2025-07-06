@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert(data.errorMsg);
                 removeData();
                 window.close();
+                return;
             }
 
             map = data.result.zoneMapDetail;
@@ -74,9 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //zone 호버
         region.addEventListener("mouseover", (e) => {
-            tooltip.innerText = region.id;
-            tooltip.style.left = e.clientX + "px";
-            tooltip.style.top = e.clientY + "px";
+            tooltip.innerText = zoneInfo[region.id]['zoneName'] + "\n[잔여석: " + zoneInfo[region.id]['remainingNum'] + "석]";
+            tooltip.style.left = e.clientX + 10 + "px";
+            tooltip.style.top = e.clientY + 10 + "px";
             tooltip.style.opacity = 1;
         });
 
