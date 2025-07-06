@@ -1,182 +1,211 @@
-<svg width="300" height="135" viewBox="0 0 300 135" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect class="seat" id="a1" x="0" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="a2" x="15" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="a3" x="30" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="a4" x="45" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="a5" x="60" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="a6" x="75" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="a7" x="90" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="a8" x="105" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="a9" x="120" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="a10" x="135" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="a11" x="150" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="a12" x="165" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="a13" x="180" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="a14" x="195" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="a15" x="210" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="a16" x="225" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="a17" x="240" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="a18" x="255" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="a19" x="270" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="a20" x="285" y="0" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b1" x="0" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b2" x="15" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b3" x="30" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b4" x="45" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b5" x="60" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b6" x="75" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b7" x="90" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b8" x="105" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b9" x="120" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b10" x="135" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b11" x="150" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b12" x="165" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b13" x="180" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b14" x="195" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b15" x="210" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b16" x="225" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b17" x="240" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b18" x="255" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b19" x="270" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="b20" x="285" y="15" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c1" x="0" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c2" x="15" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c3" x="30" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c4" x="45" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c5" x="60" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c6" x="75" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c7" x="90" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c8" x="105" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c9" x="120" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c10" x="135" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c11" x="150" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c12" x="165" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c13" x="180" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c14" x="195" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c15" x="210" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c16" x="225" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c17" x="240" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c18" x="255" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c19" x="270" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="c20" x="285" y="30" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d1" x="0" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d2" x="15" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d3" x="30" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d4" x="45" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d5" x="60" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d6" x="75" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d7" x="90" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d8" x="105" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d9" x="120" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d10" x="135" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d11" x="150" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d12" x="165" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d13" x="180" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d14" x="195" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d15" x="210" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d16" x="225" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d17" x="240" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d18" x="255" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d19" x="270" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="d20" x="285" y="45" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e1" x="0" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e2" x="15" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e3" x="30" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e4" x="45" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e5" x="60" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e6" x="75" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e7" x="90" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e8" x="105" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e9" x="120" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e10" x="135" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e11" x="150" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e12" x="165" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e13" x="180" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e14" x="195" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e15" x="210" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e16" x="225" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e17" x="240" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e18" x="255" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e19" x="270" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="e20" x="285" y="60" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f1" x="0" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f2" x="15" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f3" x="30" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f4" x="45" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f5" x="60" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f6" x="75" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f7" x="90" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f8" x="105" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f9" x="120" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f10" x="135" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f11" x="150" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f12" x="165" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f13" x="180" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f14" x="195" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f15" x="210" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f16" x="225" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f17" x="240" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f18" x="255" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f19" x="270" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="f20" x="285" y="75" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g1" x="0" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g2" x="15" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g3" x="30" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g4" x="45" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g5" x="60" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g6" x="75" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g7" x="90" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g8" x="105" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g9" x="120" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g10" x="135" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g11" x="150" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g12" x="165" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g13" x="180" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g14" x="195" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g15" x="210" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g16" x="225" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g17" x="240" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g18" x="255" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g19" x="270" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="g20" x="285" y="90" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h1" x="0" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h2" x="15" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h3" x="30" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h4" x="45" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h5" x="60" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h6" x="75" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h7" x="90" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h8" x="105" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h9" x="120" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h10" x="135" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h11" x="150" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h12" x="165" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h13" x="180" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h14" x="195" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h15" x="210" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h16" x="225" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h17" x="240" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h18" x="255" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h19" x="270" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="h20" x="285" y="105" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i1" x="0" y="120" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i2" x="15" y="120" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i3" x="30" y="120" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i4" x="45" y="120" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i5" x="60" y="120" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i6" x="75" y="120" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i7" x="90" y="120" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i8" x="105" y="120" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i9" x="120" y="120" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i10" x="135" y="120" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i11" x="150" y="120" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i12" x="165" y="120" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i13" x="180" y="120" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i14" x="195" y="120" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i15" x="210" y="120" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i16" x="225" y="120" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i17" x="240" y="120" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i18" x="255" y="120" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i19" x="270" y="120" width="10" height="10" fill="#B748E7" />
-    <rect class="seat" id="i20" x="285" y="120" width="10" height="10" fill="#B748E7" />
+<svg width="319" height="163" viewBox="0 0 319 163" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect class="seat" id="A1" x="21" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="A2" x="35.5" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="A3" x="50" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="A4" x="64.5" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="A5" x="79" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="A6" x="93.5" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="A7" x="108" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="A8" x="122.5" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="A9" x="137" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="A10" x="151.5" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="A11" x="166" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="A12" x="180.5" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="A13" x="195" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="A14" x="209.5" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="A15" x="224" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="A16" x="238.5" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="A17" x="253" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="A18" x="267.5" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="A19" x="282" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="A20" x="296.5" y="11" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B1" x="21" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B2" x="35.5" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B3" x="50" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B4" x="64.5" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B5" x="79" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B6" x="93.5" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B7" x="108" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B8" x="122.5" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B9" x="137" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B10" x="151.5" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B11" x="166" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B12" x="180.5" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B13" x="195" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B14" x="209.5" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B15" x="224" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B16" x="238.5" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B17" x="253" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B18" x="267.5" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B19" x="282" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="B20" x="296.5" y="26" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C1" x="21" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C2" x="35.5" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C3" x="50" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C4" x="64.5" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C5" x="79" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C6" x="93.5" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C7" x="108" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C8" x="122.5" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C9" x="137" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C10" x="151.5" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C11" x="166" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C12" x="180.5" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C13" x="195" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C14" x="209.5" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C15" x="224" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C16" x="238.5" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C17" x="253" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C18" x="267.5" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C19" x="282" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="C20" x="296.5" y="41" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D1" x="21" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D2" x="35.5" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D3" x="50" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D4" x="64.5" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D5" x="79" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D6" x="93.5" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D7" x="108" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D8" x="122.5" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D9" x="137" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D10" x="151.5" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D11" x="166" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D12" x="180.5" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D13" x="195" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D14" x="209.5" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D15" x="224" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D16" x="238.5" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D17" x="253" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D18" x="267.5" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D19" x="282" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="D20" x="296.5" y="56" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E1" x="21" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E2" x="35.5" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E3" x="50" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E4" x="64.5" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E5" x="79" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E6" x="93.5" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E7" x="108" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E8" x="122.5" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E9" x="137" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E10" x="151.5" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E11" x="166" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E12" x="180.5" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E13" x="195" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E14" x="209.5" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E15" x="224" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E16" x="238.5" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E17" x="253" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E18" x="267.5" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E19" x="282" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="E20" x="296.5" y="71" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F1" x="21" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F2" x="35.5" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F3" x="50" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F4" x="64.5" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F5" x="79" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F6" x="93.5" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F7" x="108" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F8" x="122.5" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F9" x="137" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F10" x="151.5" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F11" x="166" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F12" x="180.5" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F13" x="195" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F14" x="209.5" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F15" x="224" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F16" x="238.5" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F17" x="253" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F18" x="267.5" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F19" x="282" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="F20" x="296.5" y="86" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G1" x="21" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G2" x="35.5" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G3" x="50" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G4" x="64.5" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G5" x="79" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G6" x="93.5" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G7" x="108" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G8" x="122.5" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G9" x="137" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G10" x="151.5" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G11" x="166" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G12" x="180.5" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G13" x="195" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G14" x="209.5" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G15" x="224" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G16" x="238.5" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G17" x="253" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G18" x="267.5" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G19" x="282" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="G20" x="296.5" y="101" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H1" x="21" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H2" x="35.5" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H3" x="50" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H4" x="64.5" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H5" x="79" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H6" x="93.5" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H7" x="108" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H8" x="122.5" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H9" x="137" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H10" x="151.5" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H11" x="166" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H12" x="180.5" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H13" x="195" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H14" x="209.5" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H15" x="224" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H16" x="238.5" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H17" x="253" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H18" x="267.5" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H19" x="282" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="H20" x="296.5" y="116" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I1" x="21" y="131" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I2" x="35.5" y="131" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I3" x="50" y="131" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I4" x="64.5" y="131" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I5" x="79" y="131" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I6" x="93.5" y="131" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I7" x="108" y="131" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I8" x="122.5" y="131" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I9" x="137" y="131" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I10" x="151.5" y="131" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I11" x="166" y="131" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I12" x="180.5" y="131" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I13" x="195" y="131" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I14" x="209.5" y="131" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I15" x="224" y="131" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I16" x="238.5" y="131" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I17" x="253" y="131" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I18" x="267.5" y="131" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I19" x="282" y="131" width="10" height="10" fill="#B748E7"/>
+<rect class="seat" id="I20" x="296.5" y="131" width="10" height="10" fill="#B748E7"/>
+<path d="M26.7549 152H25.2803V146.326H25.2412L23.625 147.352V146.043L25.373 144.93H26.7549V152Z" fill="#707070"/>
+<path d="M54.4805 152.098C53.9661 152.098 53.5055 152.01 53.0986 151.834C52.6917 151.658 52.3727 151.411 52.1416 151.092C51.9137 150.773 51.7949 150.411 51.7852 150.008H53.2646C53.2744 150.174 53.333 150.324 53.4404 150.457C53.5479 150.59 53.6927 150.695 53.875 150.77C54.0573 150.844 54.2591 150.882 54.4805 150.882C54.7116 150.882 54.9199 150.841 55.1055 150.76C55.2943 150.675 55.4391 150.561 55.54 150.418C55.641 150.271 55.6898 150.105 55.6865 149.92C55.6898 149.728 55.6377 149.557 55.5303 149.407C55.4229 149.257 55.2666 149.142 55.0615 149.061C54.8597 148.976 54.6221 148.934 54.3486 148.934H53.6895V147.85H54.3486C54.5798 147.85 54.7865 147.811 54.9688 147.732C55.151 147.651 55.291 147.539 55.3887 147.396C55.4863 147.252 55.5335 147.09 55.5303 146.907C55.5335 146.728 55.4928 146.57 55.4082 146.434C55.3236 146.294 55.2015 146.186 55.042 146.111C54.8825 146.036 54.7002 145.999 54.4951 145.999C54.2868 145.999 54.0964 146.036 53.9238 146.111C53.7513 146.183 53.6113 146.287 53.5039 146.424C53.3997 146.557 53.3428 146.714 53.333 146.893H51.9268C51.9398 146.492 52.0586 146.136 52.2832 145.823C52.5078 145.511 52.8122 145.268 53.1963 145.096C53.5837 144.92 54.0166 144.832 54.4951 144.832C54.9801 144.832 55.4082 144.918 55.7793 145.091C56.1504 145.263 56.4385 145.501 56.6436 145.804C56.8486 146.106 56.9479 146.445 56.9414 146.819C56.9479 147.076 56.8942 147.311 56.7803 147.522C56.6696 147.734 56.5117 147.908 56.3066 148.045C56.1048 148.178 55.8704 148.27 55.6035 148.318V148.372C55.9486 148.414 56.2415 148.51 56.4824 148.66C56.7266 148.807 56.9105 148.995 57.0342 149.227C57.1579 149.458 57.2165 149.721 57.21 150.018C57.2165 150.411 57.1025 150.768 56.8682 151.087C56.6338 151.403 56.3083 151.65 55.8916 151.829C55.4749 152.008 55.0046 152.098 54.4805 152.098Z" fill="#707070"/>
+<path d="M66.6533 149.588L69.6416 144.93H70.6377V146.541H70.042L68.1377 149.51V149.568H72.3809V150.75H66.6533V149.588ZM70.0859 150.394L70.1055 149.881V144.93H71.4873V152H70.0859V150.394Z" fill="#707070"/>
+<path d="M83.5195 152.098C83.0378 152.098 82.6016 152.008 82.2109 151.829C81.8203 151.65 81.5127 151.401 81.2881 151.082C81.0667 150.763 80.9512 150.405 80.9414 150.008H82.3623C82.3786 150.19 82.4388 150.351 82.543 150.491C82.6504 150.631 82.7887 150.742 82.958 150.823C83.1305 150.901 83.3177 150.94 83.5195 150.94C83.7604 150.94 83.9753 150.887 84.1641 150.779C84.3561 150.672 84.5059 150.524 84.6133 150.335C84.7207 150.143 84.7744 149.926 84.7744 149.686C84.7744 149.435 84.7191 149.215 84.6084 149.026C84.501 148.834 84.3496 148.685 84.1543 148.577C83.9622 148.466 83.7425 148.411 83.4951 148.411C83.2314 148.408 83.0085 148.455 82.8262 148.553C82.6439 148.65 82.499 148.8 82.3916 149.002H81.0586L81.4443 144.93H85.7949V146.136H82.6553L82.46 147.918H82.5137C82.6504 147.739 82.8457 147.594 83.0996 147.483C83.3535 147.373 83.6318 147.317 83.9346 147.317C84.361 147.317 84.7467 147.417 85.0918 147.615C85.4401 147.811 85.7103 148.086 85.9023 148.44C86.0977 148.795 86.1937 149.197 86.1904 149.646C86.1937 150.115 86.0814 150.537 85.8535 150.911C85.6289 151.282 85.3148 151.574 84.9111 151.785C84.5075 151.993 84.0436 152.098 83.5195 152.098Z" fill="#707070"/>
+<path d="M98.5781 152.098C98.054 152.094 97.5788 151.979 97.1523 151.751C96.7259 151.523 96.3809 151.15 96.1172 150.633C95.8535 150.115 95.7217 149.446 95.7217 148.626C95.7217 147.841 95.8405 147.164 96.0781 146.595C96.319 146.022 96.6576 145.586 97.0938 145.286C97.5332 144.983 98.0459 144.832 98.6318 144.832C99.0973 144.832 99.5124 144.922 99.877 145.101C100.245 145.28 100.541 145.525 100.766 145.838C100.99 146.15 101.127 146.502 101.176 146.893H99.7256C99.6865 146.727 99.6165 146.583 99.5156 146.463C99.418 146.339 99.2943 146.246 99.1445 146.185C98.9948 146.123 98.8239 146.092 98.6318 146.092C98.3161 146.092 98.0492 146.183 97.8311 146.365C97.6162 146.544 97.4518 146.801 97.3379 147.137C97.224 147.472 97.1654 147.874 97.1621 148.343H97.2207C97.3314 148.134 97.4779 147.957 97.6602 147.811C97.8457 147.661 98.0557 147.547 98.29 147.469C98.5277 147.387 98.7751 147.347 99.0322 147.347C99.4521 147.347 99.8314 147.444 100.17 147.64C100.508 147.835 100.772 148.107 100.961 148.455C101.153 148.8 101.249 149.192 101.249 149.632C101.249 150.107 101.137 150.532 100.912 150.906C100.691 151.281 100.377 151.574 99.9697 151.785C99.5661 151.993 99.1022 152.098 98.5781 152.098ZM98.5684 150.94C98.806 150.94 99.0192 150.885 99.208 150.774C99.4001 150.66 99.5498 150.507 99.6572 150.315C99.7679 150.12 99.8232 149.907 99.8232 149.676C99.8232 149.438 99.7695 149.223 99.6621 149.031C99.5547 148.839 99.4066 148.689 99.2178 148.582C99.029 148.475 98.8158 148.421 98.5781 148.421C98.3438 148.421 98.1305 148.476 97.9385 148.587C97.7464 148.698 97.5951 148.849 97.4844 149.041C97.3737 149.233 97.3151 149.446 97.3086 149.681C97.3118 149.905 97.3672 150.114 97.4746 150.306C97.5853 150.498 97.735 150.652 97.9238 150.77C98.1159 150.883 98.3307 150.94 98.5684 150.94Z" fill="#707070"/>
+<path d="M113.433 146.18V146.136H109.966V144.93H114.956V146.155L111.973 152H110.459L113.433 146.18Z" fill="#707070"/>
+<path d="M127.5 152.098C126.973 152.098 126.497 152.011 126.074 151.839C125.654 151.666 125.326 151.427 125.088 151.121C124.85 150.815 124.731 150.473 124.731 150.096C124.731 149.806 124.8 149.536 124.937 149.285C125.073 149.031 125.259 148.823 125.493 148.66C125.731 148.497 125.994 148.395 126.284 148.353V148.299C126.037 148.25 125.815 148.152 125.62 148.006C125.425 147.856 125.272 147.671 125.161 147.449C125.05 147.228 124.995 146.99 124.995 146.736C124.995 146.375 125.104 146.049 125.322 145.76C125.54 145.467 125.84 145.239 126.221 145.076C126.602 144.913 127.028 144.832 127.5 144.832C127.975 144.832 128.403 144.913 128.784 145.076C129.168 145.239 129.468 145.467 129.683 145.76C129.901 146.049 130.01 146.375 130.01 146.736C130.01 146.99 129.953 147.228 129.839 147.449C129.728 147.671 129.575 147.856 129.38 148.006C129.188 148.152 128.966 148.25 128.716 148.299V148.353C129.006 148.395 129.268 148.497 129.502 148.66C129.74 148.823 129.928 149.031 130.068 149.285C130.208 149.536 130.278 149.806 130.278 150.096C130.278 150.473 130.158 150.815 129.917 151.121C129.679 151.427 129.349 151.666 128.926 151.839C128.506 152.011 128.031 152.098 127.5 152.098ZM127.5 150.979C127.744 150.979 127.961 150.936 128.149 150.848C128.338 150.76 128.485 150.638 128.589 150.481C128.693 150.325 128.745 150.149 128.745 149.954C128.745 149.749 128.691 149.565 128.584 149.402C128.477 149.24 128.328 149.113 128.14 149.021C127.951 148.93 127.738 148.885 127.5 148.885C127.266 148.885 127.054 148.93 126.865 149.021C126.676 149.113 126.528 149.24 126.421 149.402C126.313 149.565 126.261 149.749 126.265 149.954C126.261 150.149 126.312 150.325 126.416 150.481C126.52 150.638 126.667 150.76 126.855 150.848C127.044 150.936 127.259 150.979 127.5 150.979ZM127.5 147.845C127.705 147.845 127.889 147.804 128.052 147.723C128.218 147.638 128.346 147.524 128.438 147.381C128.529 147.234 128.574 147.07 128.574 146.888C128.574 146.702 128.529 146.538 128.438 146.395C128.35 146.251 128.223 146.141 128.057 146.062C127.894 145.981 127.708 145.94 127.5 145.94C127.295 145.94 127.109 145.981 126.943 146.062C126.781 146.141 126.654 146.251 126.562 146.395C126.475 146.538 126.431 146.702 126.431 146.888C126.431 147.07 126.476 147.234 126.567 147.381C126.662 147.524 126.79 147.638 126.953 147.723C127.116 147.804 127.298 147.845 127.5 147.845Z" fill="#707070"/>
+<path d="M141.422 144.832C141.946 144.832 142.421 144.946 142.848 145.174C143.274 145.398 143.618 145.77 143.878 146.287C144.142 146.801 144.273 147.465 144.273 148.279C144.277 149.07 144.16 149.752 143.922 150.325C143.684 150.898 143.346 151.338 142.906 151.644C142.47 151.946 141.956 152.098 141.363 152.098C140.901 152.098 140.486 152.007 140.118 151.824C139.75 151.642 139.454 151.395 139.229 151.082C139.005 150.766 138.868 150.41 138.819 150.013H140.265C140.307 150.185 140.377 150.333 140.475 150.457C140.576 150.581 140.701 150.675 140.851 150.74C141.004 150.805 141.174 150.838 141.363 150.838C141.679 150.838 141.948 150.747 142.169 150.564C142.39 150.382 142.556 150.122 142.667 149.783C142.781 149.441 142.838 149.035 142.838 148.562H142.774C142.664 148.764 142.517 148.94 142.335 149.09C142.153 149.24 141.943 149.355 141.705 149.437C141.471 149.515 141.223 149.554 140.963 149.554C140.546 149.554 140.169 149.456 139.83 149.261C139.495 149.065 139.231 148.795 139.039 148.45C138.847 148.102 138.749 147.713 138.746 147.283C138.746 146.811 138.857 146.39 139.078 146.019C139.303 145.644 139.618 145.353 140.025 145.145C140.432 144.933 140.898 144.829 141.422 144.832ZM141.427 145.984C141.192 145.984 140.979 146.041 140.787 146.155C140.595 146.266 140.445 146.417 140.338 146.609C140.23 146.798 140.177 147.008 140.177 147.239C140.18 147.47 140.235 147.68 140.343 147.869C140.45 148.058 140.597 148.208 140.782 148.318C140.971 148.429 141.181 148.484 141.412 148.484C141.65 148.484 141.865 148.427 142.057 148.313C142.252 148.2 142.407 148.047 142.521 147.854C142.634 147.659 142.69 147.451 142.687 147.229C142.687 147.005 142.631 146.798 142.521 146.609C142.41 146.417 142.26 146.266 142.071 146.155C141.882 146.041 141.668 145.984 141.427 145.984Z" fill="#707070"/>
+<path d="M154.454 152H152.979V146.326H152.94L151.324 147.352V146.043L153.072 144.93H154.454V152ZM158.844 152.098C158.255 152.098 157.747 151.956 157.32 151.673C156.897 151.39 156.572 150.976 156.344 150.433C156.119 149.886 156.007 149.23 156.007 148.465C156.007 147.7 156.119 147.046 156.344 146.502C156.572 145.958 156.899 145.545 157.325 145.262C157.752 144.975 158.258 144.832 158.844 144.832C159.43 144.832 159.936 144.975 160.362 145.262C160.789 145.545 161.116 145.96 161.344 146.507C161.572 147.05 161.686 147.703 161.686 148.465C161.686 149.233 161.572 149.889 161.344 150.433C161.119 150.976 160.794 151.39 160.367 151.673C159.941 151.956 159.433 152.098 158.844 152.098ZM158.844 150.887C159.117 150.887 159.355 150.797 159.557 150.618C159.762 150.439 159.918 150.169 160.025 149.808C160.133 149.443 160.185 148.995 160.182 148.465C160.182 147.938 160.128 147.493 160.021 147.132C159.913 146.767 159.758 146.494 159.557 146.312C159.355 146.129 159.117 146.038 158.844 146.038C158.57 146.038 158.333 146.129 158.131 146.312C157.932 146.494 157.778 146.767 157.667 147.132C157.556 147.493 157.501 147.938 157.501 148.465C157.501 148.995 157.555 149.443 157.662 149.808C157.773 150.169 157.929 150.439 158.131 150.618C158.333 150.797 158.57 150.887 158.844 150.887Z" fill="#707070"/>
+<path d="M169.911 152H168.437V146.326H168.397L166.781 147.352V146.043L168.529 144.93H169.911V152ZM174.599 152H173.124V146.326H173.085L171.469 147.352V146.043L173.217 144.93H174.599V152Z" fill="#707070"/>
+<path d="M184.203 152H182.729V146.326H182.689L181.073 147.352V146.043L182.821 144.93H184.203V152ZM185.839 150.94L188.383 148.602C188.633 148.361 188.829 148.162 188.969 148.006C189.109 147.846 189.215 147.687 189.286 147.527C189.361 147.365 189.398 147.192 189.398 147.01C189.398 146.808 189.35 146.631 189.252 146.478C189.154 146.321 189.021 146.202 188.852 146.121C188.682 146.04 188.49 145.999 188.275 145.999C188.057 145.999 187.864 146.043 187.694 146.131C187.528 146.219 187.4 146.347 187.309 146.517C187.221 146.683 187.177 146.876 187.177 147.098H185.78C185.78 146.645 185.884 146.248 186.093 145.906C186.304 145.561 186.599 145.296 186.977 145.11C187.357 144.925 187.795 144.832 188.29 144.832C188.788 144.832 189.228 144.92 189.608 145.096C189.989 145.271 190.284 145.517 190.492 145.833C190.704 146.149 190.81 146.51 190.81 146.917C190.81 147.194 190.756 147.461 190.648 147.718C190.544 147.975 190.359 148.26 190.092 148.572C189.828 148.885 189.452 149.262 188.964 149.705L187.885 150.745V150.794H190.912V152H185.844L185.839 150.94Z" fill="#707070"/>
+<path d="M197.557 152H196.082V146.326H196.043L194.427 147.352V146.043L196.175 144.93H197.557V152ZM201.824 152.098C201.31 152.098 200.849 152.01 200.442 151.834C200.035 151.658 199.716 151.411 199.485 151.092C199.257 150.773 199.139 150.411 199.129 150.008H200.608C200.618 150.174 200.677 150.324 200.784 150.457C200.892 150.59 201.036 150.695 201.219 150.77C201.401 150.844 201.603 150.882 201.824 150.882C202.055 150.882 202.264 150.841 202.449 150.76C202.638 150.675 202.783 150.561 202.884 150.418C202.985 150.271 203.034 150.105 203.03 149.92C203.034 149.728 202.981 149.557 202.874 149.407C202.767 149.257 202.61 149.142 202.405 149.061C202.203 148.976 201.966 148.934 201.692 148.934H201.033V147.85H201.692C201.924 147.85 202.13 147.811 202.312 147.732C202.495 147.651 202.635 147.539 202.732 147.396C202.83 147.252 202.877 147.09 202.874 146.907C202.877 146.728 202.837 146.57 202.752 146.434C202.667 146.294 202.545 146.186 202.386 146.111C202.226 146.036 202.044 145.999 201.839 145.999C201.631 145.999 201.44 146.036 201.268 146.111C201.095 146.183 200.955 146.287 200.848 146.424C200.743 146.557 200.687 146.714 200.677 146.893H199.271C199.284 146.492 199.402 146.136 199.627 145.823C199.852 145.511 200.156 145.268 200.54 145.096C200.927 144.92 201.36 144.832 201.839 144.832C202.324 144.832 202.752 144.918 203.123 145.091C203.494 145.263 203.782 145.501 203.987 145.804C204.192 146.106 204.292 146.445 204.285 146.819C204.292 147.076 204.238 147.311 204.124 147.522C204.013 147.734 203.855 147.908 203.65 148.045C203.449 148.178 203.214 148.27 202.947 148.318V148.372C203.292 148.414 203.585 148.51 203.826 148.66C204.07 148.807 204.254 148.995 204.378 149.227C204.502 149.458 204.56 149.721 204.554 150.018C204.56 150.411 204.446 150.768 204.212 151.087C203.978 151.403 203.652 151.65 203.235 151.829C202.819 152.008 202.348 152.098 201.824 152.098Z" fill="#707070"/>
+<path d="M212.469 152H210.994V146.326H210.955L209.339 147.352V146.043L211.087 144.93H212.469V152ZM213.997 149.588L216.985 144.93H217.981V146.541H217.386L215.481 149.51V149.568H219.725V150.75H213.997V149.588ZM217.43 150.394L217.449 149.881V144.93H218.831V152H217.43V150.394Z" fill="#707070"/>
+<path d="M227.12 152H225.646V146.326H225.606L223.99 147.352V146.043L225.738 144.93H227.12V152ZM231.363 152.098C230.882 152.098 230.445 152.008 230.055 151.829C229.664 151.65 229.356 151.401 229.132 151.082C228.91 150.763 228.795 150.405 228.785 150.008H230.206C230.222 150.19 230.283 150.351 230.387 150.491C230.494 150.631 230.632 150.742 230.802 150.823C230.974 150.901 231.161 150.94 231.363 150.94C231.604 150.94 231.819 150.887 232.008 150.779C232.2 150.672 232.35 150.524 232.457 150.335C232.564 150.143 232.618 149.926 232.618 149.686C232.618 149.435 232.563 149.215 232.452 149.026C232.345 148.834 232.193 148.685 231.998 148.577C231.806 148.466 231.586 148.411 231.339 148.411C231.075 148.408 230.852 148.455 230.67 148.553C230.488 148.65 230.343 148.8 230.235 149.002H228.902L229.288 144.93H233.639V146.136H230.499L230.304 147.918H230.357C230.494 147.739 230.689 147.594 230.943 147.483C231.197 147.373 231.476 147.317 231.778 147.317C232.205 147.317 232.59 147.417 232.936 147.615C233.284 147.811 233.554 148.086 233.746 148.44C233.941 148.795 234.037 149.197 234.034 149.646C234.037 150.115 233.925 150.537 233.697 150.911C233.473 151.282 233.159 151.574 232.755 151.785C232.351 151.993 231.887 152.098 231.363 152.098Z" fill="#707070"/>
+<path d="M242.037 152H240.562V146.326H240.523L238.907 147.352V146.043L240.655 144.93H242.037V152ZM246.422 152.098C245.898 152.094 245.423 151.979 244.996 151.751C244.57 151.523 244.225 151.15 243.961 150.633C243.697 150.115 243.565 149.446 243.565 148.626C243.565 147.841 243.684 147.164 243.922 146.595C244.163 146.022 244.501 145.586 244.938 145.286C245.377 144.983 245.89 144.832 246.476 144.832C246.941 144.832 247.356 144.922 247.721 145.101C248.089 145.28 248.385 145.525 248.609 145.838C248.834 146.15 248.971 146.502 249.02 146.893H247.569C247.53 146.727 247.46 146.583 247.359 146.463C247.262 146.339 247.138 146.246 246.988 146.185C246.839 146.123 246.668 146.092 246.476 146.092C246.16 146.092 245.893 146.183 245.675 146.365C245.46 146.544 245.296 146.801 245.182 147.137C245.068 147.472 245.009 147.874 245.006 148.343H245.064C245.175 148.134 245.322 147.957 245.504 147.811C245.689 147.661 245.899 147.547 246.134 147.469C246.371 147.387 246.619 147.347 246.876 147.347C247.296 147.347 247.675 147.444 248.014 147.64C248.352 147.835 248.616 148.107 248.805 148.455C248.997 148.8 249.093 149.192 249.093 149.632C249.093 150.107 248.98 150.532 248.756 150.906C248.535 151.281 248.22 151.574 247.813 151.785C247.41 151.993 246.946 152.098 246.422 152.098ZM246.412 150.94C246.65 150.94 246.863 150.885 247.052 150.774C247.244 150.66 247.394 150.507 247.501 150.315C247.612 150.12 247.667 149.907 247.667 149.676C247.667 149.438 247.613 149.223 247.506 149.031C247.398 148.839 247.25 148.689 247.062 148.582C246.873 148.475 246.66 148.421 246.422 148.421C246.188 148.421 245.974 148.476 245.782 148.587C245.59 148.698 245.439 148.849 245.328 149.041C245.217 149.233 245.159 149.446 245.152 149.681C245.156 149.905 245.211 150.114 245.318 150.306C245.429 150.498 245.579 150.652 245.768 150.77C245.96 150.883 246.174 150.94 246.412 150.94Z" fill="#707070"/>
+<path d="M256.379 152H254.904V146.326H254.865L253.249 147.352V146.043L254.997 144.93H256.379V152ZM261.276 146.18V146.136H257.81V144.93H262.8V146.155L259.816 152H258.303L261.276 146.18Z" fill="#707070"/>
+<path d="M271.042 152H269.567V146.326H269.528L267.912 147.352V146.043L269.66 144.93H271.042V152ZM275.344 152.098C274.816 152.098 274.341 152.011 273.918 151.839C273.498 151.666 273.169 151.427 272.932 151.121C272.694 150.815 272.575 150.473 272.575 150.096C272.575 149.806 272.644 149.536 272.78 149.285C272.917 149.031 273.103 148.823 273.337 148.66C273.575 148.497 273.838 148.395 274.128 148.353V148.299C273.881 148.25 273.659 148.152 273.464 148.006C273.269 147.856 273.116 147.671 273.005 147.449C272.894 147.228 272.839 146.99 272.839 146.736C272.839 146.375 272.948 146.049 273.166 145.76C273.384 145.467 273.684 145.239 274.064 145.076C274.445 144.913 274.872 144.832 275.344 144.832C275.819 144.832 276.247 144.913 276.628 145.076C277.012 145.239 277.312 145.467 277.526 145.76C277.744 146.049 277.854 146.375 277.854 146.736C277.854 146.99 277.797 147.228 277.683 147.449C277.572 147.671 277.419 147.856 277.224 148.006C277.032 148.152 276.81 148.25 276.56 148.299V148.353C276.849 148.395 277.111 148.497 277.346 148.66C277.583 148.823 277.772 149.031 277.912 149.285C278.052 149.536 278.122 149.806 278.122 150.096C278.122 150.473 278.002 150.815 277.761 151.121C277.523 151.427 277.193 151.666 276.77 151.839C276.35 152.011 275.874 152.098 275.344 152.098ZM275.344 150.979C275.588 150.979 275.804 150.936 275.993 150.848C276.182 150.76 276.328 150.638 276.433 150.481C276.537 150.325 276.589 150.149 276.589 149.954C276.589 149.749 276.535 149.565 276.428 149.402C276.32 149.24 276.172 149.113 275.983 149.021C275.795 148.93 275.581 148.885 275.344 148.885C275.109 148.885 274.898 148.93 274.709 149.021C274.52 149.113 274.372 149.24 274.265 149.402C274.157 149.565 274.105 149.749 274.108 149.954C274.105 150.149 274.156 150.325 274.26 150.481C274.364 150.638 274.51 150.76 274.699 150.848C274.888 150.936 275.103 150.979 275.344 150.979ZM275.344 147.845C275.549 147.845 275.733 147.804 275.896 147.723C276.062 147.638 276.19 147.524 276.281 147.381C276.372 147.234 276.418 147.07 276.418 146.888C276.418 146.702 276.372 146.538 276.281 146.395C276.193 146.251 276.066 146.141 275.9 146.062C275.738 145.981 275.552 145.94 275.344 145.94C275.139 145.94 274.953 145.981 274.787 146.062C274.624 146.141 274.497 146.251 274.406 146.395C274.318 146.538 274.274 146.702 274.274 146.888C274.274 147.07 274.32 147.234 274.411 147.381C274.506 147.524 274.634 147.638 274.797 147.723C274.96 147.804 275.142 147.845 275.344 147.845Z" fill="#707070"/>
+<path d="M285.037 152H283.562V146.326H283.523L281.907 147.352V146.043L283.655 144.93H285.037V152ZM289.266 144.832C289.79 144.832 290.265 144.946 290.691 145.174C291.118 145.398 291.461 145.77 291.722 146.287C291.985 146.801 292.117 147.465 292.117 148.279C292.12 149.07 292.003 149.752 291.766 150.325C291.528 150.898 291.189 151.338 290.75 151.644C290.314 151.946 289.799 152.098 289.207 152.098C288.745 152.098 288.33 152.007 287.962 151.824C287.594 151.642 287.298 151.395 287.073 151.082C286.849 150.766 286.712 150.41 286.663 150.013H288.108C288.151 150.185 288.221 150.333 288.318 150.457C288.419 150.581 288.545 150.675 288.694 150.74C288.847 150.805 289.018 150.838 289.207 150.838C289.523 150.838 289.791 150.747 290.013 150.564C290.234 150.382 290.4 150.122 290.511 149.783C290.625 149.441 290.682 149.035 290.682 148.562H290.618C290.507 148.764 290.361 148.94 290.179 149.09C289.996 149.24 289.786 149.355 289.549 149.437C289.314 149.515 289.067 149.554 288.807 149.554C288.39 149.554 288.012 149.456 287.674 149.261C287.339 149.065 287.075 148.795 286.883 148.45C286.691 148.102 286.593 147.713 286.59 147.283C286.59 146.811 286.701 146.39 286.922 146.019C287.146 145.644 287.462 145.353 287.869 145.145C288.276 144.933 288.742 144.829 289.266 144.832ZM289.271 145.984C289.036 145.984 288.823 146.041 288.631 146.155C288.439 146.266 288.289 146.417 288.182 146.609C288.074 146.798 288.021 147.008 288.021 147.239C288.024 147.47 288.079 147.68 288.187 147.869C288.294 148.058 288.44 148.208 288.626 148.318C288.815 148.429 289.025 148.484 289.256 148.484C289.493 148.484 289.708 148.427 289.9 148.313C290.096 148.2 290.25 148.047 290.364 147.854C290.478 147.659 290.534 147.451 290.53 147.229C290.53 147.005 290.475 146.798 290.364 146.609C290.254 146.417 290.104 146.266 289.915 146.155C289.726 146.041 289.511 145.984 289.271 145.984Z" fill="#707070"/>
+<path d="M295.694 150.94L298.238 148.602C298.489 148.361 298.684 148.162 298.824 148.006C298.964 147.846 299.07 147.687 299.142 147.527C299.216 147.365 299.254 147.192 299.254 147.01C299.254 146.808 299.205 146.631 299.107 146.478C299.01 146.321 298.876 146.202 298.707 146.121C298.538 146.04 298.346 145.999 298.131 145.999C297.913 145.999 297.719 146.043 297.55 146.131C297.384 146.219 297.255 146.347 297.164 146.517C297.076 146.683 297.032 146.876 297.032 147.098H295.636C295.636 146.645 295.74 146.248 295.948 145.906C296.16 145.561 296.454 145.296 296.832 145.11C297.213 144.925 297.651 144.832 298.146 144.832C298.644 144.832 299.083 144.92 299.464 145.096C299.845 145.271 300.139 145.517 300.348 145.833C300.559 146.149 300.665 146.51 300.665 146.917C300.665 147.194 300.611 147.461 300.504 147.718C300.4 147.975 300.214 148.26 299.947 148.572C299.684 148.885 299.308 149.262 298.819 149.705L297.74 150.745V150.794H300.768V152H295.699L295.694 150.94ZM304.552 152.098C303.963 152.098 303.455 151.956 303.028 151.673C302.605 151.39 302.28 150.976 302.052 150.433C301.827 149.886 301.715 149.23 301.715 148.465C301.715 147.7 301.827 147.046 302.052 146.502C302.28 145.958 302.607 145.545 303.033 145.262C303.46 144.975 303.966 144.832 304.552 144.832C305.138 144.832 305.644 144.975 306.07 145.262C306.497 145.545 306.824 145.96 307.052 146.507C307.28 147.05 307.394 147.703 307.394 148.465C307.394 149.233 307.28 149.889 307.052 150.433C306.827 150.976 306.502 151.39 306.075 151.673C305.649 151.956 305.141 152.098 304.552 152.098ZM304.552 150.887C304.825 150.887 305.063 150.797 305.265 150.618C305.47 150.439 305.626 150.169 305.733 149.808C305.841 149.443 305.893 148.995 305.89 148.465C305.89 147.938 305.836 147.493 305.729 147.132C305.621 146.767 305.466 146.494 305.265 146.312C305.063 146.129 304.825 146.038 304.552 146.038C304.278 146.038 304.041 146.129 303.839 146.312C303.64 146.494 303.486 146.767 303.375 147.132C303.264 147.493 303.209 147.938 303.209 148.465C303.209 148.995 303.263 149.443 303.37 149.808C303.481 150.169 303.637 150.439 303.839 150.618C304.041 150.797 304.278 150.887 304.552 150.887Z" fill="#707070"/>
+<path d="M37.9951 150.94L40.5391 148.602C40.7897 148.361 40.985 148.162 41.125 148.006C41.265 147.846 41.3708 147.687 41.4424 147.527C41.5173 147.365 41.5547 147.192 41.5547 147.01C41.5547 146.808 41.5059 146.631 41.4082 146.478C41.3105 146.321 41.1771 146.202 41.0078 146.121C40.8385 146.04 40.6465 145.999 40.4316 145.999C40.2135 145.999 40.0199 146.043 39.8506 146.131C39.6846 146.219 39.556 146.347 39.4648 146.517C39.377 146.683 39.333 146.876 39.333 147.098H37.9365C37.9365 146.645 38.0407 146.248 38.249 145.906C38.4606 145.561 38.7552 145.296 39.1328 145.11C39.5137 144.925 39.9515 144.832 40.4463 144.832C40.9443 144.832 41.3838 144.92 41.7646 145.096C42.1455 145.271 42.4401 145.517 42.6484 145.833C42.86 146.149 42.9658 146.51 42.9658 146.917C42.9658 147.194 42.9121 147.461 42.8047 147.718C42.7005 147.975 42.515 148.26 42.248 148.572C41.9844 148.885 41.6084 149.262 41.1201 149.705L40.041 150.745V150.794H43.0684V152H38L37.9951 150.94Z" fill="#707070"/>
+<path d="M11.1162 20L13.5576 12.9297H15.4424L17.8887 20H16.3115L14.5293 14.5264H14.4707L12.6836 20H11.1162ZM16.3799 17.2217V18.3691H12.6055V17.2217H16.3799Z" fill="#707070"/>
+<path d="M11.917 27.9297H14.7295C15.234 27.9297 15.6621 28.0062 16.0137 28.1592C16.3652 28.3089 16.6289 28.5205 16.8047 28.7939C16.9837 29.0641 17.0732 29.3815 17.0732 29.7461C17.0732 30.013 17.0179 30.2507 16.9072 30.459C16.7998 30.6673 16.6501 30.8398 16.458 30.9766C16.2692 31.11 16.0495 31.2044 15.7988 31.2598V31.3281C16.069 31.3411 16.3229 31.4193 16.5605 31.5625C16.7982 31.7057 16.9886 31.9059 17.1318 32.1631C17.2751 32.417 17.3467 32.7132 17.3467 33.0518C17.3467 33.4294 17.2539 33.7646 17.0684 34.0576C16.8828 34.3506 16.6061 34.5817 16.2383 34.751C15.8737 34.917 15.4326 35 14.915 35H11.917V27.9297ZM14.6172 33.7939C14.8939 33.7939 15.1217 33.7581 15.3008 33.6865C15.4831 33.6117 15.6165 33.5091 15.7012 33.3789C15.7858 33.2454 15.8281 33.0876 15.8281 32.9053C15.8281 32.71 15.7809 32.5342 15.6865 32.3779C15.5921 32.2217 15.4554 32.1029 15.2764 32.0215C15.1006 31.9368 14.8939 31.8945 14.6562 31.8945H13.3818V33.7939H14.6172ZM14.5098 30.8936C14.7148 30.8936 14.8988 30.8561 15.0615 30.7812C15.2275 30.7064 15.3561 30.6006 15.4473 30.4639C15.5417 30.3271 15.5889 30.166 15.5889 29.9805C15.5889 29.8047 15.5482 29.6533 15.4668 29.5264C15.3854 29.3962 15.265 29.2969 15.1055 29.2285C14.9492 29.1569 14.7604 29.1211 14.5391 29.1211H13.3818V30.8936H14.5098Z" fill="#707070"/>
+<path d="M16.2041 45.3955C16.1683 45.1351 16.0804 44.9105 15.9404 44.7217C15.8037 44.5296 15.6247 44.3831 15.4033 44.2822C15.182 44.1813 14.9362 44.1309 14.666 44.1309C14.2982 44.1309 13.9759 44.2236 13.6992 44.4092C13.4258 44.5915 13.2126 44.8584 13.0596 45.21C12.9066 45.5583 12.8301 45.9766 12.8301 46.4648C12.8301 46.9661 12.9066 47.391 13.0596 47.7393C13.2126 48.0843 13.4258 48.348 13.6992 48.5303C13.9759 48.7093 14.2933 48.7988 14.6514 48.7988C14.9215 48.7988 15.1641 48.75 15.3789 48.6523C15.597 48.5547 15.7777 48.4163 15.9209 48.2373C16.0641 48.055 16.1585 47.8385 16.2041 47.5879L17.6934 47.6025C17.638 48.0452 17.4785 48.457 17.2148 48.8379C16.9544 49.2188 16.6029 49.5247 16.1602 49.7559C15.7174 49.9837 15.208 50.0977 14.6318 50.0977C14.0003 50.0977 13.4355 49.9544 12.9375 49.668C12.4395 49.3783 12.0488 48.96 11.7656 48.4131C11.4857 47.863 11.3457 47.2135 11.3457 46.4648C11.3457 45.7096 11.4873 45.0586 11.7705 44.5117C12.057 43.9648 12.4476 43.5482 12.9424 43.2617C13.4404 42.9753 14.0036 42.832 14.6318 42.832C15.1755 42.832 15.667 42.9329 16.1064 43.1348C16.5459 43.3366 16.9023 43.6312 17.1758 44.0186C17.4525 44.4027 17.625 44.8617 17.6934 45.3955H16.2041Z" fill="#707070"/>
+<path d="M12.249 65V63.7402H14.0215C14.4772 63.7402 14.8564 63.6589 15.1592 63.4961C15.4619 63.3333 15.6898 63.0843 15.8428 62.749C15.9958 62.4105 16.0723 61.9808 16.0723 61.46C16.0723 60.9391 15.9958 60.5111 15.8428 60.1758C15.693 59.8372 15.4668 59.5882 15.1641 59.4287C14.8613 59.2692 14.4837 59.1895 14.0312 59.1895H12.2148V57.9297H14.1045C14.8141 57.9297 15.4261 58.0713 15.9404 58.3545C16.458 58.6344 16.8535 59.0397 17.127 59.5703C17.4036 60.1009 17.542 60.7308 17.542 61.46C17.542 62.1924 17.4036 62.8239 17.127 63.3545C16.8503 63.8851 16.4515 64.292 15.9307 64.5752C15.4131 64.8584 14.7979 65 14.085 65H12.249ZM13.0596 65H11.5947V57.9297H13.0596V65Z" fill="#707070"/>
+<path d="M12.1562 72.9297H16.9023V74.1406H13.6211V75.8594H16.6533V77.0654H13.6211V78.7891H16.9121V80H12.1562V72.9297Z" fill="#707070"/>
+<path d="M12.2881 87.9297H16.9463V89.1406H13.7529V90.8594H16.6387V92.0654H13.7529V95H12.2881V87.9297Z" fill="#707070"/>
+<path d="M16.126 105.21C16.0641 104.985 15.9632 104.793 15.8232 104.634C15.6833 104.471 15.5124 104.347 15.3105 104.263C15.112 104.175 14.8825 104.131 14.6221 104.131C14.2575 104.131 13.9368 104.222 13.6602 104.404C13.3867 104.587 13.1719 104.854 13.0156 105.205C12.8626 105.553 12.7861 105.972 12.7861 106.46C12.7861 106.951 12.861 107.373 13.0107 107.725C13.1637 108.073 13.3786 108.34 13.6553 108.525C13.9352 108.708 14.2624 108.799 14.6367 108.799C14.9753 108.799 15.2666 108.737 15.5107 108.613C15.7581 108.49 15.9453 108.315 16.0723 108.091C16.2025 107.863 16.2676 107.598 16.2676 107.295L16.5703 107.339H14.7344V106.221H17.6836V107.109C17.6836 107.718 17.5534 108.249 17.293 108.701C17.0326 109.15 16.6712 109.495 16.209 109.736C15.75 109.977 15.2243 110.098 14.6318 110.098C13.9743 110.098 13.3932 109.951 12.8887 109.658C12.3874 109.362 11.9967 108.94 11.7168 108.394C11.4401 107.847 11.3018 107.205 11.3018 106.47C11.3018 105.724 11.445 105.078 11.7314 104.531C12.0212 103.981 12.415 103.561 12.9131 103.271C13.4111 102.979 13.9727 102.832 14.5977 102.832C15.125 102.832 15.6068 102.933 16.043 103.135C16.4792 103.337 16.834 103.617 17.1074 103.975C17.3841 104.333 17.555 104.744 17.6201 105.21H16.126Z" fill="#707070"/>
+<path d="M11.502 117.93H12.9668V120.859H16.0332V117.93H17.498V125H16.0332V122.065H12.9668V125H11.502V117.93Z" fill="#707070"/>
+<path d="M15.2324 140H13.7676V132.93H15.2324V140Z" fill="#707070"/>
 </svg>

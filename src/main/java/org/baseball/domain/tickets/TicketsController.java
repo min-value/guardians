@@ -1,5 +1,6 @@
 package org.baseball.domain.tickets;
 
+import lombok.extern.slf4j.Slf4j;
 import org.baseball.domain.redis.RedisService;
 import org.baseball.dto.PredictInfoDTO;
 import org.baseball.dto.PurchaseReqDTO;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Controller
 @RequestMapping("/tickets")
 public class TicketsController {
@@ -69,17 +71,20 @@ public class TicketsController {
     @ResponseBody
     public boolean updatePurchase(@RequestBody PurchaseReqDTO dto) {
         try {
+            boolean r = true;
+
             if(dto.getZone_pk()==1101 || dto.getZone_pk()==1100){
                 dto.setSeats(null);
-            }
+                r = redisService.cancelBleachers(dto.getGame_pk(), dto.getUser_pk(), dto.getZone_pk());
+            } else {
+                r = redisService.confirmPayment(
+                        dto.getGame_pk(),
+                        dto.getSeats(),
+                        dto.getUser_pk(),
+                        dto.getZone_pk()
+                );
 
-            boolean r = redisService.confirmPayment(
-                    dto.getGame_pk(),
-                    dto.getSeats(),
-                    dto.getUser_pk(),
-                    dto.getZone_pk()
-            );
-            System.out.println(r);
+            }
             return r && ticketsService.updatePurchase(dto);
         } catch (Exception e) {
             e.printStackTrace();

@@ -32,6 +32,9 @@ public class ReservationController {
         //구역 정보 세션에 저장
         model.addAttribute("zoneMap", reservationService.getZones(gamePk));
 
+        //경기 정보 세션에 저장
+        ReserveGameInfoDTO reserveGameInfoDTO = reservationService.getGameInfo(gamePk);
+        session.setAttribute("gameInfo", reserveGameInfoDTO);
 
         return "reservation/tickets1";
     }
@@ -168,11 +171,5 @@ public class ReservationController {
         session.removeAttribute("gameInfo");
         session.removeAttribute("zoneMap");
         session.removeAttribute("available");
-    }
-
-    @GetMapping("/test")
-    public void test(@RequestParam int gamePk, int zonePk, HttpSession session) {
-        UserDTO user = (UserDTO) session.getAttribute("loginUser");
-        redisService.cancelPayment(gamePk, null, user.getUserPk(), zonePk);
     }
 }

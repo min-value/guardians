@@ -114,6 +114,7 @@ html, body {
     height: 146px;
     border: 1px solid var(--black);
     margin-top: 24px;
+    cursor: pointer;
 }
 /* 꺽쇠 */
 .summary-chevron {
@@ -124,7 +125,6 @@ html, body {
     height: 30px;
     opacity: 2;
     transition: transform 0.2s;
-    cursor: pointer;
 }
 .summary.open .summary-chevron {
     transform: rotate(180deg);
