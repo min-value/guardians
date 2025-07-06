@@ -21,7 +21,7 @@ public class ScheduleCrawler {
 
     private final GamesMapper gamesMapper;
 
-    @Scheduled(cron = "0 0 2 * * *")
+    @Scheduled(cron = "0 5 2 * * *")
     public void crawlSchedule() {
         WebDriver driver = init();
 

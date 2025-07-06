@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.baseball.domain.refund.RefundMapper">
+
+    <!-- 환불 대상 조회 -->
+    <select id="getRefundTargets" resultType="org.baseball.dto.RefundDTO">
+        SELECT
+            rl.reservelist_pk AS reservelistPk,
+            rl.user_pk AS userPk,
+            rl.game_pk AS gamePk,
+            rl.is_cancel AS isCancel,
+            rl.is_pay AS isPay,
+            rl.used_point AS usedPoint,
+            rl.paid_amount AS paidAmount,
+            rl.imp_uid AS impUid,
+            r.state AS state,
+            u.total_point AS totalPoint
+        FROM reservation_list rl
+                 JOIN reservations r ON rl.reservelist_pk = r.reservelist_pk
+                 JOIN games g ON rl.game_pk = g.game_pk
+                 JOIN user u ON rl.user_pk = u.user_pk
+        WHERE g.result = 'CANCEL'
+          AND rl.is_cancel = 0
+          AND rl.is_pay = 1
+    </select>
+
+    <!-- 예약 상태 변경 -->
+    <update id="updateReservationState">
+        UPDATE reservations
+        SET state = #{state}
+        WHERE reservelist_pk = #{reservelistPk}
+    </update>
+
+    <!-- 예약 리스트 취소 처리 -->
+    <update id="updateReservationCancel">
+        UPDATE reservation_list
+        SET is_cancel = 1
+        WHERE reservelist_pk = #{reservelistPk}
+    </update>
+
+    <!-- 환불 시간 기록 -->
+    <update id="updateCancelDate">
+        UPDATE reservation_list
+        SET cancel_date = #{cancelDate}
+        WHERE reservelist_pk = #{reservelistPk}
+    </update>
+
+    <!-- 포인트 적립 -->
+    <insert id="insertPoint">
+        INSERT INTO point (user_pk, point, date, type, description)
+        VALUES (#{userPk}, #{point}, NOW(), #{type}, #{description})
+    </insert>
+
+    <!-- 유저 포인트 증가 -->
+    <update id="updateUserPoint">
+        UPDATE user
+        SET total_point = total_point + #{point}
+        WHERE user_pk = #{userPk}
+    </update>
+
+</mapper>

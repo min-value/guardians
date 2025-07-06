@@ -51,17 +51,17 @@ public class PointServiceImpl implements PointService {
 
             // 포인트 계산
             if ("DRAW".equals(result)) {
-                point = (int) (paidAmount * 0.03);
-                description = "무승부 3%";
+                point = (int) (paidAmount * 0.009);
+                description = "무승부 0.9%";
             } else if (
                     ("WIN".equals(result) && predict == 0) ||
                             ("LOSE".equals(result) && predict == 1)
             ) {
-                point = (int) (paidAmount * 0.05);
-                description = "예측 성공 5%";
+                point = (int) (paidAmount * 0.012);
+                description = "예측 성공 1.2%";
             } else {
-                point = (int) (paidAmount * 0.01);
-                description = "예측 실패 1%";
+                point = (int) (paidAmount * 0.006);
+                description = "예측 실패 0.6%";
             }
 
             // 포인트 적립 내역 생성
