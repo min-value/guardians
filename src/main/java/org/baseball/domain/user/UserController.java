@@ -151,7 +151,8 @@ public class UserController {
 
         try {
             userService.updateUserInfo(user);
-            session.setAttribute("loginUser", user);
+            UserDTO updatedUser = userService.getUserInfoByPk(loginUser.getUserPk());
+            session.setAttribute("loginUser", updatedUser);
 
             result.put("success", true);
             result.put("message", "회원정보가 성공적으로 수정되었습니다.");

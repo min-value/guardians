@@ -242,7 +242,7 @@
                             }
 
                             item.innerHTML = `
-                                <div class="ticket-top">
+                                <div class="ticket-top" style="cursor: pointer;">
                                     <img src="/assets/img/teamlogos/\${ticket.homeTeamPk}.svg" class="logo-team">
                                     <span class="vs-text">VS</span>
                                     <img src="/assets/img/teamlogos/\${ticket.oppTeamPk}.svg" class="logo-team">
@@ -262,7 +262,7 @@
                                             </div>
                                             <div class="info-row">
                                               <span class="label">예매번호</span>
-                                              <span class="ticket-num">\${ticket.ticketNumber}</span>
+                                              <span class="ticket-num">\${ticket.reserveCode}</span>
                                             </div>
                                             <div class="info-row">
                                               <span class="label">경기장</span>

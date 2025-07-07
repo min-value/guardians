@@ -6,7 +6,7 @@
         SELECT
             u.user_pk AS userPk,
             u.user_name AS userName,
-            rl.reservelist_pk AS ticketNumber,
+            rl.reserve_code AS reserveCode,
             rl.imp_uid,
             rl.used_point,
             rl.is_cancel AS cancel,
