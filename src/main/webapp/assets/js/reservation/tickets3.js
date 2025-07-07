@@ -2,7 +2,7 @@ import {openLoading, closeLoading} from "./loading.js";
 
 const notifications = document.querySelectorAll('.notification');
 const closeButtons = document.querySelectorAll('.closeBtn');
-const befortBtn = document.querySelector('#beforeBtn');
+const beforeBtn = document.querySelector('#beforeBtn');
 const payBtn = document.querySelector('#payBtn');
 
 const gameInfo = JSON.parse(localStorage.getItem('gameInfo' + gamePk));
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     })
 
-    befortBtn.addEventListener("click", (e) => {
+    beforeBtn.addEventListener("click", (e) => {
         const reservelistPk = Number(localStorage.getItem('reservelistPk' + gamePk));
         const zonePk = Number(JSON.parse(localStorage.getItem('zone' + gamePk))['zonePk']);
 
@@ -172,6 +172,7 @@ async function requestPay() {
                                 window.opener.location.href = "/tickets/all?showModal=true";
                             }
                             window.close();
+                            console.log(result);
                         } else {
                             alert("예매 저장 실패. 다시 시도해주세요.");
                             $.ajax({

@@ -41,18 +41,3 @@
     cursor: pointer;
     background-color: transparent;
 }
-
-/* 툴팁 스타일 */
-.tooltip {
-    position: absolute;
-    padding: 6px 10px;
-    background: rgba(39,39,39,0.9);
-    color: var(--white);
-    font-size: 14px;
-    border-radius: 4px;
-    white-space: nowrap;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 10;
-}

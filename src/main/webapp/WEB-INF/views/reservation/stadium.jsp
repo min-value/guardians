@@ -54,16 +54,4 @@
     </div>
   </div>
 </div>
-<div id="tooltip" style="
-        position: absolute;
-        background: #333;
-        color: white;
-        padding: 6px 10px;
-        border-radius: 4px;
-        font-size: 14px;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.2s;
-        z-index: 1000;
-      "></div>
 <script type="module" src="${pageContext.request.contextPath}/assets/js/reservation/stadium.js"></script>
