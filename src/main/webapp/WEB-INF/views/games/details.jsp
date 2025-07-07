@@ -28,7 +28,7 @@
                     <option value="${y}" <c:if test="${y == selectedYear}">selected</c:if>>${y}년</option>
                 </c:forEach>
             </select>
-            <img src="/assets/img/icon/dropdownVector.png" class="dropdown-icon">
+            <img src="/assets/img/icon/dropdownVector.svg" class="dropdown-icon">
         </div>
         <div class="select-wrapper">
             <!-- 월 드롭다운 -->
@@ -39,7 +39,7 @@
                     </option>
                 </c:forEach>
             </select>
-            <img src="/assets/img/icon/dropdownVector.png" class="dropdown-icon">
+            <img src="/assets/img/icon/dropdownVector.svg" class="dropdown-icon">
         </div>
     </div>
 

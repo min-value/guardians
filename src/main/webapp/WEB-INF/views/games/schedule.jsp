@@ -24,7 +24,7 @@
                 <option value="${y}">${y}년</option>
             </c:forEach>
         </select>
-        <img src="/assets/img/icon/dropdownVector.png" class="dropdown-icon">
+        <img src="/assets/img/icon/dropdownVector.svg" class="dropdown-icon">
     </div>
 
     <!-- 월 -->
@@ -34,7 +34,7 @@
                 <option value="${m}">${m}월</option>
             </c:forEach>
         </select>
-        <img src="/assets/img/icon/dropdownVector.png" class="dropdown-icon">
+        <img src="/assets/img/icon/dropdownVector.svg" class="dropdown-icon">
     </div>
 </div>
 
