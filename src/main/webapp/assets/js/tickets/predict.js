@@ -6,27 +6,27 @@ $(document).ready(function () {
     $("#opponentTeam").attr("src", `/assets/img/teamlogos/${gameInfo['oppTeamPk']}.svg`);
 
     $("#ourTeam").on("mouseenter", function () {
-        $(this).css({ opacity: 1, height: "170px" });
+        $(this).css({ opacity: 1, height: "170px", cursor: "pointer"  });
         $("#opponentTeam").css({ opacity: 0.3, height: "150px" });
     }).on("mouseleave", function () {
         if(curPredict == null) {
-            $(this).css({opacity: 1, height: "150px"});
+            $(this).css({opacity: 1, height: "150px", cursor: "pointer"});
             $("#opponentTeam").css({ opacity: 1, height: "150px" });
         }else if (curPredict === 1) {
-            $(this).css({ opacity: 0.3, height: "150px" });
+            $(this).css({ opacity: 0.3, height: "150px", cursor: "pointer" });
             $("#opponentTeam").css({ opacity: 1, height: "170px" });
         }
     });
 
     $("#opponentTeam").on("mouseenter", function () {
-        $(this).css({ opacity: 1, height: "170px" });
+        $(this).css({ opacity: 1, height: "170px", cursor: "pointer" });
         $("#ourTeam").css({ opacity: 0.3, height: "150px" });
     }).on("mouseleave", function () {
         if(curPredict == null) {
-            $(this).css({opacity: 1, height: "150px"});
+            $(this).css({opacity: 1, height: "150px", cursor: "pointer" });
             $("#ourTeam").css({ opacity: 1, height: "150px" });
         }else if (curPredict === 0) {
-            $(this).css({ opacity: 0.3, height: "150px" });
+            $(this).css({ opacity: 0.3, height: "150px", cursor: "pointer"  });
             $("#ourTeam").css({ opacity: 1, height: "170px" });
         }
     });
