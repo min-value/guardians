@@ -229,7 +229,7 @@
                                         data-ticket="\${ticket.ticketNumber}"
                                         data-impuid="\${ticket.imp_uid}"
                                         data-userpk="\${ticket.userPk}"
-                                        data-reservepk="\${ticket.ticketNumber}"
+                                        data-reservepk="\${ticket.reservelistPk}"
                                         data-usedpoint="\${ticket.used_point}"
                                         data-gamedate="\${ticket.gameDate}"
                                         data-gamepk = "\${ticket.gamePk}"
@@ -292,12 +292,13 @@
                                     openLoading();
                                     const imp_uid = cancelBtn.dataset.impuid;
                                     const user_pk = cancelBtn.dataset.userpk;
-                                    const reservelist_pk = cancelBtn.dataset.ticket;
+                                    const reservelist_pk = cancelBtn.dataset.reservepk;
                                     const used_point = cancelBtn.dataset.usedpoint;
                                     const gameDate = new Date(cancelBtn.dataset.gamedate);
                                     const game_pk = cancelBtn.dataset.gamepk;
                                     const zone_pk = cancelBtn.dataset.zonepk;
                                     const seats = cancelBtn.dataset.seats;
+                                    console.log(reservelist_pk, user_pk, used_point, game_pk, zone_pk, seats);
                                     const now = new Date();
                                     const gameDay = new Date(gameDate.getFullYear(), gameDate.getMonth(), gameDate.getDate());
                                     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
