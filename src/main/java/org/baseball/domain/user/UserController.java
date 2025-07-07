@@ -262,7 +262,8 @@ public class UserController {
                     zone_pk
             );
 
-            return r && myTicketService.cancelReservation(map);
+            if(!r) return false;
+            else return myTicketService.cancelReservation(map);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -298,7 +299,8 @@ public class UserController {
                     user_pk,
                     zone_pk
             );
-            return r && myTicketService.restoreCanceledReservation(map);
+            if(!r) return false;
+            else return myTicketService.restoreCanceledReservation(map);
 
         } catch (Exception e) {
             e.printStackTrace();

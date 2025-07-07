@@ -47,6 +47,7 @@ $(document).ready(function () {
         target.disabled = false;
         target.style.backgroundColor = "var(--mainColor)";
         target.style.color = "var(--white)";
+        target.style.cursor = "pointer";
     });
 
     document.querySelector('.modal-btn').addEventListener('click', clickCheerBtn);
@@ -56,6 +57,7 @@ $(document).ready(function () {
 function clickCheerBtn() {
     console.log(curPredict);
     console.log(reservelistPk);
+
     $.ajax({
         url: '/tickets/predict',
         method: 'POST',
