@@ -199,7 +199,7 @@
                         }
 
                         container.innerHTML = '';
-                        tickets.forEach(ticket => {
+                        pageItems.forEach(ticket => {
                             console.log(ticket);
                             const item = document.createElement('div');
                             item.classList.add('ticket-item');
