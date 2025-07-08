@@ -208,6 +208,11 @@ table tr th {
     text-align: center;
     padding: 0.4rem;
     margin: 0.8rem;
+    cursor: pointer;
+}
+
+.main:hover{
+    background: var(--mainHover);
 }
 
 /*   /admin/reservation/   */
@@ -381,6 +386,6 @@ tbody td input {
 }
 
 .save_btn:hover {
-    background-color: var(--subColor);
+    background-color: var(--mainHover);
     color: var(--white)
 }

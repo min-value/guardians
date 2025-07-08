@@ -63,6 +63,13 @@
         WHERE c.post_pk = #{postPk}
     </select>
 
+    <!-- userPk로 postPk 받기 -->
+    <select id="selectPostPk" resultType="int" parameterType="int">
+        SELECT post_pk
+        FROM post
+        WHERE user_pk = #{user_pk}
+    </select>
+
     <!--  삭제하려는 글 안의 댓글 삭제  -->
     <delete id="deleteCommentsInPost" parameterType="int">
         DELETE FROM comment WHERE post_pk = #{post_pk}

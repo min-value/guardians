@@ -302,6 +302,12 @@
                                     const now = new Date();
                                     const gameDay = new Date(gameDate.getFullYear(), gameDate.getMonth(), gameDate.getDate());
                                     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                                    if(gameDay<=today) {
+                                        alert("환불이 가능한 기간이 지난 티켓입니다.");
+                                        closeLoading();
+                                        location.reload();
+                                    }
+
                                     $.ajax({
                                         type: "POST",
                                         url: "/user/cancel",
@@ -314,75 +320,48 @@
                                             seats: seats
                                         },
                                         success: function (res) {
-                                            if(gameDay>today){
-                                                console.log(res);
-                                                if(res){
-                                                    $.ajax({
-                                                        type: "POST",
-                                                        url: "/cancelPayment/" + imp_uid,
-                                                        success: function (response) {
-                                                            alert("예약 취소 완료");
-                                                            closeLoading();
-                                                            location.reload();
-                                                        },
-                                                        error: function (error) {
-                                                            console.error(error);
-                                                            $.ajax({
-                                                                type: "POST",
-                                                                url: "/user/restoreCancel",
-                                                                data: {
-                                                                    user_pk: user_pk,
-                                                                    reservelist_pk: reservelist_pk,
-                                                                    point: used_point,
-                                                                    game_pk: game_pk,
-                                                                    zone_pk: zone_pk,
-                                                                    seats: seats
-                                                                },
-                                                                success: function (response) {
-                                                                    alert("예약 취소 실패");
-                                                                },
-                                                                error: function (error) {
-                                                                    alert("에러가 발생하였습니다. 관리자에게 문의해주세요.");
-                                                                },
-                                                                complete: function () {
-                                                                    closeLoading();
-                                                                    cancelBtn.disabled = false;
-                                                                }
-                                                            });
-                                                        }
-                                                    });
-                                                } else {
-                                                    alert("예약 취소 실패");
-                                                    $.ajax({
-                                                        type: "POST",
-                                                        url: "/user/restoreCancel",
-                                                        data: {
-                                                            user_pk: user_pk,
-                                                            reservelist_pk: reservelist_pk,
-                                                            point: used_point,
-                                                            game_pk: game_pk,
-                                                            zone_pk: zone_pk,
-                                                            seats: seats
-                                                        },
-                                                        success: function (response) {
-                                                            alert("예약 취소 실패");
-                                                        },
-                                                        error: function (error) {
-                                                            alert("에러가 발생하였습니다. 관리자에게 문의해주세요.");
-                                                        },
-                                                        complete: function () {
-                                                            closeLoading();
-                                                            cancelBtn.disabled = false;
-                                                        }
-                                                    });
-                                                    closeLoading();
-                                                    location.reload();
-                                                }
+                                            if(res){
+                                                $.ajax({
+                                                    type: "POST",
+                                                    url: "/cancelPayment/" + imp_uid,
+                                                    success: function (response) {
+                                                        alert("예약 취소 완료 :" + response);
+                                                        closeLoading();
+                                                        location.reload();
+                                                    },
+                                                    error: function (error) {
+                                                        console.error(error);
+                                                        $.ajax({
+                                                            type: "POST",
+                                                            url: "/user/restoreCancel",
+                                                            data: {
+                                                                user_pk: user_pk,
+                                                                reservelist_pk: reservelist_pk,
+                                                                point: used_point,
+                                                                game_pk: game_pk,
+                                                                zone_pk: zone_pk,
+                                                                seats: seats
+                                                            },
+                                                            success: function (response) {
+                                                                if(res) alert("예약 취소 실패!");
+                                                                else alert("에러가 발생하였습니다. 관리자에게 문의해주세요.");
+                                                            },
+                                                            error: function (error) {
+                                                                alert("에러가 발생하였습니다. 관리자에게 문의해주세요.");
+                                                            },
+                                                            complete: function () {
+                                                                closeLoading();
+                                                                cancelBtn.disabled = false;
+                                                            }
+                                                        });
+                                                    }
+                                                });
                                             } else {
-                                                alert("예약을 취소할 수 없습니다.");
+                                                alert("예약 취소 실패!!");
                                                 closeLoading();
                                                 location.reload();
                                             }
+
                                         },
                                         error: function (error) {
                                             alert("취소 처리 실패");
