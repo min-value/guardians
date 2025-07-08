@@ -156,6 +156,10 @@ public class ReservationController {
     //예매 확인 페이지 로드
     @GetMapping("/confirm")
     public String confirm(@RequestParam int gamePk, HttpSession session) {
+        UserDTO user = (UserDTO) session.getAttribute("loginUser");
+
+        if(user == null) { return "redirect:/errors/needLogin"; }
+
         session.setAttribute("gamePk", gamePk);
         return "reservation/tickets3";
     }
