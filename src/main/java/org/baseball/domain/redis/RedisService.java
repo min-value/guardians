@@ -310,11 +310,6 @@ public class RedisService {
 
     //결제 취소
     public boolean cancelPayment(int gamePk, List<String> seats, int userPk, int zonePk) {
-//        log.info("[cancelPayment] 시작");
-//
-//        if(seats == null || seats.isEmpty()) {
-//            return true;
-//        }
 
         List<RLock> locks = new ArrayList<>();
         List<String> paidKeys = new ArrayList<>(); //롤백용
