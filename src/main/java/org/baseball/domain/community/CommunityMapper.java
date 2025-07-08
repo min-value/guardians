@@ -22,4 +22,5 @@ public interface CommunityMapper {
     String getUserNameByPk(int user_pk);
     void modifyPost(PostDTO dto);
     void updateComment(CommentDTO dto);
+    List<Integer> selectPostPk(int user_pk);
 }
