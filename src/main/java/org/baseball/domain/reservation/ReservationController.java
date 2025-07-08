@@ -118,7 +118,6 @@ public class ReservationController {
         UserDTO user = (UserDTO) session.getAttribute("loginUser");
         if(user == null) {
             PreemptionResDTO result = new PreemptionResDTO();
-            result = new PreemptionResDTO();
             result.setPreempted(0);
             result.setErrorMsg("로그인이 필요합니다.");
 
@@ -140,6 +139,7 @@ public class ReservationController {
     }
 
     @DeleteMapping("/preemption/delete/auto")
+    @ResponseBody
     public void deletePreemptionAuto(@RequestParam int gamePk, @RequestParam int zonePk, HttpSession session) {
         UserDTO user = (UserDTO) session.getAttribute("loginUser");
         //Redis 삭제
