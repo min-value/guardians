@@ -48,6 +48,16 @@ function loadVideo(page){
                     pageSize: 6,
                     containerId: '#pagination'
                 });
+            }else{
+                const container = $('#videos-list').empty();
+                container.append(`
+                    <div class="no-data">
+                        검색 결과가 없습니다.
+                    </div>
+                `);
+                $('#videos-list').css({
+                    "height": "200px"
+                })
             }
         }
     });
