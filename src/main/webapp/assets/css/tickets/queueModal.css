@@ -1,0 +1,125 @@
+
+.modal-container {
+    background-color: var(--white);
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.modal-body {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+}
+
+.modal-btn {
+    display: flex;
+    height: 56px;
+    padding: 16px 36px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    border-radius: 10px;
+    background: var(--gray-03);
+    color: var(--white);
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 20px;
+}
+
+.text1 {
+    align-self: stretch;
+    color: var(--black);
+    text-align: center;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.text2 {
+    align-self: stretch;
+    color: var(--black);
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.text3 {
+    margin-top: 30px;
+    align-self: stretch;
+    color: var(--mainColor);
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.text4 {
+    align-self: stretch;
+    color: var(--black);
+    text-align: center;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.bar-container {
+    width: 300px;
+    background-color: var(--lightBlue);
+    border-radius: 50px;
+    overflow: hidden;
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+.bar {
+    height: 30px;
+    width: 300px;
+    border-radius: 50px;
+    background: repeating-linear-gradient(
+            45deg,
+            var(--mainColor),
+            var(--mainColor) 20px,
+            var(--subColor) 20px,
+            var(--subColor) 40px
+    );
+    background-size: 200% 100%;
+    animation: slideGradient 10s linear infinite;
+}
+
+@keyframes slideGradient {
+    0% {
+        background-position: 100% 0%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.waitingNum {
+    align-self: stretch;
+    color: var(--black);
+    text-align: center;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}

@@ -1,0 +1,166 @@
+@import "/assets/css/font.css";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {
+    overflow-x: hidden;
+}
+
+
+.content{
+    width: 980px;
+    margin: 0 auto;
+}
+
+/*================ inventory ====================*/
+.inventoryText{
+    color: black;
+    font-weight: 400;
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+
+#inventoryList {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-weight: 400;
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+#inventoryList .all {
+    flex: 1;
+    text-align: left;
+    color: black;
+    font-weight: 400;
+    font-size: 24px;
+}
+#inventoryList .my {
+    flex: 1;
+    text-align: left;
+    color: var(--gray-03);
+    font-weight: 400;
+    font-size: 24px;
+}
+#inventoryList .else {
+    flex: 7;
+    text-align: left;
+    color: var(--white);
+}
+.clickable {
+    cursor: pointer;
+}
+/*-------------------------------------------*/
+
+.backgroundWrapper{
+    display: flex;
+    justify-content: center;
+}
+
+.postHeader {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+    background-color: var(--gray-06);
+    border-bottom: 2px solid var(--gray-01);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--gray-01);
+}
+.postHeader .title {
+    flex: 3;
+    text-align: left;
+}
+.postHeader .writer {
+    flex: 1;
+    text-align: left;
+}
+.postHeader .date {
+    flex: 1;
+    text-align: left;
+}
+
+hr {
+    width : 980px;
+    height : 2px;
+    border: none;
+    background-color: var(--gray-05);
+}
+
+.btnLocation{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 50px;
+}
+
+.writeBtn{
+    width: 180px;
+    height: 50px;
+    background-color: var(--mainColor);
+    border: none;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 16px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+.writeBtn:hover{
+    background-color: var(--mainHover);
+}
+
+/*============= post ===========*/
+#post-container{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-bottom: 31px;
+}
+#post {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--white);
+    border-bottom: 1px solid var(--gray-01);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0 40px;
+    color: var(--gray-01);
+    width: 980px;
+    height: 60px;
+}
+#post .title {
+    flex: 3;
+    text-align: left;
+    margin-right: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+#post .writer {
+    flex: 1;
+    text-align: left;
+    margin-right: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+#post .date {
+    flex: 1;
+    text-align: left;
+}
+
+.post-link {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.baseball.domain.story.news.NewsMapper">
+    <sql id="select">
+        <where>
+            <if test="type != null and type != '' and keyword != null and keyword != ''">
+                <choose>
+                    <when test="type == 'title'">
+                        n_title LIKE CONCAT('%',#{keyword}, '%')
+                    </when>
+                    <when test="type == 'content'">
+                        n_content LIKE CONCAT('%',#{keyword}, '%')
+                    </when>
+                    <otherwise>
+                        (n_title LIKE CONCAT('%',#{keyword},'%')
+                        OR n_content LIKE CONCAT('%', #{keyword}, '%'))
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+
+    <insert id="insertNews" parameterType="org.baseball.dto.NewsDTO">
+        INSERT IGNORE INTO news(
+             n_title, n_writer, n_content, n_year, n_month, n_date, n_hour, n_minute, img_url, news_url
+        ) VALUES (
+              #{n_title}, #{n_writer}, #{n_content}, #{n_year}, #{n_month}, #{n_date}, #{n_hour}, #{n_minute}, #{img_url}, #{news_url}
+        )
+    </insert>
+
+    <select id="getNews" resultType="org.baseball.dto.NewsDTO" parameterType="map">
+        SELECT n_title, n_writer, n_content, n_year, n_month, n_date, n_hour, n_minute, img_url, news_url
+        FROM news
+        <include refid="select"/>
+        ORDER BY n_year DESC, n_month DESC, n_date DESC, n_hour DESC, n_minute DESC
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <select id="countNews" resultType="int" parameterType="map">
+        SELECT COUNT(*)
+        FROM news
+        <include refid="select"/>
+    </select>
+</mapper>

@@ -1,0 +1,175 @@
+@import url('/assets/css/font.css');
+* {
+    box-sizing: border-box;
+}
+
+.header {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 400;
+    background-color: #fff;
+    z-index: 1000;
+    position: relative;
+}
+
+/* 로그인 영역 */
+.login-wrapper {
+    width: 100%;
+    background-color: #fff;
+    margin-top: 8px;
+}
+.login {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 36px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+}
+.login a {
+    text-decoration: none;
+    color: #333;
+}
+.login a:hover {
+    color: #0241A0;
+    font-weight: 500;
+}
+.divider {
+    color: #000;
+    font-size: 16px;
+    user-select: none;
+}
+
+/* 메뉴 영역 */
+.menu-wrapper {
+    background-color: #fff;
+}
+.header-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 16px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.menu-list {
+    list-style: none;
+    justify-content: center;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-list li:nth-child(3) {
+    margin-right: 200px;
+}
+
+.menu-list li {
+    list-style: none;
+    flex: none;
+    text-align: center;
+}
+.menu-list li a {
+    display: inline-block;
+    width: 160px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 24px;
+    color: #000;
+    transition: 0.2s;
+}
+.menu-list li a:hover {
+    color: #0241A0;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: #0241A0;
+}
+/* 로고 */
+.logo {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%) translateY(128px);
+    z-index: 1000;
+}
+.logo img {
+    width: 200px;
+}
+
+/* 세부 메뉴 (전체 배경) */
+.depth2-background {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1536px;
+    height: 320px;
+    background-image: url('/assets/img/header/header-background.png');
+    background-size: auto 320px;
+    background-position: right top;
+    background-repeat: no-repeat;
+    display: none;
+}
+
+.header:hover .depth2-background {
+    display: block;
+}
+
+/* 세부 메뉴 wrapper */
+.depth2-wrapper {
+    max-width: 1160px;
+    min-height: 320px;
+    height: 100%;
+    margin: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    overflow: hidden;
+    opacity: 0;
+    max-height: 0;
+    transition: max-height 0.4s ease, opacity 0.4s ease;
+    pointer-events: none;
+    position: relative;
+    z-index: 500;
+}
+
+/* 열릴 때 효과 */
+.header:hover .depth2-wrapper {
+    max-height: 320px;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.depth2-wrapper .depth2-column:nth-child(4) {
+    margin-left: 200px;
+}
+
+.depth2-column {
+    flex: 1;
+    width: 160px;
+    text-align: center;
+    flex: none;
+}
+.depth2 {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.depth2 li a {
+    display: inline-block;
+    width: 160px;
+    text-align: center;
+    text-decoration: none;
+    padding: 20px 0;
+    color: #000;
+}
+.depth2 li a:hover {
+    font-weight: 600;
+    color: #0241A0;
+}

@@ -1,0 +1,246 @@
+@import url("/assets/css/colors.css");
+
+/* 헤더 */
+.header-title {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    background: url('/assets/img/header/header-title.png') no-repeat center center;
+    background-size: contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* 달력 전체 */
+.calendar-wrapper {
+    width: 1190px;
+    min-height: 1187px;
+    max-height: 1394px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+
+/* 드롭다운 전체 wrapper */
+.calendar-dropdown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
+    margin-bottom: 48px;
+    gap: 10px;
+}
+
+/* 년도 셀렉트 */
+.year-select {
+    width: 140px;
+    height: 44px;
+    font-size: 20px;
+    text-align: center;
+    color: var(--black);
+    border: 1px solid var(--gray-03);
+    outline: none;
+
+    /* 기본 꺽쇠 제거 */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* 선택된 값 가운데 정렬 */
+    text-align-last: center;
+    cursor: pointer;
+}
+
+/* 월 셀렉트 */
+.month-select {
+    width: 140px;
+    height: 44px;
+    font-size: 20px;
+    text-align: center;
+    color: var(--black);
+    border: 1px solid var(--gray-03);
+
+    /* 기본 꺽쇠 제거 */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* 선택된 값 가운데 정렬 */
+    text-align-last: center;
+    cursor: pointer;
+}
+.year-select,
+.month-select:focus {
+    outline: none;
+}
+
+/* 년도 옵션 */
+.year-select option {
+    background-color: var(--white);
+    color: var(--black);
+    text-align: center;
+    font-size: 18px;
+    font-family: inherit;
+    height: 44px;
+    line-height: 44px;
+}
+
+/* 월 옵션 */
+.month-select option {
+    background-color: var(--white);
+    color: var(--black);
+    text-align: center;
+    font-size: 18px;
+    font-family: inherit;
+    height: 44px;
+    line-height: 44px;
+}
+
+
+/* 드롭다운 아이콘 wrapper */
+.dropdown-wrapper {
+    position: relative;
+}
+
+/* 드롭다운용 흰색 아이콘 */
+.dropdown-icon {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    width: 12px;
+    pointer-events: none;
+    z-index: 10;
+    cursor: pointer;
+}
+
+/* 요일 줄 전체 */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    width: 100%;
+    justify-items: center;
+
+    /*border-left: 1px solid var(--black);*/
+    /*border-top: 1px solid var(--black);*/
+}
+
+/* 요일 배경 */
+.calendar-weekdays {
+    /*background-color: var(--lightBlue);*/
+    color: var(--gray-01);
+    font-weight: bold;
+    font-size: 20px;
+    height: 60px;
+    padding-bottom: 12px;
+}
+
+/* 요일 셀 */
+.calendar-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    /*border-right: 1px solid var(--black);*/
+    /*border-bottom: 1px solid var(--black);*/
+}
+
+/* 토요일 border 제거 */
+.calendar-header:last-child {
+    border-right: none;
+}
+
+/* 날짜 셀 */
+.calendar-day {
+    width: 170px;
+    height: 214px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.date-line{
+    width: 150px;
+    height: 5px;
+    background-color: var(--lightBlueHover);
+}
+.date-line-t{
+    width: 150px;
+    height: 5px;
+    background-color: var(--subColor);
+}
+
+/* 날짜 숫자 */
+.date-number {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--gray-01);
+}
+.date-number-t {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--subColor);
+}
+
+/* 팀 로고 */
+.team-logo {
+    width: 60px;
+    margin-top: 12px;
+    margin-bottom: 6px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 경기장, 시간 */
+.game-info {
+    width: 100%;
+    font-size: 15px;
+    font-weight: normal;
+    text-align: center;
+    margin-bottom: 6px;
+}
+
+/* 경기 결과 원형 */
+.game-result {
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 4px auto;
+    color: white;
+}
+
+/* 결과 색상 구분 */
+.game-result.win {
+    background-color: var(--mainColor);
+}
+.game-result.lose {
+    background-color: var(--errorColor);
+}
+.game-result.draw {
+    background-color: var(--gray-03);
+}
+.game-result.cancel {
+    background-color: var(--gray-03);
+}

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.baseball.domain.point.PointMapper">
+    <select id="getPointsByUserPk" resultType="org.baseball.dto.PointDTO">
+        SELECT
+            point_pk,
+            user_pk,
+            point,
+            date,
+            type,
+            description,
+            CASE DAYOFWEEK(date)
+            WHEN 1 THEN '일'
+            WHEN 2 THEN '월'
+            WHEN 3 THEN '화'
+            WHEN 4 THEN '수'
+            WHEN 5 THEN '목'
+            WHEN 6 THEN '금'
+            WHEN 7 THEN '토'
+        END AS day
+    FROM point
+    WHERE user_pk = #{userPk}
+        AND point != 0
+        ORDER BY date DESC
+    </select>
+
+    <insert id="insertPoint" parameterType="org.baseball.dto.PointDTO">
+        INSERT INTO point (user_pk, point, date, type, description)
+        VALUES (#{userPk}, #{point}, NOW(), #{type}, #{description})
+    </insert>
+
+    <!-- 숫자야구 게임 보상 포인트 적립 -->
+    <insert id="insertPointReward" parameterType="map">
+        INSERT INTO point (user_pk, point, date, type, description)
+        VALUES (
+                   #{userPk},
+                   #{point},
+                   NOW(),
+                   '숫자야구 포인트 적립',
+                   '게임 보상 지급'
+               )
+    </insert>
+
+    <update id="updateTotalPoint" parameterType="map">
+        UPDATE user
+        SET total_point = total_point + #{point}
+        WHERE user_pk = #{userPk}
+    </update>
+
+    <!-- 포인트 적립 대상 예약 조회 -->
+    <select id="getPointEarnTargetList" resultType="org.baseball.dto.PointEarnDTO">
+        SELECT
+            rl.reservelist_pk AS reservelistPk,
+            rl.user_pk AS userPk,
+            rl.game_pk AS gamePk,
+            rl.paid_amount AS paidAmount,
+            rl.predict AS predict,
+            g.result AS result,
+            u.total_point AS totalPoint
+        FROM
+            reservation_list rl
+                JOIN games g ON rl.game_pk = g.game_pk
+                JOIN user u ON rl.user_pk = u.user_pk
+        WHERE
+            rl.is_pay = 1
+          AND rl.is_cancel = 0
+          AND rl.predict IS NOT NULL
+          AND rl.is_earn = 0
+          AND g.result IS NOT NULL
+          AND g.result != 'CANCEL'
+    </select>
+
+    <update id="updateIsEarn">
+        UPDATE reservation_list
+        SET is_earn = 1
+        WHERE reservelist_pk = #{reservelistPk}
+    </update>
+
+
+</mapper>

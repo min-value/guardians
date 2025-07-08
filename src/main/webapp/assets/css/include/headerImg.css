@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.backContainer{
+    width: 100%;
+    justify-items: center;
+}
+
+.backgroundImg{
+    width: 1536px;
+    height: 320px;
+    background: url('/assets/img/header/header-title.png') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.text{
+    color: black;
+    font-weight: 600;
+    font-size: 48px;
+    justify-items: center;
+    text-align: center;
+}
+

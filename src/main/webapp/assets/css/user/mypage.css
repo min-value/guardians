@@ -1,0 +1,85 @@
+@import url('/assets/css/colors.css');
+@import url('/assets/css/font.css');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.mypage-container {
+    margin: 80px auto 0 auto;
+    font-family: 'Pretendard', sans-serif;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mypage-tabs {
+    display: flex;
+    gap: 48px;
+    border-bottom: 2px solid var(--gray-05);
+    width: 980px;
+}
+
+.mypage-tabs .tab-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--gray-03);
+    cursor: pointer;
+    padding: 8px 0;
+}
+
+.mypage-tabs .tab-btn.active {
+    color: var(--black);
+}
+
+.cancel-container {
+    display: none;
+}
+
+.ticket-item.expanded .cancel-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.cancel-btn {
+    padding: 16px;
+    background-color: var(--mainColor);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+    justify-content: flex-end;
+}
+
+.cancel-btn:hover {
+    background-color: var(--mainHover);
+}
+
+.used-btn {
+    padding: 16px;
+    background-color: var(--white);
+    color: var(--gray-02);
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+    justify-content: flex-end;
+}
+.error-msg {
+    font-size: 16px;
+    color: var(--errorColor);
+    margin-left: 8px;
+    font-weight: 400;
+    gap: 8px;
+    display: inline-flex;
+    align-items: center;
+}

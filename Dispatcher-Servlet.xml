@@ -13,6 +13,9 @@
         <property name="suffix" value=".jsp" />
     </bean>
 
+    <!-- 카카오 로그인 -->
+    <context:property-placeholder location="classpath:application.properties"/>
+
     <context:component-scan base-package="org.baseball" />
     <mvc:annotation-driven/>
 

@@ -1,0 +1,285 @@
+@import url('/assets/css/colors.css');
+@import url('/assets/css/font.css');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.game-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-top: 80px;
+}
+
+.game-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1100px;
+    padding: 40px;
+}
+
+.game-left {
+    display: flex;
+    width: 650px;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.game-right {
+    flex-shrink: 0;
+}
+
+.img-container {
+    position: relative;
+    display: inline-block;
+    margin-top: 32px;
+}
+
+#openGuideBtn {
+    position: absolute;
+    top: -140px;
+    right: 32px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+#openPointBtn {
+    position: absolute;
+    top: -140px;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.numball-image {
+    width: 450px;
+    height: 450px;
+}
+
+.input-group {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.numbox {
+    width: 80px;
+    height: 100px;
+    font-weight: 600;
+    font-size: 48px;
+    text-align: center;
+    border: 2px solid var(--gray-02);
+    border-radius: 5px;
+    outline: none;
+    transition: border 0.2s;
+    background-color: var(--white);
+    color: var(--black);
+}
+
+.numbox:focus {
+    border: 3px solid var(--subColor);
+}
+
+.numbox.out-style {
+    background-color: var(--errorColor);
+    color: white;
+    border: none;
+}
+
+.numbox.success-style {
+    background-color: #22C55E;
+    color: white;
+    border: none;
+}
+
+.numbox.success-style,
+.numbox.out-style {
+    transition: background-color 0.3s ease, color 0.1s ease;
+}
+
+.result-wrapper {
+    width: 240px;
+    height: 60px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.check-btn {
+    width: 40%;
+    height: 80%;
+    font-size: 18px;
+    background: var(--gray-04);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: not-allowed;
+    transition: background 0.2s;
+}
+
+.check-btn.active {
+    background: var(--subColor);
+    cursor: pointer;
+}
+
+.result-box {
+    display: flex;
+    gap: 8px;
+    font-size: 36px;
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
+    animation: pitchIn 0.3s ease-out;
+}
+
+.result-box .circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.result-box .S {
+    background-color: #22C55E;
+}
+
+.result-box .B {
+    background-color: var(--yellow);
+}
+
+.result-box .O {
+    background-color: var(--errorColor);
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal .modal-content {
+    position: relative;
+    background-color: white;
+    padding: 48px;
+    border-radius: 5px;
+    text-align: center;
+    width: 90%;
+    max-width: 480px;
+    transform: translateY(-10%);
+    animation: slideDown 0.3s ease-out forwards;
+}
+
+.modal .modal-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 32px;
+    color: var(--black);
+}
+
+.modal .modal-description {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--gray-01);
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.modal .modal-description .highlight {
+    font-weight: 600;
+    color: var(--subColor);
+}
+
+.modal .modal-description .highlight-s {
+    font-weight: 700;
+    background-color: #22C55E;
+    color: var(--gray-01);
+    padding: 2px 4px;
+    border-radius: 5px;
+}
+
+.modal .modal-description .highlight-b {
+    font-weight: 700;
+    background-color: var(--yellow);
+    color: var(--gray-01);
+    padding: 2px 4px;
+    border-radius: 5px;
+}
+
+.modal .modal-description .highlight-o {
+    font-weight: 700;
+    background-color: var(--errorColor);
+    color: var(--gray-01);
+    padding: 2px 4px;
+    border-radius: 5px;
+}
+
+.modal .confirm-button {
+    width: 100%;
+    height: 48px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    background-color: var(--mainColor);
+    color: var(--white);
+    cursor: pointer;
+    margin-top: 24px;
+    transition: background-color 0.3s ease;
+}
+
+.modal .confirm-button:hover {
+    background-color: var(--mainHover);
+}
+
+.modal .close-button {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 24px;
+    height: 24px;
+    background: url("/assets/img/icon/close.svg") no-repeat center center;
+    background-size: contain;
+    border: none;
+    cursor: pointer;
+}
+
+@keyframes slideDown {
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes pitchIn {
+    0% {
+        transform: translateY(-20px) scale(0.6);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+

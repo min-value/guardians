@@ -1,0 +1,229 @@
+@import url('/assets/css/colors.css');
+@import url('/assets/css/font.css');
+
+.info-tab {
+    width: 378px;
+    margin: 48px auto 0 auto;
+    font-family: 'Pretendard', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mypage-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mypage-form label {
+    font-size: 18px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--mainColor);
+    display: inline-flex;
+    align-items: center;
+}
+
+.mypage-input {
+    width: 378px;
+}
+
+.mypage-form input[type="text"],
+.mypage-form input[type="email"],
+.mypage-form input[type="tel"] {
+    width: 100%;
+    height: 50px;
+    padding: 14px 20px;
+    background-color: var(--gray-06);
+    font-size: 18px;
+    font-weight: 400;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    margin-bottom: 24px;
+    box-sizing: border-box;
+}
+
+.mypage-form input::placeholder {
+    color: var(--gray-04);
+}
+
+.mypage-form input:focus {
+    border-color: var(--mainColor);
+    outline: none;
+}
+
+.mypage-form input[readonly],
+.mypage-form input:disabled {
+    border: 1px solid var(--gray-03);
+    background-color: var(--white);
+    color: var(--black);
+    cursor: not-allowed;
+}
+
+.edit-mode {
+    width: 378px;
+    height: 50px;
+    margin-top: 64px;
+    background-color: white;
+    border: 1px solid var(--mainColor);
+    color: var(--mainColor);
+    font-size: 16px;
+    font-weight: 400;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.edit-mode:hover {
+    background-color: var(--lightBlue);
+    color: var(--mainColor);
+}
+
+#editBtn:disabled{
+    background-color: var(--gray-03);
+    cursor: default;
+}
+
+.save-mode {
+    width: 378px;
+    height: 50px;
+    margin-top: 64px;
+    background-color: var(--mainColor);
+    border: none;
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 400;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.save-mode:hover {
+    background-color: var(--mainHover);
+    color: var(--white);
+}
+
+.withdraw-button {
+    color: var(--gray-01);
+    font-size: 16px;
+    font-weight: 400;
+    background: none;
+    border: none;
+    padding: 0;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 48px;
+    border-radius: 5px;
+    text-align: center;
+    width: 100%;
+    max-width: 496px;
+}
+
+.modal-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 48px;
+}
+
+.modal-description {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--gray-01);
+    margin-bottom: 16px;
+}
+
+.modal-description .highlight {
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+.modal-content .modal-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    user-select: none;
+    margin-bottom: 32px;
+}
+
+.modal-check input[type="checkbox"] {
+    display: none;
+}
+
+.modal-check .check-icon {
+    width: 32px;
+    height: 32px;
+    background-image: url("/assets/img/icon/circle_check_no.svg");
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+.modal-check input[type="checkbox"]:checked + .check-icon {
+    background-image: url("/assets/img/icon/circle_check_yes.svg");
+}
+
+.modal-check .check-text {
+    color: var(--gray-01);
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 24px;
+    height: 24px;
+    background: url("/assets/img/icon/close.svg") no-repeat center center;
+    background-size: contain;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.confirm-button {
+    width: 100%;
+    height: 48px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.confirm-button:disabled {
+    background-color: var(--gray-04);
+    color: white;
+    cursor: default;
+}
+
+.confirm-button:not(:disabled) {
+    background-color: var(--mainColor);
+    color: white;
+}

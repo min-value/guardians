@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.baseball.domain.numball.NumballMapper">
+
+    <resultMap id="numballResultMap" type="org.baseball.dto.NumballDTO">
+        <id property="numballPk" column="numball_pk" />
+        <result property="userPk" column="user_pk" />
+        <result property="gameDate" column="game_date" />
+        <result property="answer" column="answer" />
+        <result property="tryCount" column="try_count" />
+        <result property="isSuccess" column="is_success" />
+        <result property="tries" column="tries" />
+        <result property="createdAt" column="created_at" />
+    </resultMap>
+
+    <select id="selectTodayGame"  resultMap="numballResultMap">
+        SELECT *
+        FROM user_numball
+        WHERE user_pk = #{userPk}
+          AND game_date = CURDATE()
+            LIMIT 1
+    </select>
+
+    <insert id="insertNewGame"
+            parameterType="org.baseball.dto.NumballDTO"
+            useGeneratedKeys="true"
+            keyProperty="numballPk">
+        INSERT INTO user_numball (user_pk, game_date, answer)
+        VALUES (#{userPk}, CURDATE(), #{answer})
+    </insert>
+
+
+    <update id="updateTryCount">
+        UPDATE user_numball
+        SET try_count = try_count + 1
+        WHERE numball_pk = #{numballPk}
+    </update>
+
+    <update id="markSuccess">
+        UPDATE user_numball
+        SET is_success = TRUE
+        WHERE numball_pk = #{numballPk}
+    </update>
+
+    <update id="updateTries" parameterType="map">
+        UPDATE user_numball
+        SET tries = #{tries}
+        WHERE numball_pk = #{numballPk}
+    </update>
+
+    <select id="selectTries" resultType="string">
+        SELECT tries
+        FROM user_numball
+        WHERE numball_pk = #{numballPk}
+    </select>
+
+    <select id="selectByPk" resultMap="numballResultMap">
+        SELECT *
+        FROM user_numball
+        WHERE numball_pk = #{numballPk}
+    </select>
+
+</mapper>

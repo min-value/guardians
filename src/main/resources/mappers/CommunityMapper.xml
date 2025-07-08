@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.baseball.domain.community.CommunityMapper">
+
+    <sql id="select">
+        <where>
+            <if test="type != null and type != '' and keyword != null and keyword != ''">
+                <choose>
+                    <when test="type == 'title'">
+                        p.title LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                    <when test="type == 'writer'">
+                        u.user_name LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                    <when test="type == 'mine'">
+                        u.user_pk = #{keyword}
+                    </when>
+                    <otherwise>
+                        (p.title LIKE CONCAT('%', #{keyword}, '%')
+                        OR u.user_name LIKE CONCAT('%', #{keyword}, '%'))
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+
+    <select id="getPostPageWithSearch" resultType="org.baseball.dto.PostDTO" parameterType="map">
+        SELECT p.post_pk, p.title, p.p_content, p.p_date, u.user_name, u.user_pk
+        FROM post p
+        JOIN user u ON p.user_pk = u.user_pk
+        <include refid="select"/>
+        ORDER BY p.p_date DESC, p.user_pk ASC, p.title ASC
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <select id="countFiltered" resultType="int" parameterType="map">
+        SELECT COUNT(*)
+        FROM post p
+        JOIN user u ON p.user_pk = u.user_pk
+        <include refid="select"/>
+    </select>
+
+    <select id="selectPostById" resultType="org.baseball.dto.PostDTO" parameterType="int">
+        SELECT p.post_pk, p.title, p.p_content, p.p_date, u.user_name, u.user_pk
+        FROM post p
+        JOIN user u ON p.user_pk = u.user_pk
+        WHERE p.post_pk = #{postPk}
+    </select>
+
+    <select id="getCommentPage" resultType="org.baseball.dto.CommentDTO" parameterType="map">
+        SELECT c.comment_pk, c.c_content, c.c_date, u.user_name, u.user_pk
+        FROM comment c
+        JOIN user u ON c.user_pk = u.user_pk
+        WHERE c.post_pk = #{post_pk}
+        ORDER BY c.c_date DESC
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <select id="countComment" resultType="int" parameterType="int">
+        SELECT COUNT(*)
+        FROM comment c
+        WHERE c.post_pk = #{postPk}
+    </select>
+
+    <!-- userPk로 postPk 받기 -->
+    <select id="selectPostPk" resultType="int" parameterType="int">
+        SELECT post_pk
+        FROM post
+        WHERE user_pk = #{user_pk}
+    </select>
+
+    <!--  삭제하려는 글 안의 댓글 삭제  -->
+    <delete id="deleteCommentsInPost" parameterType="int">
+        DELETE FROM comment WHERE post_pk = #{post_pk}
+    </delete>
+
+    <!--  글 삭제  -->
+    <delete id="deletePost" parameterType="int">
+        DELETE FROM post WHERE post_pk = #{post_pk}
+    </delete>
+
+    <!--  댓글 삽입  -->
+    <insert id="insertComment" parameterType="org.baseball.dto.CommentDTO">
+        INSERT INTO comment(
+            c_content,
+            c_date,
+            post_pk,
+            user_pk
+        ) VALUES(
+             #{c_content},
+             NOW(),
+             #{post_pk},
+            #{user_pk}
+        )
+    </insert>
+
+    <!-- 댓글 하나 삭제 -->
+    <delete id="deleteComment" parameterType="int">
+        DELETE FROM comment WHERE comment_pk = #{comment_pk}
+    </delete>
+
+    <!--post 등록-->
+    <insert id="addPost" parameterType="org.baseball.dto.PostDTO">
+        INSERT INTO post(
+            title,
+            p_content,
+            p_date,
+            user_pk
+        ) VALUES(
+            #{title},
+            #{p_content},
+            NOW(),
+            #{user_pk}
+        )
+    </insert>
+
+    <!--post 수정-->
+    <update id="modifyPost" parameterType="org.baseball.dto.PostDTO">
+        UPDATE post
+        SET
+            title = #{title},
+            p_content = #{p_content}
+        WHERE post_pk = #{post_pk}
+    </update>
+
+    <!--comment 수정-->
+    <update id="updateComment" parameterType="org.baseball.dto.CommentDTO">
+        UPDATE comment
+        SET
+            c_content = #{c_content}
+        WHERE comment_pk = #{comment_pk}
+    </update>
+
+</mapper>

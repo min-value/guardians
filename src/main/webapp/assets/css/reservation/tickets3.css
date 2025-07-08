@@ -1,0 +1,483 @@
+@import "/assets/css/colors.css";
+
+
+#noti2 {
+    display: none;
+}
+
+#noti3 {
+    display: none;
+}
+
+#noti4 {
+    display: none;
+}
+
+.notification-container {
+    position: absolute;
+    z-index: 2;
+    width: 482px;
+    height: 474px;
+    background-color: var(--white);
+    border: 1px solid black;
+    right: 30px;
+}
+
+.notification-wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.notification-title-container {
+    width: 100%;
+    height: 40px;
+    /*background-color: red;*/
+    border-bottom: 1px solid var(--gray-04);
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.notification-title-wrapper {
+    width: 432px;
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.notification-title {
+    margin-left: 20px;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 40px;
+}
+
+.closeBtn-wrapper {
+    width: 50px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.closeBtn {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+#payBtn, #beforeBtn {
+    cursor: pointer;
+}
+
+.notification-content-container {
+    width: 482px;
+    height: 435px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification-content-wrapper {
+    width: 462px;
+    height: 415px;
+    overflow-y: scroll;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification-content {
+    width: 422px;
+    height: 415px;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+#sportsNotice {
+    width: 100%;
+    height: 100%;
+}
+
+/* left container */
+.left-container {
+    position: relative;
+}
+.left-wrapper {
+    position: absolute;
+    z-index: 1;
+    background-color: var(--white);
+}
+
+.orderInfo-container {
+    height: 140px;
+    width: 522px;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+.orderInfo-text-container {
+    height: 50px;
+    width: 522px;
+    display: flex;
+    align-items: center;
+}
+
+#orderInfo-text {
+    font-weight: 600;
+    font-size: 18px;
+    margin-left: 20px;
+}
+
+.orderInfo-detail-container {
+    height: 90px;
+    width: 522px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.orderInfo-detail-wrapper {
+    height: 90px;
+    width: 492px;
+    background-color: var(--lightBlue);
+}
+
+.orderInfo1 {
+    height: 45px;
+    width: 492px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.buyerName-container {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+}
+
+.buyerName-text-wrapper {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buyerName-detail-wrapper {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.buyerName-detail {
+    width: 90%;
+    height: 60%;
+    background-color: var(--white);
+}
+
+#buyerName {
+    margin-left: 10px;
+    margin-right: 10px;
+    line-height: 27px;
+    color: var(--gray-02);
+}
+
+.buyerPhone-container {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+}
+
+.buyerPhone-text-wrapper {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buyerPhone-detail-wrapper {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.buyerPhone-detail {
+    width: 90%;
+    height: 60%;
+    background-color: var(--white);
+}
+
+#buyerPhone {
+    margin-left: 10px;
+    margin-right: 10px;
+    line-height: 27px;
+    color: var(--gray-02);
+}
+
+.orderInfo2 {
+    height: 45px;
+    width: 492px;
+    display: flex;
+    align-items: center;
+}
+
+.buyerEmail-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.buyerEmail-text-wrapper {
+    width: 15%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buyerEmail-detail-wrapper {
+    width: 85%;
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.buyerEmail-detail {
+    width: 95.8%;
+    height: 60%;
+    background-color: var(--white);
+}
+
+#buyerEmail {
+    margin-left: 10px;
+    margin-right: 10px;
+    line-height: 27px;
+    color: var(--gray-02);
+}
+
+.orderConfirm-container {
+    height: 187px;
+    width: 522px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.orderConfirm-text-container {
+    height: 50px;
+    width: 522px;
+    display: flex;
+    align-items: center;
+}
+
+#orderConfirm-text {
+    font-weight: 600;
+    font-size: 18px;
+    margin-left: 20px;
+}
+
+
+/* 체크박스 */
+.orderConfirm-detail-container {
+    width: 472px;
+    height: 137px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.orderConfirm-detail-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.orderConfirm-detail-wrapper:first-child {
+    height: 40px;
+}
+.orderConfirm-checkbox-wrapper {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 472px;
+    height: 28px;
+}
+
+
+
+.orderConfirm-checkbox {
+    display: none; /* 기본 체크 박스 사용X */
+}
+
+.orderConfirm-checkbox + label {
+    display: block;
+    width: 12px;
+    aspect-ratio: 1 / 1;
+}
+
+.orderConfirm-checkbox+label {
+    background-repeat: no-repeat;
+    background-image: url('/assets/img/reservation/checkboxOff.svg');
+    background-position: center center;
+    background-size: contain;
+}
+
+.orderConfirm-checkbox + label {
+    cursor: pointer;
+}
+
+.orderConfirm-checkbox:checked+label {
+    background-repeat: no-repeat;
+    background-image: url('/assets/img/reservation/checkboxOn.svg');
+    background-position: center center;
+    background-size: contain;
+}
+
+.orderConfirm-checkbox-text {
+    font-size: 12px;
+    font-weight: 400;
+    margin-left: 8px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.viewDetail {
+    margin-left: 10px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.paymentInfo-container {
+    height: 187px;
+    width: 522px;
+}
+
+.paymentInfo-text-container {
+    height: 50px;
+    width: 522px;
+    display: flex;
+    align-items: center;
+}
+
+#paymentInfo-text {
+    font-weight: 600;
+    font-size: 18px;
+    margin-left: 20px;
+}
+
+.paymentInfo-detail-container {
+    height: 137px;
+    width: 522px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.paymentInfo-detail-wrapper {
+    height: 137px;
+    width: 492px;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
+.paymentInfo-card-container {
+    height: 117px;
+    width: 205px;
+}
+
+.paymentInfo-card-wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin: auto auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#paymentInfo-card {
+    height: 110px;
+    object-fit: contain;
+    position: absolute;
+    z-index: 1;
+}
+
+#myPoint {
+    position: absolute;
+    z-index: 2;
+    right: 15px;
+    bottom: 15px;
+    font-weight: 300;
+    font-size: 17px;
+    color: var(--white);
+}
+.paymentInfo-point-container {
+    height: 117px;
+    width: 287px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+
+.pointInfo-text-container {
+    width: 257px;
+    height: 50%;
+    display: flex;
+    align-items: end;
+}
+
+#pointInfo-text {
+    margin-left: 15px;
+    margin-bottom: 5px;
+}
+
+.point-container {
+    width: 257px;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+#pointMsg {
+    margin-left: 20px;
+    font-size: 10px;
+    color: var(--errorColor);
+}
+
+#usePoint {
+    margin-left: 20px;
+    width: 180px;
+    height: 25px;
+    border: 1px solid var(--gray-02);
+    display: flex;
+    justify-content: end;
+    text-align: right;
+}
+
+#point {
+    margin-right: 10px;
+    line-height: 25px;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}

@@ -1,0 +1,19 @@
+:root{
+    --mainHover: #00327C;
+    --mainColor: #0241A0;
+    --subColor: #0471E9;
+    --lightBlue: #ddedf4;
+    --lightBlueHover: #d2e9f3;
+    --yellow: #FFDE01;
+
+    --gray-01: #333333;
+    --gray-02: #707070;
+    --gray-03: #BDBDBD;
+    --gray-04: #D0D0D0;
+    --gray-05: #E1E1E1;
+    --gray-06: #F5F5F5;
+
+    --white: #FFFFFF;
+    --black: #000000;
+    --errorColor: #FC5555;
+}

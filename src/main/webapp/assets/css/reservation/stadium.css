@@ -1,0 +1,43 @@
+@import "/assets/css/colors.css";
+
+.stadium-container {
+    width: 482px;
+    height: 424px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--white);
+}
+
+.ballpark-container {
+    position: absolute;
+    height: 424px;
+    width: 482px;
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    margin: auto auto;
+}
+
+.ballpark-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+}
+
+#svgMap {
+    height: 424px;
+    background-color: var(--white);
+}
+
+/* 투명 영역 (툴팁 대상) */
+.region-overlay {
+    position: absolute;
+    cursor: pointer;
+    background-color: transparent;
+}

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.baseball.domain.tickets.TicketsMapper">
+    <select id="getTicketsList" resultType="org.baseball.dto.TicketsDTO" parameterType="map">
+        SELECT
+            h.game_pk as gameNo, g.game_date as gameDate, g.team_pk as opponentTeam,
+            s.location as stadium, h.start_date as startDate, h.end_date as endDate
+        FROM homegame h
+             JOIN games g ON h.game_pk = g.game_pk
+             JOIN stadium s ON s.stadium_pk = g.stadium_pk
+        WHERE end_date > NOW()
+        <if test="teamStatus != null and teamStatus != 0">
+            AND g.team_pk = #{teamStatus}
+        </if>
+        <choose>
+            <when test="ticketStatus != null and ticketStatus eq 1">
+                AND h.start_date &lt;= NOW() AND h.end_date >= NOW()
+            </when>
+            <when test="ticketStatus != null and ticketStatus eq 2">
+                AND h.start_date > NOW()
+            </when>
+        </choose>
+        ORDER BY gameDate
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+    <select id="countTicketsList" resultType="int" parameterType="map">
+        SELECT count(*)
+        FROM homegame h
+             JOIN games g ON h.game_pk = g.game_pk
+             JOIN stadium s ON s.stadium_pk = g.stadium_pk
+        WHERE end_date > NOW()
+        <if test="teamStatus != null and teamStatus != 0">
+            AND g.team_pk = #{teamStatus}
+        </if>
+        <choose>
+            <when test="ticketStatus != null and ticketStatus == '1'">
+                AND h.start_date &lt;= NOW() AND h.end_date >= NOW()
+            </when>
+            <when test="ticketStatus != null and ticketStatus == '2'">
+                AND h.start_date > NOW()
+            </when>
+        </choose>
+    </select>
+    <select id="getGameInfoforPredict" parameterType="int" resultType="org.baseball.dto.PredictInfoDTO">
+        SELECT game_pk as gamePk, team_pk as opponentTeam
+        FROM games
+        WHERE game_pk = #{gamePk}
+    </select>
+    <update id="updatePredict" parameterType="map">
+        UPDATE reservation_list set predict = #{predict} where reservelist_pk = #{reservelistPk} AND user_pk = #{userPk}
+    </update>
+    <update id="updateReserveList" parameterType="org.baseball.dto.PurchaseReqDTO">
+        UPDATE reservation_list
+        set
+            reserve_date = NOW(),
+            used_point = #{used_point},
+            imp_uid = #{impUid},
+            is_pay = 1,
+            total_amount = #{total_amount},
+            paid_amount = #{paid_amount},
+            apply_num = #{apply_num},
+            card_name = #{card_name},
+            card_number = #{card_number}
+        WHERE reservelist_pk = #{reservelist_pk} AND imp_uid IS NULL;
+    </update>
+    <update id="updateReservations" parameterType="org.baseball.dto.PurchaseReqDTO">
+        UPDATE reservations
+        SET state = 'PAID', discount_pk = #{dPk}
+        WHERE reservelist_pk = #{reservelist_pk}
+    </update>
+    <update id="deductPoint" parameterType="org.baseball.dto.PurchaseReqDTO">
+        UPDATE user set total_point= total_point-#{used_point} where user_pk = #{user_pk}
+    </update>
+    <insert id="insertReservePointUsage" parameterType="org.baseball.dto.PurchaseReqDTO">
+        INSERT INTO point(user_pk, point, date, type, description) VALUES (#{user_pk}, #{used_point}, NOW(), '티켓 예매 포인트 차감', '결제 사용')
+    </insert>
+</mapper>
