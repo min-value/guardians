@@ -85,7 +85,7 @@ html, body {
     flex: 0.1;
     border: none;
     cursor: pointer;
-    background: url("../../img/icon/edit-vertical.png") no-repeat center center;
+    background: url("../../img/icon/edit-vertical.svg") no-repeat center center;
     background-size: contain;
 }
 

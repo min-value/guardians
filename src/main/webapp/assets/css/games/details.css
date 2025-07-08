@@ -28,7 +28,7 @@ html, body {
 
 /* 드롭다운 전체 */
 .dropdown-wrapper {
-    gap: 0;
+    gap: 10px;
     display: flex;
     width: 292px;
     height: 44px;
@@ -44,41 +44,41 @@ html, body {
 
 /* 년도 드롭다운 */
 .year-select {
-    width: 146px;
+    width: 140px;
     height: 44px;
-    background: var(--mainColor);
-    color: var(--white);
-
     font-size: 20px;
     text-align: center;
-
-    /* 외곽선 */
-    border: 1px solid var(--black);
-    border-right: none;
+    color: var(--black);
+    border: 1px solid var(--gray-03);
+    outline: none;
 
     /* 기본 꺽쇠 제거 */
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+
+    /* 선택된 값 가운데 정렬 */
+    text-align-last: center;
+    cursor: pointer;
 }
 
 /* 월 드롭다운 */
 .month-select {
-    width: 146px;
+    width: 140px;
     height: 44px;
-    background: var(--mainColor);
-    color: var(--white);
-
     font-size: 20px;
     text-align: center;
-
-    /* 외곽선 */
-    border: 1px solid var(--black);
+    color: var(--black);
+    border: 1px solid var(--gray-03);
 
     /* 기본 꺽쇠 제거 */
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+
+    /* 선택된 값 가운데 정렬 */
+    text-align-last: center;
+    cursor: pointer;
 }
 
 /* 강조 효과 제거 */
@@ -99,12 +99,12 @@ html, body {
 .dropdown-icon {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
     right: 15px;
+    transform: translateY(-50%);
     width: 12px;
     pointer-events: none;
     z-index: 10;
-    filter: brightness(0) invert(1);
+    cursor: pointer;
 }
 
 /* 상세정보 카드 */
