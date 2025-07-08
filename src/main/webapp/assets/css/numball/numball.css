@@ -97,7 +97,7 @@ html, body {
 }
 
 .numbox.success-style {
-    background-color: var(--mainColor);
+    background-color: #22C55E;
     color: white;
     border: none;
 }
@@ -210,6 +210,30 @@ html, body {
 .modal .modal-description .highlight {
     font-weight: 600;
     color: var(--subColor);
+}
+
+.modal .modal-description .highlight-s {
+    font-weight: 700;
+    background-color: #22C55E;
+    color: var(--gray-01);
+    padding: 2px 4px;
+    border-radius: 5px;
+}
+
+.modal .modal-description .highlight-b {
+    font-weight: 700;
+    background-color: var(--yellow);
+    color: var(--gray-01);
+    padding: 2px 4px;
+    border-radius: 5px;
+}
+
+.modal .modal-description .highlight-o {
+    font-weight: 700;
+    background-color: var(--errorColor);
+    color: var(--gray-01);
+    padding: 2px 4px;
+    border-radius: 5px;
 }
 
 .modal .confirm-button {

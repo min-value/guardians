@@ -93,9 +93,9 @@
                 6번의 도전 안에 맞혀보세요!
             </p>
             <p class="modal-description">
-                숫자와 자리가 모두 맞으면 <span class="highlight">스트라이크(S)</span><br>
-                숫자만 맞고 자리는 다르면 <span class="highlight">볼(B)</span><br>
-                숫자가 하나도 맞지 않으면 <span class="highlight">아웃(OUT)</span>입니다.
+                숫자와 자리가 모두 맞으면 <span class="highlight-s">스트라이크(S)</span><br>
+                숫자만 맞고 자리는 다르면 <span class="highlight-b">볼(B)</span><br>
+                숫자가 하나도 맞지 않으면 <span class="highlight-o">아웃(OUT)</span>입니다.
             </p>
             <p class="modal-description">
                 숫자는 0~9까지 구성되어 있으며,<br>

@@ -57,4 +57,10 @@
         WHERE numball_pk = #{numballPk}
     </select>
 
+    <select id="selectByPk" resultMap="numballResultMap">
+        SELECT *
+        FROM user_numball
+        WHERE numball_pk = #{numballPk}
+    </select>
+
 </mapper>

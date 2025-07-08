@@ -19,4 +19,5 @@ public interface NumballMapper {
     int updateTries(@Param("numballPk") int numballPk, @Param("tries") String triesJson);
     // 저장된 시도 내역 조회
     String selectTries(@Param("numballPk") int numballPk);
+    NumballDTO selectByPk(int numballPk);
 }
