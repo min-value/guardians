@@ -30,6 +30,24 @@
         VALUES (#{userPk}, #{point}, NOW(), #{type}, #{description})
     </insert>
 
+    <!-- 숫자야구 게임 보상 포인트 적립 -->
+    <insert id="insertPointReward" parameterType="map">
+        INSERT INTO point (user_pk, point, date, type, description)
+        VALUES (
+                   #{userPk},
+                   #{point},
+                   NOW(),
+                   '숫자야구 포인트 적립',
+                   '게임 보상 지급'
+               )
+    </insert>
+
+    <update id="updateTotalPoint" parameterType="map">
+        UPDATE user
+        SET total_point = total_point + #{point}
+        WHERE user_pk = #{userPk}
+    </update>
+
     <!-- 포인트 적립 대상 예약 조회 -->
     <select id="getPointEarnTargetList" resultType="org.baseball.dto.PointEarnDTO">
         SELECT

@@ -20,7 +20,8 @@ public interface UserMapper {
     void deleteReservationListByUser(@Param("userPk") int userPk);
     void deletePointsByUser(@Param("userPk") int userPk);
     void deleteCommentsByUser(int userPk);
-    void deletePostsByUser(int userPk);
+    void deleteNumballByUser(@Param("userPk") int userPk);
+    boolean hasUncancelledReservations(@Param("userPk") int userPk);
     // 포인트 총합 조회
     Integer getTotalPoint(@Param("userPk") int userPk);
     // 포인트 총합 업데이트

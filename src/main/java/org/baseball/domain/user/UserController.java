@@ -177,6 +177,11 @@ public class UserController {
         }
 
         int userPk = loginUser.getUserPk();
+        if (userService.hasUncancelledReservations(userPk)) {
+            result.put("success", false);
+            result.put("message", "예매 중인 티켓이 있어 탈퇴할 수 없습니다.");
+            return result;
+        }
         boolean deleted = userService.deleteUserByPk(userPk);
 
         if (deleted) {
