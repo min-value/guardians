@@ -1,11 +1,14 @@
 package org.baseball.domain.user;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.baseball.domain.community.CommunityMapper;
 import org.baseball.domain.kakao.Tokens;
 import org.baseball.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -16,6 +19,8 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserMapper userMapper) {
         this.userMapper = userMapper;
     }
+    @Autowired
+    public CommunityMapper communityMapper;
 
     @Override
     @Transactional
@@ -84,7 +89,11 @@ public class UserServiceImpl implements UserService {
 
             // 3. 커뮤니티 기록 삭제
             userMapper.deleteCommentsByUser(userPk);
-            userMapper.deletePostsByUser(userPk);
+            List<Integer> list = communityMapper.selectPostPk(userPk);
+            for(int i : list){
+                communityMapper.deleteCommentsInPost(i);
+                communityMapper.deletePost(i);
+            }
 
             // 4. user 삭제
             int result = userMapper.deleteUser(userPk);
