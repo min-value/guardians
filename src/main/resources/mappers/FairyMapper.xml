@@ -6,6 +6,7 @@
         SELECT user_pk as userNo, user_name as userName, win_cnt + lose_cnt + draw_cnt as totalCnt,
                win_cnt as winCnt, lose_cnt as loseCnt, draw_cnt as drawCnt, ROUND((win_cnt + 1) / (win_cnt + lose_cnt + draw_cnt + 2), 3) as ratio
         FROM user
+        WHERE  win_cnt + lose_cnt + draw_cnt > 0
         ORDER BY ratio DESC, totalCnt DESC, winCnt DESC
         LIMIT 3;
     </select>
