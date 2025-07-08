@@ -113,7 +113,7 @@ public class ReservationService {
     }
 
     @Transactional
-    public PreemptionResDTO preemptSeat(PreemptionDTO preemptionDTO, UserDTO userDTO, PreemptionResDTO result, String reserveCode) {
+    public PreemptionResDTO getPreempt(PreemptionDTO preemptionDTO, UserDTO userDTO, PreemptionResDTO result, String reserveCode) {
         int zonePk = preemptionDTO.getZonePk();
         int gamePk =  preemptionDTO.getGamePk();
 
@@ -122,7 +122,7 @@ public class ReservationService {
         for(String seatNum : preemptionDTO.getSeats()) {
             int check = reservationMapper.confirmPreemption(zonePk, seatNum, gamePk);
 
-            if(check == 1) {
+            if(check >= 1) {
                 result.setPreempted(0);
                 result.setErrorMsg("이미 선점된 좌석입니다.");
                 return result;
@@ -153,6 +153,8 @@ public class ReservationService {
             reservationMapper.setPreemptionReserve(preemptionReserveDTO);
         }
 
+        redisService.preemptSeat(gamePk, preemptionDTO.getSeats(), userDTO.getUserPk(), zonePk);
+
         return result;
     }
 
@@ -164,31 +166,71 @@ public class ReservationService {
         List<String> seats =  preemptionDTO.getSeats();
         int userPk = userDTO.getUserPk();
 
-        result.setPreempted(1);
+        try {
+            //락 잡기
+            if (!redisService.tryLockSeat(gamePk, null, zonePk)) {
+                result.setPreempted(0);
+                result.setErrorMsg("이미 선점된 좌석입니다.");
+                return result;
+            }
 
-        //선점
-        PreemptionListDTO preemptionListDTO = PreemptionListDTO
-                .builder()
-                .quantity(quantity)
-                .userPk(userPk)
-                .gamePk(gamePk)
-                .reserveCode(reserveCode)
-                .build();
-        reservationMapper.setPreemptionList(preemptionListDTO);
+            //이전 기록이 있는지 확인
+            if(redisService.confirmPreempt(gamePk, null, userPk, zonePk)) {
+                result.setPreempted(0);
+                result.setErrorMsg("이미 선점된 좌석입니다.");
+                return result;
+            }
 
-        int reservelistPk = preemptionListDTO.getReservelistPk();
-        result.setReservelistPk(reservelistPk);
+            //DB 탐색해 남은 좌석 개수 판단
+            SoldSeatsReqDTO soldSeatsReqDTO = new SoldSeatsReqDTO(gamePk, zonePk);
 
-        for(String seatNum : preemptionDTO.getSeats()) {
-            PreemptionReserveDTO preemptionReserveDTO = PreemptionReserveDTO
+            List<String> soldSeats = getSoldSeats(soldSeatsReqDTO); //남은 좌석 정보
+
+            ZoneDTO zoneDTO = getZoneInfo(preemptionDTO.getZonePk()); //구역 정보
+
+            int remainingSeats = zoneDTO.getTotalNum() - soldSeats.size(); //남은 좌석 수
+
+            if (remainingSeats < quantity) {
+                //좌석 수가 충분하지 않다면
+                result.setPreempted(2);
+                result.setErrorMsg("좌석 수가 충분하지 않습니다.");
+                return result;
+            }
+
+            result.setPreempted(1);
+
+            //선점
+            PreemptionListDTO preemptionListDTO = PreemptionListDTO
                     .builder()
-                    .reservelistPk(reservelistPk)
-                    .zonePk(zonePk)
-                    .seatNum(seatNum)
+                    .quantity(quantity)
+                    .userPk(userPk)
+                    .gamePk(gamePk)
+                    .reserveCode(reserveCode)
                     .build();
-            reservationMapper.setPreemptionReserve(preemptionReserveDTO);
-        }
+            reservationMapper.setPreemptionList(preemptionListDTO);
 
+            int reservelistPk = preemptionListDTO.getReservelistPk();
+            result.setReservelistPk(reservelistPk);
+
+            for (String seatNum : preemptionDTO.getSeats()) {
+                PreemptionReserveDTO preemptionReserveDTO = PreemptionReserveDTO
+                        .builder()
+                        .reservelistPk(reservelistPk)
+                        .zonePk(zonePk)
+                        .seatNum(seatNum)
+                        .build();
+                reservationMapper.setPreemptionReserve(preemptionReserveDTO);
+            }
+
+            //Redis에 선점 정보 등록
+            if (!redisService.getBleachers(gamePk, userPk, zonePk)) {
+                result.setPreempted(0);
+                result.setErrorMsg("이미 선점된 좌석입니다.");
+                return result;
+            }
+        } finally {
+            redisService.unlockSeat(gamePk, null, zonePk);
+        }
         return result;
     }
 
@@ -245,63 +287,10 @@ public class ReservationService {
         //Redis에 선점 정보 넣기 (int gamePk, List<String> seats, int userPk)
         if(zonePk == 1101 || zonePk == 1100) {
             //외야석이라면
-            try {
-                //락 잡기
-                if(!redisService.tryLockSeat(gamePk, null, zonePk)) {
-                    result.setPreempted(0);
-                    result.setErrorMsg("이미 선점된 좌석입니다.");
-                    return result;
-                }
-
-                //DB 탐색해 남은 좌석 개수 판단
-                SoldSeatsReqDTO soldSeatsReqDTO = new SoldSeatsReqDTO(gamePk, zonePk);
-
-                List<String> soldSeats = getSoldSeats(soldSeatsReqDTO); //남은 좌석 정보
-
-                ZoneDTO zoneDTO = getZoneInfo(preemptionDTO.getZonePk()); //구역 정보
-
-                int remainingSeats = zoneDTO.getTotalNum() - soldSeats.size(); //남은 좌석 수
-
-                if(remainingSeats < quantity) {
-                    //좌석 수가 충분하지 않다면
-                    result.setPreempted(2);
-                    result.setErrorMsg("좌석 수가 충분하지 않습니다.");
-                    return result;
-                }
-                //DB에 등록
-                result = getBleachers(preemptionDTO, user, result, createReserveCode(gamePk, zonePk, userPk));
-
-                //Redis에 선점 정보 등록
-                if(!redisService.getBleachers(gamePk, userPk, zonePk)) {
-                    result.setPreempted(0);
-                    result.setErrorMsg("이미 선점된 좌석입니다.");
-                    return result;
-                }
-
-            } catch(Exception e) {
-                //오류메시지
-                result.setPreempted(3);
-                result.setErrorMsg("내부 오류로 선점이 취소되었습니다.");
-            } finally{
-                //락 해제
-                redisService.unlockSeat(gamePk, null, zonePk);
-            }
+            result = getBleachers(preemptionDTO, user, result, createReserveCode(gamePk, zonePk, userPk));
         } else {
             //그 외 구역이라면
-            try {
-                if(redisService.preemptSeat(gamePk, seats, userPk, zonePk)) {
-                    result = preemptSeat(preemptionDTO, user, result, createReserveCode(gamePk, zonePk, userPk));
-                } else {
-                    result.setPreempted(0);
-                    result.setErrorMsg("이미 선점된 좌석입니다.");
-                }
-            } catch (Exception e) {
-                //롤백
-                //redis 롤백
-                redisService.cancelPreempt(gamePk, seats, userPk, zonePk);
-                result.setPreempted(2);
-                result.setErrorMsg("내부 오류로 선점이 취소되었습니다.");
-            }
+            result = getPreempt(preemptionDTO, user, result, createReserveCode(gamePk, zonePk, userPk));
         }
         return result;
     }
