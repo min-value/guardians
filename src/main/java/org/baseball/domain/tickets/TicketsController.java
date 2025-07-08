@@ -85,7 +85,8 @@ public class TicketsController {
                 );
 
             }
-            return r && ticketsService.updatePurchase(dto);
+            if(!r) return false;
+            else return ticketsService.updatePurchase(dto);
         } catch (Exception e) {
             e.printStackTrace();
             return false;

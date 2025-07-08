@@ -6,27 +6,27 @@ $(document).ready(function () {
     $("#opponentTeam").attr("src", `/assets/img/teamlogos/${gameInfo['oppTeamPk']}.svg`);
 
     $("#ourTeam").on("mouseenter", function () {
-        $(this).css({ opacity: 1, height: "170px" });
+        $(this).css({ opacity: 1, height: "170px", cursor: "pointer"  });
         $("#opponentTeam").css({ opacity: 0.3, height: "150px" });
     }).on("mouseleave", function () {
         if(curPredict == null) {
-            $(this).css({opacity: 1, height: "150px"});
+            $(this).css({opacity: 1, height: "150px", cursor: "pointer"});
             $("#opponentTeam").css({ opacity: 1, height: "150px" });
         }else if (curPredict === 1) {
-            $(this).css({ opacity: 0.3, height: "150px" });
+            $(this).css({ opacity: 0.3, height: "150px", cursor: "pointer" });
             $("#opponentTeam").css({ opacity: 1, height: "170px" });
         }
     });
 
     $("#opponentTeam").on("mouseenter", function () {
-        $(this).css({ opacity: 1, height: "170px" });
+        $(this).css({ opacity: 1, height: "170px", cursor: "pointer" });
         $("#ourTeam").css({ opacity: 0.3, height: "150px" });
     }).on("mouseleave", function () {
         if(curPredict == null) {
-            $(this).css({opacity: 1, height: "150px"});
+            $(this).css({opacity: 1, height: "150px", cursor: "pointer" });
             $("#ourTeam").css({ opacity: 1, height: "150px" });
         }else if (curPredict === 0) {
-            $(this).css({ opacity: 0.3, height: "150px" });
+            $(this).css({ opacity: 0.3, height: "150px", cursor: "pointer"  });
             $("#ourTeam").css({ opacity: 1, height: "170px" });
         }
     });
@@ -47,6 +47,7 @@ $(document).ready(function () {
         target.disabled = false;
         target.style.backgroundColor = "var(--mainColor)";
         target.style.color = "var(--white)";
+        target.style.cursor = "pointer";
     });
 
     document.querySelector('.modal-btn').addEventListener('click', clickCheerBtn);
@@ -56,6 +57,7 @@ $(document).ready(function () {
 function clickCheerBtn() {
     console.log(curPredict);
     console.log(reservelistPk);
+
     $.ajax({
         url: '/tickets/predict',
         method: 'POST',
