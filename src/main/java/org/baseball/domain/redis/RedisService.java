@@ -115,6 +115,66 @@ public class RedisService {
                 .setIfAbsent(key, String.valueOf(userPk), PREEMPT_TTL, TimeUnit.MINUTES)); //todo
     }
 
+//    //타 구역에 대한 선점 등록(TTL: 10M) -> lock:seat:{gamePk}:{zonePk}:{seatNum} / preempt:seat:{gamePk}:{zonePk}:{seatNum}
+//    public boolean preemptSeatCheck(int gamePk, List<String> seats, int userPk, int zonePk) {
+//        List<RLock> locks = new ArrayList<>();
+//        List<String> preemptedKeys = new ArrayList<>();
+//
+//        try {
+//            //락 리스트 생성
+//            for(String seatNum: seats) {
+//                RLock lock = redissonClient.getLock(getLockKey(gamePk, seatNum, zonePk));
+//                locks.add(lock);
+//            }
+//
+//            //Multilock 획득 시도
+//            RLock multiLock = redissonClient.getMultiLock(locks.toArray(new RLock[0]));
+//
+//            if(!multiLock.tryLock(3, 10, TimeUnit.SECONDS)) {
+//                //락 획득 실패
+//                return false;
+//            }
+//
+//            //이미 선점/판매된 좌석이 있는지 확인
+//            for(String seatNum: seats) {
+//                String preemptKey = getPreemptkey(gamePk, seatNum, zonePk, userPk);
+//                String paidKey = getPaidKey(gamePk,  seatNum, zonePk, userPk);
+//
+//                String existingPreempt = redisTemplate.opsForValue().get(preemptKey);
+//                String existingPaid = redisTemplate.opsForValue().get(paidKey);
+//
+//                if(existingPreempt != null || existingPaid != null) {
+//                    //이미 선점/판매된 좌석 발견 -> 전체 실패
+//                    return false;
+//                }
+//            }
+//
+//            //모든 좌석에 대해 선점 등록
+//            for(String seatNum: seats) {
+//                String preemptKey = getPreemptkey(gamePk, seatNum, zonePk, userPk);
+//                redisTemplate.opsForValue().set(preemptKey, String.valueOf(userPk), PREEMPT_TTL, TimeUnit.MINUTES); //todo: minute으로 변경
+//                preemptedKeys.add(preemptKey); //나중에 실패 시 롤백용
+//            }
+//            return true;
+//        } catch (Exception e) {
+//            //롤백
+//            for(String key: preemptedKeys) {
+//                redisTemplate.delete(key);
+//            }
+//            return false;
+//        } finally {
+//            //락 해제
+//            for(RLock lock: locks) {
+//                if (lock.isHeldByCurrentThread()) {
+//                    try {
+//                        lock.unlock();
+//                    } catch (Exception ignore) {
+//                    }
+//                }
+//            }
+//        }
+//    }
+
     //타 구역에 대한 선점 등록(TTL: 10M) -> lock:seat:{gamePk}:{zonePk}:{seatNum} / preempt:seat:{gamePk}:{zonePk}:{seatNum}
     public boolean preemptSeat(int gamePk, List<String> seats, int userPk, int zonePk) {
         List<RLock> locks = new ArrayList<>();
@@ -133,20 +193,6 @@ public class RedisService {
             if(!multiLock.tryLock(3, 10, TimeUnit.SECONDS)) {
                 //락 획득 실패
                 return false;
-            }
-
-            //이미 선점/판매된 좌석이 있는지 확인
-            for(String seatNum: seats) {
-                String preemptKey = getPreemptkey(gamePk, seatNum, zonePk, userPk);
-                String paidKey = getPaidKey(gamePk,  seatNum, zonePk, userPk);
-
-                String existingPreempt = redisTemplate.opsForValue().get(preemptKey);
-                String existingPaid = redisTemplate.opsForValue().get(paidKey);
-
-                if(existingPreempt != null || existingPaid != null) {
-                    //이미 선점/판매된 좌석 발견 -> 전체 실패
-                    return false;
-                }
             }
 
             //모든 좌석에 대해 선점 등록
