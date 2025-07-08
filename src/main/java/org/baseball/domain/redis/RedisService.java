@@ -310,6 +310,12 @@ public class RedisService {
 
     //결제 취소
     public boolean cancelPayment(int gamePk, List<String> seats, int userPk, int zonePk) {
+        log.info("[cancelPayment] 시작");
+
+        if(seats == null || seats.isEmpty()) {
+            return true;
+        }
+
         List<RLock> locks = new ArrayList<>();
         List<String> paidKeys = new ArrayList<>(); //롤백용
         try {
@@ -363,6 +369,7 @@ public class RedisService {
     //결제 실패 시 복구
     public boolean restorePayment(int gamePk, List<String> seats, int userPk, int zonePk) {
         if(seats == null || seats.isEmpty()) {
+            System.out.println(gamePk + zonePk + userPk);
             return true;
         }
 

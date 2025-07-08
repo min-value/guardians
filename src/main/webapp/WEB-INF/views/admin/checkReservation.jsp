@@ -72,12 +72,12 @@
 <div class="container">
     <div class="title_container">
         <div class="title">
-            <img src="/assets/img/icon/list.png" alt="icon"/>
+            <img src="/assets/img/icon/list.svg" alt="icon"/>
             <p>예매 목록 조회</p>
         </div>
         <div class="logout" onclick="location.href='/user/logout';">
             <span class="logout-text">로그아웃</span>
-            <img src="/assets/img/icon/logout.png" alt="icon"/>
+            <img src="/assets/img/icon/logout.svg" alt="icon"/>
         </div>
     </div>
 

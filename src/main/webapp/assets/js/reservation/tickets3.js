@@ -96,12 +96,14 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("모든 항목에 동의하셔야 다음 단계로 진행할 수 있습니다.");
             e.preventDefault();
         } else {
+            openLoading();
             const usedPointStr = document.getElementById('usedPoint').innerText.replace(/,/g, '').replace(/[^0-9]/g, '');
             const usedPointNum = parseInt(usedPointStr, 10);
             localStorage.setItem('usedPoint' + gamePk, JSON.stringify(usedPointNum));
             localStorage.setItem('paidAmount' + gamePk, JSON.stringify(document.getElementById('totalPay').innerText.replace(/,/g, '')));
+            payBtn.disabled = true;
             await requestPay();
-
+            payBtn.disabled = false;
         }
     });
 
@@ -143,7 +145,6 @@ async function requestPay() {
             url : "/verifyPayment/" + res.imp_uid
         }).done(function(data) {
             if(res.paid_amount === data.response.amount){
-                alert("결제 및 결제검증완료");
                 $.ajax({
                     type : "POST",
                     url: "/tickets/purchase",
@@ -165,6 +166,7 @@ async function requestPay() {
                         discount_pk: discountPk
                     }),
                     success: function(result) {
+                        closeLoading();
                         console.log("서버 응답:", result);
                         if (result === true || result === "true") {
                             alert("예매 성공!");
@@ -191,10 +193,12 @@ async function requestPay() {
                     error: function(err) {
                         alert("예매 처리 중 오류 발생");
                         console.error(err);
+                        closeLoading();
                     }
                 })
             } else {
-                alert("결제 실패: ", res.error_msg);
+                alert("결제 실패: "+ res.error_msg);
+                closeLoading();
             }
         });
     });

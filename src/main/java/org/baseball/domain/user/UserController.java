@@ -1,5 +1,6 @@
 package org.baseball.domain.user;
 
+import lombok.extern.slf4j.Slf4j;
 import org.baseball.domain.myfairy.MyFairyService;
 import org.baseball.domain.myticket.MyTicketService;
 import org.baseball.domain.redis.RedisService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
+@Slf4j
 @Controller
 public class UserController {
 
@@ -244,14 +246,16 @@ public class UserController {
         map.put("reservelist_pk", reservelist_pk);
         map.put("user_pk", user_pk);
         map.put("point", point);
+        log.info("[예약취소] 요청 시작.");
 
         List<String> seat = Arrays.asList(seats.replace(" ", "").split(","));
-        System.out.println(seat.toString());
+        log.info("[예약취소] 좌석 목록: {}", seat);
 
         try {
             boolean r = true;
 
             if(zone_pk==1101 || zone_pk==1100){
+                log.info("[예약취소] 외야 구역: Redis 처리 생략");
                 seat = null;
             } else {
                 r = redisService.cancelPayment(
@@ -260,9 +264,10 @@ public class UserController {
                         user_pk,
                         zone_pk
                 );
+                log.info("[예약취소] Redis 처리 결과: {}", r);
             }
-
-            return r && myTicketService.cancelReservation(map);
+            if(!r) return false;
+            else return myTicketService.cancelReservation(map);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -284,6 +289,7 @@ public class UserController {
         map.put("reservelist_pk", reservelist_pk);
         map.put("user_pk", user_pk);
         map.put("point", point);
+        log.info("[restoreCancel] 요청 시작:");
 
         List<String> seat = Arrays.asList(seats.split(","));
         System.out.println(seat.toString());
@@ -298,7 +304,10 @@ public class UserController {
                     user_pk,
                     zone_pk
             );
-            return r && myTicketService.restoreCanceledReservation(map);
+            log.info("[restoreCancel] Redis 복구 결과: {}", r);
+
+            if(!r) return false;
+            else return myTicketService.restoreCanceledReservation(map);
 
         } catch (Exception e) {
             e.printStackTrace();

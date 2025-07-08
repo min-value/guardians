@@ -24,12 +24,12 @@
     cursor: pointer;
 }
 .pageRight{
-    background: url("../../img/icon/pageRight.png") no-repeat center center;
+    background: url("../../img/icon/pageRight.svg") no-repeat center center;
     background-size: contain;
     padding-right: 50px;
 }
 .pageLeft{
-    background: url("../../img/icon/pageLeft.png") no-repeat center center;
+    background: url("../../img/icon/pageLeft.svg") no-repeat center center;
     background-size: contain;
     padding-left: 50px;
 }
@@ -45,7 +45,7 @@
     height: 4px;
     border: none;
     cursor: default;
-    background: url("../../img/icon/pageDot.png") no-repeat center center;
+    background: url("../../img/icon/pageDot.svg") no-repeat center center;
     background-size: contain;
     padding-right: 45px;
 }
