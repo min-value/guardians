@@ -62,6 +62,10 @@ $(document).ready(function () {
             method: "GET",
             data: { year: year, month: month },
             success: function(scheduleList) {
+                if (!scheduleList || scheduleList.length === 0) {
+                    alert(`${month}월에는 편성된 경기가 없습니다.`);
+                    return;
+                }
                 const gameMap = {};
 
                 // 더블헤더 고려해서 일정 나누기

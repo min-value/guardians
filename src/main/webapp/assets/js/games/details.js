@@ -10,6 +10,12 @@ $(document).ready(function () {
             method: 'GET',
             data: { year, month },
             success: function (data) {
+                if (!data || !data.list || data.list.length === 0) {
+                    alert(`${month}월에는 경기 결과가 존재하지 않습니다.`);
+                    $('#detail-box').html(`<div id="no-data-msg" class="no-data-msg">해당 달은 경기 결과가 없습니다.</div>`);
+                    $('#pagination').empty();
+                    return;
+                }
                 renderGameCards(data.list);
                 bindSummaryToggle();
 
