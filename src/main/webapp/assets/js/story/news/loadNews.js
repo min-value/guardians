@@ -73,6 +73,16 @@ function loadNews(page){
                     pageSize: 4,
                     containerId: '#pagination'
                 });
+            }else{
+                const container = $('#news-list').empty();
+                container.append(`
+                    <div class="no-data">
+                        검색 결과가 없습니다.
+                    </div>
+                `);
+                $('#news-list').css({
+                    "height": "200px"
+                })
             }
         }
     });
