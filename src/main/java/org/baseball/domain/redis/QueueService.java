@@ -45,8 +45,10 @@ public class QueueService {
 
         Set<String> akeys = redisTemplate.keys("available:*");
         for (String key : akeys) {
-            redisTemplate.opsForZSet().remove(key, String.valueOf(userPk));
-            redisTemplate.delete(AVAILABLE_KEY_PREFIX + key.substring(QUEUE_KEY_PREFIX.length()) + ":" + userPk);
+            String[] parts = key.split(":");
+            if (parts.length == 3 && parts[2].equals(String.valueOf(userPk))) {
+                redisTemplate.delete(key);
+            }
         }
 
         redisTemplate.opsForZSet().add(queueKey, String.valueOf(userPk), score);
