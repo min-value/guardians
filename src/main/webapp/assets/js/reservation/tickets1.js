@@ -245,6 +245,17 @@ function renderingInfo() {
                             }
                         });
                 }
+            } else if(data.check === 4) {
+                //나머지 데이터 삭제
+                localStorage.removeItem('reservelistPk' + gamePk);
+                localStorage.removeItem('seats' + gamePk);
+                localStorage.removeItem('zone' + gamePk);
+
+                localStorage.removeItem('discountPk' + gamePk);
+                localStorage.removeItem('totalPay' + gamePk);
+
+                alert("다시 접속해주세요.");
+                window.close();
             }
 
         })
@@ -296,7 +307,11 @@ function tryPreempt(sendData, gamePk, zoneInfo, selectedSeats, lastColoredName) 
                 alert(`${data.errorMsg}`);
                 removeData();
                 window.close();
-            } else {
+            } else if(data.preempted === 4) {
+                alert(`${data.errorMsg}`);
+                removeData();
+                window.close();
+            } else{
                 alert(`${data.errorMsg}`);
                 location.reload();
             }
