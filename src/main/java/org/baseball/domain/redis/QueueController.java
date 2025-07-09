@@ -19,10 +19,10 @@ public class QueueController {
                                 @RequestParam int userPk,
                                 Model model) {
         boolean enqueued = queueService.enqueueUser(gamePk, userPk);
-        int pos = queueService.getQueuePosition(gamePk, userPk);
+        long pos = queueService.getPosition(gamePk, userPk);
         model.addAttribute("position", pos);
         model.addAttribute("enqueued", enqueued);
-        return "/tickets/queueModal"; // JSP
+        return "/tickets/queueModal"; // JSP 뷰 경로
     }
 
     @PostMapping("/enqueue/{gamePk}")
@@ -30,10 +30,10 @@ public class QueueController {
                                        @RequestParam int userPk) {
         boolean enqueued = queueService.enqueueUser(gamePk, userPk);
         if (enqueued) {
-            int position = queueService.getQueuePosition(gamePk, userPk);
+            long position = queueService.getPosition(gamePk, userPk);
             return ResponseEntity.ok("대기열에 등록되었습니다. 현재 대기 순번: " + position);
         } else {
-            return ResponseEntity.ok("이미 대기열에 등록되어 있습니다.");
+            return ResponseEntity.status(400).body("대기열 등록 실패");
         }
     }
 
@@ -42,9 +42,9 @@ public class QueueController {
                                         @RequestParam int userPk) {
         if (queueService.canReserve(gamePk, userPk)) {
             queueService.pollFront(gamePk);
-            return ResponseEntity.ok("예약 가능! 바로 진행하세요.");
+            return ResponseEntity.ok("예약 가능 상태");
         } else {
-            int pos = queueService.getQueuePosition(gamePk, userPk);
+            Long pos = queueService.getPosition(gamePk, userPk);
             return ResponseEntity.status(403).body("예약 대기 중입니다. 현재 순번: " + pos);
         }
     }
@@ -54,7 +54,6 @@ public class QueueController {
                                                  @RequestParam int userPk) {
         boolean removed = queueService.dequeueUser(gamePk, userPk);
         if (removed) {
-            queueService.notifyNext(gamePk);
             return ResponseEntity.ok("");
         } else {
             return ResponseEntity.status(400).body("대기열에서 제거 실패");
@@ -75,15 +74,19 @@ public class QueueController {
 
     @GetMapping("/queue-position/{gamePk}")
     @ResponseBody
-    public int getQueuePosition(@PathVariable int gamePk, @RequestParam int userPk) {
-        return queueService.getQueuePosition(gamePk, userPk);
+    public Long getQueuePosition(@PathVariable int gamePk, @RequestParam int userPk) {
+        return queueService.getPosition(gamePk, userPk);
     }
 
     @GetMapping("/queue-size/{gamePk}")
     @ResponseBody
-    public int getQueueSize(@PathVariable int gamePk) {
+    public Long getQueueSize(@PathVariable int gamePk) {
         return queueService.getQueueSize(gamePk);
     }
 
-
+    @GetMapping("/can-reserve/{gamePk}")
+    @ResponseBody
+    public boolean canReserve(@PathVariable int gamePk, @RequestParam int userPk) {
+        return queueService.canReserve(gamePk, userPk);
+    }
 }

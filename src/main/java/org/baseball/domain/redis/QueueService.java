@@ -1,10 +1,16 @@
 package org.baseball.domain.redis;
 
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
 import org.redisson.api.RScoredSortedSet;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
@@ -13,56 +19,111 @@ public class QueueService {
     @Autowired
     private RedissonClient redissonClient;
 
-    private String getQueueKey(int gamePk) {
-        return "reservation:queue:" + gamePk;
+    private final String QUEUE_KEY_PREFIX = "queue:";
+    private final String AVAILABLE_KEY_PREFIX = "available:";
+    private final StringRedisTemplate redisTemplate;
+
+    private static final int ALLOWED_ENTRANCE_COUNT = 10;
+    private static final long TTL_MILLIS = 20 * 60 * 1000;
+
+    public QueueService(RedissonClient redissonClient, StringRedisTemplate redisTemplate) {
+        this.redissonClient = redissonClient;
+        this.redisTemplate = redisTemplate;
     }
 
     public boolean enqueueUser(int gamePk, int userPk) {
-        RScoredSortedSet<String> queue = redissonClient.getScoredSortedSet(getQueueKey(gamePk));
-        String user = String.valueOf(userPk);
-        if (!queue.contains(user)) {
-            double score = System.currentTimeMillis();
-            queue.add(score, user);
+        String queueKey = QUEUE_KEY_PREFIX + gamePk;
+        double score = System.currentTimeMillis();
+
+        // 모든 기존 queue에서 제거 (한 게임만 대기 허용)
+        Set<String> keys = redisTemplate.keys("queue:*");
+        for (String key : keys) {
+            redisTemplate.opsForZSet().remove(key, userPk);
+            redisTemplate.delete(AVAILABLE_KEY_PREFIX + key.substring(QUEUE_KEY_PREFIX.length()) + ":" + userPk);
+
+        }
+
+        redisTemplate.opsForZSet().add(queueKey, String.valueOf(userPk), score);
+        Long rank = redisTemplate.opsForZSet().rank(queueKey, userPk);
+        if (rank != null && rank < ALLOWED_ENTRANCE_COUNT) {
+            redisTemplate.opsForValue().set("available:" + gamePk + ":" + userPk, "allowed", TTL_MILLIS, TimeUnit.MILLISECONDS);
             return true;
         }
+
         return false;
     }
 
+    //예약가능상태 확인
     public boolean canReserve(int gamePk, int userPk) {
-        RScoredSortedSet<String> queue = redissonClient.getScoredSortedSet(getQueueKey(gamePk));
-        String first = queue.first();
-        return String.valueOf(userPk).equals(first);
+        String queueKey = QUEUE_KEY_PREFIX + gamePk;
+        String availableKey = AVAILABLE_KEY_PREFIX + gamePk + ":" + userPk;
+        RScoredSortedSet<String> queue = redissonClient.getScoredSortedSet(queueKey);
+        String first = queue.isEmpty() ? null : queue.first();
+
+        // 첫번째 대기자가 맞고, 예약 가능 상태 키가 존재해야 예약 가능
+        return String.valueOf(userPk).equals(first) && Boolean.TRUE.equals(redisTemplate.hasKey(availableKey));
     }
 
     public boolean dequeueUser(int gamePk, int userPk) {
-        RScoredSortedSet<String> queue = redissonClient.getScoredSortedSet(getQueueKey(gamePk));
-        return queue.remove(String.valueOf(userPk));
+        String queueKey = QUEUE_KEY_PREFIX + gamePk;
+        String availableKey = AVAILABLE_KEY_PREFIX + gamePk + ":" + userPk;
+
+        Long removed = redisTemplate.opsForZSet().remove(queueKey, String.valueOf(userPk));
+        redisTemplate.delete(availableKey);
+        return removed != null && removed > 0;
     }
 
-    public int getQueuePosition(int gamePk, int userPk) {
-        RScoredSortedSet<String> queue = redissonClient.getScoredSortedSet(getQueueKey(gamePk));
-        String user = String.valueOf(userPk);
-        return queue.rank(user) != null ? queue.rank(user) + 1 : -1;
+    // 대기열 순위 확인
+    public Long getPosition(int gamePk, int userPk) {
+        String queueKey = QUEUE_KEY_PREFIX + gamePk;
+        return redisTemplate.opsForZSet().rank(queueKey, userPk);
     }
 
-    public int getQueueSize(int gamePk) {
-        return redissonClient.getScoredSortedSet(getQueueKey(gamePk)).size();
-    }
-
-    public void notifyNext(int gamePk) {
-        RScoredSortedSet<String> queue = redissonClient.getScoredSortedSet(getQueueKey(gamePk));
-        String nextUser = queue.first();
-        if (nextUser != null) {
-            int userPk = Integer.parseInt(nextUser);
-            log.info("예약 가능 유저: gamePk={}, userPk={}", gamePk, userPk);
-        }
+    // 전체 대기열 수
+    public Long getQueueSize(int gamePk) {
+        String queueKey = QUEUE_KEY_PREFIX + gamePk;
+        return redisTemplate.opsForZSet().zCard(queueKey);
     }
 
     public void pollFront(int gamePk) {
-        RScoredSortedSet<String> queue = redissonClient.getScoredSortedSet(getQueueKey(gamePk));
-        String first = queue.first();
-        if (first != null) {
-            queue.remove(first);
+        String lockKey = "lock:pollFront:" + gamePk;
+        RLock lock = redissonClient.getLock(lockKey);
+
+        try {
+            if (lock.tryLock(5, 10, TimeUnit.SECONDS)) {
+                RScoredSortedSet<String> queue = redissonClient.getScoredSortedSet(QUEUE_KEY_PREFIX + gamePk);
+                String first = queue.isEmpty() ? null : queue.first();
+
+                if (first != null) {
+                    queue.remove(first);
+                    // 예약 가능 상태 키 TTL 갱신
+                    redisTemplate.opsForValue().set(AVAILABLE_KEY_PREFIX + gamePk + ":" + first,
+                            "allowed", TTL_MILLIS, TimeUnit.MILLISECONDS);
+
+                    log.info("예약 가능 상태 갱신: gamePk={}, userPk={}", gamePk, first);
+                    notifyNext(gamePk);
+                }
+            } else {
+                log.warn("pollFront lock 획득 실패 gamePk={}", gamePk);
+            }
+        } catch (InterruptedException e) {
+            log.error("pollFront lock 중단", e);
+            Thread.currentThread().interrupt();
+        } catch (Exception e) {
+            log.error("pollFront 에러", e);
+        } finally {
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
+        }
+    }
+
+    public void notifyNext(int gamePk) {
+        RScoredSortedSet<String> queue = redissonClient.getScoredSortedSet(QUEUE_KEY_PREFIX + gamePk);
+        String nextUser = queue.isEmpty() ? null : queue.first();
+        if (nextUser != null) {
+            log.info("예약 가능 유저 알림: gamePk={}, userPk={}", gamePk, nextUser);
+            // 실제 알림 처리 로직 추가 가능 (ex: 메시지 큐, 웹소켓 푸시 등)
         }
     }
 }
