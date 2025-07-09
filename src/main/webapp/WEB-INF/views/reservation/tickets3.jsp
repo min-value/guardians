@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title></title>
+    <title>신한 가디언즈 예매</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets-common.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets-common2.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets3.css">
