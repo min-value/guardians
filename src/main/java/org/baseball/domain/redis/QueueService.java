@@ -10,7 +10,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -140,5 +139,21 @@ public class QueueService {
 
     public Set<String> getAllQueueKeys() {
         return redisTemplate.keys("queue:*");
+    }
+
+    public String getKey(int gamePk, int userPk) {
+        return "available:" + gamePk + ":" + userPk;
+    }
+
+    public boolean checkTTL(int gamePk, int userPk) {
+        String key = getKey(gamePk, userPk);
+        Long ttlRemain = redisTemplate.getExpire(key);
+
+        /*
+         * 0 > ttl 남음
+         * -1 = ttl 설정 없음
+         * -2 = 해당 key 없음
+         */
+        return ttlRemain > 0;
     }
 }
