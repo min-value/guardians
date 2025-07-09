@@ -21,7 +21,7 @@ public class DetailCrawler {
 
     private final GamesMapper gamesMapper;
 
-    @Scheduled(cron = "0 10 2 * * *")
+    @Scheduled(cron = "0 10 1 * * *")
     public void crawlDetails() {
         WebDriver driver = initDriver();
         Set<Integer> processedPk = new HashSet<>();

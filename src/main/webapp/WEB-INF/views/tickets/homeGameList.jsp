@@ -13,8 +13,6 @@
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/include/pagination.js"></script>
 <script>
-    const gamePk = Number(${gamePk});
-
     const user = {
         userPk: "${sessionScope.loginUser.userPk}",
         userName: "${sessionScope.loginUser.userName}",
@@ -23,20 +21,21 @@
         totalPoint: "${sessionScope.loginUser.totalPoint}"
     };
 
-    function openSeatReservation(gameNo) {
+    function openSeatReservation(gamePk) {
         const width = 500;
         const height = 400;
 
         const left = (window.screen.width - width) / 2;
         const top = (window.screen.height - height) / 2;
 
-        // window.open(
-        //     '/tickets/queue',
-        //     '_blank',
-        //     `width=\${width},height=\${height},left=\${left},top=\${top},scrollbars=no,resizable=no`
-        // );
-        window.open(`/reservation/seat?gamePk=\${gameNo}`, '_blank',
-                'width=800,height=700,scrollbars=yes,resizable=no');
+        localStorage.clear();
+        window.open(
+            `/queue/waiting/\${gamePk}?userPk=\${user.userPk}`,
+            '_blank',
+            'width=800,height=500,scrollbars=no,resizable=no'
+        );
+        // window.open(`/reservation/seat?gamePk=\${gameNo}`, '_blank',
+        //         'width=800,height=700,scrollbars=yes,resizable=no');
     }
 
     function loadPage(page) {
@@ -76,7 +75,7 @@
                 const isOnSale = startDate <= now;
 
                 const buttonHtml = isOnSale
-                    ? `<input class="onsale-ticket-btn" type="button" value="예매하기" onclick="redirectIfSessionExists(\${dto.gameNo})">`
+                    ? `<input class="onsale-ticket-btn" type="button" value="예매하기" onclick="openSeatReservation(\${dto.gameNo})">` //redirectIfSessionExists(\${dto.gameNo})
                     : `
                         <div class="plan-ticket-btn">
                           <span class="plan-time">\${dto.date} \${dto.time}</span>
@@ -121,6 +120,9 @@
         });
   }
     function redirectIfSessionExists(gamePk) {
+        window.open(`/reservation/seat?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
+
+        /*
         //권종/할인 선택
         let discountInfo = JSON.parse(localStorage.getItem('discountInfo' + gamePk));
         let gameInfo = JSON.parse(localStorage.getItem('gameInfo' + gamePk));
@@ -226,8 +228,15 @@
             }
         } else {
             localStorage.clear();
-            window.open(`/reservation/seat?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
+            window.open(
+                `/tickets/queue?gamePk=\${gamePk}&&userPk=\${user.userPk}`,
+                '_blank',
+                'width=800,height=500,scrollbars=no,resizable=no'
+            );
+            // window.open(`/reservation/seat?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
         }
+
+         */
     }
 
   $(document).ready(function () {
