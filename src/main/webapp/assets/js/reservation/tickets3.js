@@ -182,7 +182,18 @@ async function requestPay() {
                         closeLoading();
                         console.log("서버 응답:", result);
                         if (result === true || result === "true") {
+                            fetch(`/complete-reservation/\${gameInfo.gamePk}?userPk=\${user.userPk}`, {
+                                method: 'POST'
+                            }).then(res => {
+                                if (!res.ok) {
+                                    console.warn("대기열 제거 실패");
+                                }
+                            }).catch(err => {
+                                console.error("대기열 제거 중 에러:", err);
+                            });
+
                             alert("예매 성공!");
+
                             if (window.opener && !window.opener.closed) {
                                 window.opener.location.href = "/tickets/all?showModal=true";
                             }

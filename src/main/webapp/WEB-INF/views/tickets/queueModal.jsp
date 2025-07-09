@@ -72,7 +72,7 @@
                           .then(res => res.text())
                           .then(canReserve => {
                             if (canReserve === "true") {
-                              //TODO 이동하는 코드
+                              window.close();
                               window.open(`/reservation/seat?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
                             }
                           });
