@@ -1,12 +1,14 @@
 package org.baseball.domain.games;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.RequiredArgsConstructor;
 import org.baseball.dto.ScheduleDTO;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,7 @@ public class ScheduleCrawler {
 
     private final GamesMapper gamesMapper;
 
-    @Scheduled(cron = "0 5 2 * * *")
+    @Scheduled(cron = "0 36 10 * * *")
     public void crawlSchedule() {
         WebDriver driver = init();
 
@@ -40,8 +42,14 @@ public class ScheduleCrawler {
     // 드라이버 설정
     private static WebDriver init() {
         WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+
+        WebDriver driver = new ChromeDriver(options);
+        driver.manage().window().setSize(new Dimension(1920, 1080));
         return driver;
     }
 

@@ -1,7 +1,6 @@
 package org.baseball.domain.games;
 
 import lombok.RequiredArgsConstructor;
-import org.baseball.domain.games.GamesMapper;
 import org.baseball.dto.RankDTO;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,7 +15,7 @@ public class RankCrawler {
 
     private final GamesMapper gamesMapper;
 
-    @Scheduled(cron = "0 0 2 * * *")
+    @Scheduled(cron = "0 0 9 * * *")
     public void crawlAndSave() {
         try {
             // 랭킹 페이지 URL
