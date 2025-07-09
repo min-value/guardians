@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RQueue;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,9 @@ public class QueueService {
 
     @Autowired
     private RedissonClient redissonClient;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     public String getQueueKey(int gamePk) {
         return "reservation:queue:" + gamePk;
@@ -49,5 +53,21 @@ public class QueueService {
             int userPk = Integer.parseInt(nextUser);
             // 예: WebSocket 알림
         }
+    }
+
+    public String getKey(int gamePk, int userPk) {
+        return "available:" + gamePk + ":" + userPk;
+    }
+
+    public boolean checkTTL(int gamePk, int userPk) {
+        String key = getKey(gamePk, userPk);
+        Long ttlRemain = redisTemplate.getExpire(key);
+
+        /*
+         * 0 > ttl 남음
+         * -1 = ttl 설정 없음
+         * -2 = 해당 key 없음
+         */
+        return ttlRemain > 0;
     }
 }
