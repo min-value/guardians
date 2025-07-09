@@ -72,6 +72,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert("로그인이 필요합니다.");
                     removeData();
                     window.close();
+                }  else if(data === 3) {
+                    alert("다시 시도하세요.");
+                    removeData();
+                    window.close();
                 } else {
                     //선점이 되어있으면 돌아가기
                     window.location.href = `/reservation/discount?gamePk=${gamePk}`;
@@ -96,14 +100,23 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("모든 항목에 동의하셔야 다음 단계로 진행할 수 있습니다.");
             e.preventDefault();
         } else {
-            openLoading();
-            const usedPointStr = document.getElementById('usedPoint').innerText.replace(/,/g, '').replace(/[^0-9]/g, '');
-            const usedPointNum = parseInt(usedPointStr, 10);
-            localStorage.setItem('usedPoint' + gamePk, JSON.stringify(usedPointNum));
-            localStorage.setItem('paidAmount' + gamePk, JSON.stringify(document.getElementById('totalPay').innerText.replace(/,/g, '')));
-            payBtn.disabled = true;
-            await requestPay();
-            payBtn.disabled = false;
+            const res = await fetch(`/reservation/queue/confirm?gamePk=${gamePk}`);
+            const data = await res.json();
+
+            if(data === true) {
+                openLoading();
+                const usedPointStr = document.getElementById('usedPoint').innerText.replace(/,/g, '').replace(/[^0-9]/g, '');
+                const usedPointNum = parseInt(usedPointStr, 10);
+                localStorage.setItem('usedPoint' + gamePk, JSON.stringify(usedPointNum));
+                localStorage.setItem('paidAmount' + gamePk, JSON.stringify(document.getElementById('totalPay').innerText.replace(/,/g, '')));
+                payBtn.disabled = true;
+                await requestPay();
+                payBtn.disabled = false;
+            } else {
+                alert("다시 시도해주세요.");
+                removeData();
+                window.close();
+            }
         }
     });
 

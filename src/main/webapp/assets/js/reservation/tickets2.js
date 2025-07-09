@@ -102,7 +102,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         alert("로그인이 필요합니다.");
                         removeData();
                         window.close();
-                    } else {
+                    } else if(data === 3 ) {
+                        alert("다시 시도하세요.");
+                        removeData();
+                        window.close();
+                    } else{
                         //선점이 되어있으면
                         //컨트롤러에서 선점 여부 확인 후 선점
                         const sendData = {
@@ -165,8 +169,6 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
     })
     document.querySelector('#nextBtn').addEventListener('click', () => {
-        console.log(totalPayment);
-        console.log(totalSelected);
         if(totalSelected !== quantity) {
             alert('매수를 정확히 선택해주세요.')
         } else {
@@ -199,6 +201,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         window.close();
                     } else if(data === 0) {
                         alert("로그인이 필요합니다.");
+                        removeData();
+                        window.close();
+                    } else if(data === 3 ) {
+                        alert("다시 시도하세요.");
                         removeData();
                         window.close();
                     } else {
