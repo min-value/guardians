@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -130,5 +129,21 @@ public class QueueService {
             log.info("예약 가능 유저 알림: gamePk={}, userPk={}", gamePk, nextUser);
             // 실제 알림 처리 로직 추가 가능 (ex: 메시지 큐, 웹소켓 푸시 등)
         }
+    }
+
+    public String getKey(int gamePk, int userPk) {
+        return "available:" + gamePk + ":" + userPk;
+    }
+
+    public boolean checkTTL(int gamePk, int userPk) {
+        String key = getKey(gamePk, userPk);
+        Long ttlRemain = redisTemplate.getExpire(key);
+
+        /*
+         * 0 > ttl 남음
+         * -1 = ttl 설정 없음
+         * -2 = 해당 key 없음
+         */
+        return ttlRemain > 0;
     }
 }
