@@ -28,6 +28,14 @@
                     <label for="pwd">비밀번호</label>
                     <input type="password" id="pwd" name="userPwd" placeholder="비밀번호를 입력하세요" required>
                 </div>
+
+                <c:if test="${not empty errorMessage}">
+                    <div class="error-message">
+                        <img src="/assets/img/user/error-message.svg" alt="오류 아이콘" class="error-icon" />
+                        <span>${errorMessage}</span>
+                    </div>
+                </c:if>
+
                 <div class="login-btn"><input type="submit" value="로그인" alt="로그인"></div>
                 <div class="signup">
                     <span>계정이 없으신가요?</span>
@@ -35,10 +43,6 @@
                 </div>
             </div>
         </form>
-
-        <c:if test="${not empty errorMessage}">
-            <p style="color: var(--errorColor);">${errorMessage}</p>
-        </c:if>
 
         <hr class="divider-line" />
         <div class="kakao-login">
