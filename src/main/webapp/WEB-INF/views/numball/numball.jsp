@@ -15,6 +15,10 @@
 <div class="game-wrapper">
     <div class="game-container">
         <div class="game-left">
+            <div class="goPrev" onclick="goPrevPage()">
+                <div class="prevImg"></div>
+                <div class="prevText">포인트내역</div>
+            </div>
             <div class="input-group">
                 <input type="text" maxlength="1" class="numbox" id="num0_1" disabled>
                 <input type="text" maxlength="1" class="numbox" id="num0_2" disabled>
@@ -157,6 +161,10 @@
     const openPointBtn = document.getElementById('openPointBtn');
     const closePoint = document.getElementById('closePoint');
     const confirmPoint = document.getElementById('confirmPoint');
+
+    function goPrevPage(){
+        history.back();
+    }
 
     openBtn.addEventListener('click', () => {
         modal.style.display = 'flex';

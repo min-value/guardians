@@ -1,6 +1,12 @@
 @import url('/assets/css/colors.css');
 @import url('/assets/css/font.css');
 
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
 .login-form {
     width: 378px;
     margin: 80px auto;

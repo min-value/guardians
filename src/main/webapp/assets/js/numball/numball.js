@@ -46,6 +46,9 @@ window.onload = function () {
             if (isSuccess) {
                 const image = document.getElementById('numballCharacter');
                 image.src = contextPath + "/assets/img/mypage/numball-success.png";
+            } else if (!isSuccess && existingTries.length === MAX_TRIES) {
+                const image = document.getElementById('numballCharacter');
+                image.src = contextPath + "/assets/img/mypage/numball-fail.png";
             }
         });
 
@@ -151,6 +154,13 @@ window.onload = function () {
 
                     if (status !== 'success' && index + 1 < MAX_TRIES) {
                         activateRow(index + 1);
+                    } else if (status !== 'success' && index + 1 === MAX_TRIES) {
+                        const image = document.getElementById('numballCharacter');
+                        image.style.opacity = 0;
+                        setTimeout(() => {
+                            image.src = "/assets/img/mypage/numball-fail.png";
+                            image.style.opacity = 1;
+                        }, 300);
                     }
                 })
                 .finally(() => {
