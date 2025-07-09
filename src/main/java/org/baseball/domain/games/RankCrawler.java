@@ -16,7 +16,7 @@ public class RankCrawler {
 
     private final GamesMapper gamesMapper;
 
-    @Scheduled(cron = "0 30 00 * * *")
+    @Scheduled(cron = "0 00 1 * * *")
     public void crawlAndSave() {
         try {
             // 랭킹 페이지 URL

@@ -94,7 +94,16 @@ public class TicketsController {
     }
 
     @GetMapping("/queue")
-    public  String showQueueList(Model model) {
+    public String showQueueList(Model model) {
+        return "tickets/queueModal";
+    }
+
+    @GetMapping("/queue/enqueue")
+    public String showQueue(@RequestParam() int gamePk,
+                                @RequestParam() int userPk,
+                             Model model) {
+        model.addAttribute("gamePk", gamePk);
+        model.addAttribute("userPk", userPk);
         return "tickets/queueModal";
     }
 }
