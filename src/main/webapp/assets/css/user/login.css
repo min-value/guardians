@@ -139,3 +139,18 @@ html, body {
     left: 20px;
     position: absolute;
 }
+
+.error-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    color: var(--errorColor);
+    gap: 6px;
+}
+
+.error-icon {
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+}
