@@ -14,7 +14,7 @@ public class PointScheduler {
     private static final Logger log = LoggerFactory.getLogger(PointScheduler.class);
     private final PointService pointService;
 
-    @Scheduled(cron = "0 20 2 * * *")
+    @Scheduled(cron = "0 50 00 * * *")
     public void schedulePointEarn() {
         log.info("스케줄러 실행");
         pointService.earnPredictionPoints();
