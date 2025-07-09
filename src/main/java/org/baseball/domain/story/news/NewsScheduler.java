@@ -15,7 +15,7 @@ public class NewsScheduler {
     @Autowired
     private NewsService newsService;
 
-    @Scheduled(cron = "0 30 00 * * *")
+    @Scheduled(cron = "0 0 1 * * *")
     public void crawlNews(){
         try{
             Document doc = Jsoup.connect("https://sports.daum.net/baseball").get();

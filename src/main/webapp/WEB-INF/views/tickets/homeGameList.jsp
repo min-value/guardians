@@ -226,7 +226,12 @@
             }
         } else {
             localStorage.clear();
-            window.open(`/reservation/seat?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
+            window.open(
+                `/tickets/queue?gamePk=\${gamePk}&&userPk=\${user.userPk}`,
+                '_blank',
+                'width=800,height=500,scrollbars=no,resizable=no'
+            );
+            // window.open(`/reservation/seat?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
         }
     }
 
