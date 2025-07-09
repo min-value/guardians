@@ -15,8 +15,8 @@ public class QueueController {
     private QueueService queueService;
 
     @GetMapping("/waiting/{gamePk}")
-    public String showQueuePage(@PathVariable int gamePk,
-                                @RequestParam int userPk,
+    public String showQueuePage(@PathVariable String gamePk,
+                                @RequestParam String userPk,
                                 Model model) {
         System.out.println("gamePk=" + gamePk + ", userPk=" + userPk);
         boolean enqueued = queueService.enqueueUser(gamePk, userPk);
@@ -30,8 +30,8 @@ public class QueueController {
 
 
     @PostMapping("/enqueue/{gamePk}")
-    public ResponseEntity<?> joinQueue(@PathVariable int gamePk,
-                                       @RequestParam int userPk) {
+    public ResponseEntity<?> joinQueue(@PathVariable String gamePk,
+                                       @RequestParam String userPk) {
        try{
            boolean enqueued = queueService.enqueueUser(gamePk, userPk);
            long position = queueService.getPosition(gamePk, userPk);
@@ -44,8 +44,8 @@ public class QueueController {
     }
 
     @PostMapping("/try-reserve/{gamePk}")
-    public ResponseEntity<?> tryReserve(@PathVariable int gamePk,
-                                        @RequestParam int userPk) {
+    public ResponseEntity<?> tryReserve(@PathVariable String gamePk,
+                                        @RequestParam String userPk) {
         if (queueService.canReserve(gamePk, userPk)) {
             queueService.pollFront(gamePk);
             return ResponseEntity.ok("예약 가능 상태");
@@ -56,8 +56,8 @@ public class QueueController {
     }
 
     @PostMapping("/complete-reservation/{gamePk}")
-    public ResponseEntity<?> completeReservation(@PathVariable int gamePk,
-                                                 @RequestParam int userPk) {
+    public ResponseEntity<?> completeReservation(@PathVariable String gamePk,
+                                                 @RequestParam String userPk) {
         boolean removed = queueService.dequeueUser(gamePk, userPk);
         if (removed) {
             return ResponseEntity.ok("");
@@ -68,8 +68,8 @@ public class QueueController {
 
     @PostMapping("/leave/{gamePk}")
     @ResponseBody
-    public ResponseEntity<?> leaveQueue(@PathVariable int gamePk,
-                                        @RequestParam int userPk) {
+    public ResponseEntity<?> leaveQueue(@PathVariable String gamePk,
+                                        @RequestParam String userPk) {
         boolean removed = queueService.dequeueUser(gamePk, userPk);
         if (removed) {
             log.info("사용자 {} 게임 {} 대기열에서 나감", userPk, gamePk);
@@ -80,19 +80,19 @@ public class QueueController {
 
     @GetMapping("/queue-position/{gamePk}")
     @ResponseBody
-    public Long getQueuePosition(@PathVariable int gamePk, @RequestParam int userPk) {
+    public Long getQueuePosition(@PathVariable String gamePk, @RequestParam String userPk) {
         return queueService.getPosition(gamePk, userPk);
     }
 
     @GetMapping("/queue-size/{gamePk}")
     @ResponseBody
-    public Long getQueueSize(@PathVariable int gamePk) {
+    public Long getQueueSize(@PathVariable String gamePk) {
         return queueService.getQueueSize(gamePk);
     }
 
     @GetMapping("/can-reserve/{gamePk}")
     @ResponseBody
-    public boolean canReserve(@PathVariable int gamePk, @RequestParam int userPk) {
+    public boolean canReserve(@PathVariable String gamePk, @RequestParam String userPk) {
         return queueService.canReserve(gamePk, userPk);
     }
 }

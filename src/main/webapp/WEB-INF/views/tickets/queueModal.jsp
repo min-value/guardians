@@ -53,14 +53,14 @@
 
       // 대기 순번과 전체 대기열 크기를 가져와서 UI 갱신
       function updateQueueStatus() {
-        fetch(`/queue/queue-position/${gamePk}?userPk=${user.userPk}`)
+        fetch(`/queue/queue-position/\${gamePk}?userPk=\${user.userPk}`)
                 .then(res => res.text())
                 .then(position => {
-                  position = Number(position);
+                  position = Number(position) + 1;
                   document.getElementById("waitingNum").innerText = position;
 
                   // 진행바 계산용 queue size
-                  fetch(`/queue/queue-size/${gamePk}`)
+                  fetch(`/queue/queue-size/\${gamePk}`)
                           .then(res => res.text())
                           .then(total => {
                             total = Number(total);
@@ -68,7 +68,7 @@
                           });
 
                   // 예약 가능 상태 확인
-                  fetch(`/queue/can-reserve/${gamePk}?userPk=${user.userPk}`)
+                  fetch(`/queue/can-reserve/\${gamePk}?userPk=\${user.userPk}`)
                           .then(res => res.text())
                           .then(canReserve => {
                             if (canReserve === "true") {
