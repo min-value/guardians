@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/tickets/queueModal.css">
     <script>
-      const gamePk = Number(${gamePk});
+      const pathSegments = window.location.pathname.split('/');
+      const gamePk = pathSegments[pathSegments.length - 1];
 
       const user = {
         userPk: "${sessionScope.loginUser.userPk}",
@@ -16,7 +17,27 @@
         email: "${sessionScope.loginUser.email}",
         totalPoint: "${sessionScope.loginUser.totalPoint}"
       };
-      localStorage.setItem("user", user);
+
+      window.onload = () => {
+        // 모달 열리자마자 대기열 등록 요청
+        fetch(`/queue/enqueue/\${gamePk}?userPk=\${user.userPk}`, {
+          method: 'POST'
+        })
+                .then(res => {
+                  console.log(res);
+                  if (!res.ok) throw new Error("대기열 등록 실패");
+                  return res.text();
+                })
+                .then(msg => {
+                  console.log(msg); // 성공 메시지 콘솔에 찍기
+                  updateQueueStatus(); // 대기열 상태 초기화
+                  setInterval(updateQueueStatus, 3000); // 이후 3초마다 상태 확인
+                })
+                .catch(err => {
+                  alert("대기열 등록에 실패했습니다. 다시 시도해주세요.");
+                  console.error(err);
+                });
+      };
 
       // 진행 바를 업데이트하는 함수
       function updateProgressBar(position, total) {
@@ -32,27 +53,31 @@
 
       // 대기 순번과 전체 대기열 크기를 가져와서 UI 갱신
       function updateQueueStatus() {
-        fetch(`/queue-position/${gamePk}?userPk=${user.userPk}`)
+        fetch(`/queue/queue-position/${gamePk}?userPk=${user.userPk}`)
                 .then(res => res.text())
                 .then(position => {
                   position = Number(position);
                   document.getElementById("waitingNum").innerText = position;
 
-                  // 전체 대기열 크기(bar길이용)
-                  fetch(`/queue-size/${gamePk}`)
+                  // 진행바 계산용 queue size
+                  fetch(`/queue/queue-size/${gamePk}`)
                           .then(res => res.text())
                           .then(total => {
                             total = Number(total);
                             updateProgressBar(position, total);
                           });
+
+                  // 예약 가능 상태 확인
+                  fetch(`/queue/can-reserve/${gamePk}?userPk=${user.userPk}`)
+                          .then(res => res.text())
+                          .then(canReserve => {
+                            if (canReserve === "true") {
+                              //TODO 이동하는 코드
+                              window.open(`/reservation/seat?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
+                            }
+                          });
                 });
       }
-
-      // 페이지 로드 시 초기 실행 및 3초마다 갱신
-      window.onload = () => {
-        updateQueueStatus();
-        setInterval(updateQueueStatus, 3000);
-      };
 
       window.addEventListener("beforeunload", function () {
         const url = `/queue/leave/${gamePk}?userPk=${user.userPk}`;

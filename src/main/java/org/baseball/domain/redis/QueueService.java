@@ -23,7 +23,7 @@ public class QueueService {
     private final String AVAILABLE_KEY_PREFIX = "available:";
     private final StringRedisTemplate redisTemplate;
 
-    private static final int ALLOWED_ENTRANCE_COUNT = 10;
+    private static final int ALLOWED_ENTRANCE_COUNT = 1;
     private static final long TTL_MILLIS = 20 * 60 * 1000;
 
     public QueueService(RedissonClient redissonClient, StringRedisTemplate redisTemplate) {
@@ -38,19 +38,17 @@ public class QueueService {
         // 모든 기존 queue에서 제거 (한 게임만 대기 허용)
         Set<String> keys = redisTemplate.keys("queue:*");
         for (String key : keys) {
-            redisTemplate.opsForZSet().remove(key, userPk);
+            redisTemplate.opsForZSet().remove(key, String.valueOf(userPk));
             redisTemplate.delete(AVAILABLE_KEY_PREFIX + key.substring(QUEUE_KEY_PREFIX.length()) + ":" + userPk);
-
         }
 
         redisTemplate.opsForZSet().add(queueKey, String.valueOf(userPk), score);
-        Long rank = redisTemplate.opsForZSet().rank(queueKey, userPk);
+        Long rank = redisTemplate.opsForZSet().rank(queueKey, String.valueOf(userPk));
         if (rank != null && rank < ALLOWED_ENTRANCE_COUNT) {
             redisTemplate.opsForValue().set("available:" + gamePk + ":" + userPk, "allowed", TTL_MILLIS, TimeUnit.MILLISECONDS);
-            return true;
         }
 
-        return false;
+        return true;
     }
 
     //예약가능상태 확인
@@ -76,7 +74,7 @@ public class QueueService {
     // 대기열 순위 확인
     public Long getPosition(int gamePk, int userPk) {
         String queueKey = QUEUE_KEY_PREFIX + gamePk;
-        return redisTemplate.opsForZSet().rank(queueKey, userPk);
+        return redisTemplate.opsForZSet().rank(queueKey, String.valueOf(userPk));
     }
 
     // 전체 대기열 수

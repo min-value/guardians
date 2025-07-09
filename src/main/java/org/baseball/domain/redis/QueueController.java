@@ -14,27 +14,33 @@ public class QueueController {
     @Autowired
     private QueueService queueService;
 
-    @GetMapping("/enqueue/{gamePk}")
+    @GetMapping("/waiting/{gamePk}")
     public String showQueuePage(@PathVariable int gamePk,
                                 @RequestParam int userPk,
                                 Model model) {
+        System.out.println("gamePk=" + gamePk + ", userPk=" + userPk);
         boolean enqueued = queueService.enqueueUser(gamePk, userPk);
+        System.out.println("enqueued=" + enqueued);
         long pos = queueService.getPosition(gamePk, userPk);
+        System.out.println("position=" + pos);
         model.addAttribute("position", pos);
         model.addAttribute("enqueued", enqueued);
-        return "/tickets/queueModal"; // JSP 뷰 경로
+        return "/tickets/queueModal";
     }
+
 
     @PostMapping("/enqueue/{gamePk}")
     public ResponseEntity<?> joinQueue(@PathVariable int gamePk,
                                        @RequestParam int userPk) {
-        boolean enqueued = queueService.enqueueUser(gamePk, userPk);
-        if (enqueued) {
-            long position = queueService.getPosition(gamePk, userPk);
-            return ResponseEntity.ok("대기열에 등록되었습니다. 현재 대기 순번: " + position);
-        } else {
-            return ResponseEntity.status(400).body("대기열 등록 실패");
-        }
+       try{
+           boolean enqueued = queueService.enqueueUser(gamePk, userPk);
+           long position = queueService.getPosition(gamePk, userPk);
+           return ResponseEntity.ok("대기열에 등록되었습니다. 현재 대기 순번: " + position);
+
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+       return ResponseEntity.status(400).build();
     }
 
     @PostMapping("/try-reserve/{gamePk}")
