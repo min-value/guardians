@@ -30,7 +30,7 @@ public class QueueService {
         this.redisTemplate = redisTemplate;
     }
 
-    public boolean enqueueUser(int gamePk, int userPk) {
+    public boolean enqueueUser(String gamePk, String userPk) {
         String queueKey = QUEUE_KEY_PREFIX + gamePk;
         double score = System.currentTimeMillis();
 
@@ -51,17 +51,24 @@ public class QueueService {
     }
 
     //예약가능상태 확인
-    public boolean canReserve(int gamePk, int userPk) {
+    public boolean canReserve(String gamePk, String userPk) {
         String queueKey = QUEUE_KEY_PREFIX + gamePk;
         String availableKey = AVAILABLE_KEY_PREFIX + gamePk + ":" + userPk;
-        RScoredSortedSet<String> queue = redissonClient.getScoredSortedSet(queueKey);
-        String first = queue.isEmpty() ? null : queue.first();
 
-        // 첫번째 대기자가 맞고, 예약 가능 상태 키가 존재해야 예약 가능
-        return String.valueOf(userPk).equals(first) && Boolean.TRUE.equals(redisTemplate.hasKey(availableKey));
+        RScoredSortedSet<Integer> queue = redissonClient.getScoredSortedSet(queueKey);
+        Integer first = queue.isEmpty() ? null : queue.first();
+
+        if (first == null) {
+            return false;
+        }
+
+        int userPkInt = Integer.parseInt(userPk);
+
+        return userPkInt == first && Boolean.TRUE.equals(redisTemplate.hasKey(availableKey));
     }
 
-    public boolean dequeueUser(int gamePk, int userPk) {
+
+    public boolean dequeueUser(String gamePk, String userPk) {
         String queueKey = QUEUE_KEY_PREFIX + gamePk;
         String availableKey = AVAILABLE_KEY_PREFIX + gamePk + ":" + userPk;
 
@@ -71,18 +78,18 @@ public class QueueService {
     }
 
     // 대기열 순위 확인
-    public Long getPosition(int gamePk, int userPk) {
+    public Long getPosition(String gamePk, String userPk) {
         String queueKey = QUEUE_KEY_PREFIX + gamePk;
         return redisTemplate.opsForZSet().rank(queueKey, String.valueOf(userPk));
     }
 
     // 전체 대기열 수
-    public Long getQueueSize(int gamePk) {
+    public Long getQueueSize(String gamePk) {
         String queueKey = QUEUE_KEY_PREFIX + gamePk;
         return redisTemplate.opsForZSet().zCard(queueKey);
     }
 
-    public void pollFront(int gamePk) {
+    public void pollFront(String gamePk) {
         String lockKey = "lock:pollFront:" + gamePk;
         RLock lock = redissonClient.getLock(lockKey);
 
@@ -115,7 +122,7 @@ public class QueueService {
         }
     }
 
-    public void notifyNext(int gamePk) {
+    public void notifyNext(String gamePk) {
         RScoredSortedSet<String> queue = redissonClient.getScoredSortedSet(QUEUE_KEY_PREFIX + gamePk);
         String nextUser = queue.isEmpty() ? null : queue.first();
         if (nextUser != null) {
