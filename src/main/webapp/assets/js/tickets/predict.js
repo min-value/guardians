@@ -38,6 +38,7 @@ $(document).ready(function () {
         target.disabled = false;
         target.style.backgroundColor = "var(--mainColor)";
         target.style.color = "var(--white)";
+        target.style.cursor = "pointer";
     });
 
     $("#opponentTeam").on("click", function () {
