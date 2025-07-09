@@ -49,80 +49,12 @@ public class ReservationController {
                                    @RequestParam("check") int check,
                                    @RequestParam(value = "seats", required = false)  List<String> seats,
                                    @RequestParam(value = "zonePk", required = false) Integer zonePk,
+                                   @RequestParam(value = "reservelistPk") int reservelistPk,
                                    HttpSession session) throws JsonProcessingException {
-        try {
-            SeatLoadResDTO result = new SeatLoadResDTO();
-            result.setError(false);
-            result.setResult(new HashMap<>());
+        //유저 정보 가져오기
+        UserDTO user = (UserDTO) session.getAttribute("loginUser");
 
-            //유저 정보 가져오기
-            UserDTO user = (UserDTO) session.getAttribute("loginUser");
-
-            //우리팀 경기인지 확인
-            if (!reservationService.isOurGame(gamePk)) {
-                result.setError(true);
-                result.setErrorMsg("존재하지 않는 경기입니다.");
-                return result;
-            }
-
-            //해당 유저가 해당 게임에서 구매한 좌석이 4개 이하인지 확인
-            int cnt = reservationService.countUserReserve(gamePk, user.getUserPk());
-
-            //남은 좌석 수 저장 - available(세션)
-            if (cnt >= 4) {
-                result.setError(true);
-                result.setErrorMsg("최대 4장까지만 구매가 가능합니다");
-                return result;
-            }
-            int remainingCnt = 4 - cnt;
-            session.setAttribute("available", remainingCnt); //세션에 저장
-            result.getResult().put("available", remainingCnt);
-
-            //경기 정보 저장 (gameInfo) - gameInfo(세션), gamePk
-            ReserveGameInfoDTO reserveGameInfoDTO = reservationService.getGameInfo(gamePk);
-            result.getResult().put("gameInfo", reserveGameInfoDTO);
-            session.setAttribute("gameInfo", reserveGameInfoDTO); //세션에 저장(JSON으로 파싱)
-
-            //좌석 정보 저장 - zoneInfo(구역 별 상세 정보), zoneMapDetail(구역별 팔린 좌석 목록)
-            reservationService.getSeatsInfo(gamePk, result.getResult());
-
-            //할인 정보 저장 - discountInfo
-            List<DiscountDTO> discountDTOList = reservationService.getDiscountInfo();
-            result.getResult().put("discountInfo", discountDTOList);
-
-            //대기열 키가 존재하지 않으면 오류
-            if(!queueService.checkTTL(gamePk, user.getUserPk())) {
-                result.setCheck(4); //4: 대기열 키가 존재하지 않는 상태
-                return result;
-            }
-
-            //선점 여부에 따라 렌더링 화면 변경
-            if(check == 1) {
-                result.setCheck(1);
-            } else  if(check == 2 || check == 3) {
-                //선점 확인
-                PreemptConfirmReqDTO dto = new PreemptConfirmReqDTO();
-                dto.setGamePk(gamePk);
-                dto.setSeats(seats);
-                dto.setZonePk(zonePk);
-
-                int confirmResult = reservationService.confirmPreempt(dto, user);
-
-                if(confirmResult == 1) {
-                    //선점 되어있는 경우
-                    if(check == 2) result.setCheck(2);
-                    else result.setCheck(3);
-                } else {
-                    //선점이 되어 있지 않은 경우
-                    result.setCheck(1);
-                }
-            }
-
-            return result;
-        } catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
+        return reservationService.seatLoad(gamePk, check, seats, zonePk, user, reservelistPk, session);
     }
 
     //전체 구역 정보 불러오기
