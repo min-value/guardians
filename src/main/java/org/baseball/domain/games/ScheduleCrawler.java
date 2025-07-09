@@ -4,7 +4,6 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.RequiredArgsConstructor;
 import org.baseball.dto.ScheduleDTO;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -23,7 +22,7 @@ public class ScheduleCrawler {
 
     private final GamesMapper gamesMapper;
 
-    @Scheduled(cron = "0 36 10 * * *")
+    @Scheduled(cron = "0 5 1 * * *")
     public void crawlSchedule() {
         WebDriver driver = init();
 
@@ -40,16 +39,25 @@ public class ScheduleCrawler {
     }
 
     // 드라이버 설정
-    private static WebDriver init() {
+    private WebDriver init() {
         WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
+
+        // 최신 Headless 모드 (GUI와 동일 렌더링)
+        options.addArguments("--headless=new");
+
+        // 안정성 옵션
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-blink-features=AutomationControlled");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--window-size=1920,1080");
+
+        // 사람처럼 보이게 하는 옵션들
+        options.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36");
 
         WebDriver driver = new ChromeDriver(options);
-        driver.manage().window().setSize(new Dimension(1920, 1080));
         return driver;
     }
 
@@ -134,6 +142,25 @@ public class ScheduleCrawler {
             return; // 날짜 파싱 실패 시 해당 경기 스킵
         }
 
+        String detailUrl = null;
+        try {
+            WebElement linkTag = game.findElement(By.cssSelector("td.td_btn > a"));
+
+            String rawText = linkTag.getDomProperty("textContent").trim();
+            WebElement span = linkTag.findElement(By.cssSelector("span.inner_txt"));
+            String innerText = span.getText().trim();
+            String linkText = rawText.replace(innerText, "").trim();
+
+            if (!"문자중계".equals(linkText)) {
+                detailUrl = linkTag.getAttribute("href");
+                if (!detailUrl.startsWith("http")) {
+                    detailUrl = "https://sports.daum.net" + detailUrl;
+                }
+            }
+        } catch (Exception ignored) {}
+
+
+
         int stadiumPk = gamesMapper.getStadiumPk(area);
         int teamPk = gamesMapper.getTeamPk(opp);
 
@@ -145,12 +172,19 @@ public class ScheduleCrawler {
         dto.setStadiumPk(stadiumPk);
         dto.setTeamPk(teamPk);
         dto.setLocation(area);
+        dto.setDetailUrl(detailUrl);
 
         ScheduleDTO existing = gamesMapper.findSchedule(gameDate.toString(), area, opp);
 
         if (existing != null) {
+            dto.setGamePk(existing.getGamePk());
+
+            if (existing.getDetailUrl() == null && detailUrl != null) {
+                gamesMapper.updateDetailUrl(dto);
+                System.out.println("URL만 추가됨 날짜: " + date + ", 상대: " + opp);
+            }
+
             if (existing.getResult() == null && result != null) {
-                dto.setGamePk(existing.getGamePk());
                 gamesMapper.updateSchedule(dto);
                 System.out.println("경기정보 업데이트 날짜: " + date + ", 상대: " + opp + ", 결과: " + result);
             } else {
