@@ -88,7 +88,7 @@
   <div class="modal-container">
     <div class="modal-body">
       <div class="text1">나의 대기 순서</div>
-      <div class="waitingNum">${position}</div>
+      <div class="waitingNum" id="waitingNum">${position}</div>
       <div class="bar-container">
         <div class="bar" id="progressBar" style="width: 0;"></div>
       </div>
