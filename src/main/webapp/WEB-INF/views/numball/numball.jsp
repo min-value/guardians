@@ -82,14 +82,15 @@
                 <img id="openPointBtn"
                      src="${pageContext.request.contextPath}/assets/img/icon/point.svg"
                      alt="포인트 설명">
-                <%
-                    String imgSrc = "/assets/img/mypage/" +
-                            ((request.getAttribute("isSuccess") != null && (Boolean) request.getAttribute("isSuccess"))
-                                    ? "numball-success.png"
-                                    : "numball.png");
-                %>
+<%--                <%--%>
+<%--                    String imgSrc = "/assets/img/mypage/" +--%>
+<%--                            ((request.getAttribute("isSuccess") != null && (Boolean) request.getAttribute("isSuccess"))--%>
+<%--                                    ? "numball-success.png"--%>
+<%--                                    : "numball.png");--%>
+<%--                %>--%>
                 <img id="numballCharacter"
-                     src="${pageContext.request.contextPath}<%= imgSrc %>"
+                     src="${pageContext.request.contextPath}/assets/img/mypage/numball.png"
+                     style="visibility: hidden;"
                      alt="야구 캐릭터"
                      class="numball-image">
             </div>

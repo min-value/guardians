@@ -7,7 +7,7 @@ window.onload = function () {
         .then(res => res.json())
         .then(data => {
             existingTries = JSON.parse(data.tries || "[]");
-            const isSuccess = data.isSuccess;
+            const isSuccess = data.isSuccess === true || data.isSuccess === 1;
             const tryCount = data.tryCount || 0;
             if (!data.tries || data.tries === "null") {
                 saveTryToServer(existingTries);
@@ -43,13 +43,16 @@ window.onload = function () {
                 activateRow(tryCount);
             }
 
+            const image = document.getElementById('numballCharacter');
+
             if (isSuccess) {
-                const image = document.getElementById('numballCharacter');
-                image.src = contextPath + "/assets/img/mypage/numball-success.png";
-            } else if (!isSuccess && existingTries.length === MAX_TRIES) {
-                const image = document.getElementById('numballCharacter');
-                image.src = contextPath + "/assets/img/mypage/numball-fail.png";
+                image.src = "/assets/img/mypage/numball-success.png";
+            } else if (tryCount >= MAX_TRIES) {
+                image.src = "/assets/img/mypage/numball-fail.png";
+            } else {
+                image.src = "/assets/img/mypage/numball.png";
             }
+            image.style.visibility = 'visible';
         });
 
     function activateRow(index) {
