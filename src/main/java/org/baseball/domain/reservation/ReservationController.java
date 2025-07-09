@@ -42,7 +42,11 @@ public class ReservationController {
     //seat 페이지 최초 로드 시 정보 불러오기
     @GetMapping("/seat/load")
     @ResponseBody
-    public SeatLoadResDTO seatLoad(@RequestParam int gamePk, HttpSession session) throws JsonProcessingException {
+    public SeatLoadResDTO seatLoad(@RequestParam int gamePk,
+                                   @RequestParam("check") int check,
+                                   @RequestParam(value = "seats", required = false)  List<String> seats,
+                                   @RequestParam(value = "zonePk", required = false) Integer zonePk,
+                                   HttpSession session) throws JsonProcessingException {
         try {
             SeatLoadResDTO result = new SeatLoadResDTO();
             result.setError(false);
@@ -82,6 +86,28 @@ public class ReservationController {
             //할인 정보 저장 - discountInfo
             List<DiscountDTO> discountDTOList = reservationService.getDiscountInfo();
             result.getResult().put("discountInfo", discountDTOList);
+
+
+            if(check == 1) {
+                result.setCheck(1);
+            } else  if(check == 2 || check == 3) {
+                //선점 확인
+                PreemptConfirmReqDTO dto = new PreemptConfirmReqDTO();
+                dto.setGamePk(gamePk);
+                dto.setSeats(seats);
+                dto.setZonePk(zonePk);
+
+                int confirmResult = reservationService.confirmPreempt(dto, user);
+
+                if(confirmResult == 1) {
+                    //선점 되어있는 경우
+                    if(check == 2) result.setCheck(2);
+                    else result.setCheck(3);
+                } else {
+                    //선점이 되어 있지 않은 경우
+                    result.setCheck(1);
+                }
+            }
 
             return result;
         } catch (Exception e){

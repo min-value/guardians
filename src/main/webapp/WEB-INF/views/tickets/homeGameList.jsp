@@ -121,6 +121,9 @@
         });
   }
     function redirectIfSessionExists(gamePk) {
+        window.open(`/reservation/seat?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
+
+        /*
         //권종/할인 선택
         let discountInfo = JSON.parse(localStorage.getItem('discountInfo' + gamePk));
         let gameInfo = JSON.parse(localStorage.getItem('gameInfo' + gamePk));
@@ -233,6 +236,8 @@
             );
             // window.open(`/reservation/seat?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
         }
+
+         */
     }
 
   $(document).ready(function () {

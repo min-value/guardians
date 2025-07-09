@@ -15,38 +15,8 @@ export let discountInfo = null;
 export let available = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    //정보 로드
-    fetch(`/reservation/seat/load?gamePk=${gamePk}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-        .then(res => res.json())
-        .then(data => {
-            if (data.error === true) {
-                alert(data.errorMsg);
-                removeData();
-                window.close();
-                return;
-            }
+    renderingInfo();
 
-            map = data.result.zoneMapDetail;
-            zoneInfo = data.result.zoneInfo;
-            gameInfo = data.result.gameInfo;
-            discountInfo = data.result.discountInfo;
-            available = Number(data.result.available);
-
-            localStorage.setItem('available' + gamePk, JSON.stringify(available));
-            localStorage.setItem('discountInfo' + gamePk, JSON.stringify(discountInfo));
-            localStorage.setItem('gameInfo' + gamePk, JSON.stringify(gameInfo));
-
-        })
-        .catch(error => {
-            alert(`내부 서버 오류 발생으로 작업을 중단합니다.`);
-            removeData();
-            window.close();
-        });
 
 
     const tooltip = document.getElementById('tooltip');
@@ -145,6 +115,146 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 })
+/* 정보 렌더링 함수*/
+function renderingInfo() {
+    openLoading();
+    //로컬 스토리지 확인
+    //권종/할인 선택
+    let discountInfo = JSON.parse(localStorage.getItem('discountInfo' + gamePk));
+    let gameInfo = JSON.parse(localStorage.getItem('gameInfo' + gamePk));
+    let reservelistPk = Number(localStorage.getItem('reservelistPk' + gamePk));
+    let seats = JSON.parse(localStorage.getItem('seats' + gamePk));
+    let zone = JSON.parse(localStorage.getItem('zone' + gamePk));
+
+    //예매 확인
+    let discountPk = JSON.parse(localStorage.getItem('discountPk' + gamePk));
+    let totalPay = Number(localStorage.getItem('totalPay' + gamePk));
+
+    let check1 = discountInfo !== null && gameInfo !== null && reservelistPk !== null && seats !== null && zone !== null;
+    let check2 = discountPk !== null && totalPay !== null && !isNaN(totalPay);
+
+    let check = 1;
+
+    if(check1 === true && check2 === true) {
+        check = 3;
+    } else if(check1 === true) {
+        check = 2;
+    }
+
+    //보낼 데이터 세팅
+    const params = new URLSearchParams();
+    params.append('gamePk', gamePk);
+    params.append('check', check + "");
+
+    if(seats !== null) {
+        seats.forEach(seat => params.append('seats', seat));
+    }
+
+    if(zone !== null) {
+        params.append('zonePk', zone['zonePk']);
+    }
+
+    //정보 로드
+    fetch(`/reservation/seat/load?${params.toString()}`, {
+        method: 'GET'
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.error === true) {
+                alert(data.errorMsg);
+                removeData();
+                window.close();
+                return;
+            }
+
+            map = data.result.zoneMapDetail;
+            zoneInfo = data.result.zoneInfo;
+            gameInfo = data.result.gameInfo;
+            discountInfo = data.result.discountInfo;
+            available = Number(data.result.available);
+
+            localStorage.setItem('available' + gamePk, JSON.stringify(available));
+            localStorage.setItem('discountInfo' + gamePk, JSON.stringify(discountInfo));
+            localStorage.setItem('gameInfo' + gamePk, JSON.stringify(gameInfo));
+
+            closeLoading();
+            if(data.check === 1) {
+                //나머지 데이터 삭제
+                localStorage.removeItem('reservelistPk' + gamePk);
+                localStorage.removeItem('seats' + gamePk);
+                localStorage.removeItem('zone' + gamePk);
+
+                localStorage.removeItem('discountPk' + gamePk);
+                localStorage.removeItem('totalPay' + gamePk);
+            } else if(data.check === 2) {
+                if(confirm(`이전 예매 기록이 있습니다. 불러오시겠습니까?`)) {
+                    //나머지 데이터 삭제
+                    localStorage.removeItem('discountPk' + gamePk);
+                    localStorage.removeItem('totalPay' + gamePk);
+
+                    location.href = `/reservation/discount?gamePk=${gamePk}`;
+                } else {
+                    //선점 기록 삭제
+                    let sendData = {
+                        gamePk: gamePk,
+                        seats: seats,
+                        zonePk: Number(zone['zonePk']),
+                        reservelistPk: reservelistPk
+                    };
+
+                    console.log(sendData);
+                    fetch(`/reservation/preemption/delete`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(sendData)
+                    })
+                        .then(r => r.json())
+                        .then(data => {
+                            if(data !== 1) {
+                                alert('선점 취소가 실패했습니다. 다시 시도해주세요');
+                            }
+                        });
+                }
+
+            } else if(data.check === 3) {
+                if(confirm(`이전 예매 기록이 있습니다. 불러오시겠습니까?`)) {
+                    location.href = `/reservation/confirm?gamePk=${gamePk}`;
+                } else {
+                    //선점 기록 삭제
+                    let sendData = {
+                        gamePk: gamePk,
+                        seats: seats,
+                        zonePk: Number(zone['zonePk']),
+                        reservelistPk: reservelistPk
+                    };
+
+                    console.log(sendData);
+                    fetch(`/reservation/preemption/delete`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(sendData)
+                    })
+                        .then(r => r.json())
+                        .then(data => {
+                            if(data !== 1) {
+                                alert('선점 취소가 실패했습니다. 다시 시도해주세요');
+                            }
+                        });
+                }
+            }
+
+        })
+        .catch(error => {
+            console.log(error);
+            alert(`내부 서버 오류 발생으로 작업을 중단합니다.`);
+            removeData();
+            window.close();
+        });
+}
 
 /* 선점 함수 */
 function tryPreempt(sendData, gamePk, zoneInfo, selectedSeats, lastColoredName) {
