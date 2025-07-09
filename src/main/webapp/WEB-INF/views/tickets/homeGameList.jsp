@@ -13,8 +13,6 @@
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/include/pagination.js"></script>
 <script>
-    const gamePk = Number(${gamePk});
-
     const user = {
         userPk: "${sessionScope.loginUser.userPk}",
         userName: "${sessionScope.loginUser.userName}",
@@ -23,15 +21,16 @@
         totalPoint: "${sessionScope.loginUser.totalPoint}"
     };
 
-    function openSeatReservation(gameNo) {
+    function openSeatReservation(gamePk) {
         const width = 500;
         const height = 400;
 
         const left = (window.screen.width - width) / 2;
         const top = (window.screen.height - height) / 2;
 
+        localStorage.clear();
         window.open(
-            `/tickets/queue?gamePk=\${gamePk}&&userPk=\${user.userPk}`,
+            `/queue/waiting/\${gamePk}?userPk=\${user.userPk}`,
             '_blank',
             'width=800,height=500,scrollbars=no,resizable=no'
         );
@@ -75,7 +74,7 @@
                 const isOnSale = startDate <= now;
 
                 const buttonHtml = isOnSale
-                    ? `<input class="onsale-ticket-btn" type="button" value="예매하기" onclick="openSeatReservation(\${dto.gameNo})">`
+                    ? `<input class="onsale-ticket-btn" type="button" value="예매하기" onclick="openSeatReservation(\${dto.gameNo})">` //redirectIfSessionExists(\${dto.gameNo})
                     : `
                         <div class="plan-ticket-btn">
                           <span class="plan-time">\${dto.date} \${dto.time}</span>
@@ -237,7 +236,6 @@
         }
 
          */
-
     }
 
   $(document).ready(function () {
