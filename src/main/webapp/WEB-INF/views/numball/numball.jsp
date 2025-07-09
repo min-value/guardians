@@ -78,7 +78,14 @@
                 <img id="openPointBtn"
                      src="${pageContext.request.contextPath}/assets/img/icon/point.svg"
                      alt="포인트 설명">
-                <img src="${pageContext.request.contextPath}/assets/img/mypage/numball.png"
+                <%
+                    String imgSrc = "/assets/img/mypage/" +
+                            ((request.getAttribute("isSuccess") != null && (Boolean) request.getAttribute("isSuccess"))
+                                    ? "numball-success.png"
+                                    : "numball.png");
+                %>
+                <img id="numballCharacter"
+                     src="${pageContext.request.contextPath}<%= imgSrc %>"
                      alt="야구 캐릭터"
                      class="numball-image">
             </div>
@@ -99,6 +106,7 @@
             </p>
             <p class="modal-description">
                 숫자는 0~9까지 구성되어 있으며,<br>
+                0이 맨 앞자리에 올 수도 있습니다.<br>
                 각 숫자는 한번씩만 사용 가능합니다.
             </p>
             <p class="modal-description">
@@ -118,12 +126,12 @@
                 <span class="highlight">매일 포인트를 적립</span>할 수 있어요!
             </p>
             <p class="modal-description">
-                첫 번째 시도에 성공 시 <span class="highlight">50P</span><br>
-                두 번째 시도에 성공 시 <span class="highlight">30P</span><br>
-                세 번째 시도에 성공 시 <span class="highlight">20P</span><br>
-                네 번째 시도에 성공 시 <span class="highlight">10P</span><br>
-                다섯 번째 시도에 성공 시 <span class="highlight">5P</span><br>
-                마지막 시도에 성공 시 <span class="highlight">3P</span><br>
+                <span class="point-try">첫 번째 시도에 성공 시</span> <span class="point">50P</span><br>
+                <span class="point-try">두 번째 시도에 성공 시</span> <span class="point">30P</span><br>
+                <span class="point-try">세 번째 시도에 성공 시</span> <span class="point">20P</span><br>
+                <span class="point-try">네 번째 시도에 성공 시</span> <span class="point">10P</span><br>
+                <span class="point-try">다섯 번째 시도에 성공 시</span> <span class="point">5P</span><br>
+                <span class="point-try">마지막 시도에 성공 시</span> <span class="point">3P</span><br>
             </p>
             <p class="modal-description">
                 *하루 한 번 참여 가능하며,<br>

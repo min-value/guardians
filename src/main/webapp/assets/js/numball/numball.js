@@ -1,5 +1,4 @@
 window.onload = function () {
-    console.log("✅ window.onload 실행됨");
 
     const MAX_TRIES = 6;
     let existingTries = [];
@@ -11,7 +10,6 @@ window.onload = function () {
             const isSuccess = data.isSuccess;
             const tryCount = data.tryCount || 0;
             if (!data.tries || data.tries === "null") {
-                console.log("⚠️ 서버에 tries 없어서 새로 저장 시도");
                 saveTryToServer(existingTries);
             }
 
@@ -44,6 +42,11 @@ window.onload = function () {
             if (!isSuccess && tryCount < MAX_TRIES) {
                 activateRow(tryCount);
             }
+
+            if (isSuccess) {
+                const image = document.getElementById('numballCharacter');
+                image.src = contextPath + "/assets/img/mypage/numball-success.png";
+            }
         });
 
     function activateRow(index) {
@@ -59,6 +62,12 @@ window.onload = function () {
             input.value = '';
             input.addEventListener('input', validateInputs);
             input.addEventListener('keydown', handleBackspace);
+
+            input.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' && !button.disabled) {
+                    button.click();
+                }
+            });
         });
 
         button.disabled = true;
@@ -114,6 +123,13 @@ window.onload = function () {
 
                     if (status === 'success') {
                         inputs.forEach(input => input.classList.add("success-style"));
+
+                        const image = document.getElementById('numballCharacter');
+                        image.style.opacity = 0;
+                        setTimeout(() => {
+                            image.src = "/assets/img/mypage/numball-success.png";
+                            image.style.opacity = 1;
+                        }, 300);
                     } else if (result.strike === 0 && result.ball === 0) {
                         inputs.forEach(input => input.classList.add("out-style"));
                     }
@@ -136,6 +152,9 @@ window.onload = function () {
                     if (status !== 'success' && index + 1 < MAX_TRIES) {
                         activateRow(index + 1);
                     }
+                })
+                .finally(() => {
+                    isChecking = false;
                 });
         }
 
@@ -170,7 +189,6 @@ window.onload = function () {
     }
 
     function saveTryToServer(allTries) {
-        console.log("🚀 saveTryToServer() 호출됨", allTries);
         fetch('/point/numball/try', {
             method: 'POST',
             headers: {

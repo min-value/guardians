@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,10 +25,13 @@ public class NumBallController {
 
     // 숫자야구 JSP 페이지 렌더링
     @GetMapping("/numball")
-    public String showNumBallPage(HttpSession session) {
+    public String showNumBallPage(HttpSession session, HttpServletRequest request) {
         UserDTO user = (UserDTO) session.getAttribute("loginUser");
         if (user != null) {
             numballService.getOrCreateTodayGame(user.getUserPk());
+            NumballDTO dto = numballService.getOrCreateTodayGame(user.getUserPk());
+            boolean isSuccess = dto.getIsSuccess() == 1;
+            request.setAttribute("isSuccess", isSuccess);
         }
         return "numball/numball";
     }
