@@ -56,7 +56,6 @@
         document.getElementById('usedPoint').innerText = `- ` + value;
         document.getElementById('totalPay').innerText = ticketPrice - parseInt(value || 0);
     }
-
 </script>
 
 <body>

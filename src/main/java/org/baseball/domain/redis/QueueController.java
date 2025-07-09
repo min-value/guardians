@@ -95,4 +95,6 @@ public class QueueController {
     public boolean canReserve(@PathVariable String gamePk, @RequestParam String userPk) {
         return queueService.canReserve(gamePk, userPk);
     }
+
+
 }
