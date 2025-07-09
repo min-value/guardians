@@ -46,7 +46,7 @@
     <select id="confirmPreemption" resultType="int">
         SELECT COUNT(*)
         FROM reservations r LEFT JOIN reservation_list l ON r.reservelist_pk = l.reservelist_pk
-        WHERE r.zone_pk = #{zonePk} AND r.seat_num = #{seatNum} AND l.game_pk = #{gamePk}
+        WHERE r.zone_pk = #{zonePk} AND r.seat_num = #{seatNum} AND l.game_pk = #{gamePk} AND r.state='PAID'
     </select>
 
     <insert id="setPreemptionList" useGeneratedKeys="true" keyProperty="reservelistPk" keyColumn="reservelist_pk">

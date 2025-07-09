@@ -86,3 +86,11 @@ html, body {
     text-align: right;
     color: var(--gray-02);
 }
+
+.no-data{
+    width: 980px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

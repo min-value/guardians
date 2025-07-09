@@ -12,6 +12,7 @@ public interface UserService {
     void updateUserInfo(UserDTO user);
     // 마이페이지 회원 탈퇴
     boolean deleteUserByPk(int userPk);
+    boolean hasUncancelledReservations(int userPk);
     // 마이페이지 포인트 총합
     int getTotalPoint(int userPk);
     // 아이디 중복체크

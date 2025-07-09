@@ -46,6 +46,19 @@
         WHERE user_id = #{userId}
     </update>
 
+    <select id="hasUncancelledReservations" parameterType="int" resultType="boolean">
+        SELECT EXISTS (
+            SELECT 1
+            FROM reservation_list rl
+                     JOIN reservations r ON rl.reservelist_pk = r.reservelist_pk
+                     JOIN games g ON rl.game_pk = g.game_pk
+            WHERE rl.user_pk = #{userPk}
+              AND r.state = 'PAID'
+              AND (rl.cancel_date IS NULL OR rl.is_cancel = 0)
+              AND g.game_date >= NOW()
+        )
+    </select>
+
     <delete id="deleteReservationsByUser" parameterType="int">
         DELETE FROM reservations
         WHERE reservelist_pk IN (
@@ -67,6 +80,10 @@
 
     <delete id="deletePostsByUser" parameterType="int">
         DELETE FROM post WHERE user_pk = #{userPk}
+    </delete>
+
+    <delete id="deleteNumballByUser" parameterType="int">
+        DELETE FROM user_numball WHERE user_pk = #{userPk}
     </delete>
 
     <delete id="deleteUser" parameterType="int">

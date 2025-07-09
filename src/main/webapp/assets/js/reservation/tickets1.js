@@ -41,12 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('discountInfo' + gamePk, JSON.stringify(discountInfo));
             localStorage.setItem('gameInfo' + gamePk, JSON.stringify(gameInfo));
 
-            console.log(map);
-            console.log(zoneInfo);
-            console.log(gameInfo);
-            console.log(discountInfo);
-            console.log(available);
-
         })
         .catch(error => {
             alert(`내부 서버 오류 발생으로 작업을 중단합니다.`);
@@ -93,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('ticket-btn' ).addEventListener('click', () => {
-        console.log(selectedSeats);
         if(selectedSeats.length === 0) {
             alert("선택된 좌석이 없습니다. 좌석을 선택하세요");
             return;
@@ -116,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //로딩 창 띄우기
         openLoading();
-        tryPreempt(sendData, gamePk, zoneInfo, selectedSeats, lastColoredName)
+        tryPreempt(sendData, gamePk, zoneInfo, selectedSeats, lastColoredName);
 
     });
 
@@ -224,7 +217,6 @@ function calCount(type) {
             selectedSeats.pop();
         }
     }
-    console.log(selectedSeats)
 }
 /* 등급 선택 클릭 리스너 */
 export function changeZoneInfoListBox(zonePk) {

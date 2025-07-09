@@ -78,13 +78,20 @@ public class UserServiceImpl implements UserService {
 
     // 마이페이지 회원 탈퇴
     @Override
+    public boolean hasUncancelledReservations(int userPk) {
+        return userMapper.hasUncancelledReservations(userPk);
+    }
+
+    @Override
+    @Transactional
     public boolean deleteUserByPk(int userPk) {
         try {
             // 1. 예약 관련 데이터 삭제
             userMapper.deleteReservationsByUser(userPk);
             userMapper.deleteReservationListByUser(userPk);
 
-            // 2. 포인트 기록 삭제
+            // 2. 포인트, 숫자야구 기록 삭제
+            userMapper.deleteNumballByUser(userPk);
             userMapper.deletePointsByUser(userPk);
 
             // 3. 커뮤니티 기록 삭제
@@ -100,7 +107,7 @@ public class UserServiceImpl implements UserService {
             return result > 0;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            throw new RuntimeException("회원 탈퇴 중 오류", e);
         }
     }
 
