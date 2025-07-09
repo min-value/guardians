@@ -30,13 +30,13 @@
         const left = (window.screen.width - width) / 2;
         const top = (window.screen.height - height) / 2;
 
-        // window.open(
-        //     '/tickets/queue',
-        //     '_blank',
-        //     `width=\${width},height=\${height},left=\${left},top=\${top},scrollbars=no,resizable=no`
-        // );
-        window.open(`/reservation/seat?gamePk=\${gameNo}`, '_blank',
-                'width=800,height=700,scrollbars=yes,resizable=no');
+        window.open(
+            `/tickets/queue?gamePk=\${gamePk}&&userPk=\${user.userPk}`,
+            '_blank',
+            'width=800,height=500,scrollbars=no,resizable=no'
+        );
+        // window.open(`/reservation/seat?gamePk=\${gameNo}`, '_blank',
+        //         'width=800,height=700,scrollbars=yes,resizable=no');
     }
 
     function loadPage(page) {
@@ -47,7 +47,6 @@
         const finalTicketStatus = (ticketStatus=== null || ticketStatus.trim() === '') ? '0' : ticketStatus;
 
         console.log({ page, teamStatus: finalTeamStatus, ticketStatus: finalTicketStatus });
-        console.log("???");
         $.ajax({
           url: '/tickets/allgames',
           method: 'GET',
@@ -76,7 +75,7 @@
                 const isOnSale = startDate <= now;
 
                 const buttonHtml = isOnSale
-                    ? `<input class="onsale-ticket-btn" type="button" value="예매하기" onclick="redirectIfSessionExists(\${dto.gameNo})">`
+                    ? `<input class="onsale-ticket-btn" type="button" value="예매하기" onclick="openSeatReservation(\${dto.gameNo})">`
                     : `
                         <div class="plan-ticket-btn">
                           <span class="plan-time">\${dto.date} \${dto.time}</span>
@@ -238,6 +237,7 @@
         }
 
          */
+
     }
 
   $(document).ready(function () {
