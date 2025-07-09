@@ -170,6 +170,9 @@ async function requestPay() {
                         console.log("서버 응답:", result);
                         if (result === true || result === "true") {
                             alert("예매 성공!");
+                            $.ajax({
+
+                            })
                             if (window.opener && !window.opener.closed) {
                                 window.opener.location.href = "/tickets/all?showModal=true";
                             }
