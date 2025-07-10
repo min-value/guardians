@@ -6,8 +6,6 @@ import org.redisson.api.RScoredSortedSet;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -51,29 +49,15 @@ public class QueueService {
         }
 
         redisTemplate.opsForZSet().add(queueKey, String.valueOf(userPk), score);
-        Long rank = redisTemplate.opsForZSet().rank(queueKey, String.valueOf(userPk));
-        if (rank != null && rank < ALLOWED_ENTRANCE_COUNT) {
-            redisTemplate.opsForValue().set("available:" + gamePk + ":" + userPk, "allowed", TTL_MILLIS, TimeUnit.MILLISECONDS);
-        }
 
         return true;
     }
 
     //예약가능상태 확인
     public boolean canReserve(String gamePk, String userPk) {
-        String queueKey = QUEUE_KEY_PREFIX + gamePk;
         String availableKey = AVAILABLE_KEY_PREFIX + gamePk + ":" + userPk;
 
-        RScoredSortedSet<Integer> queue = redissonClient.getScoredSortedSet(queueKey);
-        Integer first = queue.isEmpty() ? null : queue.first();
-
-        if (first == null) {
-            return false;
-        }
-
-        int userPkInt = Integer.parseInt(userPk);
-
-        return userPkInt == first && Boolean.TRUE.equals(redisTemplate.hasKey(availableKey));
+        return redisTemplate.hasKey(availableKey);
     }
 
 
@@ -104,17 +88,29 @@ public class QueueService {
 
         try {
             if (lock.tryLock(5, 10, TimeUnit.SECONDS)) {
-                RScoredSortedSet<Integer> queue = redissonClient.getScoredSortedSet(QUEUE_KEY_PREFIX + gamePk);
-                Integer first = queue.isEmpty() ? null : queue.first();
+                Set<String> availableKeys = redisTemplate.keys(AVAILABLE_KEY_PREFIX + gamePk + ":*");
+                int available = availableKeys.size();
+                int remaining = ALLOWED_ENTRANCE_COUNT - available;
 
-                if (first != null) {
-                    queue.remove(first);
-                    redisTemplate.opsForValue().set(AVAILABLE_KEY_PREFIX + gamePk + ":" + first,
-                            "allowed", TTL_MILLIS, TimeUnit.MILLISECONDS);
-
-                    log.info("예약 가능 상태 갱신: gamePk={}, userPk={}", gamePk, first);
-                    notifyNext(gamePk);
+                log.info(available + "");
+                if(available >= ALLOWED_ENTRANCE_COUNT) {
+                    log.info("현재 예약 가능 인원이 {}명이므로 입장 보류: gamePk={}", available, gamePk);
+                    return;
                 }
+
+                log.info("진입");
+                Set<String> toRemove = redisTemplate.opsForZSet().range(QUEUE_KEY_PREFIX + gamePk, 0, remaining - 1);
+
+                if(toRemove == null || toRemove.isEmpty()) {
+                    return;
+                }
+
+                for(String user : toRemove) {
+                    redisTemplate.opsForZSet().remove(QUEUE_KEY_PREFIX + gamePk, user);
+                    redisTemplate.opsForValue().set(AVAILABLE_KEY_PREFIX + gamePk + ":" + user, "allowed2", TTL_MILLIS, TimeUnit.MILLISECONDS);
+                    log.info("예약 가능 상태 갱신: gamePk={}, userPk={}", gamePk, user);
+                }
+
             } else {
                 log.warn("pollFront lock 획득 실패 gamePk={}", gamePk);
             }
