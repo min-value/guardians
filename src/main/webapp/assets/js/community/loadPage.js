@@ -29,7 +29,6 @@ function loadPage(page){
         success: function(res){
             const list = res.list;
             const totalCount = res.totalCount;
-            console.log("total: " + totalCount);
 
             const container = $('#post-container').empty();
             list.forEach(post => {
