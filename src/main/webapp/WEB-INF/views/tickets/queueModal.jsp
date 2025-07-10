@@ -53,13 +53,11 @@
           method: 'POST'
         })
                 .then(res => {
-                  console.log(res);
                   if (!res.ok) throw new Error("대기열 등록 실패");
                   return res.text();
                 })
                 .then(msg => {
                   // closeLoading();
-                  console.log(msg); // 성공 메시지 콘솔에 찍기
                   updateQueueStatus(); // 대기열 상태 초기화
                   setInterval(updateQueueStatus, 3000); // 이후 3초마다 상태 확인
                 })

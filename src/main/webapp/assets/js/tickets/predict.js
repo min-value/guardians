@@ -56,8 +56,8 @@ $(document).ready(function () {
 });
 
 function clickCheerBtn() {
-    console.log(curPredict);
-    console.log(reservelistPk);
+    // console.log(curPredict);
+    // console.log(reservelistPk);
 
     $.ajax({
         url: '/tickets/predict',
