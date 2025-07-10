@@ -46,7 +46,6 @@
         const finalTicketStatus = (ticketStatus=== null || ticketStatus.trim() === '') ? '0' : ticketStatus;
 
         console.log({ page, teamStatus: finalTeamStatus, ticketStatus: finalTicketStatus });
-        console.log("???");
         $.ajax({
           url: '/tickets/allgames',
           method: 'GET',
@@ -74,11 +73,15 @@
                 const startDate = new Date(dto.startDate);
                 const isOnSale = startDate <= now;
 
+                // 날짜 포맷: "07.19 18:00"
+                const formatted = `\${String(startDate.getMonth() + 1).padStart(2, '0')}.\${String(startDate.getDate()).padStart(2, '0')} \${String(startDate.getHours()).padStart(2, '0')}:\${String(startDate.getMinutes()).padStart(2, '0')}`;
+
+
                 const buttonHtml = isOnSale
                     ? `<input class="onsale-ticket-btn" type="button" value="예매하기" onclick="openSeatReservation(\${dto.gameNo})">` //redirectIfSessionExists(\${dto.gameNo})
                     : `
                         <div class="plan-ticket-btn">
-                          <span class="plan-time">\${dto.date} \${dto.time}</span>
+                          <span class="plan-time">\${formatted}</span>
                           <span class="plan-label">판매 예정</span>
                         </div>
                       `;
@@ -121,122 +124,6 @@
   }
     function redirectIfSessionExists(gamePk) {
         window.open(`/reservation/seat?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
-
-        /*
-        //권종/할인 선택
-        let discountInfo = JSON.parse(localStorage.getItem('discountInfo' + gamePk));
-        let gameInfo = JSON.parse(localStorage.getItem('gameInfo' + gamePk));
-        let reservelistPk = Number(localStorage.getItem('reservelistPk' + gamePk));
-        let seats = JSON.parse(localStorage.getItem('seats' + gamePk));
-        let zone = JSON.parse(localStorage.getItem('zone' + gamePk));
-
-        //예매 확인
-        let discountPk = JSON.parse(localStorage.getItem('discountPk' + gamePk));
-        let totalPay = Number(localStorage.getItem('totalPay' + gamePk));
-
-        if(discountInfo !== null && gameInfo !== null && reservelistPk !== null && seats !== null && zone !== null) {
-            if(gamePk === gameInfo['gamePk']) {
-                //세션에 존재 -> redis확인
-                const sendConfirm = {
-                    gamePk: gameInfo['gamePk'],
-                    seats: seats,
-                    zonePk: zone['zonePk']
-                }
-
-                fetch(`/reservation/preemption/confirm`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(sendConfirm)
-                })
-                    .then(res => {
-                        if(res.status === 401) {
-                            const redirectUrl = res.headers.get("Location") || "/reservation/errors/needLogin";
-                            window.location.href = redirectUrl;
-                            return;
-                        } else {
-                            return res.json();
-                        }
-                    })
-                    .then(data => {
-                        if (data === 2) {
-                            localStorage.clear();
-                        } else if (data === 0) {
-                            localStorage.clear();
-                        } else {
-                            //선점이 되어있으면
-                            if (discountPk !== null && totalPay !== null && !isNaN(totalPay)) {
-                                if(confirm(`이전 예매 기록이 있습니다. 불러오시겠습니까?`)) {
-                                    localStorage.removeItem('discountPk');
-                                    localStorage.removeItem('totalPay');
-
-                                    window.open(`/reservation/confirm?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
-                                } else {
-                                    //DB에서 삭제
-                                    let sendData = {
-                                        gamePk: gamePk,
-                                        seats: seats,
-                                        zonePk: Number(zone['zonePk']),
-                                        reservelistPk: reservelistPk
-                                    };
-
-                                    console.log(sendData);
-                                    fetch(`/reservation/preemption/delete`, {
-                                        method: 'DELETE',
-                                        headers: {
-                                            'Content-Type': 'application/json'
-                                        },
-                                        body: JSON.stringify(sendData)
-                                    })
-                                        .finally(() => {
-                                            localStorage.clear();
-                                            window.open(`/reservation/seat?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
-                                        });
-                                }
-                            } else {
-                                if(confirm(`이전 예매 기록이 있습니다. 불러오시겠습니까?`)) {
-                                    window.open(`/reservation/discount?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
-                                } else {
-                                    //DB에서 삭제
-                                    let sendData = {
-                                        gamePk: gamePk,
-                                        seats: seats,
-                                        zonePk: Number(zone['zonePk']),
-                                        reservelistPk: reservelistPk
-                                    };
-                                    console.log(sendData);
-                                    fetch(`/reservation/preemption/delete`, {
-                                        method: 'DELETE',
-                                        headers: {
-                                            'Content-Type': 'application/json'
-                                        },
-                                        body: JSON.stringify(sendData)
-                                    })
-                                        .finally(() => {
-                                            localStorage.clear();
-                                            window.open(`/reservation/seat?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
-                                        });
-                                }
-                            }
-                        }
-                    })
-                    .catch(error => {
-                        alert(`서버 오류 발생` + error);
-                        localStorage.clear();
-                    });
-            }
-        } else {
-            localStorage.clear();
-            window.open(
-                `/tickets/queue?gamePk=\${gamePk}&&userPk=\${user.userPk}`,
-                '_blank',
-                'width=800,height=500,scrollbars=no,resizable=no'
-            );
-            // window.open(`/reservation/seat?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
-        }
-
-         */
     }
 
   $(document).ready(function () {
