@@ -6,9 +6,20 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/colors.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/tickets/queueModal.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/loading.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/tickets/loading2.css">
 
   <script>
+    function resizeLoading(){
+      let loader = document.querySelector('.loader');
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      loader.style.position = 'fixed';
+      loader.style.left = (vw / 2) - 50 + 'px';
+      loader.style.top = (vh / 2) - 50 + 'px';
+
+    }
+
       const pathSegments = window.location.pathname.split('/');
       const gamePk = pathSegments[pathSegments.length - 1];
 
@@ -22,7 +33,9 @@
 
       //로딩 띄우기
       function openLoading() {
-        document.querySelector('.loader').style.display = 'block';
+        let loader = document.querySelector('.loader');
+        loader.style.display = 'block'
+        resizeLoading();
         document.querySelector('.loading-overlay').style.display = 'flex';
       }
 
@@ -33,6 +46,7 @@
       }
 
       window.onload = () => {
+        window.addEventListener('resize', resizeLoading);
         openLoading();
         // 모달 열리자마자 대기열 등록 요청
         fetch(`/queue/enqueue/\${gamePk}?userPk=\${user.userPk}`, {
