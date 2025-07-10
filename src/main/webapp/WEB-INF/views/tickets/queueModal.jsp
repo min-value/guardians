@@ -56,7 +56,7 @@
         fetch(`/queue/queue-position/\${gamePk}?userPk=\${user.userPk}`)
                 .then(res => res.text())
                 .then(position => {
-                  position = Number(position) + 1;
+                  position = Number(position);
                   document.getElementById("waitingNum").innerText = position;
 
                   // 진행바 계산용 queue size

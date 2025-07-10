@@ -6,7 +6,6 @@ import org.baseball.dto.GamedetailsDTO;
 import org.baseball.dto.RankDTO;
 import org.baseball.dto.ScheduleDTO;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 @Mapper
@@ -38,15 +37,14 @@ public interface GamesMapper {
     // 상세정보 조회
     List<GamedetailsDTO> getGameDetails(@Param("year") int year, @Param("month") int month);
 
-    // game_pk 가져오기
-    Integer getGamePkByDate(@Param("date") Timestamp date);
-
     // game_result 존재 여부
     boolean existsGameResult(@Param("gamePk") int gamePk);
 
     // game_result 삽입
     void insertGameResult(GamedetailsDTO dto);
 
+    // url 업데이트
+    void updateDetailUrl(ScheduleDTO dto);
 
     // 페이지네이션용 목록
     List<GamedetailsDTO> selectDetailList(
@@ -58,4 +56,6 @@ public interface GamesMapper {
 
     // 전체 개수 조회
     int countDetail(@Param("year") int year, @Param("month") int month);
+
+    List<ScheduleDTO> getDetails();
 }

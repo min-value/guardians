@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.baseball.domain.reservation.ReservationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.Message;
+import org.springframework.data.redis.core.ReactiveRedisOperations;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.listener.KeyExpirationEventMessageListener;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 
@@ -11,9 +13,11 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 public class RedisExpirationListener extends KeyExpirationEventMessageListener {
     @Autowired
     ReservationMapper reservationMapper;
+    private final StringRedisTemplate redisTemplate;
 
-    public RedisExpirationListener(RedisMessageListenerContainer listenerContainer) {
+    public RedisExpirationListener(RedisMessageListenerContainer listenerContainer, StringRedisTemplate redisTemplate) {
         super(listenerContainer);
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
@@ -65,6 +69,15 @@ public class RedisExpirationListener extends KeyExpirationEventMessageListener {
                 reservationMapper.deletePreemptionList(reservelistPk);
             }
             log.info("gamePk={" + gamePk + "} seat={" + seatNum + "} reservelistPk={" + reservelistPk + "} 선점 정보 DB에서 제거");
+        } else if (expiredKey.startsWith("available:")) {
+            String[] parts = expiredKey.split(":");
+
+            int gamePk = Integer.parseInt(parts[2]);
+            int userPk = Integer.parseInt(parts[3]);
+            String queueKey = "queue:" + gamePk;
+            redisTemplate.opsForZSet().remove(queueKey, String.valueOf(userPk));
+            redisTemplate.delete(expiredKey);
+
         }
     }
 }
