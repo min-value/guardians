@@ -44,7 +44,6 @@ public class QueueCleanupScheduler {
 
     @Scheduled(fixedDelay = 3000)
     public void processQueue() {
-        log.info("실행");
         for (String queueKey : queueService.getAllQueueKeys()) {
             String gamePk = queueKey.substring("queue:".length());
             queueService.pollFront(gamePk);

@@ -62,12 +62,9 @@ public class QueueService {
 
 
     public boolean dequeueUser(String gamePk, String userPk) {
-        String queueKey = QUEUE_KEY_PREFIX + gamePk;
         String availableKey = AVAILABLE_KEY_PREFIX + gamePk + ":" + userPk;
 
-        Long removed = redisTemplate.opsForZSet().remove(queueKey, String.valueOf(userPk));
-        redisTemplate.delete(availableKey);
-        return removed != null && removed > 0;
+        return redisTemplate.delete(availableKey);
     }
 
     // 대기열 순위 확인
