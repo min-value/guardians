@@ -22,7 +22,7 @@ public class DetailCrawler {
 
     private final GamesMapper gamesMapper;
 
-    @Scheduled(cron = "0 30 13 * * *")
+    @Scheduled(cron = "0 20 2 * * *")
     public void crawlDetails() {
         WebDriver driver = initDriver();
         int successCount = 0;

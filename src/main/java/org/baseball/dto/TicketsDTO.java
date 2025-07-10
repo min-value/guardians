@@ -13,6 +13,7 @@ public class TicketsDTO {
     private String opponentTeam;
     private String stadium;
     private Timestamp startDate;
+    private String startDateLocal;
     private Timestamp endDate;
 
     private String date;
