@@ -69,7 +69,7 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisExpirationListener redisExpirationListener(RedisMessageListenerContainer container) {
-        return new RedisExpirationListener(container);
+    public RedisExpirationListener redisExpirationListener(RedisMessageListenerContainer container, StringRedisTemplate redisTemplate) {
+        return new RedisExpirationListener(container, redisTemplate);
     }
 }
