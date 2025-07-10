@@ -208,7 +208,6 @@
 
                         container.innerHTML = '';
                         pageItems.forEach(ticket => {
-                            console.log(ticket);
                             const item = document.createElement('div');
                             item.classList.add('ticket-item');
 
@@ -298,7 +297,6 @@
                                     const game_pk = cancelBtn.dataset.gamepk;
                                     const zone_pk = cancelBtn.dataset.zonepk;
                                     const seats = cancelBtn.dataset.seats;
-                                    console.log(reservelist_pk, user_pk, used_point, game_pk, zone_pk, seats);
                                     const now = new Date();
                                     const gameDay = new Date(gameDate.getFullYear(), gameDate.getMonth(), gameDate.getDate());
                                     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
