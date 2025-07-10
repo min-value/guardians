@@ -10,7 +10,6 @@
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script>
         Kakao.init('ceead2a16e86d5010c921c46bc602aa6');
-        console.log('Kakao SDK 초기화 여부:', Kakao.isInitialized());
     </script>
 
 </head>
@@ -56,15 +55,12 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const btn = document.querySelector('.kakao-btn');
-            console.log('found kakao-btn:', btn);
             if (!btn) return;
 
             const contextPath = "${pageContext.request.contextPath}";
             const redirectUri = window.location.origin + contextPath + '/user/kakao/callback';
-            console.log('will use redirectUri:', redirectUri);
 
             btn.addEventListener('click', function() {
-                console.log('kakao-btn clicked');
                 Kakao.Auth.authorize({
                     redirectUri: redirectUri,
                     scope: 'profile_nickname, account_email'
