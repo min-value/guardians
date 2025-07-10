@@ -100,7 +100,7 @@
                           .then(res => res.text())
                           .then(canReserve => {
                             if (canReserve === "true") {
-                              location.href = `/reservation/seat?gamePk=` + gamePk;
+                              location.href =`/reservation/seat?gamePk=` + gamePk;
                             }
                           });
                 });
