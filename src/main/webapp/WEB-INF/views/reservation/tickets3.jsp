@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets-common2.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets3.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/loading.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/tickets/loading.css">
     <script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
@@ -301,7 +301,7 @@
         </div>
     </div>
 </div>
-<div class="loader">Loading...</div>
+<div class="loader" aria-label="Loading..."></div>
 <div class="loading-overlay"></div>
 <script type="module" src="${pageContext.request.contextPath}/assets/js/reservation/tickets3.js"></script>
 </body>

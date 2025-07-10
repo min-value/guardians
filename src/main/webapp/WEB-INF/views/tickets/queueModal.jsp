@@ -6,7 +6,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/colors.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/tickets/queueModal.css">
-    <script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/loading.css">
+
+  <script>
       const pathSegments = window.location.pathname.split('/');
       const gamePk = pathSegments[pathSegments.length - 1];
 
@@ -18,7 +20,20 @@
         totalPoint: "${sessionScope.loginUser.totalPoint}"
       };
 
+      //로딩 띄우기
+      function openLoading() {
+        document.querySelector('.loader').style.display = 'block';
+        document.querySelector('.loading-overlay').style.display = 'flex';
+      }
+
+      //로딩 닫기
+      function closeLoading() {
+        document.querySelector('.loader').style.display = 'none';
+        document.querySelector('.loading-overlay').style.display = 'none';
+      }
+
       window.onload = () => {
+        openLoading();
         // 모달 열리자마자 대기열 등록 요청
         fetch(`/queue/enqueue/\${gamePk}?userPk=\${user.userPk}`, {
           method: 'POST'
@@ -29,6 +44,7 @@
                   return res.text();
                 })
                 .then(msg => {
+                  // closeLoading();
                   console.log(msg); // 성공 메시지 콘솔에 찍기
                   updateQueueStatus(); // 대기열 상태 초기화
                   setInterval(updateQueueStatus, 3000); // 이후 3초마다 상태 확인
@@ -56,7 +72,7 @@
         fetch(`/queue/queue-position/\${gamePk}?userPk=\${user.userPk}`)
                 .then(res => res.text())
                 .then(position => {
-                  position = Number(position);
+                  position = Number(position) + 1;
                   document.getElementById("waitingNum").innerText = position;
 
                   // 진행바 계산용 queue size
@@ -98,5 +114,7 @@
       <div class="text3">새로고침 하거나 재접속 하시면 대기 순서가<br>초기화 되어 대기 시간이 더 길어집니다.</div>
     </div>
   </div>
+  <div class="loader">Loading...</div>
+  <div class="loading-overlay"></div>
   </body>
 </html>
