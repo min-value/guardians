@@ -154,6 +154,7 @@ function renderingInfo() {
         params.append('zonePk', zone['zonePk']);
     }
 
+    params.append('reservelistPk', reservelistPk);
     //정보 로드
     fetch(`/reservation/seat/load?${params.toString()}`, {
         method: 'GET'
