@@ -191,9 +191,7 @@ async function requestPay() {
                             }).catch(err => {
                                 console.error("대기열 제거 중 에러:", err);
                             });
-
                             alert("예매 성공!");
-
                             if (window.opener && !window.opener.closed) {
                                 window.opener.location.href = "/tickets/all?showModal=true";
                             }
