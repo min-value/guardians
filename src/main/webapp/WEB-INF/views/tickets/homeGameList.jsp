@@ -32,7 +32,7 @@
         window.open(
             `/queue/waiting/\${gamePk}?userPk=\${user.userPk}`,
             '_blank',
-            'width=800,height=500,scrollbars=no,resizable=no'
+            'width=800,height=500,left=${left}, top=${top}, scrollbars=no,resizable=no'
         );
         // window.open(`/reservation/seat?gamePk=\${gameNo}`, '_blank',
         //         'width=800,height=700,scrollbars=yes,resizable=no');
