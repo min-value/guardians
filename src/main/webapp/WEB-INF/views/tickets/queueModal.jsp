@@ -57,7 +57,7 @@
                   return res.text();
                 })
                 .then(msg => {
-                  // closeLoading();
+                  closeLoading();
                   updateQueueStatus(); // 대기열 상태 초기화
                   setInterval(updateQueueStatus, 3000); // 이후 3초마다 상태 확인
                 })
