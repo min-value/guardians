@@ -2,14 +2,11 @@ package org.baseball.domain.redis;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RScoredSortedSet;
 import org.redisson.api.RedissonClient;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.util.Set;
 
 @Component
 @Slf4j
@@ -47,6 +44,7 @@ public class QueueCleanupScheduler {
 
     @Scheduled(fixedDelay = 3000)
     public void processQueue() {
+        log.info("실행");
         for (String queueKey : queueService.getAllQueueKeys()) {
             String gamePk = queueKey.substring("queue:".length());
             queueService.pollFront(gamePk);
