@@ -3,7 +3,7 @@
 
 /* 기본 글꼴 설정 - 페이지 전체에 적용 */
 html, body {
-    font-family: Pretendard, sans-serif !important;
+    font-family: "Pretendard Variable", Pretendard, sans-serif !important;
     font-size: 16px;
     line-height: 1.6;
     margin: 0;
