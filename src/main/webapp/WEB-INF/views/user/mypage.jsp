@@ -343,7 +343,7 @@
                                                                 seats: seats
                                                             },
                                                             success: function (response) {
-                                                                if(res) alert("예약 취소 실패!");
+                                                                if(res) alert("예약 취소 실패");
                                                                 else alert("에러가 발생하였습니다. 관리자에게 문의해주세요.");
                                                             },
                                                             error: function (error) {
@@ -357,7 +357,7 @@
                                                     }
                                                 });
                                             } else {
-                                                alert("예약 취소 실패!!");
+                                                alert("예약 취소 실패");
                                                 closeLoading();
                                                 location.reload();
                                             }

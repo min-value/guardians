@@ -77,11 +77,10 @@ public class QueueService {
         return userPkInt == first && Boolean.TRUE.equals(redisTemplate.hasKey(availableKey));
     }
 
-
     public boolean dequeueUser(String gamePk, String userPk) {
         String queueKey = QUEUE_KEY_PREFIX + gamePk;
         String availableKey = AVAILABLE_KEY_PREFIX + gamePk + ":" + userPk;
-
+        log.info("dequeue queue:{},available:{}", queueKey, availableKey);
         Long removed = redisTemplate.opsForZSet().remove(queueKey, String.valueOf(userPk));
         redisTemplate.delete(availableKey);
         return removed != null && removed > 0;
@@ -109,7 +108,7 @@ public class QueueService {
                 Integer first = queue.isEmpty() ? null : queue.first();
 
                 if (first != null) {
-                    queue.remove(first);
+                    //queue.remove(first);
                     redisTemplate.opsForValue().set(AVAILABLE_KEY_PREFIX + gamePk + ":" + first,
                             "allowed", TTL_MILLIS, TimeUnit.MILLISECONDS);
 
