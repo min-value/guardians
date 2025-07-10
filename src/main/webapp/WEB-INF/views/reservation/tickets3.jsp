@@ -22,12 +22,10 @@
         totalPoint: "${sessionScope.loginUser.totalPoint}"
     };
 
-    console.log(user);
     $.ajax({
         type: "GET",
         url: "/user/info",
         success: function(res) {
-            console.log("최신 유저 정보:", res);
             user = res;
             $("#myPoint").text(user.totalPoint);
         },

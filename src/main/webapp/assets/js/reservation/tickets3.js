@@ -92,7 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     payBtn.addEventListener("click", async (e) => {
-        console.log('click?');
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         const allChecked = Array.from(checkboxes).every(cb => cb.checked);
 
@@ -145,12 +144,11 @@ async function requestPay() {
         buyer_name: user.userName,
         buyer_tel: user.tel
     }, function(res) {
-        console.log("@@@RES: ", res);
-        if (res.success) {
-            console.log("성공 imp_uid:", res.imp_uid);
-        } else {
-            console.error("실패 메시지:", res.error_msg);
-        }
+        // if (res.success) {
+        //     console.log("성공 imp_uid:", res.imp_uid);
+        // } else {
+        //     console.error("실패 메시지:", res.error_msg);
+        // }
 
         // 결제검증
         $.ajax({
@@ -180,7 +178,7 @@ async function requestPay() {
                     }),
                     success: function(result) {
                         closeLoading();
-                        console.log("서버 응답:", result);
+                        // console.log("서버 응답:", result);
                         if (result === true || result === "true") {
                             fetch(`/queue/complete-reservation/${gameInfo.gamePk}?userPk=${user.userPk}`, {
                                 method: 'POST'
@@ -196,7 +194,6 @@ async function requestPay() {
                                 window.opener.location.href = "/tickets/all?showModal=true";
                             }
                             window.close();
-                            console.log(result);
                         } else {
                             alert("예매 저장 실패. 다시 시도해주세요.");
                             $.ajax({
