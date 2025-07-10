@@ -22,12 +22,12 @@ public class VideoScheduler {
     @Value("${youtube.api.key}")
     private String youtubeApiKey;
 
-    @Scheduled(cron = "0 45 11 * * *")
+    @Scheduled(cron = "0 10 13 * * *")
     public void crawlYoutube()throws Exception{
         String query = "nc다이노스 하이라이트";
         String urlString = "https://www.googleapis.com/youtube/v3/search?part=snippet&q="
                 + java.net.URLEncoder.encode(query, "UTF-8")
-                + "&type=video&maxResults=6&key=" + youtubeApiKey;
+                + "&type=video&maxResults=15&key=" + youtubeApiKey;
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
