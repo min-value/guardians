@@ -22,7 +22,7 @@ public class VideoScheduler {
     @Value("${youtube.api.key}")
     private String youtubeApiKey;
 
-    @Scheduled(cron = "0 10 13 * * *")
+    @Scheduled(cron = "0 30 8 * * *")
     public void crawlYoutube()throws Exception{
         String query = "nc다이노스 하이라이트";
         String urlString = "https://www.googleapis.com/youtube/v3/search?part=snippet&q="

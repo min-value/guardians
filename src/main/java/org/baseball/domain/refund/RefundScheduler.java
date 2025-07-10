@@ -13,7 +13,7 @@ public class RefundScheduler {
 
     private final RefundService refundService;
 
-    @Scheduled(cron = "0 25 1 * * *")
+    @Scheduled(cron = "0 00 3 * * *")
     public void processRefundForCanceledGames() {
         log.info("취소된 경기 자동 환불 시작");
 
