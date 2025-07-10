@@ -182,7 +182,7 @@ async function requestPay() {
                         closeLoading();
                         console.log("서버 응답:", result);
                         if (result === true || result === "true") {
-                            fetch(`queue/complete-reservation/${gameInfo.gamePk}?userPk=${user.userPk}`, {
+                            fetch(`/queue/complete-reservation/${gameInfo.gamePk}?userPk=${user.userPk}`, {
                                 method: 'POST'
                             }).then(res => {
                                 if (!res.ok) {
