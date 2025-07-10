@@ -45,7 +45,6 @@
         const finalTeamStatus = (teamStatus=== null || teamStatus.trim() === '') ? '0' : teamStatus;
         const finalTicketStatus = (ticketStatus=== null || ticketStatus.trim() === '') ? '0' : ticketStatus;
 
-        console.log({ page, teamStatus: finalTeamStatus, ticketStatus: finalTicketStatus });
         $.ajax({
           url: '/tickets/allgames',
           method: 'GET',
@@ -57,7 +56,6 @@
           success: function(res) {
             const list = res.list;
             const totalCount = res.totalCount;
-            console.log(res);
             const container = $('#list').empty();
 
               if (list.length === 0) {

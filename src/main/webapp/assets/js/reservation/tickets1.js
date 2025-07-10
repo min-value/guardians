@@ -203,7 +203,7 @@ function renderingInfo() {
                         reservelistPk: reservelistPk
                     };
 
-                    console.log(sendData);
+                    // console.log(sendData);
                     fetch(`/reservation/preemption/delete`, {
                         method: 'DELETE',
                         headers: {
@@ -231,7 +231,7 @@ function renderingInfo() {
                         reservelistPk: reservelistPk
                     };
 
-                    console.log(sendData);
+                    // console.log(sendData);
                     fetch(`/reservation/preemption/delete`, {
                         method: 'DELETE',
                         headers: {
