@@ -100,8 +100,7 @@
                           .then(res => res.text())
                           .then(canReserve => {
                             if (canReserve === "true") {
-                              window.close();
-                              window.open(`/reservation/seat?gamePk=` + gamePk, '_blank', 'width=800,height=700,scrollbars=yes,resizable=no');
+                              location.href = `/reservation/seat?gamePk=` + gamePk;
                             }
                           });
                 });
