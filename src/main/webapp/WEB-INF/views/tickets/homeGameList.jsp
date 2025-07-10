@@ -28,7 +28,6 @@
         const left = (window.screen.width - width) / 2;
         const top = (window.screen.height - height) / 2;
 
-        localStorage.clear();
         window.open(
             `/queue/waiting/\${gamePk}?userPk=\${user.userPk}`,
             '_blank',
