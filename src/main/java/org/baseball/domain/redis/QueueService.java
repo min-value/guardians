@@ -104,7 +104,7 @@ public class QueueService {
 
                 for(String user : toRemove) {
                     redisTemplate.opsForZSet().remove(QUEUE_KEY_PREFIX + gamePk, user);
-                    redisTemplate.opsForValue().set(AVAILABLE_KEY_PREFIX + gamePk + ":" + user, "allowed2", TTL_MILLIS, TimeUnit.MILLISECONDS);
+                    redisTemplate.opsForValue().set(AVAILABLE_KEY_PREFIX + gamePk + ":" + user, "allowed", TTL_MILLIS, TimeUnit.MILLISECONDS);
                     log.info("예약 가능 상태 갱신: gamePk={}, userPk={}", gamePk, user);
                 }
 
