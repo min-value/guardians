@@ -18,4 +18,7 @@ public class ScheduleDTO {
 
     // StaduumPk
     private String location;
+
+    // 상세 페이지 링크
+    private String detailUrl;
 }

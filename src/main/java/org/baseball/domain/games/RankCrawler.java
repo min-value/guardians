@@ -1,7 +1,6 @@
 package org.baseball.domain.games;
 
 import lombok.RequiredArgsConstructor;
-import org.baseball.domain.games.GamesMapper;
 import org.baseball.dto.RankDTO;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
