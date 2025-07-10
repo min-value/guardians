@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Slf4j
 @Controller
 public class HomeController {
+    @GetMapping("/")
+    public String home1(Model model) {
+        return "home";
+    }
+
     @GetMapping("/home")
     public String home(Model model) {
         System.out.println("sout");
