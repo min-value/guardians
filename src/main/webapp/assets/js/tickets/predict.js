@@ -1,3 +1,4 @@
+
 let curPredict = null;
 let reservelistPk = JSON.parse(localStorage.getItem("reservelistPk" +  gamePk));
 const gameInfo = JSON.parse(localStorage.getItem('gameInfo' + gamePk));
