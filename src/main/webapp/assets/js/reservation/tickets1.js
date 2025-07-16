@@ -217,6 +217,13 @@ function renderingInfo() {
                                 alert('선점 취소가 실패했습니다. 다시 시도해주세요');
                             }
                         });
+                    localStorage.removeItem('reservelistPk' + gamePk);
+                    localStorage.removeItem('zone' + gamePk);
+                    localStorage.removeItem('seats' + gamePk);
+                    localStorage.removeItem('totalPay' + gamePk);
+                    localStorage.removeItem('discountPk' + gamePk);
+                    localStorage.removeItem('usedPoint' + gamePk);
+                    localStorage.removeItem('paidAmount' + gamePk);
                 }
 
             } else if(data.check === 3) {
@@ -245,6 +252,13 @@ function renderingInfo() {
                                 alert('선점 취소가 실패했습니다. 다시 시도해주세요');
                             }
                         });
+                    localStorage.removeItem('reservelistPk' + gamePk);
+                    localStorage.removeItem('zone' + gamePk);
+                    localStorage.removeItem('seats' + gamePk);
+                    localStorage.removeItem('totalPay' + gamePk);
+                    localStorage.removeItem('discountPk' + gamePk);
+                    localStorage.removeItem('usedPoint' + gamePk);
+                    localStorage.removeItem('paidAmount' + gamePk);
                 }
             } else if(data.check === 4) {
                 //나머지 데이터 삭제

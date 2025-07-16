@@ -78,6 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.close();
                 } else {
                     //선점이 되어있으면 돌아가기
+                    localStorage.removeItem('totalPay' + gamePk);
+                    localStorage.removeItem('discountPk' + gamePk);
+                    localStorage.removeItem('usedPoint' + gamePk);
+                    localStorage.removeItem('paidAmount' + gamePk);
                     window.location.href = `/reservation/discount?gamePk=${gamePk}`;
                 }
             })
