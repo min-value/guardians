@@ -23,17 +23,17 @@
 
     <insert id="insertNews" parameterType="org.baseball.dto.NewsDTO">
         INSERT IGNORE INTO news(
-             n_title, n_writer, n_content, n_year, n_month, n_date, n_hour, n_minute, img_url, news_url
+             n_title, n_writer, n_content, img_url, news_url, n_writeDate
         ) VALUES (
-              #{n_title}, #{n_writer}, #{n_content}, #{n_year}, #{n_month}, #{n_date}, #{n_hour}, #{n_minute}, #{img_url}, #{news_url}
+              #{n_title}, #{n_writer}, #{n_content}, #{img_url}, #{news_url}, #{n_writeDate}
         )
     </insert>
 
     <select id="getNews" resultType="org.baseball.dto.NewsDTO" parameterType="map">
-        SELECT n_title, n_writer, n_content, n_year, n_month, n_date, n_hour, n_minute, img_url, news_url
+        SELECT n_title, n_writer, n_content, img_url, news_url, n_writeDate
         FROM news
         <include refid="select"/>
-        ORDER BY n_year DESC, n_month DESC, n_date DESC, n_hour DESC, n_minute DESC
+        ORDER BY n_writeDate DESC
         LIMIT #{size} OFFSET #{offset}
     </select>
 

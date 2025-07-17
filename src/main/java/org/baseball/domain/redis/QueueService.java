@@ -26,7 +26,7 @@ public class QueueService {
     private final String AVAILABLE_KEY_PREFIX = "available:";
     private final StringRedisTemplate redisTemplate;
 
-    private static final int ALLOWED_ENTRANCE_COUNT = 1;
+    private static final int ALLOWED_ENTRANCE_COUNT = 5;
     private static final long TTL_MILLIS = 20 * 60 * 1000;
 
     public QueueService(RedissonClient redissonClient, StringRedisTemplate redisTemplate) {
