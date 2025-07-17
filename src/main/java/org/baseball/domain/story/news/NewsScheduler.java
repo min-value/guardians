@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 @Component
 public class NewsScheduler {
 
@@ -46,16 +49,15 @@ public class NewsScheduler {
                     String time[] = (date[3]).split(":");
                     int n_hour = Integer.parseInt(time[0]);
                     int n_minute = Integer.parseInt(time[1]);
+                    LocalDateTime dateTime = LocalDateTime.of(n_year, n_month, n_date, n_hour, n_minute);
+                    Timestamp timestamp = Timestamp.valueOf(dateTime);
+
 
                     NewsDTO dto = new NewsDTO();
                     dto.setN_title(newsName.text());
                     dto.setN_writer(newsWriter.text());
                     dto.setN_content(content != null ? content.text() : null);
-                    dto.setN_year(n_year);
-                    dto.setN_month(n_month);
-                    dto.setN_date(n_date);
-                    dto.setN_hour(n_hour);
-                    dto.setN_minute(n_minute);
+                    dto.setN_writeDate(timestamp);
                     dto.setImg_url(imgSrc);
                     dto.setNews_url(href);
 
