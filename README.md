@@ -1,4 +1,5 @@
 <p align="center">
+  <img width="101" height="101" alt="image" src="https://github.com/user-attachments/assets/7006ff29-8837-4ea6-82ee-4142d17aff1f" />
   <img width="485" height="101" alt="guardians" src="https://github.com/user-attachments/assets/d3139b86-4d5e-4274-8a61-a3df0d6e6854" />
 </p>
 <br>
@@ -22,11 +23,15 @@
   </thead>
   <tbody>
     <tr>
-    <td><p align="center"><img src="https://github.com/user-attachments/assets/b79d75bb-6092-417d-8f17-0e90aebf7c10" height=150px></p></td>
-     <td><p align="center"><img src="https://github.com/user-attachments/assets/699b9c1b-ce87-457a-9175-c83bf9714551" height=150px></p></td>
-     <td><p align="center"><img src="https://github.com/user-attachments/assets/b12c9f01-1ca9-4953-b19a-bea74913c0c2" height=150px></p></td>
-     <td><p align="center"><img src="https://github.com/user-attachments/assets/7d85ab39-1635-41f6-84ce-460e1ea857de" height=150px></p></td>
-     <td><p align="center"><img src="https://github.com/user-attachments/assets/38c84cca-015f-4789-8ec4-28646802c88a" height=150px></p></td>
+    <td><p align="center"><img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/d778998c-da58-41b0-8823-068d7066926e" />
+</p></td>
+     <td><p align="center"><img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/d6cf4aee-687b-414a-bf6c-76513fdd947b" /></p></td>
+     <td><p align="center"><img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/922ba9e6-2921-4061-82b3-bc01697bc21b" />
+</p></td>
+     <td><p align="center"><img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/cda8cf76-5d29-4d60-b282-142e77d70901" />
+</p></td>
+     <td><p align="center"><img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/237e83d4-d706-43c3-a49d-73a39ec5005f" />
+</p></td>
     </tr>
     <tr>
       <td align="center"><a href="https://github.com/chqkq" target="_blank">@chqkq</a></td>
@@ -168,304 +173,47 @@
 
 <h2>화면 구성</h2>
 <table>
-  <thead>
-    <tr>
-      <td align="center">메인 화면</td>
-      <td align="center">로그인</td>
-    </tr>
-  </thead>
   <tbody>
     <tr>
       <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/30b79b29-a7b3-4d2d-8904-bfb9666b41bc" />
+        <img width="7000" height="2372" alt="main   login" src="https://github.com/user-attachments/assets/e61887e0-8f1e-462f-8fba-d0a07618d001" />
       </td>
+    </tr>
+    <tr>
       <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/a706a38e-81f9-4ee5-a0d7-8d1f148a7e9d" />
+        <img width="7000" height="2586" alt="mypage" src="https://github.com/user-attachments/assets/f88ef1fa-d746-4cab-bcd7-7c6559211cdf" />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img width="7000" height="2654" alt="story" src="https://github.com/user-attachments/assets/801a6f96-b746-4db9-8ea9-8b6f708e1a3a" />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img width="7000" height="3055" alt="Game" src="https://github.com/user-attachments/assets/3e0689db-78d2-4747-9550-87592fed3167" />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img width="7000" height="2294" alt="community" src="https://github.com/user-attachments/assets/8d373162-0d11-4027-90a6-b74ea2352141" />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img width="7000" height="2650" alt="fairy   numball   errorPage" src="https://github.com/user-attachments/assets/9722c282-c191-4d77-862c-686cc2ae808a" />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img width="7000" height="3989" alt="reservation" src="https://github.com/user-attachments/assets/1c415824-c54d-4299-a636-f192b196a4da" />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img width="7000" height="2141" alt="admin" src="https://github.com/user-attachments/assets/d1c0fbe7-d5ee-41da-845b-ab040f36af97" />
       </td>
     </tr>
   </tbody>
 </table>
 <table>
-  <thead>
-    <tr>
-      <td align="center">회원가입 페이지</td>
-      <td align="center">카카오 추가 정보 페이지</td>
-    </tr>
-  </thead>
-  <tbody>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/8a2d5037-ebe0-4742-8733-507a16edbfe1" />
-      </td>
-      <td>
-        <img src="https://github.com/user-attachments/assets/5c26fa25-e0d3-431a-b61b-79139e1e6182" width=400px>
-      </td>
-  </tbody>
-</table>
-<table>
-  <thead>
-    <tr>
-      <td align="center">하이라이트</td>
-      <td align="center">뉴스 스크랩</td>
-    </tr>
-  </thead>
-  <tbody>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/84d68be2-c34b-4cb8-afb7-bc907d75a3d9" />
-      </td>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/696531a7-d9c6-4f18-b5fe-35531e9ee32d" />
-      </td>
-  </tbody>
-</table>
-<table>
-  <thead>
-    <tr>
-      <td align="center">구단 소개</td>
-      <td align="center">경기장 소개</td>
-    </tr>
-  </thead>
-  <tbody>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/873d47ae-f41e-4ba0-a11f-6cc9ad9e1139" />
-      </td>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/56f149cc-1bb3-4293-a8a5-9b8ab1b12a85" />
-      </td>
-  </tbody>
-</table>
-<table>
-  <thead>
-    <tr>
-      <td align="center">스폰서</td>
-      <td align="center">선수 정보</td>
-    </tr>
-  </thead>
-  <tbody>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/f18238cb-fd89-492c-8b34-08ee4766146b" />
-      </td>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/9a0c5778-aebb-41a1-9e92-3b529e7583c7" />
-      </td>
-  </tbody>
-</table>
-<table>
-  <thead>
-    <tr>
-      <td align="center">경기 일정</td>
-      <td align="center">경기 결과</td>
-    </tr>
-  </thead>
-  <tbody>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/de4eda02-bf8e-436a-bcf4-24983f218b39" />
-      </td>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/5e8afa08-859f-43db-85f1-b8bf122e9536" />
-      </td>
-  </tbody>
-</table>
-<table>
-  <thead>
-    <tr>
-      <td align="center">순위</td>
-      <td align="center">승리 요정</td>
-    </tr>
-  </thead>
-  <tbody>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/7d2a65f7-522e-469d-a85f-ad00200553cc" />
-      </td>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/803b6757-2fa9-4243-9a4d-87bc662dd1e9" />
-      </td>
-  </tbody>
-</table>
-<table>
-  <thead>
-    <tr>
-      <td align="center">커뮤니티-목록</td>
-      <td align="center">커뮤니티-글 상세</td>
-    </tr>
-  </thead>
-  <tbody>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/aba5ccad-1860-41ed-8bb7-344820ee1c39" />
-      </td>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/2737beea-4dac-4cf0-b75e-62ed3e464cb9" />
-      </td>
-  </tbody>
-</table>
-<table>
-  <thead>
-    <tr>
-      <td align="center">커뮤니티-글 작성</td>
-      <td align="center">커뮤니티-글 수정</td>
-    </tr>
-  </thead>
-  <tbody>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/b560ece1-c47e-4028-a77f-67da2e019a40" />
-      </td>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/c6c2e87c-6781-4f0e-a51d-284cd781274e" />
-      </td>
-  </tbody>
-</table>
-<table>
-  <thead>
-    <tr>
-      <td align="center">예매-목록</td>
-      <td align="center">예매-대기열</td>
-    </tr>
-  </thead>
-  <tbody>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/4859c120-7fef-4c25-99ec-9cc021ef07db" />
-      </td>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/21ca6755-4101-429e-ad00-0052784792e5" />
-      </td>
-  </tbody>
-</table>
-<table>
-  <thead>
-    <tr>
-      <td align="center">예매-등급/좌석 선택(1)</td>
-      <td align="center">예매-등급/좌석 선택(2)</td>
-    </tr>
-  </thead>
-  <tbody>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/654e6981-ac69-4f3b-97e1-986b1a6b87d1" />
-      </td>
-      <td>
-        <img width="450"alt="image" src="https://github.com/user-attachments/assets/08e81da3-45f1-4502-9c89-480ae2940b2b" />
-      </td>
-  </tbody>
-</table>
-<table>
-  <thead>
-    <tr>
-      <td align="center">예매-권종/할인 선택</td>
-      <td align="center">예매-예매 확인</td>
-    </tr>
-  </thead>
-  <tbody>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/e2d046ad-2842-4222-9f97-e20e784cfdbd" />
-      </td>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/f729761c-1440-4296-994d-7da0fc859159" />
-      </td>
-  </tbody>
-</table>
-<table>
-  <thead>
-    <tr>
-      <td align="center">예매-승부 예측</td>
-      <td align="center">마이페이지-내정보</td>
-    </tr>
-  </thead>
-  <tbody>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/6b64a4b5-ebdc-4eda-8290-fe78c2e37544" />
-      </td>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/e7ef4e4b-e135-4454-9c9c-97e769507d7d" />
-      </td>
-  </tbody>
-</table>
-<table>
-  <thead>
-    <tr>
-      <td align="center">마이페이지-내정보(수정)</td>
-      <td align="center">마이페이지-회원탈퇴</td>
-    </tr>
-  </thead>
-  <tbody>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/c010e67c-9595-49ef-b59f-a392ed619be1" />
-      </td>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/10ab5afe-9b18-4940-acfc-3e16968e116f" />
-      </td>
-  </tbody>
-</table>
-<table>
-  <thead>
-    <tr>
-      <td align="center">마이페이지-예매내역</td>
-      <td align="center">마이페이지-포인트내역</td>
-    </tr>
-  </thead>
-  <tbody>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/2ac62492-6642-4a73-848b-8ed423206692" />
-      </td>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/1f2bca90-3f31-45d6-806d-406b31fbecbc" />
-      </td>
-  </tbody>
-</table>
-<table>
-  <thead>
-    <tr>
-      <td align="center">숫자야구</td>
-      <td align="center">마이페이지-승리요정</td>
-    </tr>
-  </thead>
-  <tbody>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/10905aef-e786-48e8-817c-6f68e407551d" />
-      </td>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/1fc8b258-cf8b-48bd-9dac-7e4bab94e796" />
-      </td>
-  </tbody>
-</table>
-<table>
-  <thead>
-    <tr>
-      <td align="center">관리자페이지-메인</td>
-      <td align="center">관리자페이지-예매목록조회</td>
-    </tr>
-  </thead>
-  <tbody>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/ac42e9a1-f867-4f89-9291-80142732d48f" />
-      </td>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/19af18bc-47fc-4efa-b8f6-33b61c90b6fa" />
-      </td>
-  </tbody>
-</table>
-<table>
-  <thead>
-    <tr>
-      <td align="center">관리자페이지-경기목록조회</td>
-      <td align="center">관리자페이지-경기예매등록</td>
-    </tr>
-  </thead>
-  <tbody>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/117a8fb4-994b-4e25-bc16-f0e0ff8beb9b" />
-      </td>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/394001fa-24d8-4b18-ab89-5d9648b5dcd6" />
-      </td>
-  </tbody>
-</table>
-<table>
-  <thead>
-    <tr>
-      <td align="center">관리자페이지-경기예매등록(상세)</td>
-    </tr>
-  </thead>
-  <tbody>
-      <td>
-        <img width="450" alt="image" src="https://github.com/user-attachments/assets/b0810203-3328-4eeb-b4d1-90bdaa83e7ae" />
-      </td>
-  </tbody>
-</table>
