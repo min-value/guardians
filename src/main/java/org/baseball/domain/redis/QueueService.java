@@ -5,9 +5,13 @@ import org.redisson.api.RLock;
 import org.redisson.api.RScoredSortedSet;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.Cursor;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -35,12 +39,35 @@ public class QueueService {
         double score = System.currentTimeMillis();
 
         // 모든 기존 queue에서 제거 (한 게임만 대기 허용)
-        Set<String> qkeys = redisTemplate.keys("queue:*");
+        Set<String> qkeys = new HashSet<>();
+        ScanOptions scanOptions = ScanOptions.scanOptions().match("queue:*").count(1000).build();
+
+        redisTemplate.execute((RedisConnection connection) -> {
+            Cursor<byte[]> cursor = connection.scan(scanOptions);
+            while(cursor.hasNext()) {
+                qkeys.add(new String(cursor.next()));
+            }
+
+            return null;
+        });
+//        Set<String> qkeys = redisTemplate.keys("queue:*");
         for (String key : qkeys) {
             redisTemplate.opsForZSet().remove(key, String.valueOf(userPk));
         }
 
-        Set<String> akeys = redisTemplate.keys("available:*");
+//        Set<String> akeys = redisTemplate.keys("available:*");
+        Set<String> akeys = new HashSet<>();
+        ScanOptions scanOptions2 = ScanOptions.scanOptions().match("available:*").count(1000).build();
+
+        redisTemplate.execute((RedisConnection connection) -> {
+            Cursor<byte[]> cursor = connection.scan(scanOptions2);
+            while(cursor.hasNext()) {
+                akeys.add(new String(cursor.next()));
+            }
+
+            return null;
+        });
+
         for (String key : akeys) {
             String[] parts = key.split(":");
             if (parts.length == 3 && parts[2].equals(String.valueOf(userPk))) {
@@ -85,7 +112,19 @@ public class QueueService {
 
         try {
             if (lock.tryLock(5, 10, TimeUnit.SECONDS)) {
-                Set<String> availableKeys = redisTemplate.keys(AVAILABLE_KEY_PREFIX + gamePk + ":*");
+//                Set<String> availableKeys = redisTemplate.keys(AVAILABLE_KEY_PREFIX + gamePk + ":*");
+                Set<String> availableKeys = new HashSet<>();
+                ScanOptions scanOptions = ScanOptions.scanOptions().match(AVAILABLE_KEY_PREFIX + gamePk + ":*").count(1000).build();
+
+                redisTemplate.execute((RedisConnection connection) -> {
+                    Cursor<byte[]> cursor = connection.scan(scanOptions);
+                    while(cursor.hasNext()) {
+                        availableKeys.add(new String(cursor.next()));
+                    }
+
+                    return null;
+                });
+
                 int available = availableKeys.size();
                 int remaining = ALLOWED_ENTRANCE_COUNT - available;
 
@@ -132,7 +171,19 @@ public class QueueService {
     }
 
     public Set<String> getAllQueueKeys() {
-        return redisTemplate.keys("queue:*");
+        Set<String> qkeys = new HashSet<>();
+        ScanOptions scanOptions = ScanOptions.scanOptions().match("queue:*").count(1000).build();
+
+        redisTemplate.execute((RedisConnection connection) -> {
+            Cursor<byte[]> cursor = connection.scan(scanOptions);
+            while(cursor.hasNext()) {
+                qkeys.add(new String(cursor.next()));
+            }
+
+            return null;
+        });
+
+        return qkeys;
     }
 
     public String getKey(int gamePk, int userPk) {
