@@ -31,24 +31,15 @@ function loadNews(page){
 
             const container = $('#news-list').empty();
             list.forEach(news => {
-                let month = "";
-                if(news.n_month < 10){month = "0"+news.n_month.toString();}
-                else{month = news.n_month.toString();}
-
-                let day = "";
-                if(news.n_date < 10){day = "0"+news.n_date.toString();}
-                else{day = news.n_date.toString();}
-
-                let hour = "";
-                if(news.n_hour < 10){hour = "0"+news.n_hour.toString();}
-                else{hour = news.n_hour.toString();}
-
-                let minute = "";
-                if(news.n_minute < 10){minute = "0"+news.n_minute.toString();}
-                else{minute = news.n_minute.toString();}
+                const dateObj = new Date(news.n_writeDate);
+                const year = dateObj.getFullYear();
+                const month = (dateObj.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작
+                const day = dateObj.getDate().toString().padStart(2, '0');
+                const hour = dateObj.getHours().toString().padStart(2, '0');
+                const minute = dateObj.getMinutes().toString().padStart(2, '0');
 
 
-                const date = news.n_year.toString()+"-"+month+"-"+day+"  "+hour+":"+minute;
+                const date = `${year}-${month}-${day} ${hour}:${minute}`;
                 container.append(`
 
                     <div class="news">

@@ -29,7 +29,6 @@ function loadPage(page){
         success: function(res){
             const list = res.list;
             const totalCount = res.totalCount;
-            console.log("total: " + totalCount);
 
             const container = $('#post-container').empty();
             list.forEach(post => {
@@ -58,6 +57,9 @@ function loadPage(page){
             else{
                 const container2 = $('#pagination').empty();
                 container2.append(``);
+                container.append(`<div class="no-data">
+                        작성된 글이 없습니다.
+                    </div>`);
             }
         }
     });

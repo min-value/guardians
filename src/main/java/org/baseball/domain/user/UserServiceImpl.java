@@ -7,6 +7,7 @@ import org.baseball.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 
@@ -29,6 +30,9 @@ public class UserServiceImpl implements UserService {
         if (!isValidPassword(user.getUserPwd())) {
             throw new IllegalArgumentException("비밀번호는 대문자, 특수문자를 포함하여 6~10자리를 입력하세요");
         }
+
+        String encodedPwd = new BCryptPasswordEncoder().encode(user.getUserPwd());
+        user.setUserPwd(encodedPwd);
 
         userMapper.insertUser(user);
     }
@@ -59,14 +63,31 @@ public class UserServiceImpl implements UserService {
             return null;
         }
 
+        String storedPassword = user.getUserPwd();
         System.out.println("DB에서 조회된 비밀번호: " + user.getUserPwd());
 
-        if (user.getUserPwd().equals(userPwd)) {
-            System.out.println("비밀번호 일치, 로그인 성공");
-            return user;
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        // 암호화된 비밀번호인 경우
+        if (storedPassword != null && storedPassword.startsWith("$2a$")) {
+            if (encoder.matches(userPwd, storedPassword)) {
+                System.out.println("암호화된 비밀번호 일치 → 로그인 성공");
+                return user;
+            } else {
+                System.out.println("암호화된 비밀번호 불일치 → 로그인 실패");
+                return null;
+            }
         } else {
-            System.out.println("로그인 실패: 비밀번호 불일치");
-            return null;
+            // 평문 비밀번호인 경우
+            if (userPwd.equals(storedPassword)) {
+                System.out.println("평문 비밀번호 일치 → 로그인 성공 + 암호화 갱신");
+                String encoded = encoder.encode(userPwd);
+                userMapper.updatePassword(userId, encoded);
+                user.setUserPwd(encoded);
+                return user;
+            } else {
+                System.out.println("평문 비밀번호 불일치 → 로그인 실패");
+                return null;
+            }
         }
     }
 

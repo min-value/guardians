@@ -11,13 +11,12 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession(false);
-        UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
 
-        if (loginUser == null) {
+        // 먼저 null 체크를 하고 나서 loginUser를 꺼내야 안전함
+        if (session == null || session.getAttribute("loginUser") == null) {
             String requestType = request.getHeader("X-Requested-With");
 
-            if("XMLHttpRequest".equals(requestType)) {
-                //ajax 요청일 경우(return type: JSON)
+            if ("XMLHttpRequest".equals(requestType)) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.setHeader("Location", "/reservation/errors/needLogin");
             } else {
@@ -25,6 +24,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             }
             return false;
         }
+
         return true;
     }
 }

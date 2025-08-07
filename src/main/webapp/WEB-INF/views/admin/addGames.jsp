@@ -94,7 +94,6 @@
                 success: function(res) {
                     const list = res.list;
                     const totalCount = res.totalCount;
-                    console.log(res.totalCount);
                     const container = $('#list').empty();
 
                     list.forEach(dto => {

@@ -227,8 +227,6 @@ export function reload() {
         .then(data => {
             setMap(data.zoneMapDetail);
             setZoneInfo(data.zoneInfo);
-            console.log(map);
-            console.log(zoneInfo);
             /* 새로고침 방식 변경 */
             // $('.zoneInfo-wrapper').load(window.location.href + ' .zoneInfo-wrapper', function() {
             //     scrollToZoneInfo(lastColoredName);

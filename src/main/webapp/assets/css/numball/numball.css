@@ -11,8 +11,30 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     margin-top: 80px;
+}
+
+.goPrev {
+    height: 28px;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    margin-left: 36px;
+}
+
+.prevImg{
+    height: 28px;
+    width: 28px;
+    background: url("../../img/icon/chevron-left.svg") no-repeat center center;
+    background-size: contain;
+}
+
+.prevText{
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
 }
 
 .game-container {
@@ -20,7 +42,6 @@ html, body {
     justify-content: space-between;
     align-items: center;
     width: 1100px;
-    padding: 40px;
 }
 
 .game-left {
@@ -38,6 +59,10 @@ html, body {
     position: relative;
     display: inline-block;
     margin-top: 32px;
+}
+
+.numball-image {
+    transition: opacity 0.3s ease-in-out;
 }
 
 #openGuideBtn {
@@ -167,6 +192,29 @@ html, body {
     background-color: var(--errorColor);
 }
 
+.mypage-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 60px;
+}
+
+.page-button {
+    background-color: var(--mainColor);
+    color: white;
+    font-size: 18px;
+    font-weight: 400;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.page-button:hover {
+    background-color: var(--mainHover);
+}
+
 .modal {
     position: fixed;
     top: 0;
@@ -212,28 +260,31 @@ html, body {
     color: var(--subColor);
 }
 
+.modal .modal-description .point-try {
+    display: inline-block;
+    width: 160px;
+}
+
+.modal .modal-description .point {
+    display: inline-block;
+    width: 40px;
+    font-weight: 600;
+    color: var(--subColor);
+}
+
 .modal .modal-description .highlight-s {
     font-weight: 700;
-    background-color: #22C55E;
-    color: var(--gray-01);
-    padding: 2px 4px;
-    border-radius: 5px;
+    color: #22C55E;
 }
 
 .modal .modal-description .highlight-b {
     font-weight: 700;
-    background-color: var(--yellow);
-    color: var(--gray-01);
-    padding: 2px 4px;
-    border-radius: 5px;
+    color: var(--yellow);
 }
 
 .modal .modal-description .highlight-o {
     font-weight: 700;
-    background-color: var(--errorColor);
-    color: var(--gray-01);
-    padding: 2px 4px;
-    border-radius: 5px;
+    color: var(--errorColor);
 }
 
 .modal .confirm-button {

@@ -144,4 +144,10 @@
         WHERE user_pk = #{userPk}
     </update>
 
+    <update id="updatePassword">
+        UPDATE `user`
+        SET user_pwd = #{userPwd}
+        WHERE user_id = #{userId}
+    </update>
+
 </mapper>

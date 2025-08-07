@@ -1,3 +1,4 @@
+
 let curPredict = null;
 let reservelistPk = JSON.parse(localStorage.getItem("reservelistPk" +  gamePk));
 const gameInfo = JSON.parse(localStorage.getItem('gameInfo' + gamePk));
@@ -38,6 +39,7 @@ $(document).ready(function () {
         target.disabled = false;
         target.style.backgroundColor = "var(--mainColor)";
         target.style.color = "var(--white)";
+        target.style.cursor = "pointer";
     });
 
     $("#opponentTeam").on("click", function () {
@@ -55,8 +57,8 @@ $(document).ready(function () {
 });
 
 function clickCheerBtn() {
-    console.log(curPredict);
-    console.log(reservelistPk);
+    // console.log(curPredict);
+    // console.log(reservelistPk);
 
     $.ajax({
         url: '/tickets/predict',

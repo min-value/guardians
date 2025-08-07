@@ -23,5 +23,6 @@ public interface ReservationMapper {
     Integer getReservelistPkByUser(@Param("gamePk") int gamePk, @Param("seatNum") String seatNum, @Param("zonePk") int zonePk, @Param("userPk") int userPk);
     Integer getReservelistPkAuto(@Param("gamePk") int gamePk, @Param("userPk") int userPk, @Param("zonePk") int zonePk);
     int countUserReserve(@Param("gamePk") int gamePk, @Param("userPk") int userPk);
+    List<HeldSeatDTO> selectHeldAll(@Param("gamePk") int gamePk, @Param("userPk") int userPk);
 }
 

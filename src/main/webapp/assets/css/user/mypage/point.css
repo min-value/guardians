@@ -7,27 +7,95 @@
     box-sizing: border-box;
 }
 
-.point-title-box {
-    width: 780px;
-    padding: 48px 36px;
-    border-radius: 5px;
-    background: linear-gradient(90deg, #024083 -1.1%, #0471E9 101.41%);
-    color: white;
+.points-tab-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.point-title-box {
+    width: 380px;
+    height: 160px;
+    padding: 0 28px;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #024083 -1.1%, #0471E9 101.41%);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
     margin-bottom: 64px;
     box-sizing: border-box;
 }
 
 .point-title {
-    font-size: 32px;
-    font-weight: 400;
+    font-size: 28px;
+    font-weight: 500;
 }
 
 .point-total {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 400;
+}
+
+.num-ball-box {
+    width: 380px;
+    height: 160px;
+    padding: 0 28px;
+    border-radius: 5px;
+    background: var(--lightBlue);
+    color: var(--black);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 64px;
+    box-sizing: border-box;
+    cursor: pointer;
+    position: relative;
+}
+
+.num-ball-box:hover {
+    background-color: var(--lightBlueHover);
+}
+
+.num-ball-text {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.num-ball-title {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.num-ball-subtitle {
+    font-size: 20px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+}
+
+.num-ball-image {
+    width: 120px;
+    height: auto;
+    transition: opacity 0.2s ease;
+}
+
+.num-ball-image.hover {
+    position: absolute;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+}
+
+.num-ball-box:hover .num-ball-image.default {
+    opacity: 0;
+}
+
+.num-ball-box:hover .num-ball-image.hover {
+    opacity: 1;
 }
 
 .points-tab label {

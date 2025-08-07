@@ -2,6 +2,7 @@ package org.baseball.domain.reservation;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
+import org.baseball.domain.redis.QueueService;
 import org.baseball.domain.redis.RedisService;
 import org.baseball.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class ReservationController {
     private ReservationService reservationService;
     @Autowired
     private RedisService redisService;
+    @Autowired
+    private QueueService queueService;
 
     //등급 및 좌석 선택 페이지 로드
     @GetMapping("/seat")
@@ -42,52 +45,16 @@ public class ReservationController {
     //seat 페이지 최초 로드 시 정보 불러오기
     @GetMapping("/seat/load")
     @ResponseBody
-    public SeatLoadResDTO seatLoad(@RequestParam int gamePk, HttpSession session) throws JsonProcessingException {
-        try {
-            SeatLoadResDTO result = new SeatLoadResDTO();
-            result.setError(false);
-            result.setResult(new HashMap<>());
+    public SeatLoadResDTO seatLoad(@RequestParam int gamePk,
+                                   @RequestParam("check") int check,
+                                   @RequestParam(value = "seats", required = false)  List<String> seats,
+                                   @RequestParam(value = "zonePk", required = false) Integer zonePk,
+                                   @RequestParam(value = "reservelistPk") int reservelistPk,
+                                   HttpSession session) throws JsonProcessingException {
+        //유저 정보 가져오기
+        UserDTO user = (UserDTO) session.getAttribute("loginUser");
 
-            //유저 정보 가져오기
-            UserDTO user = (UserDTO) session.getAttribute("loginUser");
-
-            //우리팀 경기인지 확인
-            if (!reservationService.isOurGame(gamePk)) {
-                result.setError(true);
-                result.setErrorMsg("존재하지 않는 경기입니다.");
-                return result;
-            }
-
-            //해당 유저가 해당 게임에서 구매한 좌석이 4개 이하인지 확인
-            int cnt = reservationService.countUserReserve(gamePk, user.getUserPk());
-
-            //남은 좌석 수 저장 - available(세션)
-            if (cnt >= 4) {
-                result.setError(true);
-                result.setErrorMsg("최대 4장까지만 구매가 가능합니다");
-                return result;
-            }
-            int remainingCnt = 4 - cnt;
-            session.setAttribute("available", remainingCnt); //세션에 저장
-            result.getResult().put("available", remainingCnt);
-
-            //경기 정보 저장 (gameInfo) - gameInfo(세션), gamePk
-            ReserveGameInfoDTO reserveGameInfoDTO = reservationService.getGameInfo(gamePk);
-            result.getResult().put("gameInfo", reserveGameInfoDTO);
-            session.setAttribute("gameInfo", reserveGameInfoDTO); //세션에 저장(JSON으로 파싱)
-
-            //좌석 정보 저장 - zoneInfo(구역 별 상세 정보), zoneMapDetail(구역별 팔린 좌석 목록)
-            reservationService.getSeatsInfo(gamePk, result.getResult());
-
-            //할인 정보 저장 - discountInfo
-            List<DiscountDTO> discountDTOList = reservationService.getDiscountInfo();
-            result.getResult().put("discountInfo", discountDTOList);
-
-            return result;
-        } catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
+        return reservationService.seatLoad(gamePk, check, seats, zonePk, user, reservelistPk, session);
     }
 
     //전체 구역 정보 불러오기
@@ -99,6 +66,13 @@ public class ReservationController {
         return result;
     }
 
+    /*
+    0: 미로그인 상태
+    1: 정상(대기열 ttl + 선점 ttl 정상)
+    2: 좌석 선점 종료
+    3: 대기열 ttl 종료
+     */
+    //대기열 ttl + 선점 확인
     @PostMapping("/preemption/confirm")
     @ResponseBody
     public int confirmPreempt(@RequestBody PreemptConfirmReqDTO preemptConfirmReqDTO, HttpSession session) {
@@ -106,6 +80,11 @@ public class ReservationController {
 
         if(user == null) {
             return 0; //로그인 X
+        }
+
+        //대기열 ttl 확인
+        if(!queueService.checkTTL(preemptConfirmReqDTO.getGamePk(), user.getUserPk())) {
+            return 3;
         }
 
         return reservationService.confirmPreempt(preemptConfirmReqDTO, user);
@@ -121,6 +100,14 @@ public class ReservationController {
             result.setPreempted(0);
             result.setErrorMsg("로그인이 필요합니다.");
 
+            return result;
+        }
+
+        //대기열 ttl 확인
+        if(!queueService.checkTTL(preemptionDTO.getGamePk(), user.getUserPk())) {
+            PreemptionResDTO result = new PreemptionResDTO();
+            result.setPreempted(4);
+            result.setErrorMsg("다시 접속해주세요.");
             return result;
         }
 
@@ -156,6 +143,10 @@ public class ReservationController {
     //예매 확인 페이지 로드
     @GetMapping("/confirm")
     public String confirm(@RequestParam int gamePk, HttpSession session) {
+        UserDTO user = (UserDTO) session.getAttribute("loginUser");
+
+        if(user == null) { return "redirect:/errors/needLogin"; }
+
         session.setAttribute("gamePk", gamePk);
         return "reservation/tickets3";
     }
@@ -171,5 +162,14 @@ public class ReservationController {
         session.removeAttribute("gameInfo");
         session.removeAttribute("zoneMap");
         session.removeAttribute("available");
+    }
+
+    //대기열 ttl 존재 여부 확인
+    @GetMapping("/queue/confirm")
+    @ResponseBody
+    public boolean confirmQueue(@RequestParam int gamePk, HttpSession session) {
+        UserDTO user = (UserDTO) session.getAttribute("loginUser");
+
+        return queueService.checkTTL(gamePk, user.getUserPk());
     }
 }

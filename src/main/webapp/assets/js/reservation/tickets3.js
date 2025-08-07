@@ -72,8 +72,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert("로그인이 필요합니다.");
                     removeData();
                     window.close();
+                }  else if(data === 3) {
+                    alert("다시 시도하세요.");
+                    removeData();
+                    window.close();
                 } else {
                     //선점이 되어있으면 돌아가기
+                    localStorage.removeItem('totalPay' + gamePk);
+                    localStorage.removeItem('discountPk' + gamePk);
+                    localStorage.removeItem('usedPoint' + gamePk);
+                    localStorage.removeItem('paidAmount' + gamePk);
                     window.location.href = `/reservation/discount?gamePk=${gamePk}`;
                 }
             })
@@ -88,7 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     payBtn.addEventListener("click", async (e) => {
-        console.log('click?');
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         const allChecked = Array.from(checkboxes).every(cb => cb.checked);
 
@@ -96,14 +103,23 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("모든 항목에 동의하셔야 다음 단계로 진행할 수 있습니다.");
             e.preventDefault();
         } else {
-            openLoading();
-            const usedPointStr = document.getElementById('usedPoint').innerText.replace(/,/g, '').replace(/[^0-9]/g, '');
-            const usedPointNum = parseInt(usedPointStr, 10);
-            localStorage.setItem('usedPoint' + gamePk, JSON.stringify(usedPointNum));
-            localStorage.setItem('paidAmount' + gamePk, JSON.stringify(document.getElementById('totalPay').innerText.replace(/,/g, '')));
-            payBtn.disabled = true;
-            await requestPay();
-            payBtn.disabled = false;
+            const res = await fetch(`/reservation/queue/confirm?gamePk=${gamePk}`);
+            const data = await res.json();
+
+            if(data === true) {
+                openLoading();
+                const usedPointStr = document.getElementById('usedPoint').innerText.replace(/,/g, '').replace(/[^0-9]/g, '');
+                const usedPointNum = parseInt(usedPointStr, 10);
+                localStorage.setItem('usedPoint' + gamePk, JSON.stringify(usedPointNum));
+                localStorage.setItem('paidAmount' + gamePk, JSON.stringify(document.getElementById('totalPay').innerText.replace(/,/g, '')));
+                payBtn.disabled = true;
+                await requestPay();
+                payBtn.disabled = false;
+            } else {
+                alert("다시 시도해주세요.");
+                removeData();
+                window.close();
+            }
         }
     });
 
@@ -132,12 +148,11 @@ async function requestPay() {
         buyer_name: user.userName,
         buyer_tel: user.tel
     }, function(res) {
-        console.log("@@@RES: ", res);
-        if (res.success) {
-            console.log("성공 imp_uid:", res.imp_uid);
-        } else {
-            console.error("실패 메시지:", res.error_msg);
-        }
+        // if (res.success) {
+        //     console.log("성공 imp_uid:", res.imp_uid);
+        // } else {
+        //     console.error("실패 메시지:", res.error_msg);
+        // }
 
         // 결제검증
         $.ajax({
@@ -167,14 +182,22 @@ async function requestPay() {
                     }),
                     success: function(result) {
                         closeLoading();
-                        console.log("서버 응답:", result);
+                        // console.log("서버 응답:", result);
                         if (result === true || result === "true") {
+                            fetch(`/queue/complete-reservation/${gameInfo.gamePk}?userPk=${user.userPk}`, {
+                                method: 'POST'
+                            }).then(res => {
+                                if (!res.ok) {
+                                    console.warn("대기열 제거 실패");
+                                }
+                            }).catch(err => {
+                                console.error("대기열 제거 중 에러:", err);
+                            });
                             alert("예매 성공!");
                             if (window.opener && !window.opener.closed) {
                                 window.opener.location.href = "/tickets/all?showModal=true";
                             }
                             window.close();
-                            console.log(result);
                         } else {
                             alert("예매 저장 실패. 다시 시도해주세요.");
                             $.ajax({

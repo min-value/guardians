@@ -38,4 +38,7 @@ public interface UserMapper {
                              @Param("tel") String tel,
                              @Param("accessToken") String accessToken,
                              @Param("refreshToken") String refreshToken);
+
+    // 기존 유저 로그인 성공 시 비밀번호 암호화해서 업데이트
+    void updatePassword(@Param("userId") String userId, @Param("userPwd") String userPwd);
 }

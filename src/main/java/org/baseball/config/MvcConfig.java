@@ -114,9 +114,10 @@ public class MvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/admin/**");
 
         registry.addInterceptor(new LoginCheckInterceptor())
-                .addPathPatterns("/reservation/**")
+                .addPathPatterns("/reservation/**", "/queue/**")
                 .excludePathPatterns(
-                        "/reservation/errors/needLogin"  // 무한 리다이렉트 방지
+                        "/reservation/errors/needLogin",  // 무한 리다이렉트 방지
+                        "/queue/errors/needLogin"
                 );
 
         registry.addInterceptor(new MypageCheckInterceptor())

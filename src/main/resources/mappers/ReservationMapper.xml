@@ -110,4 +110,15 @@
         FROM reservations r LEFT JOIN reservation_list l ON l.reservelist_pk = r.reservelist_pk
         WHERE l.game_pk = #{gamePk} AND l.user_pk = #{userPk} AND r.state = 'PAID'
     </select>
+
+    <resultMap id="HeldSeat" type="org.baseball.dto.HeldSeatDTO">
+        <result property="reservelistPk" column="reservelist_pk"/>
+        <result property="zonePk" column="zone_pk"/>
+        <result property="seatNum" column="seat_num"/>
+    </resultMap>
+    <select id="selectHeldAll" resultMap="HeldSeat">
+        SELECT l.reservelist_pk, r.zone_pk, r.seat_num
+        FROM reservations r LEFT JOIN reservation_list l ON l.reservelist_pk = r.reservelist_pk
+        WHERE l.game_pk = #{gamePk} AND l.user_pk = #{userPk} AND r.state = 'HELD'
+    </select>
 </mapper>

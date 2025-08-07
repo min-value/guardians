@@ -2,6 +2,7 @@ package org.baseball.config;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
+import org.redisson.codec.JsonJacksonCodec;
 import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +29,9 @@ public class RedissonConfig {
         config.useSingleServer()
                 .setAddress("redis://" + host + ":" + port)
                 .setPassword(password);
+
+        // JsonJacksonCodec 명시적 설정
+        config.setCodec(new JsonJacksonCodec());
 
         return Redisson.create(config);
     }

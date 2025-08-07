@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>예매</title>
+    <title>신한 가디언즈 예매</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets-common.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets1.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">

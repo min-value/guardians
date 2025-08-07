@@ -1,12 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title></title>
+    <title>신한 가디언즈 예매</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets-common.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets-common2.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/tickets3.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reservation/loading.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/tickets/loading.css">
     <script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
@@ -22,12 +22,10 @@
         totalPoint: "${sessionScope.loginUser.totalPoint}"
     };
 
-    console.log(user);
     $.ajax({
         type: "GET",
         url: "/user/info",
         success: function(res) {
-            console.log("최신 유저 정보:", res);
             user = res;
             $("#myPoint").text(user.totalPoint);
         },
@@ -56,7 +54,6 @@
         document.getElementById('usedPoint').innerText = `- ` + value;
         document.getElementById('totalPay').innerText = ticketPrice - parseInt(value || 0);
     }
-
 </script>
 
 <body>
@@ -302,7 +299,7 @@
         </div>
     </div>
 </div>
-<div class="loader">Loading...</div>
+<div class="loader" aria-label="Loading..."></div>
 <div class="loading-overlay"></div>
 <script type="module" src="${pageContext.request.contextPath}/assets/js/reservation/tickets3.js"></script>
 </body>

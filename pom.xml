@@ -120,6 +120,11 @@
       <artifactId>spring-tx</artifactId>
       <version>5.2.25.RELEASE</version>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-crypto</artifactId>
+      <version>5.3.3.RELEASE</version>
+    </dependency>
     <!-- Jsoup -->
     <dependency>
       <groupId>org.jsoup</groupId>
@@ -272,9 +277,39 @@
     <!-- netty -->
     <dependency>
       <groupId>io.netty</groupId>
-      <artifactId>netty-all</artifactId>
-      <version>4.1.68.Final</version>
+      <artifactId>netty-buffer</artifactId>
+      <version>4.1.100.Final</version>
     </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-common</artifactId>
+      <version>4.1.100.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-resolver</artifactId>
+      <version>4.1.100.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-resolver-dns</artifactId>
+      <version>4.1.100.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-transport</artifactId>
+      <version>4.1.100.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-handler</artifactId>
+      <version>4.1.100.Final</version>
+    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>io.netty</groupId>-->
+<!--      <artifactId>netty-all</artifactId>-->
+<!--      <version>4.1.100.Final</version>-->
+<!--    </dependency>-->
     <!-- jakarta annotation api -->
     <dependency>
       <groupId>jakarta.annotation</groupId>
