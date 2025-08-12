@@ -1,0 +1,10 @@
+FROM docker.io/library/mariadb:11.4.5
+
+MAINTAINER "HWANG HYESUNG<hwanghs7008@g.skku.edu>"
+
+ENV MARIADB_PASSWORD guardians
+ENV MARIADB_USER guardians
+ENV MARIADB_DATABASE guardians
+ENV MARIADB_ROOT_PASSWORD guardians
+
+ADD guardians.sql /docker-entrypoint-initdb.d/
